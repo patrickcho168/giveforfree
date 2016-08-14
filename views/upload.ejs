@@ -3,33 +3,55 @@
 
 <head>
     <title>Simple Upload Example</title>
+
+    <!-- Bootstrap Support -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <body>
-	<div>
-		<form action="/upload" enctype="multipart/form-data" method="post">
-			<p> Title:
-				<input type="text" name="title" placeholder="Enter the name of your object">
-			</p>
-			<p> Description:
-				<input type="text" name="description" placeholder="Enter some description of your object">
-			</p>
-			<p> Select an image to upload:
-		    	<input type="file" name="avatar">
-			</p>
-		    <p> Number of Days
-		    	<select name="no_of_days">
-		    		<option value="7">7</option>
-		    		<option value="14">14</option>
-		    	</select>
-		    </p>
-		    <p> Randomly Assign?
-		    	<input type="checkbox" name="randomAssign" value="1">
-		    </p>
+    <div class="container">
+        <h1>Post a new item</h1>
+        <form action="/upload" enctype="multipart/form-data" method="post">
+            <% if (locals.error_messages) { 
+                error_messages.forEach(function(message) { %>
+            <div class="alert alert-warning"><strong>Error: </strong> <%= message %></div>
+            <% }); 
+            } %>
+            <div class="form-group has-warning">
+                <label>Title</label>
+                    <input type="text" class="form-control" name="title" placeholder="Enter the name of your object" required>
+                
+            </div>
+            <div class="form-group has-warning">
+                <label>Description</label>
+                    <input class="form-control" type="text" name="description" placeholder="Enter some description of your object" required>
+                
+            </div>
+            <div class="form-group has-warning">
+                <label>Select an image to upload:</label>   
+                    <input class="form-control-file" type="file" name="avatar" required>
+                
+            </div>
+            <div class="form-group">
+                <label>Number of Days</label>
+                    <select class="form-control" name="no_of_days">
+                        <option value="7">7</option>
+                        <option value="14">14</option>
+                    </select>
+                
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="randomAssign" value="1">
+                    Randomly Assign?  
+                </label>
+            </div>
 
-            <input type="submit" value="Post">
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-        </p>
     </div>
 </body>
 

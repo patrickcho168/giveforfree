@@ -1,6 +1,7 @@
 "use strict"
 
 var express = require("express");
+var flash = require('connect-flash');
 var fbLogin = require('./routes/facebookLogin');
 var upload = require('./routes/upload');
 var profile = require('./routes/profile');
@@ -13,7 +14,6 @@ var db = require('./models/db');
 var app = express();
 
 app.use(express.static('public'));
-
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
@@ -29,11 +29,12 @@ app.use(require('cookie-session')({
   // saveUninitialized: true
 }));
 
-
-app.get('/500', function(req, res) {
-  var err = new Error();
-  err.status = 500;
-  next(err);
+// Flash messages
+app.use(flash());
+app.use(function(req, res, next){
+    res.locals.success_messages = req.flash('success_messages');
+    res.locals.error_messages = req.flash('error_messages');
+    next();
 });
 
 // Define routes.
@@ -43,6 +44,5 @@ profile(app);
 freeItem(app);
 privacy(app);
 handleErrors(app);
-
 
 app.listen(80);
