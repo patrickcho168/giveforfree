@@ -1,0 +1,133 @@
+/* Main */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+body {
+    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 150%;
+}
+h1 {
+    font-size: 2.75em;
+}
+h2 {
+    font-size: 2.50em;
+}
+h3 {
+    font-size: 2.25em;
+}
+h4 {
+    font-size: 2.00em;
+}
+h5 {
+    font-size: 1.75em;
+}
+h6 {
+    font-size: 1.50em;
+}
+p {
+    font-size: 1.35em;
+    font-weight: lighter;
+}
+
+/* Login */
+
+.text-vertical-center {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+.text-vertical-center h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 4.1em;
+    font-weight: 700;
+}
+.login {
+    display: table;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: url(../../images/landing/landing-background.jpg) no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    padding: 50px 0;
+}
+
+/* About */
+
+.about {
+    padding-top: 50px;
+}
+.about-item {
+    margin-bottom: 30px;
+}
+span.glyphicon-gift {
+    padding: 35px 0;
+    font-size: 6.0em;
+}
+span.glyphicon-user {
+    padding: 35px 0;
+    font-size: 6.0em;
+}
+span.glyphicon-fire {
+    padding: 35px 0;
+    font-size: 6.0em;
+}
+.feature-subtitles {
+    padding-top: 20px;
+}
+.feature {
+    padding: 40px 25px;
+    padding-bottom: 0px;
+}
+.feature-icons {
+    padding: 15px 0;
+}
+
+/* Contact Us*/
+
+.contact {
+    padding: 50px 0;
+}
+.contact-row {
+    padding: 40px 0;
+}
+.contact-item {
+    margin-bottom: 30px;
+}
+.teammate-description {
+    text-align: left;
+}
+span.glyphicon-bullhorn {
+    padding: 35px 0;
+    font-size: 6.0em;
+}
+span.glyphicon-blackboard {
+    padding: 35px 0;
+    font-size: 6.0em;
+}
+span.glyphicon-cog {
+    padding: 35px 0;
+    font-size: 6.0em;
+}
+span.glyphicon-globe {
+    padding: 35px 0;
+    font-size: 6.0em;
+}
+
+/* Footer */
+
+footer {}
+.contact-list {
+    text-align: left;
+    padding-top: 20px;
+}
+.text-muted {
+    text-align: right;
+    padding-top: 20px;
+}

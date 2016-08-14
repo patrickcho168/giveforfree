@@ -1,0 +1,9 @@
+Friends:
+<% for(var i=0; i<friends.length; i++) {%>
+   <li><a href="/profile/<%= friends[i].attributes.userID %>"><%= friends[i].attributes.name %></a></li>
+<% } %><br/>
+
+Back to <a href="/">home</a>.<br/>
+<a href="/upload">Upload</a> an Item.<br/>
+<a href="/logout">Logout</a>.
+</p>

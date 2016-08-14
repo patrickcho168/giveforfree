@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Upload Example</title>
+</head>
+
+<body>
+	<div>
+		<form action="/upload" enctype="multipart/form-data" method="post">
+			<p> Title:
+				<input type="text" name="title" placeholder="Enter the name of your object">
+			</p>
+			<p> Description:
+				<input type="text" name="description" placeholder="Enter some description of your object">
+			</p>
+			<p> Select an image to upload:
+		    	<input type="file" name="avatar">
+			</p>
+		    <p> Number of Days
+		    	<select name="no_of_days">
+		    		<option value="7">7</option>
+		    		<option value="14">14</option>
+		    	</select>
+		    </p>
+		    <p> Randomly Assign?
+		    	<input type="checkbox" name="randomAssign" value="1">
+		    </p>
+
+            <input type="submit" value="Post">
+        </form>
+        </p>
+    </div>
+</body>
+
+</html>

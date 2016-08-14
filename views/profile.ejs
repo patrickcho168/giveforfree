@@ -1,0 +1,84 @@
+<% if (myProfile === true) { %>
+  <p> This is your profile page! </p>
+<% } else { %>
+  <p> This is someone else's profile page! </p>
+<% } %>
+<p>
+<img src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large"><br/>
+Name: <%= user.name %><br/>
+</p>
+<p>
+<b>User Wants:</b>
+<% if (userWants.length > 0) { %>
+<table style="width:100%">
+</table>
+<% } else { %>
+	<p> No items wanted. </p>
+<% } %>
+</p>
+<p>
+<b>User Giving Out:</b>
+<% if (userGive.length > 0) { %>
+<table style="width:100%">
+	<tr>
+		<th>Item Name</th>
+		<th>Item Description</th>
+		<th>Item timeCreated</th>
+		<th>Item timeExpired</th>
+		<th>Item Giver</th>
+		<th>Item Image</th>
+	</tr>
+ 	<% for(var i=0; i<userGive.length; i++) { %>
+ 		<tr>
+ 			<td><a href="/item/<%=userGive[i].attributes.itemID%>"><%= userGive[i].attributes.title %></a></td>
+ 			<td><%= userGive[i].attributes.description   %></td>
+ 			<td><%= userGive[i].attributes.timeCreated   %></td>
+ 			<td><%= userGive[i].attributes.timeExpired   %></td>
+ 			<% if (myProfile === true) { %>
+ 				<td><a href="/profile/<%= userGive[i].attributes.giverID%>"><%= user.name %><</td>
+ 			<% } else { %>
+ 				<td><a href="/profile/<%= userGive[i].attributes.giverID%>"><%= friendProperty[userGive[i].attributes.giverID].name%></a></td>
+ 			<% } %>
+ 			<td><img src="https://d24uwljj8haz6q.cloudfront.net/<%= userGive[i].attributes.imageLocation %>" width="50"></td>
+ 		</tr>
+	<% } %>
+</table>
+<% } else { %>
+	<p> No items being given out currently. </p>
+<% } %>
+</p>
+<p>
+<b>User Given Out:</b>
+<% if (userGiven.length > 0) { %>
+<table style="width:100%">
+	<tr>
+		<th>Item Name</th>
+		<th>Item Description</th>
+		<th>Item timeCreated</th>
+		<th>Item timeExpired</th>
+		<th>Item Giver</th>
+		<th>Item Image</th>
+	</tr>
+ 	<% for(var i=0; i<userGiven.length; i++) { %>
+ 		<tr>
+ 			<td><a href="/item/<%=userGiven[i].attributes.itemID%>"><%= userGiven[i].attributes.title %></a></td>
+ 			<td><%= userGiven[i].attributes.description   %></td>
+ 			<td><%= userGiven[i].attributes.timeCreated   %></td>
+ 			<td><%= userGiven[i].attributes.timeExpired   %></td>
+ 			<% if (myProfile === true) { %>
+ 				<td><a href="/profile/<%= userGiven[i].attributes.giverID%>"><%= user.name %><</td>
+ 			<% } else { %>
+ 				<td><a href="/profile/<%= userGiven[i].attributes.giverID%>"><%= friendProperty[userGiven[i].attributes.giverID].name%></a></td>
+ 			<% } %>
+ 			<td><img src="https://d24uwljj8haz6q.cloudfront.net/<%= userGiven[i].attributes.imageLocation %>" width="50"></td>
+ 		</tr>
+	<% } %>
+</table>
+<% } else { %>
+	<p> No items have been given out. </p>
+<% } %>
+</p>
+Back to <a href="/">home</a>.<br/>
+Visit your <a href="/friends">friends</a>.<br/>
+<a href="/upload">Upload</a> an Item.<br/>
+<a href="/logout">Logout</a>.

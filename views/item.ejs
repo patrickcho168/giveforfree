@@ -1,0 +1,26 @@
+<% if (myItem === true) { %>
+  <p> This is your item! </p>
+<% } else { %>
+  <p> This is someone else's item! </p>
+<% } %>
+
+<p>
+<img src="https://d24uwljj8haz6q.cloudfront.net/<%= item.imageLocation %>" width="200"><br/>
+Title: <%= item.title %><br/>
+Description: <%= item.description %><br/>
+<% if (myItem === true) { %>
+  Giver: You<br/>
+<% } else { %>
+  Giver: <a href="/profile/<%=item.giverID%>"><%= friendProperty[item.giverID].name %></a><br/>
+<% } %>
+TimeCreated: <%= item.timeCreated %><br/>
+TimeExpire: <%= item.timeExpired %><br/>
+
+<% if (myItem === true) { %>
+  <p> This is your item. Give away now? </p>
+<% } %>
+</p>
+
+Back to <a href="/">home</a>.<br/>
+<a href="/upload">Upload</a> an Item.<br/>
+<a href="/logout">Logout</a>.

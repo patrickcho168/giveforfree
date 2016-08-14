@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+
+	<!-- Metadata and Responsive Viewport -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>Give For Free - Meeting the needs of others</title>
+
+	<!-- Bootstrap Support -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<!-- Other Scripts -->
+	<script src="scripts/home/home.js"></script>
+
+	<!-- CSS Styles -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="styles/home/home.css">
+	<link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
+
+	<!-- Font Support -->
+	<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+</head>
+
+
+<body>
+
+	<!-- AJAX Action Pre-Loader -->
+	<!-- <div class="loader">
+		<div class="loader-inner">
+			<div class="loader-line-wrap">
+				<div class="loader-line"></div>
+			</div>
+			<div class="loader-line-wrap">
+				<div class="loader-line"></div>
+			</div>
+			<div class="loader-line-wrap">
+				<div class="loader-line"></div>
+			</div>
+			<div class="loader-line-wrap">
+				<div class="loader-line"></div>
+			</div>
+			<div class="loader-line-wrap">
+				<div class="loader-line"></div>
+			</div>
+		</div>
+	</div> -->
+
+	<!-- <div class="loader" id="loader"></div> -->
+
+	<!-- Navigation Bar -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+
+			<!-- Left Header Icon -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/">Give For Free</a>
+			</div>
+
+			<!-- Menu -->
+			<div class="collapse navbar-collapse" id="nav-menu">
+
+				<!-- Navbar Search -->
+				<form class="navbar-form navbar-left" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="#tags, people, items">
+					</div>
+				</form>
+
+				<!-- User Actions Menu -->
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#profile">Profile</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#logout">Logout</a></li>
+						</ul>
+					</li>
+					<li class="active" id="nav-feed"><a href="#feed">Feed</a></li>
+					<li id="nav-discover"><a href="#discover">Discover</a></li>
+					<li id="nav-gift"><a href="#gift">Gift</a></li>
+				</ul>
+
+			</div>
+
+		</div>
+	</nav>
+
+	<a href="/upload" type="button" class="btn btn-danger btn-circle-lg create-gift-button">
+		<span class="glyphicon glyphicon-gift"></span>
+	</a>
+
+	<!-- Scroll Container -->
+	<div class="infinite-scroll-container col-lg-10 col-lg-offset-1" id="infinite-scroll-container"></div>
+
+	<!-- Footer -->
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 col-lg-offset-1 text-center">
+					<hr class="small">
+					<ul class="col-lg-6 list-unstyled contact-list">
+						<li>
+							<span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 6123 4567
+						</li>
+						<li>
+							<span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">contact@giveforfree.com</a>
+						</li>
+					</ul>
+					<p class="col-lg-6 text-muted">Copyright &copy; Give For Free 2016 </p>
+				</div>
+			</div>
+		</div>
+		<a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
+	</footer>
+
+</body>
+
+
+</html>
+<<<<<<< HEAD
+
+<!-- <p>
+	Hello, <%= user.displayName %>. View your <a href="/profile/<%= user.appUserId %>">profile</a>.
+</p>
+
+Items Available From Your Friends:
+<% if (availItems.length > 0) { %>
+<table style="width:100%">
+	<tr>
+		<th>Item Name</th>
+		<th>Item Description</th>
+		<th>Item timeCreated</th>
+		<th>Item timeExpired</th>
+		<th>Item Giver</th>
+		<th>Item Image</th>
+	</tr>
+ 	<% for(var i=0; i<availItems.length; i++) { %>
+ 		<tr>
+ 			<td><a href="/item/<%=availItems[i].attributes.itemID%>"><%= availItems[i].attributes.title         %></a></td>
+ 			<td><%= availItems[i].attributes.description   %></td>
+ 			<td><%= availItems[i].attributes.timeCreated   %></td>
+ 			<td><%= availItems[i].attributes.timeExpired   %></td>
+ 			<td><a href="/profile/<%=availItems[i].attributes.giverID%>"><%= friendProperty[availItems[i].attributes.giverID].name%></a></td>
+ 			<td><img src="https://d24uwljj8haz6q.cloudfront.net/<%= availItems[i].attributes.imageLocation %>" width="50"></td>
+ 		</tr>
+	<% } %>
+</table>
+<% } else { %>
+	<p> No items available for taking currently. Try posting an item! </p>
+<% } %><br/>
+
+Visit your <a href="/friends">friends</a>.<br/>
+<a href="/upload">Upload</a> an Item.<br/>
+<a href="/logout">Logout</a>.
+</p> -->
+=======
+>>>>>>> 2b8eb03c199b7b3887bf4d6d7e6bcc745c1b66af
