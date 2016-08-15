@@ -2,6 +2,7 @@
 
 var db = require('../models/db');
 var ensureLogin = require('connect-ensure-login');
+var moment = require('moment');
 
 // Included to support <IE9
 function inArray(needle,haystack)
@@ -16,6 +17,25 @@ function inArray(needle,haystack)
 
 module.exports = function(app) {
 
+  // Want or unwant a product (given itemID and userID)
+  app.post('/api/want/:itemId/:userId', ensureLogin.ensureLoggedIn(), function (req,res) {
+    var itemId = parseInt(req.params.itemId);
+    var userId = parseInt(req.params.userId);
+    db.Want.where({itemID: itemId, wanterID: userId}).fetch().then(function (oldWant) {
+      if (oldWant === null) {
+        var newWant = new db.Want({
+          itemID: profile.id,
+          wanterID: profile.displayName,
+          timeWanted: moment().format()
+        });
+        newWant.save();
+      } else {
+        oldWant.destroy();
+      }
+    });
+  })
+
+  // Find items posted from friends
   app.get('/api/friendItems/:lastItemId/:loadNum', ensureLogin.ensureLoggedIn(),
     function(req, res) {
       // db.getNextItems(req.params.pageNum, req.session.fbFriendsId, function(result) {
@@ -35,6 +55,7 @@ module.exports = function(app) {
       }
     });
 
+  // Find items posted by anyone other than yourself
   app.get('/api/allItems/:lastItemId/:loadNum', ensureLogin.ensureLoggedIn(),
     function(req, res) {
       // db.getNextItems(req.params.pageNum, req.session.fbFriendsId, function(result) {
