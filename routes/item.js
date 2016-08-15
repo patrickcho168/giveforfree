@@ -16,10 +16,10 @@ function inArray(needle,haystack)
 
 module.exports = function(app) {
 
-  app.get('/allItems', ensureLogin.ensureLoggedIn(),
+  app.get('/allItems/:pageNum', ensureLogin.ensureLoggedIn(),
     function(req, res) {
       // console.log("All Items Fn");
-      db.getNextItems(1, function(result) {
+      db.getNextItems(req.params.pageNum, req.session.fbFriendsId, function(result) {
         res.json(result);
       });
       // console.log(result);

@@ -51,21 +51,15 @@ function addViews(amount) {
 
 }
 
-function addRealViews(html, urlAJAX, first, limit) {
+function addRealViews(html, urlAJAX) {
     // AJAX to fetch JSON objects from server
     $.ajax({
         url: urlAJAX,
         dataType: "json",
         method: 'get',
-        data: {
-            start: first,
-            limit: limit
-        },
         // Success Callback
         success: function(data) {
-            console.log("FIRST");
-            console.log(data);
-            console.log(data.length);
+            pageNumber += 1;
             flag = true;
 
             if (data.resources.length > 0) {
@@ -73,7 +67,9 @@ function addRealViews(html, urlAJAX, first, limit) {
                 // Increment trackers to track load state
                 first = parseInt($('#first').val());
                 limit = parseInt($('#limit').val());
-                $('#first').val(first + limit);
+                $('#first').val(first + 1);
+                $('#limit').val(data.pagesFiltered);
+                totalPages = data.pagesFiltered;
 
                 /*** Factory for views ***/
 
@@ -81,7 +77,6 @@ function addRealViews(html, urlAJAX, first, limit) {
                 // $('#infinite-scroll-container').append('<li class="year">' + year + '</li>');
 
                 $.each(data.resources, function(key, value) {
-                    console.log(value);
                     html = '<div class="col-sm-6 col-md-4 item">';
                     // Main Item Photo
                     html += '<div class="thumbnail">';
@@ -127,22 +122,25 @@ function addRealViews(html, urlAJAX, first, limit) {
 
 var html = '';
 var triggered = 0;
+var pageNumber = 1;
+var totalPages = 1;
 
 $(document).ready(function() {
 
     // Test Mode
     var test = false;
-    $('#first').val(0);
-    $('#limit').val(6);
+    $('#first').val(1);
+    $('#limit').val(1);
     // addViews(6);
     first = $('#first').val();
     limit = $('#limit').val();
-    urlAJAX = '/allItems';
-    addRealViews(html, urlAJAX, first, limit);
+    urlAJAX = '/allItems/' + pageNumber;
+    console.log(urlAJAX);
+    addRealViews(html, urlAJAX);
 
 
     // AJAX Server-End URL
-    var urlAJAX = 'ajax.php';
+    // var urlAJAX = 'ajax.php';
     flag = true;
 
     $(window).scroll(function() {
@@ -151,8 +149,6 @@ $(document).ready(function() {
         if ($(window).scrollTop() + $(window).height() == $(document).height()) {
             first = $('#first').val();
             limit = $('#limit').val();
-            console.log(first);
-            console.log(limit);
             no_data = true;
 
             triggered += 1;
@@ -172,7 +168,7 @@ $(document).ready(function() {
                 // Construct AJAX Request based on type
                 switch (name) {
                     case 'nav-feed':
-                        urlAJAX = '/allItems'
+                        urlAJAX = '/allItems/' + pageNumber;
                         ajaxRequest = null;
                         break;
 
@@ -185,7 +181,7 @@ $(document).ready(function() {
                         break;
 
                     default:
-                        urlAJAX = '/allItems'
+                        urlAJAX = '/allItems/' + pageNumber;
                         ajaxRequest = null;
                 }
 
@@ -193,7 +189,12 @@ $(document).ready(function() {
                 $("#loader").fadeTo(2000, 0.8);
                 // console.log(urlAJAX);
                 // AJAX to fetch JSON objects from server
-                addRealViews(html, urlAJAX, first, limit);
+                console.log(pageNumber);
+                console.log(totalPages);
+                if (pageNumber <= totalPages) {
+                    console.log(urlAJAX);
+                    addRealViews(html, urlAJAX);
+                }
 
                 // Simulate Infinite Scroll and Content Population for UI/UX
             } else if (test && triggered == 1) {
