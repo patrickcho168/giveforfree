@@ -101,6 +101,13 @@ module.exports = function(app) {
 
   app.use(onlyNotLogout(facebookCache));
 
+  app.get('/allItems', ensureLogin.ensureLoggedIn(),
+    function(req, res) {
+      db.Item.where({takerID: null}).where('giverID', 'in', req.session.fbFriendsId).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
+        // console.log(data3.related('ownedBy'));
+        res.json(data3.models);
+      });
+    });
   // HOME PAGE
   // DISPLAY ALL ITEMS FROM FRIENDS OR ALL ITEMS
   // MIGHT WANT TO ADD ITEMS THAT ARE ALLOWED TO BE GIVEN TO EVERYONE
@@ -111,17 +118,17 @@ module.exports = function(app) {
       });
     });
 
-  // app.get('/login',
-  //   function(req, res){
-  //     res.render('loginSS');
-  //   });
-
-  // TESTING
   app.get('/login',
     function(req, res){
-      res.render('homeLoggedIn', {user:req.user});
-    //   res.render('loginSS');
+      res.render('loginSS');
     });
+
+  // TESTING
+  // app.get('/login',
+  //   function(req, res){
+  //     res.render('homeLoggedIn', {user:req.user});
+  //   //   res.render('loginSS');
+  //   });
 
   app.get('/login/facebook',
     passport.authenticate('facebook', { scope: ['user_friends'] })); // NEED TO ADD POST ITEM SCOPE

@@ -23,7 +23,7 @@ var uploading = multer({
   // Only accept image files
   fileFilter: function (req, file, cb) {
       console.log(file.mimetype);
-
+      console.log(JSON.stringify(file.mimetype));
       // Checks the file extension
       if (!(file.mimetype.includes("image"))) {
         cb(new Error("This is not an image file."), false);
