@@ -1,168 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
-    <title>Parallax Template - Materialize</title>
 
-    <!-- CSS  -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
-    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+<head>
+
+    <!-- Metadata and Responsive Viewport -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Give For Free - Meeting the needs of others</title>
+
+    <!-- Bootstrap Support -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Other Scripts -->
+    <script src="scripts/landing/landing.js"></script>
+
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/landing/default.css">
+    <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
+
+    <!-- Font Support -->
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
 </head>
 
-<body>
-    <nav class="white" role="navigation">
-        <div class="nav-wrapper container">
-            <a id="logo-container" href="#" class="brand-logo">Logo</a>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="#">Navbar Link</a></li>
-            </ul>
 
-            <ul id="nav-mobile" class="side-nav">
-                <li><a href="#">Navbar Link</a></li>
-            </ul>
-            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+
+            <!-- Left Header Icon -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#login">Give For Free</a>
+            </div>
+
+            <!-- Right Menu -->
+            <div class="collapse navbar-collapse" id="nav-menu">
+                <ul class="nav navbar-nav">
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="nav-login"><a href="#login">Login</a></li>
+                    <li id="nav-about"><a href="#about">About</a></li>
+                    <li id="nav-contact"><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+
         </div>
     </nav>
 
-    <div id="index-banner" class="parallax-container">
-        <div class="section no-pad-bot">
-            <div class="container">
-                <br>
-                <br>
-                <h1 class="header center teal-text text-lighten-2">Parallax Template</h1>
-                <div class="row center">
-                    <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+    <!-- Section 1: Login -->
+    <header id="login" class="login">
+        <div class="text-vertical-center">
+            <h1>Free stuff, take only.</h1>
+            <h3>Do you have anything to give away today?</h3>
+            <br>
+            <a href="/login/facebook" class="btn btn-primary animated slideInUp"><h6>Login using Facebook</h6></a>
+        </div>
+    </header>
+
+    <!-- Section 2: About -->
+    <section id="about" class="about">
+        <div class="container" id="about-container">
+            <div class="row text-center">
+
+                <!-- Introduction -->
+                <div class="col-lg-10 col-lg-offset-1">
+                    <h2>What is Give For Free?</h2>
+                    <hr class="small">
+                    <div class="row">
+
+                        <div class="col-md-4 col-sm-6">
+                            <div class="about-item">
+                                <span class="glyphicon glyphicon-gift" id="gift-icon" aria-hidden="true"></span>
+                                <h6>
+                                    <strong>Gifts in your social circle</strong>
+                                </h6>
+                                <p>
+                                    One man's junk is another man's treasure! Help people on Facebook by looking for something you want!
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <div class="about-item">
+                                <span class="glyphicon glyphicon-user" id="friends-icon" aria-hidden="true"></span>
+                                <h6>
+                                    <strong>Make new friends</strong>
+                                </h6>
+                                <p>
+                                    Why not befriend a helpful stranger? By either giving or receiving, you are helping another friend out.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                            <div class="about-item">
+                                <span class="glyphicon glyphicon-fire" id="karma-icon" aria-hidden="true"></span>
+                                <h6>
+                                    <strong>Gain good karma</strong>
+                                </h6>
+                                <p>
+                                    Be recognised for your good deeds! Contribute to the community and clock karma points!
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-                <div class="row center">
-                    <a href="/login" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Login</a>
+
+                <!-- Features -->
+                <div class="col-lg-10 col-lg-offset-1">
+                    <h2>Features</h2>
+                    <hr class="small">
+
+                    <div class="col-md-12" id="sub-first">
+
+                        <div class="feature-subtitles">
+                            <h5><strong>Gifting</strong></h5>
+                        </div>
+
+                        <div class="col-sm-4 feature">
+                            <img class="feature-icons" id="feat-1" src="images/landing/upload-images.svg">
+                            <h6>Upload Images</h6>
+                            <p class="lead">Build an image gallery for your gift</p>
+                        </div>
+
+                        <div class="col-sm-4 feature">
+                            <img class="feature-icons" id="feat-2" src="images/landing/controlled-visibility.svg">
+                            <h6>Controlled Visibility</h6>
+                            <p class="lead">Control who to view and snag your items</p>
+                        </div>
+
+                        <div class="col-sm-4 feature">
+                            <img class="feature-icons " id="feat-3" src="images/landing/pick-lottery.svg">
+                            <h6>Pick or Lottery</h6>
+                            <p class="lead">Pick manually or draw winners randomly</p>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12" id="sub-second">
+
+                        <div class="feature-subtitles">
+                            <h5><strong>Snagging</strong></h5>
+                        </div>
+
+                        <div class="col-sm-4 feature">
+                            <img class="feature-icons" id="feat-4" src="images/landing/curated-selection.svg">
+                            <h6>Curated Selection</h6>
+                            <p class="lead">Receive a curated gallery of freebies in the community</p>
+                        </div>
+
+                        <div class="col-sm-4 feature">
+                            <img class="feature-icons" id="feat-5" src="images/landing/smart-recommendations.svg">
+                            <h6>Smart Recommendations</h6>
+                            <p class="lead">Get recommendations for items you are interested in</p>
+                        </div>
+
+                        <div class="col-sm-4 feature">
+                            <img class="feature-icons" id="feat-6" src="images/landing/integrated-messaging.svg">
+                            <h6>Integrated Messaging</h6>
+                            <p class="lead">Native integration with Messenger to convey your gratitude</p>
+                        </div>
+
+                    </div>
+
                 </div>
-                <br>
-                <br>
 
             </div>
         </div>
-        <div class="parallax"><img src="background1.jpg" alt="Unsplashed background img 1"></div>
-    </div>
+    </section>
 
-
-    <div class="container">
-        <div class="section">
-
-            <!--   Icon Section   -->
+    <!-- Section 3: Contact Us -->
+    <section id="contact" class="contact">
+        <div class="container" id="contact-container">
             <div class="row">
-                <div class="col s12 m4">
-                    <div class="icon-block">
-                        <h2 class="center brown-text"><i class="material-icons">flash_on</i></h2>
-                        <h5 class="center">Speeds up development</h5>
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <h2>Our Team</h2>
+                    <hr class="small">
+                    <div class="contact-row col-md-12">
 
-                        <p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
+                        <div class="col-md-6 contact-item">
+                            <div class="col-md-4">
+                                <span class="glyphicon glyphicon-bullhorn" id="bullhorn-icon" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-md-8 teammate-description">
+                                <h5> Ng Xu Jie </h5>
+                                <p> Xu Jie is our team manager, marketeer and front-end developer. </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 contact-item">
+                            <div class="col-md-4">
+                                <span class="glyphicon glyphicon-blackboard" id="blackboard-icon" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-md-8 teammate-description">
+                                <h5> Huang Lie Jun </h5>
+                                <p> Lie Jun is our UX/UI designer and front-end developer. </p>
+                            </div>
+                        </div>
+
                     </div>
-                </div>
 
-                <div class="col s12 m4">
-                    <div class="icon-block">
-                        <h2 class="center brown-text"><i class="material-icons">group</i></h2>
-                        <h5 class="center">User Experience Focused</h5>
 
-                        <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
+                    <div class="col-md-12">
+
+                        <div class="col-md-6 contact-item">
+                            <div class="col-md-4">
+                                <span class="glyphicon glyphicon-cog" id="cog-icon" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-md-8 teammate-description">
+                                <h5> Ken Oung Yong Quan </h5>
+                                <p> Ken is our back-end developer, managing ... </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 contact-item">
+                            <div class="col-md-4">
+                                <span class="glyphicon glyphicon-globe" id="globe-icon" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-md-8 teammate-description">
+                                <h5> Patrick Cho </h5>
+                                <p> Patrick is our back-end developer, managing ... </p>
+                            </div>
+                        </div>
+
                     </div>
-                </div>
-
-                <div class="col s12 m4">
-                    <div class="icon-block">
-                        <h2 class="center brown-text"><i class="material-icons">settings</i></h2>
-                        <h5 class="center">Easy to work with</h5>
-
-                        <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
 
 
-    <div class="parallax-container valign-wrapper">
-        <div class="section no-pad-bot">
-            <div class="container">
-                <div class="row center">
-                    <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
                 </div>
             </div>
         </div>
-        <div class="parallax"><img src="background2.jpg" alt="Unsplashed background img 2"></div>
-    </div>
+    </section>
 
-    <div class="container">
-        <div class="section">
-
-            <div class="row">
-                <div class="col s12 center">
-                    <h3><i class="mdi-content-send brown-text"></i></h3>
-                    <h4>Contact Us</h4>
-                    <p class="left-align light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque id nunc nec volutpat. Etiam pellentesque tristique arcu, non consequat magna fermentum ac. Cras ut ultricies eros. Maecenas eros justo, ullamcorper a sapien id, viverra ultrices eros. Morbi sem neque, posuere et pretium eget, bibendum sollicitudin lacus. Aliquam eleifend sollicitudin diam, eu mattis nisl maximus sed. Nulla imperdiet semper molestie. Morbi massa odio, condimentum sed ipsum ac, gravida ultrices erat. Nullam eget dignissim mauris, non tristique erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-    <div class="parallax-container valign-wrapper">
-        <div class="section no-pad-bot">
-            <div class="container">
-                <div class="row center">
-                    <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
-                </div>
-            </div>
-        </div>
-        <div class="parallax"><img src="background3.jpg" alt="Unsplashed background img 3"></div>
-    </div>
-
-    <footer class="page-footer teal">
+    <!-- Footer -->
+    <footer>
         <div class="container">
             <div class="row">
-                <div class="col l6 s12">
-                    <h5 class="white-text">Company Bio</h5>
-                    <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
-
-
-                </div>
-                <div class="col l3 s12">
-                    <h5 class="white-text">Settings</h5>
-                    <ul>
-                        <li><a class="white-text" href="#!">Link 1</a></li>
-                        <li><a class="white-text" href="#!">Link 2</a></li>
-                        <li><a class="white-text" href="#!">Link 3</a></li>
-                        <li><a class="white-text" href="#!">Link 4</a></li>
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <hr class="small">
+                    <ul class="col-lg-6 list-unstyled contact-list">
+                        <li>
+                            <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 6123 4567
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">contact@giveforfree.com</a>
+                        </li>
                     </ul>
-                </div>
-                <div class="col l3 s12">
-                    <h5 class="white-text">Connect</h5>
-                    <ul>
-                        <li><a class="white-text" href="#!">Link 1</a></li>
-                        <li><a class="white-text" href="#!">Link 2</a></li>
-                        <li><a class="white-text" href="#!">Link 3</a></li>
-                        <li><a class="white-text" href="#!">Link 4</a></li>
-                    </ul>
+                    <p class="col-lg-6 text-muted">Copyright &copy; Give For Free 2016 </p>
                 </div>
             </div>
         </div>
-        <div class="footer-copyright">
-            <div class="container">
-                Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
-            </div>
-        </div>
+        <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
     </footer>
 
-
-    <!--  Scripts-->
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="js/materialize.js"></script>
-    <script src="js/init.js"></script>
 </body>
+
 
 </html>

@@ -129,6 +129,11 @@ module.exports = function(app) {
   //     res.render('homeLoggedIn', {user:req.user});
   //   //   res.render('loginSS');
   //   });
+  
+  // app.get('/login',
+  //   function(req, res){
+  //     res.render('profile');
+  //   });
 
   app.get('/login/facebook',
     passport.authenticate('facebook', { scope: ['user_friends'] })); // NEED TO ADD POST ITEM SCOPE

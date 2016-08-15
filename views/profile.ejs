@@ -1,84 +1,130 @@
-<% if (myProfile === true) { %>
-  <p> This is your profile page! </p>
-<% } else { %>
-  <p> This is someone else's profile page! </p>
-<% } %>
-<p>
-<img src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large"><br/>
-Name: <%= user.name %><br/>
-</p>
-<p>
-<b>User Wants:</b>
-<% if (userWants.length > 0) { %>
-<table style="width:100%">
-</table>
-<% } else { %>
-	<p> No items wanted. </p>
-<% } %>
-</p>
-<p>
-<b>User Giving Out:</b>
-<% if (userGive.length > 0) { %>
-<table style="width:100%">
-	<tr>
-		<th>Item Name</th>
-		<th>Item Description</th>
-		<th>Item timeCreated</th>
-		<th>Item timeExpired</th>
-		<th>Item Giver</th>
-		<th>Item Image</th>
-	</tr>
- 	<% for(var i=0; i<userGive.length; i++) { %>
- 		<tr>
- 			<td><a href="/item/<%=userGive[i].attributes.itemID%>"><%= userGive[i].attributes.title %></a></td>
- 			<td><%= userGive[i].attributes.description   %></td>
- 			<td><%= userGive[i].attributes.timeCreated   %></td>
- 			<td><%= userGive[i].attributes.timeExpired   %></td>
- 			<% if (myProfile === true) { %>
- 				<td><a href="/profile/<%= userGive[i].attributes.giverID%>"><%= user.name %><</td>
- 			<% } else { %>
- 				<td><a href="/profile/<%= userGive[i].attributes.giverID%>"><%= friendProperty[userGive[i].attributes.giverID].name%></a></td>
- 			<% } %>
- 			<td><img src="https://d24uwljj8haz6q.cloudfront.net/<%= userGive[i].attributes.imageLocation %>" width="50"></td>
- 		</tr>
-	<% } %>
-</table>
-<% } else { %>
-	<p> No items being given out currently. </p>
-<% } %>
-</p>
-<p>
-<b>User Given Out:</b>
-<% if (userGiven.length > 0) { %>
-<table style="width:100%">
-	<tr>
-		<th>Item Name</th>
-		<th>Item Description</th>
-		<th>Item timeCreated</th>
-		<th>Item timeExpired</th>
-		<th>Item Giver</th>
-		<th>Item Image</th>
-	</tr>
- 	<% for(var i=0; i<userGiven.length; i++) { %>
- 		<tr>
- 			<td><a href="/item/<%=userGiven[i].attributes.itemID%>"><%= userGiven[i].attributes.title %></a></td>
- 			<td><%= userGiven[i].attributes.description   %></td>
- 			<td><%= userGiven[i].attributes.timeCreated   %></td>
- 			<td><%= userGiven[i].attributes.timeExpired   %></td>
- 			<% if (myProfile === true) { %>
- 				<td><a href="/profile/<%= userGiven[i].attributes.giverID%>"><%= user.name %><</td>
- 			<% } else { %>
- 				<td><a href="/profile/<%= userGiven[i].attributes.giverID%>"><%= friendProperty[userGiven[i].attributes.giverID].name%></a></td>
- 			<% } %>
- 			<td><img src="https://d24uwljj8haz6q.cloudfront.net/<%= userGiven[i].attributes.imageLocation %>" width="50"></td>
- 		</tr>
-	<% } %>
-</table>
-<% } else { %>
-	<p> No items have been given out. </p>
-<% } %>
-</p>
-Back to <a href="/">home</a>.<br/>
-Visit your <a href="/friends">friends</a>.<br/>
-<a href="/upload">Upload</a> an Item.<br/>
-<a href="/logout">Logout</a>.
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+
+    <!-- Metadata and Responsive Viewport -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Give For Free - Meeting the needs of others</title>
+
+    <!-- Bootstrap Support -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Other Scripts -->
+    <script src="scripts/profile/profile.js"></script>
+
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/profile/profile.css">
+    <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
+
+    <!-- Font Support -->
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+</head>
+
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+
+            <!-- Left Header Icon -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Give For Free</a>
+            </div>
+
+            <!-- Menu -->
+            <div class="collapse navbar-collapse" id="nav-menu">
+
+                <!-- Navbar Search -->
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="#tags, people, items">
+                    </div>
+                </form>
+
+                <!-- User Actions Menu -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/profile/>">Profile</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                    <li class="active" id="nav-feed"><a href="#feed">Feed</a></li>
+                    <li id="nav-discover"><a href="#discover">Discover</a></li>
+                    <li id="nav-gift"><a href="#gift">Gift</a></li>
+                </ul>
+
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Profile Header Jumbotron -->
+    <div class="block-container">
+        <div class="well center-block">
+
+            <div class="col-md-3 col-sm-6">
+                <img src="images/profile/placeholder-profile.png" alt="..." class="img-circle img-thumbnail">
+            </div>
+            <div class="col-md-8 col-sm-6">
+                <h1 class="display-3">Larry Huang Lie Jun</h1>
+            </div>
+            <!-- <hr class="m-y-2"> -->
+            <div class="col-md-8 col-sm-6">
+                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Scroll Container -->
+    <div class="infinite-scroll-container col-lg-10 col-lg-offset-1" id="infinite-scroll-container"></div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <hr class="small">
+                    <ul class="col-lg-6 list-unstyled contact-list">
+                        <li>
+                            <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 6123 4567
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">contact@giveforfree.com</a>
+                        </li>
+                    </ul>
+                    <p class="col-lg-6 text-muted">Copyright &copy; Give For Free 2016 </p>
+                </div>
+            </div>
+        </div>
+        <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
+    </footer>
+
+</body>
+
+
+</html>
