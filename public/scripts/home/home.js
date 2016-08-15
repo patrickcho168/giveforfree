@@ -1,79 +1,120 @@
+// Want or Unwant
+$(function() {
+    $(".itemcall").on("click", function() {
+        console.log("HELLO");
+        var itemId = $(this).attr('name');
+        console.log(itemId);
+    });
+});
+
 // Navbar Selection Fix
 $(function() {
     $(".nav a").on("click", function() {
+        if ( !$(this).parent().hasClass('active') && $(this).parent().attr('id') !== 'nav-user' ) {
+            // TODO:Add logic to determine whether to clear or not
+            // Clear section
+            var node = document.getElementById('infinite-scroll-container');
+            while (node.hasChildNodes()) {
+                node.removeChild(node.lastChild);
+            }
 
-        // TODO:Add logic to determine whether to clear or not
-        // Clear section
-        var node = document.getElementById('infinite-scroll-container');
-        while (node.hasChildNodes()) {
-            node.removeChild(node.lastChild);
+            $(".nav").find(".active").removeClass("active");
+            $(this).parent().addClass("active");
+
+            // addViews(3);
+            var activeTab = $(".nav").find(".active");
+            var name = "null";
+            lastItemId = 0;
+
+            var ajaxRequest = null;
+
+            if (activeTab != null) {
+                name = activeTab.attr('id');
+            }
+            console.log(name);
+
+            // Construct AJAX Request based on type
+            switch (name) {
+                case 'nav-feed':
+                    urlAJAX = '/api/friendItems/0/' + numItems;
+                    ajaxRequest = null;
+                    addRealViews(html, urlAJAX);
+                    break;
+
+                case 'nav-discover':
+                    urlAJAX = '/api/allItems/0/' + numItems;
+                    ajaxRequest = null;
+                    addRealViews(html, urlAJAX);
+                    break;
+
+                case 'nav-gift':
+                    urlAJAX = null;
+                    ajaxRequest = null;
+                    break;
+
+                // default:
+                //     urlAJAX = '/api/friendItems/0/' + numItems;
+                //     ajaxRequest = null;
+            }
+
+            
         }
-
-        // addViews(3);
-
-
-        $(".nav").find(".active").removeClass("active");
-        $(this).parent().addClass("active");
 
     });
 });
 
 // AJAX Call for Infinite Scroll
-function addViews(amount) {
-    for (i = 1; i <= amount; ++i) {
-        html = '<div class="col-sm-6 col-md-4 item">';
-        // Main Item Photo
-        html += '<div class="thumbnail">';
-        html += '<a href="#" class="">';
-        html += '<img src="' + '/images/home/default-placeholder.png' + '">';
-        // Item Title
-        html += '<div class="caption-area">';
-        html += '<h6 class="item-header">' + 'Thumbnail label' + '</h6>';
-        // Item Owner
-        html += '<p class="item-author">' + 'Owner\'s name' + '</p>';
-        // Item Caption
-        html += '<p class="item-caption">' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ' + '</p>';
-        // Item Call-to-Action Snag Button
-        html += '<div class="col-lg-12 text-center call-button"><a href="#" class="btn btn-primary item-call" role="button">SNAG THIS ITEM</a></div>';
-        // Item Snag Counts
-        html += '<p class="item-snags">' + '123' + ' people snagged this.</p>';
-        html += '</div>';
-        html += '</a>';
-        html += '</div>';
-        html += '</div>';
-        $('#infinite-scroll-container').append(html);
-    }
+// function addViews(amount) {
+//     for (i = 1; i <= amount; ++i) {
+//         html = '<div class="col-sm-6 col-md-4 item">';
+//         // Main Item Photo
+//         html += '<div class="thumbnail">';
+//         html += '<a href="#" class="">';
+//         html += '<img src="' + '/images/home/default-placeholder.png' + '">';
+//         // Item Title
+//         html += '<div class="caption-area">';
+//         html += '<h6 class="item-header">' + 'Thumbnail label' + '</h6>';
+//         // Item Owner
+//         html += '<p class="item-author">' + 'Owner\'s name' + '</p>';
+//         // Item Caption
+//         html += '<p class="item-caption">' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ' + '</p>';
+//         // Item Call-to-Action Snag Button
+//         html += '<div class="col-lg-12 text-center call-button"><a href="#" class="btn btn-primary item-call" role="button">SNAG THIS ITEM</a></div>';
+//         // Item Snag Counts
+//         html += '<p class="item-snags">' + '123' + ' people snagged this.</p>';
+//         html += '</div>';
+//         html += '</a>';
+//         html += '</div>';
+//         html += '</div>';
+//         $('#infinite-scroll-container').append(html);
+//     }
 
-    triggered = 0;
+//     triggered = 0;
 
-    // "loading" done -> revert to normal state
-    $("#loader").fadeTo(2000, 0.0);
+//     // "loading" done -> revert to normal state
+//     $("#loader").fadeTo(2000, 0.0);
 
-}
+// }
 
-function addRealViews(html, urlAJAX, first, limit) {
+function addRealViews(html, urlAJAX) {
     // AJAX to fetch JSON objects from server
     $.ajax({
         url: urlAJAX,
         dataType: "json",
         method: 'get',
-        data: {
-            start: first,
-            limit: limit
-        },
         // Success Callback
         success: function(data) {
-            console.log("FIRST");
-            console.log(data);
-            console.log(data.length);
             flag = true;
 
             if (data.length > 0) {
 
                 // Increment trackers to track load state
-                first = parseInt($('#first').val());
-                limit = parseInt($('#limit').val());
-                $('#first').val(first + limit);
+                // first = parseInt($('#first').val());
+                // limit = parseInt($('#limit').val());
+                // $('#first').val(first + 1);
+                // $('#limit').val(data.pagesFiltered);
+                // totalPages = data.pagesFiltered;
+                lastItemId = data[data.length-1].itemID;
 
                 /*** Factory for views ***/
 
@@ -81,7 +122,6 @@ function addRealViews(html, urlAJAX, first, limit) {
                 // $('#infinite-scroll-container').append('<li class="year">' + year + '</li>');
 
                 $.each(data, function(key, value) {
-                    console.log(value);
                     html = '<div class="col-sm-6 col-md-4 item">';
                     // Main Item Photo
                     html += '<div class="thumbnail">';
@@ -95,7 +135,7 @@ function addRealViews(html, urlAJAX, first, limit) {
                     // Item Caption
                     html += '<p class="item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
-                    html += '<div class="col-lg-12 text-center call-button"><a href="#" class="btn btn-primary item-call" role="button">SNAG THIS ITEM</a></div>';
+                    html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary itemcall" id="itemcall' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
                     // Item Snag Counts
                     html += '<p class="item-snags">' + '123' + ' people snagged this.</p>';
                     html += '</div>';
@@ -109,7 +149,7 @@ function addRealViews(html, urlAJAX, first, limit) {
                 triggered = 0;
 
             } else {
-                alert('No more data to show');
+                // alert('No more data to show');
                 no_data = false;
             }
         },
@@ -120,6 +160,7 @@ function addRealViews(html, urlAJAX, first, limit) {
             $("#loader").fadeTo(2000, 0.0);
 
             triggered = 0;
+            console.log(data);
             alert('Something went wrong, Please contact administrator.');
         }
     });
@@ -127,22 +168,24 @@ function addRealViews(html, urlAJAX, first, limit) {
 
 var html = '';
 var triggered = 0;
+var lastItemId = 0;
+var numItems = 6;
 
 $(document).ready(function() {
 
     // Test Mode
     var test = false;
-    $('#first').val(0);
-    $('#limit').val(6);
+    // $('#first').val(1);
+    // $('#limit').val(1);
     // addViews(6);
-    first = $('#first').val();
-    limit = $('#limit').val();
-    urlAJAX = '/allItems';
-    addRealViews(html, urlAJAX, first, limit);
-
+    // first = $('#first').val();
+    // limit = $('#limit').val();
+    urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
+    console.log(urlAJAX);
+    addRealViews(html, urlAJAX);
 
     // AJAX Server-End URL
-    var urlAJAX = 'ajax.php';
+    // var urlAJAX = 'ajax.php';
     flag = true;
 
     $(window).scroll(function() {
@@ -151,8 +194,6 @@ $(document).ready(function() {
         if ($(window).scrollTop() + $(window).height() == $(document).height()) {
             first = $('#first').val();
             limit = $('#limit').val();
-            console.log(first);
-            console.log(limit);
             no_data = true;
 
             triggered += 1;
@@ -166,17 +207,20 @@ $(document).ready(function() {
                 var ajaxRequest = null;
 
                 if (activeTab != null) {
-                    name = activeTab.attr('name');
+                    name = activeTab.attr('id');
                 }
 
                 // Construct AJAX Request based on type
+                console.log(name);
+                console.log(lastItemId);
                 switch (name) {
                     case 'nav-feed':
-                        urlAJAX = '/allItems'
+                        urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
                         ajaxRequest = null;
                         break;
 
                     case 'nav-discover':
+                        urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
                         ajaxRequest = null;
                         break;
 
@@ -184,16 +228,20 @@ $(document).ready(function() {
                         ajaxRequest = null;
                         break;
 
-                    default:
-                        urlAJAX = '/allItems'
-                        ajaxRequest = null;
+                    // default:
+                    //     urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
+                    //     ajaxRequest = null;
                 }
 
                 // Display AJAX Pre-Loader while loading
                 $("#loader").fadeTo(2000, 0.8);
                 // console.log(urlAJAX);
                 // AJAX to fetch JSON objects from server
-                addRealViews(html, urlAJAX, first, limit);
+                console.log(lastItemId);
+                if (lastItemId >= 1) {
+                    console.log(urlAJAX);
+                    addRealViews(html, urlAJAX);
+                }
 
                 // Simulate Infinite Scroll and Content Population for UI/UX
             } else if (test && triggered == 1) {

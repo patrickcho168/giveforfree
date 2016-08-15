@@ -13,6 +13,7 @@ var knex = require('knex')({
 });
 
 var bookshelf = require('bookshelf')(knex);
+// var pm = require('bookshelf-pagemaker')(bookshelf);
 
 var Item = bookshelf.Model.extend({
   tableName: 'item',
@@ -56,5 +57,12 @@ var db = {}
 db.Item = Item;
 db.User = User;
 db.Want = Want;
+// db.getNextItems = function(pageNum, fbFriends, cb) {
+//   console.log("HERE");
+//   pm(Item).forge().orderBy('timeCreated', 'DESC').limit(6).where({takerID: null}).where('giverID', 'in', fbFriends).page(pageNum).paginate({withRelated: ['ownedBy']}).end().then(function(results) {
+//     console.log(results);
+//     cb(results);
+//   })
+// }
 
 module.exports = db;

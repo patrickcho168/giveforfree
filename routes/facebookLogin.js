@@ -101,13 +101,6 @@ module.exports = function(app) {
 
   app.use(onlyNotLogout(facebookCache));
 
-  app.get('/allItems', ensureLogin.ensureLoggedIn(),
-    function(req, res) {
-      db.Item.where({takerID: null}).where('giverID', 'in', req.session.fbFriendsId).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
-        // console.log(data3.related('ownedBy'));
-        res.json(data3.models);
-      });
-    });
   // HOME PAGE
   // DISPLAY ALL ITEMS FROM FRIENDS OR ALL ITEMS
   // MIGHT WANT TO ADD ITEMS THAT ARE ALLOWED TO BE GIVEN TO EVERYONE
