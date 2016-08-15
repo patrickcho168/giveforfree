@@ -68,7 +68,7 @@ function addRealViews(html, urlAJAX, first, limit) {
             console.log(data.length);
             flag = true;
 
-            if (data.length > 0) {
+            if (data.resources.length > 0) {
 
                 // Increment trackers to track load state
                 first = parseInt($('#first').val());
@@ -80,7 +80,7 @@ function addRealViews(html, urlAJAX, first, limit) {
                 // Section headers, if applicable
                 // $('#infinite-scroll-container').append('<li class="year">' + year + '</li>');
 
-                $.each(data, function(key, value) {
+                $.each(data.resources, function(key, value) {
                     console.log(value);
                     html = '<div class="col-sm-6 col-md-4 item">';
                     // Main Item Photo

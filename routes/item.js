@@ -15,8 +15,22 @@ function inArray(needle,haystack)
 }
 
 module.exports = function(app) {
-  app.get('/item/:id',
-    ensureLogin.ensureLoggedIn(),
+
+  app.get('/allItems', ensureLogin.ensureLoggedIn(),
+    function(req, res) {
+      // console.log("All Items Fn");
+      db.getNextItems(1, function(result) {
+        res.json(result);
+      });
+      // console.log(result);
+      // res.json(result);
+      // db.Item.where({takerID: null}).where('giverID', 'in', req.session.fbFriendsId).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
+      //   // console.log(data3.related('ownedBy'));
+      //   res.json(data3.models);
+      // });
+    });
+
+  app.get('/item/:id', ensureLogin.ensureLoggedIn(),
     function(req, res){
       var itemId = req.params.id;
       // Find Item

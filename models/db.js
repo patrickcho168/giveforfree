@@ -13,6 +13,7 @@ var knex = require('knex')({
 });
 
 var bookshelf = require('bookshelf')(knex);
+var pm = require('bookshelf-pagemaker')(bookshelf);
 
 var Item = bookshelf.Model.extend({
   tableName: 'item',
@@ -56,5 +57,11 @@ var db = {}
 db.Item = Item;
 db.User = User;
 db.Want = Want;
+db.getNextItems = function(pageNum, cb) {
+  console.log("HERE");
+  pm(Item).forge().orderBy('timeCreated', 'asc').limit(6).page(pageNum).paginate().end().then(function(results) {
+    cb(results);
+  })
+}
 
 module.exports = db;
