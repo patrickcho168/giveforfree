@@ -16,18 +16,42 @@ function inArray(needle,haystack)
 
 module.exports = function(app) {
 
-  app.get('/allItems/:pageNum', ensureLogin.ensureLoggedIn(),
+  app.get('/api/friendItems/:lastItemId/:loadNum', ensureLogin.ensureLoggedIn(),
     function(req, res) {
-      // console.log("All Items Fn");
-      db.getNextItems(req.params.pageNum, req.session.fbFriendsId, function(result) {
-        res.json(result);
-      });
-      // console.log(result);
-      // res.json(result);
-      // db.Item.where({takerID: null}).where('giverID', 'in', req.session.fbFriendsId).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
-      //   // console.log(data3.related('ownedBy'));
-      //   res.json(data3.models);
+      // db.getNextItems(req.params.pageNum, req.session.fbFriendsId, function(result) {
+      //   res.json(result);
       // });
+      var lastSeenItem = parseInt(req.params.lastItemId);
+      var numItems = parseInt(req.params.loadNum);
+      console.log(req.session.fbFriendsId);
+      if (lastSeenItem === 0) {
+        db.Item.where({takerID: null}).where('giverID', 'in', req.session.fbFriendsId).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
+          res.json(data3.models);
+        });
+      } else {
+        db.Item.where('itemID', '<', lastSeenItem).where({takerID: null}).where('giverID', 'in', req.session.fbFriendsId).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
+          res.json(data3.models);
+        });
+      }
+    });
+
+  app.get('/api/allItems/:lastItemId/:loadNum', ensureLogin.ensureLoggedIn(),
+    function(req, res) {
+      // db.getNextItems(req.params.pageNum, req.session.fbFriendsId, function(result) {
+      //   res.json(result);
+      // });
+      var lastSeenItem = parseInt(req.params.lastItemId);
+      var numItems = parseInt(req.params.loadNum);
+      var userId = req.user.appUserId;
+      if (lastSeenItem === 0) {
+        db.Item.where({takerID: null}).where('giverID', '!=', userId).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
+          res.json(data3.models);
+        });
+      } else {
+        db.Item.where('itemID', '<', lastSeenItem).where({takerID: null}).where('giverID', '!=', userId).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
+          res.json(data3.models);
+        });
+      }
     });
 
   app.get('/item/:id', ensureLogin.ensureLoggedIn(),
