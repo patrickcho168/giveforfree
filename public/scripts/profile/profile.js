@@ -30,7 +30,7 @@ $(document).ready(function() {
                     // urlAJAX = null;
                     // ajaxRequest = null;
 
-                    var html = "<div class=\"col-sm-12\"><ul class=\"list-group\">";
+                    var html = "<ul class=\"list-group\">";
 
                     // var myFriends = !{friends};
 
@@ -40,10 +40,10 @@ $(document).ready(function() {
 
                         console.log(myFriends[i]);
 
-                        html += "<li href=\"/profile/" + myFriends[i].userID + " class=\"list-group-item\">" + "<span class=\"tag tag-default tag-pill pull-xs-right\">14</span>" + myFriends[i].name +  "</li>";
+                        html += "<li class=\"list-group-item\" href=\"/profile/" + myFriends[i].userID + ">" + "<span class=\"tag tag-default tag-pill pull-xs-right\">14</span>" + myFriends[i].name +  "</li>";
                     }
 
-                    html += "</ul></div>";
+                    html += "</ul>";
 
                     $('#infinite-scroll-container').append(html);
 
