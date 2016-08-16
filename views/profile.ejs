@@ -27,10 +27,10 @@
     <link rel="stylesheet" href="../assets/codyhouse/css/style.css">
 
     <!-- JSON -->
-    <link rel="stylesheet" href="../assets/JSON/js/cycle.css">
-    <link rel="stylesheet" href="../assets/JSON/js/json_parse_state.css">
-    <link rel="stylesheet" href="../assets/JSON/js/json_parse.css">
-    <link rel="stylesheet" href="../assets/JSON/js/json2.css">
+    <script src="../assets/JSON/js/cycle.js"></script>
+    <script src="../assets/JSON/js/json_parse_state.js"></script>>
+    <script src="../assets/JSON/js/json_parse.js"></script>>
+    <script src="../assets/JSON/js/json2.js"></script>>
 
     <!-- CSS Styles -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -46,9 +46,8 @@
 <body>
 
     <script type='text/javascript'>
-        var myFriends = !{
-            JSON.stringify(friends)
-        };
+        var myFriends = !{friends};
+        myFriends = jQuery.parseJSON( myFriends );
     </script>
 
     <!-- Navigation Bar -->
