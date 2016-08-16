@@ -35,7 +35,7 @@ $(document).ready(function() {
                     // urlAJAX = null;
                     // ajaxRequest = null;
 
-                    var html = "<div class=\"col-sm-8 col-md-2\"><div class=\"list-group\">";
+                    var html = "<div class=\"col-sm-10\"><div class=\"list-group\">";
 
                     // var myFriends = !{friends};
 
