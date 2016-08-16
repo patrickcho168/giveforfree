@@ -27,7 +27,8 @@ module.exports = function(app) {
       var mine = otherUserId === req.user.appUserId;
       db.User.where({userID: otherUserId}).fetch().then(function(user) {
         if (user === null || (inArray(otherUserId, req.user.fbFriendsId) === false && mine === false)) { // WHAT IF NOT FRIEND
-          res.redirect('/profile/' + req.user.appUserId);
+        //   res.redirect('/profile/' + req.user.appUserId);
+          res.redirect('/profile/');
         } else {
           // Get Profile Wants
           db.Want.where({wanterID: otherUserId}).fetchAll().then(function(userWants) {
@@ -52,7 +53,7 @@ module.exports = function(app) {
           //   for (var i=0; i<friendsData.length; i++) {
           //     friendsQuery.push(friendsData[i].id)
           //   }
-          //   db.User.where('fbID', 'in', friendsQuery).fetchAll().then(function(data2) {          
+          //   db.User.where('fbID', 'in', friendsQuery).fetchAll().then(function(data2) {
           //     if (mine === true) {
           //       // console.log(data2.models);
           //       req.user.name = req.user.displayName;
@@ -71,7 +72,7 @@ module.exports = function(app) {
   app.get('/friends',
     ensureLogin.ensureLoggedIn(),
     function(req, res){
-      db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {        
+      db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
         res.render('friends', {friends: data.models});
       });
     });
