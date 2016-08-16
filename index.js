@@ -13,7 +13,8 @@ var config = require('./config');
 var db = require('./models/db');
 var app = express();
 
-app.use('/static', express.static(__dirname + '/public'));
+app.use(express.static('public'));
+// app.use('/static', express.static('public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
