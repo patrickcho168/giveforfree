@@ -1,4 +1,5 @@
 // Want or Unwant
+<<<<<<< HEAD
 $(document).on("click",".snag", function() {
     var itemId = $(this).attr('itemId');
     console.log("Item", itemId, "has been snagged");
@@ -36,6 +37,14 @@ $(document).on("click",".unsnag", function() {
 
     // Send post request
     $.post("api/unwant/" + itemId)
+=======
+$(function() {
+    $(".item-call").on("click", function() {
+        console.log("HELLO");
+        var itemId = $(this).attr('name');
+        console.log(itemId);
+    });
+>>>>>>> 97a94f299fe4e5ef79744312b0cf09e35a6769ea
 });
 
 // Navbar Selection Fix
@@ -167,7 +176,11 @@ function addRealViews(html, urlAJAX) {
                     // Item Caption
                     html += '<p class="item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
+<<<<<<< HEAD
                     html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag" itemId="' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
+=======
+                    html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary item-call" id="itemcall' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
+>>>>>>> 97a94f299fe4e5ef79744312b0cf09e35a6769ea
                     // Item Snag Counts
                     html += '<p class="item-snags">' + '123' + ' people snagged this.</p>';
                     html += '</div>';

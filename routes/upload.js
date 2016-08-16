@@ -79,29 +79,38 @@ function createFbPost(title, itemId, imgUrl) {
 }
 
 module.exports = function(app) {
-  app.get('/upload', function(req, res) {
-    res.render("upload", { messages: req.flash('error_messages') });
+  app.get('/upload', function(req, res, next) {
+    res.render("upload");
   });
 
-  app.post('/upload', function(req, res) {
+  app.post('/upload', function(req, res, next) {
     uploading(req, res, function (err) {
       if (err) {
         console.log(err.message);
         req.flash('error_messages', err.message);
         res.redirect('/upload');
       } else {
-        // Create item based on form
-        var newItem = new db.Item({
-          giverID: req.user.appUserId,
-          timeCreated: moment().format(),
-          timeExpired: moment().add(req.body.no_of_days, 'days').format(),
-          randomAssign: req.body.randomAssign,
-          title: req.body.title,
-          description: req.body.description,
-          imageLocation: req.file.key
-        });
+        // Check appUserId exists
+        if (!(req.user.appUserId)) {
+          next(new Error("User does not have appUserId"));  
+        }
 
-        // Save item to database
+        // Simple form validation
+        if (req.body.title && req.body.description) {
+          // Create item based on form
+          console.log(req.user);
+
+          var newItem = new db.Item({
+            giverID: req.user.appUserId,
+            timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+            timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
+            title: req.body.title,
+            description: req.body.description,
+            randomAssign: 0,
+            imageLocation: req.file.key
+          });
+
+          // Save item to database
         newItem.save().then(function(newSavedItem) {
           var userFbId = req.user.id;
           var newItemTitle = newSavedItem.attributes.title;
@@ -121,7 +130,16 @@ module.exports = function(app) {
           // console.log('%7B%22' + objString + '%22%7D');
         });
 
-        res.redirect("/");
+          res.redirect("/");
+        } else if (req.body.title) {
+          req.flash('error_messages', "Please fill in a valid description.");
+
+          res.redirect('/upload');
+        } else {
+          req.flash('error_messages', "Please fill in a valid title.")
+
+          res.redirect('/upload');
+        }
       }
     });
   });
