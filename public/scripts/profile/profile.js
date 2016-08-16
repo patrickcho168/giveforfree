@@ -41,7 +41,7 @@ $(document).ready(function() {
 
                     console.log(myFriends);
 
-                    for(var i=0; i< myFriends.length; i++) {
+                    for (var i = 0; i < myFriends.length; i++) {
 
                         console.log(myFriends[i]);
 
@@ -55,7 +55,7 @@ $(document).ready(function() {
                     break;
 
                 default:
-                //...
+                    //...
             }
 
             $(".nav").find(".active").removeClass("active");
@@ -105,7 +105,24 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $(".cd-main-nav a").on("click", function() {
-        console.log($(this).parent().attr('id'));
+        var name = $(this).parent().attr('id');
+
+        switch (name) {
+            case "but-snagged":
+                document.getElementById('tab-snagged').click();
+                break;
+
+            case "but-gifted":
+                document.getElementById('tab-gifted').click();
+                break;
+
+            case "but-friends":
+                document.getElementById('tab-friends').click();
+                break;
+
+            default:
+
+        }
     });
 });
 
