@@ -1,6 +1,6 @@
 // Want or Unwant
 $(function() {
-    $(".itemcall").on("click", function() {
+    $(".item-call").on("click", function() {
         console.log("HELLO");
         var itemId = $(this).attr('name');
         console.log(itemId);
@@ -102,6 +102,7 @@ function addRealViews(html, urlAJAX) {
         url: urlAJAX,
         dataType: "json",
         method: 'get',
+        cache: false,
         // Success Callback
         success: function(data) {
             flag = true;
@@ -135,7 +136,7 @@ function addRealViews(html, urlAJAX) {
                     // Item Caption
                     html += '<p class="item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
-                    html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary itemcall" id="itemcall' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
+                    html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary item-call" id="itemcall' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
                     // Item Snag Counts
                     html += '<p class="item-snags">' + '123' + ' people snagged this.</p>';
                     html += '</div>';
