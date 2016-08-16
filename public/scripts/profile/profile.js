@@ -1,12 +1,50 @@
 // Navbar Selection Fix
 $(function() {
     $(".nav a").on("click", function() {
-        if (!$(this).parent().hasClass('active') && $(this).parent().attr('id') !== 'nav-user') {
+        if (!$(this).parent().hasClass('active') && $(this).parent().attr('id') !== $(this).parent().find(".active").attr('id')) {
             // TODO:Add logic to determine whether to clear or not
             // Clear section
             var node = document.getElementById('infinite-scroll-container');
             while (node.hasChildNodes()) {
                 node.removeChild(node.lastChild);
+            }
+
+            var currentTab = $(this).parent().attr('id');
+
+            switch (currentTab) {
+                case 'tab-snagged':
+                    // urlAJAX = '/api/friendItems/0/' + numItems;
+                    // ajaxRequest = null;
+                    // addRealViews(html, urlAJAX);
+                    addViews(6);
+                    break;
+
+                case 'tab-gifted':
+                    // urlAJAX = '/api/allItems/0/' + numItems;
+                    // ajaxRequest = null;
+                    // addRealViews(html, urlAJAX);
+                    addViews(5);
+                    break;
+
+                case 'tab-friends':
+                    // urlAJAX = null;
+                    // ajaxRequest = null;
+                    var html = '<ul class="list-group">' +
+
+                        '<% for(var i=0; i<friends.length; i++) {%>' +
+
+                        '<li class="list-group-item"><a href="/profile/<%= friends[i].attributes.userID %>"><%= friends[i].attributes.name %></a></li>' +
+
+                        '<% } %><br/>' +
+
+                        '</ul>';
+
+                    $('#infinite-scroll-container').append(html);
+
+                    break;
+
+                default:
+                //...
             }
 
             $(".nav").find(".active").removeClass("active");

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -94,10 +95,10 @@
             <div class="col-sm-8 well center-block" align="center">
 
                 <div align="center" class="col-sm-4 profile-photo-holder" vertical-align="center">
-                    <img align="center" src="../images/profile/placeholder-profile.png" alt="..." class="img-circle img-thumbnail profile-photo" vertical-align="center">
+                    <img align="center" src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large" class="img-circle img-thumbnail profile-photo" vertical-align="center">
                 </div>
                 <div class="col-sm-8 text-holder">
-                    <h1 class="display-3 name">Larry Huang Lie Jun</h1>
+                    <h1 class="display-3 name"><%= user.name %></h1>
                     <!-- <hr class="m-y-6"></hr> -->
                     <p>Woodlands, Singapore</p>
                     <div class="counters col-sm-10 col-sm-offset-1" align="center">
@@ -158,9 +159,9 @@
 
     <div class="col-sm-4 col-sm-offset-4 nav-tab-area">
         <ul class="nav nav-pills nav-justified tabs">
-            <li class="active"><a href="#">Snagged Items</a></li>
-            <li><a href="#">Given Out</a></li>
-            <li><a href="#">Friends List</a></li>
+            <li class="active tab-snagged"><a href="#">Snagged Items</a></li>
+            <li class="active tab-gifted"><a href="#">Given Out</a></li>
+            <li class="active tab-friends"><a href="#">Friends List</a></li>
         </ul>
     </div>
 
