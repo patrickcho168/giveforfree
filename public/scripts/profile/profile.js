@@ -40,7 +40,7 @@ $(document).ready(function() {
 
                         console.log(myFriends[i]);
 
-                        html += "<a href=\"/profile/" + myFriends[i].userID + " class=\"list-group-item\">" + "<span class=\"tag tag-default tag-pill pull-xs-right\">14</span>" + myFriends[i].name +  "</a>" + "</li>";
+                        html += "<a href=\"/profile/" + myFriends[i].userID + " class=\"list-group-item\">" + "<span class=\"tag tag-default tag-pill pull-xs-right\">14</span>" + myFriends[i].name +  "</a>";
                     }
 
                     html += "</ul></div>";
