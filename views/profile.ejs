@@ -20,6 +20,12 @@
     <!-- Other Scripts -->
     <script src="scripts/profile/profile.js"></script>
 
+    <!-- Nav Tab Menu -->
+    <script src="assets/codyhouse/js/main.js"></script>
+    <script src="assets/codyhouse/js/modernizer.js"></script>
+    <link rel="stylesheet" href="assets/codyhouse/css/reset.css">
+    <link rel="stylesheet" href="assets/codyhouse/css/style.css">
+
     <!-- CSS Styles -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/profile/profile.css">
@@ -27,6 +33,8 @@
 
     <!-- Font Support -->
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+
 
 </head>
 
@@ -52,25 +60,27 @@
             <div class="collapse navbar-collapse" id="nav-menu">
 
                 <!-- Navbar Search -->
-                <form class="navbar-form navbar-left" role="search">
+                <!-- <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="#tags, people, items">
                     </div>
-                </form>
+                </form> -->
 
                 <!-- User Actions Menu -->
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
+                    <!-- <li class="dropdown"> -->
+                    <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a> -->
+                    <!-- <ul class="dropdown-menu">
                             <li><a href="/profile/>">Profile</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/logout">Logout</a></li>
-                        </ul>
-                    </li>
-                    <li class="active" id="nav-feed"><a href="#feed">Feed</a></li>
-                    <li id="nav-discover"><a href="#discover">Discover</a></li>
-                    <li id="nav-gift"><a href="#gift">Gift</a></li>
+                        </ul> -->
+                    <!-- </li> -->
+                    <li id="nav-feed"><a href="#feed">Feed</a></li>
+                    <!-- <li id="nav-discover"><a href="#discover">Discover</a></li>
+                    <li id="nav-gift"><a href="#gift">Gift</a></li> -->
+                    <li class="active" id="nav-profile"><a href="/profile">Profile</a></li>
+                    <li id="nav-logout"><a href="/logout">Logout</a></li>
                 </ul>
 
             </div>
@@ -79,37 +89,91 @@
     </nav>
 
     <!-- Profile Header Jumbotron -->
-    <div class="block-container">
-        <div class="well center-block">
+    <row>
+        <div class="block-container col-sm-12 col-sm-offset-2">
+            <div class="col-sm-8 well center-block" align="center">
 
-            <div class="col-md-3 col-sm-6">
-                <img src="images/profile/placeholder-profile.png" alt="..." class="img-circle img-thumbnail">
-            </div>
-            <div class="col-md-8 col-sm-6">
-                <h1 class="display-3">Larry Huang Lie Jun</h1>
-            </div>
-            <!-- <hr class="m-y-2"> -->
-            <div class="col-md-8 col-sm-6">
-                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-                </p>
+                <div align="center" class="col-sm-4 profile-photo-holder" vertical-align="center">
+                    <img align="center" src="images/profile/placeholder-profile.png" alt="..." class="img-circle img-thumbnail profile-photo" vertical-align="center">
+                </div>
+                <div class="col-sm-8 text-holder">
+                    <h1 class="display-3 name">Larry Huang Lie Jun</h1>
+                    <!-- <hr class="m-y-6"></hr> -->
+                    <p>Woodlands, Singapore</p>
+                    <div class="counters col-sm-10 col-sm-offset-1" align="center">
+                        <div align="center" class="col-sm-4 counter">
+                            <p align="center" class="count">
+                                123
+                            </p>
+                            <!-- <hr class="m-y-2" /> -->
+                            <p align="center" class="count-label">
+                                Received
+                            </p>
+                        </div>
+                        <div align="center" class="col-sm-4 counter">
+                            <p align="center" class="count">
+                                123
+                            </p>
+                            <!-- <hr class="m-y-2" /> -->
+                            <p align="center" class="count-label">
+                                Gifted
+                            </p>
+                        </div>
+                        <div align="center" class="col-sm-4 counter">
+                            <p align="center" class="count">
+                                123
+                            </p>
+                            <!-- <hr class="m-y-2" /> -->
+                            <p align="center" class="count-label">
+                                Karma
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
+    </row>
+
+    <!-- <nav class="bar bar-standard">
+        <div class="segmented-control">
+            <a class="control-item active">Thing one</a>
+            <a class="control-item">Thing two</a>
+            <a class="control-item">Thing three</a>
+        </div>
+    </nav> -->
+
+    <!-- Nav Button -->
+    <div id="cd-nav" class="is-fixed hidden">
+        <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
+
+        <nav id="cd-main-nav">
+            <ul class="has-transitions">
+                <li><a href="#">Snagged Items</a></li>
+                <li><a href="#">Given Out</a></li>
+                <li><a href="#">Friends List</a></li>
+            </ul>
+        </nav>
     </div>
 
-
+    <div class="col-sm-4 col-sm-offset-4 nav-tab-area">
+        <ul class="nav nav-pills nav-justified tabs">
+            <li class="active"><a href="#">Snagged Items</a></li>
+            <li><a href="#">Given Out</a></li>
+            <li><a href="#">Friends List</a></li>
+        </ul>
+    </div>
 
     <!-- Scroll Container -->
-    <div class="infinite-scroll-container col-lg-10 col-lg-offset-1" id="infinite-scroll-container"></div>
+    <div class="infinite-scroll-container col-sm-10 col-sm-offset-1" id="infinite-scroll-container"></div>
 
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-lg-10 col-lg-offset-1 text-center">
+                <div class="col-sm-10 col-sm-offset-1 text-center">
                     <hr class="small">
-                    <ul class="col-lg-6 list-unstyled contact-list">
+                    <ul class="col-sm-6 list-unstyled contact-list">
                         <li>
                             <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 6123 4567
                         </li>
@@ -117,7 +181,7 @@
                             <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">contact@giveforfree.com</a>
                         </li>
                     </ul>
-                    <p class="col-lg-6 text-muted">Copyright &copy; Give For Free 2016 </p>
+                    <p class="col-sm-6 text-muted">Copyright &copy; Give For Free 2016 </p>
                 </div>
             </div>
         </div>
