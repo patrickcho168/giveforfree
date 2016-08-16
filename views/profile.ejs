@@ -80,7 +80,7 @@
                     <li id="nav-feed"><a href="/">Feed</a></li>
                     <!-- <li id="nav-discover"><a href="#discover">Discover</a></li>
                     <li id="nav-gift"><a href="#gift">Gift</a></li> -->
-                    <li class="active" id="nav-profile"><a href="/profile">Profile</a></li>
+                    <li class="active" id="nav-profile"><a href="/profile/<%= user.appUserId %>">Profile</a></li>
                     <li id="nav-logout"><a href="/logout">Logout</a></li>
                 </ul>
 
@@ -159,7 +159,7 @@
 
     <div class="col-sm-4 col-sm-offset-4 nav-tab-area">
         <ul class="nav nav-pills nav-justified tabs">
-            <li id="active tab-snagged"><a>Snagged Items</a></li>
+            <li id="tab-snagged"><a>Snagged Items</a></li>
             <li id="tab-gifted"><a>Given Out</a></li>
             <li id="tab-friends"><a>Friends List</a></li>
         </ul>
