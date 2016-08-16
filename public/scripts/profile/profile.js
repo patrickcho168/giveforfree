@@ -103,6 +103,12 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function() {
+    $(".cd-main-nav a").on("click", function() {
+        console.log($(this).parent().attr('id'));
+    });
+});
+
 // AJAX Call for Infinite Scroll
 function addViews(amount) {
     for (i = 1; i <= amount; ++i) {
