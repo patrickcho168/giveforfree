@@ -32,7 +32,7 @@ $(function() {
 
                     var html = "<ul class=\"list-group\">";
 
-                    var myFriends = !{friends};
+                    // var myFriends = !{friends};
 
                     console.log(myFriends);
 
