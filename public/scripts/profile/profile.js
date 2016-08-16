@@ -45,7 +45,7 @@ $(document).ready(function() {
 
                         console.log(myFriends[i]);
 
-                        html += "<a class=\"list-group-item\" href=\"/profile/" + myFriends[i].userID + ">" + myFriends[i].name +  "</a>";
+                        html += "<li class=\"list-group-item\"><a href=\"/profile/" + myFriends[i].userID + ">" + myFriends[i].name +  "</a></li>";
                     }
 
                     html += "</ul>";
