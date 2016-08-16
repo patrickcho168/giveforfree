@@ -35,7 +35,7 @@ $(document).ready(function() {
                     // urlAJAX = null;
                     // ajaxRequest = null;
 
-                    var html = "<div class=\"list-group\">";
+                    var html = "<div class=\"list-group col-sm-8 col-md-2\>";
 
                     // var myFriends = !{friends};
 
@@ -45,7 +45,7 @@ $(document).ready(function() {
 
                         console.log(myFriends[i]);
 
-                        html += "<a class=\"list-group-item list-group-item-action\" href=\"/profile/" + myFriends[i].userID + ">" + myFriends[i].name +  "<span class=\"tag tag-default tag-pill pull-xs-right\">14</span></a>";
+                        html += "<a class=\"list-group-item list-group-item-action\" href=\"/profile/" + myFriends[i].userID + ">" + myFriends[i].name + "</a>";
                     }
 
                     html += "</div>";
