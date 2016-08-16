@@ -29,7 +29,15 @@ $(function() {
                 case 'tab-friends':
                     // urlAJAX = null;
                     // ajaxRequest = null;
-                    var html = "<ul class=\"list-group\"><% for(var i=0; i<friends.length; i++) {%><li class=\"list-group-item\"><a href=\"/profile/<%= friends[i].attributes.userID %>\"><%= friends[i].attributes.name %></a></li><% } %><br/></ul>";
+
+                    var html = "<ul class=\"list-group\">";
+
+                    for(var i=0; i<friends.length; i++) {
+
+                        html += "<li class=\"list-group-item\"><a href=\"/profile/" + friends[i].attributes.userID + friends[i].attributes.name + "</a></li><br/>";
+                    }
+
+                    html += "</ul>";
 
                     $('#infinite-scroll-container').append(html);
 
