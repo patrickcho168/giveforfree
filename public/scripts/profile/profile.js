@@ -38,7 +38,9 @@ $(document).ready(function() {
 
                     for(var i=0; i< myFriends.length; i++) {
 
-                        html += "<li class=\"list-group-item\"><a href=\"/profile/" /*+ myFriends[i].attributes.userID*/ + myFriends[i].attributes.name + "</a></li><br/>";
+                        console.log(myFriends[i]);
+
+                        // html += "<li class=\"list-group-item\"><a href=\"/profile/" /*+ myFriends[i].attributes.userID*/ + myFriends[i].attributes.name + "</a></li><br/>";
                     }
 
                     html += "</ul>";
