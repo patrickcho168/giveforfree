@@ -1,10 +1,41 @@
 // Want or Unwant
-$(function() {
-    $(".itemcall").on("click", function() {
-        console.log("HELLO");
-        var itemId = $(this).attr('name');
-        console.log(itemId);
-    });
+$(document).on("click",".snag", function() {
+    var itemId = $(this).attr('itemId');
+    console.log("Item", itemId, "has been snagged");
+
+    // Change text
+    $(this).text("UNSNAG");
+
+    // Change color
+    $(this).removeClass("btn-primary");
+    $(this).addClass("btn-danger");
+
+    // Change type
+    $(this).removeClass("snag")
+    $(this).addClass("unsnag")
+
+    // Send post request
+    // Should check for success
+    $.post("api/want/" + itemId);
+});
+
+$(document).on("click",".unsnag", function() {
+    var itemId = $(this).attr('itemId');
+    console.log("Item", itemId, "has been unsnagged");
+
+    // Change text
+    $(this).text("SNAG THIS ITEM");
+
+    // Change color
+    $(this).removeClass("btn-danger");
+    $(this).addClass("btn-primary");
+
+    // Change type
+    $(this).removeClass("unsnag")
+    $(this).addClass("snag")
+
+    // Send post request
+    $.post("api/unwant/" + itemId)
 });
 
 // Navbar Selection Fix
@@ -135,7 +166,7 @@ function addRealViews(html, urlAJAX) {
                     // Item Caption
                     html += '<p class="item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
-                    html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary itemcall" id="itemcall' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
+                    html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag" itemId="' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
                     // Item Snag Counts
                     html += '<p class="item-snags">' + '123' + ' people snagged this.</p>';
                     html += '</div>';
