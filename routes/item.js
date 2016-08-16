@@ -74,12 +74,12 @@ module.exports = function(app) {
     });
   })
 
+
+  // Want a product (given itemID and userID)
+  // Should return success header?
+  app.post('/api/want/:itemId', ensureLogin.ensureLoggedIn(), function (req, res) {
     var itemId = parseInt(req.params.itemId);
     var userId = parseInt(req.user.appUserId);
-
-    console.log(itemId);
-    console.log(req.user);
-    console.log(userId);
 
     // Check if item already wanted by this person
     db.Want.where({itemID: itemId, wanterID: userId}).fetch().then(function (oldWant) {
@@ -87,9 +87,9 @@ module.exports = function(app) {
 
         // Register a new claim for the item
         var newWant = new db.Want({
-          itemID: profile.id,
-          wanterID: profile.displayName,
-          timeWanted: moment().format()
+          itemID: itemId,
+          wanterID: userId,
+          timeWanted: moment().format("YYYY-MM-DD HH:mm:ss")
         });
 
         // Store in db
@@ -101,13 +101,13 @@ module.exports = function(app) {
   // Want a product (given itemID and userID)
   app.post('/api/unwant/:itemId', ensureLogin.ensureLoggedIn(), function (req,res) {
     var itemId = parseInt(req.params.itemId);
-    var userId = parseInt(req.params.appUserId);
+    var userId = parseInt(req.user.appUserId);
 
     // Check if item is wanted by this person
     db.Want.where({itemID: itemId, wanterID: userId}).fetch().then(function (oldWant) {
       if (oldWant) {
         // Remove
-        newWant.destroy();
+        oldWant.where({itemID: itemId, wanterID: userId}).destroy();
       }
     });
   })
