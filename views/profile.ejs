@@ -44,7 +44,11 @@
 
 <body>
 
-    <script> var myFriends = <%- JSON.stringify(friends) %>; </script>
+    <script>
+        $(document).ready(function() {
+            var myFriends = <%- JSON.stringify(friends) %>;
+        });
+    </script>
 
     <!-- Navigation Bar -->
     <nav class="navbar navbar-default navbar-fixed-top">
