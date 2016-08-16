@@ -23,7 +23,7 @@ passport.use(new Strategy({
           name: profile.displayName
         });
         newUser.save().then(function(user2) {
-          profile.appUserId = user2.attributes.id;
+          profile.appUserId = user2.attributes.userID;
           return cb(null, profile);
         });
       } else {
