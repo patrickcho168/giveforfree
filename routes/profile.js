@@ -39,7 +39,7 @@ module.exports = function(app) {
                 // If Need Profile Taken
                 // db.Item.where({takerID: otherUserId}).fetchAll().then(function(userTaken) {
                 // })
-                res.render('profile', {myProfile: mine, user: user.attributes, userWants: userWants.models, userGive: userGive.models, userGiven: userGiven.models, friendProperty: req.user.fbFriendsToPropertyMap});
+                res.render('profile', {myProfile: mine, user: user.attributes, userWants: userWants.models, userGive: userGive.models, userGiven: userGiven.models, friendProperty: req.user.fbFriendsToPropertyMap, friends: data.models});
               });
             });
           });
