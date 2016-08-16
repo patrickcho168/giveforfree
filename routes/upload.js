@@ -9,6 +9,8 @@ var aws = require('aws-sdk');
 var config = require('../config');
 var db = require('../models/db');
 var ensureLogin = require('connect-ensure-login');
+var querystring = require('querystring');
+var facebook = require('../controllers/facebook');
 
 aws.config.update({
   secretAccessKey: config.awsSecretAccessKey,
@@ -49,6 +51,33 @@ var uploading = multer({
                     })
 }).single('avatar');
 
+// function createFbItem(imgUrl, title, desc, itemId) { 
+//   var object = { 
+//     'og:url': 'http://ec2-54-255-178-61.ap-southeast-1.compute.amazonaws.com/item/' + itemId,
+//     'og:title': title,
+//     'og:type': 'product.item',
+//     'og:image': 'https://d24uwljj8haz6q.cloudfront.net/' + imgUrl,
+//     'og:description': desc,
+//     'fb:app_id': config.fbClientID,
+//     'product:retailer_item_id': itemId,
+//     'product:price:amount': '0',
+//     'product:price:currency': 'SGD',
+//     'product:availability': 'in stock',
+//     'product:condition': 'used'
+//   };
+//   return querystring.stringify(object, '%22%2C%22', '%22%3A%22');
+// }
+
+function createFbPost(title, itemId, imgUrl) { 
+  var object = { 
+    'link': 'http://ec2-54-255-178-61.ap-southeast-1.compute.amazonaws.com/item/' + itemId,
+    'message': 'Snag my ' + title + ' for free now!',
+    'method': 'POST',
+    'picture': 'https://d24uwljj8haz6q.cloudfront.net/' + imgUrl
+  };
+  return querystring.stringify(object);
+}
+
 module.exports = function(app) {
   app.get('/upload', function(req, res) {
     res.render("upload", { messages: req.flash('error_messages') });
@@ -73,7 +102,24 @@ module.exports = function(app) {
         });
 
         // Save item to database
-        newItem.save();
+        newItem.save().then(function(newSavedItem) {
+          var userFbId = req.user.id;
+          var newItemTitle = newSavedItem.attributes.title;
+          var newItemId = newSavedItem.attributes.itemID;
+          var newItemUrl = newSavedItem.attributes.imageLocation;
+          var apiCall =  '/' + userFbId +'/feed';
+          console.log(apiCall);
+          facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data){
+            console.log(data);
+          });
+          // console.log(newSavedItem);
+          // var newItemId = newSavedItem.attributes.itemID;
+          // var newItemUrl = newSavedItem.attributes.imageLocation;
+          // var newItemDesc = newSavedItem.attributes.description;
+          // var newItemTitle = newSavedItem.attributes.title;
+          // var objString = createFbItem(newItemUrl, newItemTitle, newItemDesc, newItemId);
+          // console.log('%7B%22' + objString + '%22%7D');
+        });
 
         res.redirect("/");
       }

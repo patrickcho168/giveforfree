@@ -50,16 +50,16 @@ module.exports = function(app) {
 
   // CACHE THINGS HERE
   var facebookCache = function(req, res, next) {
-    if (req.session.fbFriends && req.session.fbFriendsId && req.session.fbFriendsToPropertyMap) {
+    if (req.user && req.user.fbFriends && req.user.fbFriendsId && req.user.fbFriendsToPropertyMap) {
       console.log("CACHED");
       next();
     } else {
       console.log("NOT CACHED");
-      if (req.session.passport === undefined) {
+      if (req.user === undefined) {
         next();
       } else {
-        var accessToken = req.session.passport.user.accessToken;
-        facebook.getFbData(accessToken, '/' + req.user.id +'/friends', function(data) {
+        var accessToken = req.user.accessToken;
+        facebook.getFbData(accessToken, '/' + req.user.id +'/friends', '', function(data) {
           var jsonData = JSON.parse(data);
           var friendsData = jsonData.data;
           var friendsQuery = [];
@@ -78,10 +78,9 @@ module.exports = function(app) {
               cacheFriendsToPropertiesMapping[data2.models[i].attributes.userID] = data2.models[i].attributes;
             }
             // CACHE
-            req.session.fbFriends = cacheFriends;
-            req.session.fbFriendsId = cacheFriendsAppId;
-            req.session.fbFriendsToPropertyMap = cacheFriendsToPropertiesMapping;
-            console.log(req.session.fbFriendsId);
+            req.user.fbFriends = cacheFriends;
+            req.user.fbFriendsId = cacheFriendsAppId;
+            req.user.fbFriendsToPropertyMap = cacheFriendsToPropertiesMapping;
             next();
           });
         });
@@ -104,17 +103,17 @@ module.exports = function(app) {
   // HOME PAGE
   // DISPLAY ALL ITEMS FROM FRIENDS OR ALL ITEMS
   // MIGHT WANT TO ADD ITEMS THAT ARE ALLOWED TO BE GIVEN TO EVERYONE
-  app.get('/', ensureLogin.ensureLoggedIn(),
-    function(req, res) {
-      db.Item.where({takerID: null}).where('giverID', 'in', req.session.fbFriendsId).fetchAll().then(function(data3) {
-        res.render('homeLoggedIn', {user:req.user, availItems: data3.models, friendProperty: req.session.fbFriendsToPropertyMap});
-      });
+  app.get('/', ensureLogin.ensureLoggedIn(), function(req, res) {
+    console.log(req.user.accessToken);
+    console.log(req.user.id);
+    db.Item.where({takerID: null}).where('giverID', 'in', req.user.fbFriendsId).fetchAll().then(function(data3) {
+      res.render('homeLoggedIn', {user:req.user, availItems: data3.models, friendProperty: req.user.fbFriendsToPropertyMap});
     });
+  });
 
-  app.get('/login',
-    function(req, res){
-      res.render('loginSS');
-    });
+  app.get('/login', function(req, res){
+    res.render('loginSS');
+  });
 
   // TESTING
   // app.get('/login',
@@ -129,7 +128,7 @@ module.exports = function(app) {
   //   });
 
   app.get('/login/facebook',
-    passport.authenticate('facebook', { scope: ['user_friends'] })); // NEED TO ADD POST ITEM SCOPE
+    passport.authenticate('facebook', { scope: ['user_friends','publish_actions'] })); // NEED TO ADD POST ITEM SCOPE
 
   app.get('/login/facebook/return',
     passport.authenticate('facebook', { failureRedirect: '/login' }),
