@@ -27,8 +27,8 @@ module.exports = function(app) {
       var mine = otherUserId === req.user.appUserId;
       db.User.where({userID: otherUserId}).fetch().then(function(user) {
         if (user === null || (inArray(otherUserId, req.user.fbFriendsId) === false && mine === false)) { // WHAT IF NOT FRIEND
-        //   res.redirect('/profile/' + req.user.appUserId);
-          res.redirect('/profile/');
+          res.redirect('/profile/' + req.user.appUserId);
+        //   res.redirect('/profile/');
         } else {
           // Get Profile Wants
           db.Want.where({wanterID: otherUserId}).fetchAll().then(function(userWants) {
