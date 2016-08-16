@@ -35,7 +35,7 @@ $(document).ready(function() {
                     // urlAJAX = null;
                     // ajaxRequest = null;
 
-                    var html = "<div class=\"list-group col-sm-8 col-md-2\">";
+                    var html = "<div class=\"col-sm-8 col-md-2\"><div class=\"list-group\">";
 
                     // var myFriends = !{friends};
 
@@ -48,7 +48,7 @@ $(document).ready(function() {
                         html += "<a class=\"list-group-item list-group-item-action\" href=\"/profile/" + myFriends[i].userID + ">" + myFriends[i].name + "</a>";
                     }
 
-                    html += "</div>";
+                    html += "</div></div>";
 
                     $('#infinite-scroll-container').append(html);
 
