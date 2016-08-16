@@ -16,6 +16,13 @@ function inArray(needle,haystack)
 }
 
 module.exports = function(app) {
+
+  app.get('/profile', ensureLogin.ensureLoggedIn(),
+    function(req, res){
+      var appId = req.user.appUserId;
+      res.redirect('/profile/' + appId);
+    })
+
   // SHOW PROFILE DETAILS
   // SHOW PROFILE WANTS
   // SHOW PROFILE GIVING OUT
@@ -26,7 +33,7 @@ module.exports = function(app) {
       var otherUserId = parseInt(req.params.id);
       var mine = otherUserId === req.user.appUserId;
       db.User.where({userID: otherUserId}).fetch().then(function(user) {
-        if (user === null || (inArray(otherUserId, req.session.fbFriendsId) === false && mine === false)) { // WHAT IF NOT FRIEND
+        if (user === null || (inArray(otherUserId, req.user.fbFriendsId) === false && mine === false)) { // WHAT IF NOT FRIEND
           res.redirect('/profile/' + req.user.appUserId);
         } else {
           // Get Profile Wants
@@ -38,12 +45,12 @@ module.exports = function(app) {
                 // If Need Profile Taken
                 // db.Item.where({takerID: otherUserId}).fetchAll().then(function(userTaken) {
                 // })
-                res.render('profile', {myProfile: mine, user: user.attributes, userWants: userWants.models, userGive: userGive.models, userGiven: userGiven.models, friendProperty: req.session.fbFriendsToPropertyMap});
+                res.render('profile', {myProfile: mine, user: user.attributes, userWants: userWants.models, userGive: userGive.models, userGiven: userGiven.models, friendProperty: req.user.fbFriendsToPropertyMap});
               });
             });
           });
           // console.log(user.attributes);
-          // var accessToken = req.session.passport.user.accessToken;
+          // var accessToken = req.user.passport.user.accessToken;
           // var otherUserFbId = user.attributes.fbID;
           // facebook.getFbData(accessToken, '/' + otherUserFbId +'/friends', function(data){
           //   var jsonData = JSON.parse(data);
@@ -71,7 +78,7 @@ module.exports = function(app) {
   app.get('/friends',
     ensureLogin.ensureLoggedIn(),
     function(req, res){
-      db.User.where('userID', 'in', req.session.fbFriendsId).fetchAll().then(function(data) {        
+      db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {        
         res.render('friends', {friends: data.models});
       });
     });

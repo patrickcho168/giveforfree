@@ -50,15 +50,15 @@ module.exports = function(app) {
 
   // CACHE THINGS HERE
   var facebookCache = function(req, res, next) {
-    if (req.session.fbFriends && req.session.fbFriendsId && req.session.fbFriendsToPropertyMap) {
+    if (req.user && req.user.fbFriends && req.user.fbFriendsId && req.user.fbFriendsToPropertyMap) {
       console.log("CACHED");
       next();
     } else {
       console.log("NOT CACHED");
-      if (req.session.passport === undefined) {
+      if (req.user === undefined) {
         next();
       } else {
-        var accessToken = req.session.passport.user.accessToken;
+        var accessToken = req.user.accessToken;
         facebook.getFbData(accessToken, '/' + req.user.id +'/friends', function(data) {
           var jsonData = JSON.parse(data);
           var friendsData = jsonData.data;
@@ -78,10 +78,9 @@ module.exports = function(app) {
               cacheFriendsToPropertiesMapping[data2.models[i].attributes.userID] = data2.models[i].attributes;
             }
             // CACHE
-            req.session.fbFriends = cacheFriends;
-            req.session.fbFriendsId = cacheFriendsAppId;
-            req.session.fbFriendsToPropertyMap = cacheFriendsToPropertiesMapping;
-            console.log(req.session.fbFriendsId);
+            req.user.fbFriends = cacheFriends;
+            req.user.fbFriendsId = cacheFriendsAppId;
+            req.user.fbFriendsToPropertyMap = cacheFriendsToPropertiesMapping;
             next();
           });
         });
@@ -106,8 +105,9 @@ module.exports = function(app) {
   // MIGHT WANT TO ADD ITEMS THAT ARE ALLOWED TO BE GIVEN TO EVERYONE
   app.get('/', ensureLogin.ensureLoggedIn(),
     function(req, res) {
-      db.Item.where({takerID: null}).where('giverID', 'in', req.session.fbFriendsId).fetchAll().then(function(data3) {
-        res.render('homeLoggedIn', {user:req.user, availItems: data3.models, friendProperty: req.session.fbFriendsToPropertyMap});
+      console.log("USER: " req.user.displayName);
+      db.Item.where({takerID: null}).where('giverID', 'in', req.user.fbFriendsId).fetchAll().then(function(data3) {
+        res.render('homeLoggedIn', {user:req.user, availItems: data3.models, friendProperty: req.user.fbFriendsToPropertyMap});
       });
     });
 
@@ -121,11 +121,6 @@ module.exports = function(app) {
   //   function(req, res){
   //     res.render('homeLoggedIn', {user:req.user});
   //   //   res.render('loginSS');
-  //   });
-  
-  // app.get('/login',
-  //   function(req, res){
-  //     res.render('profile');
   //   });
 
   app.get('/login/facebook',
