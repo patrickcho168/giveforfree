@@ -122,7 +122,7 @@ module.exports = function(app) {
   //     res.render('homeLoggedIn', {user:req.user});
   //   //   res.render('loginSS');
   //   });
-  
+
   // app.get('/login',
   //   function(req, res){
   //     res.render('profile');
