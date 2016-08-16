@@ -1,4 +1,6 @@
 // Navbar Selection Fix
+var friendListView = false;
+
 $(document).ready(function() {
     $(".nav a").on("click", function() {
         if (!$(this).parent().hasClass('active') && $(this).parent().attr('id') !== $(this).parent().find(".active").attr('id')) {
@@ -13,6 +15,7 @@ $(document).ready(function() {
 
             switch (currentTab) {
                 case 'tab-snagged':
+                    friendListView = false;
                     // urlAJAX = '/api/friendItems/0/' + numItems;
                     // ajaxRequest = null;
                     // addRealViews(html, urlAJAX);
@@ -20,6 +23,7 @@ $(document).ready(function() {
                     break;
 
                 case 'tab-gifted':
+                    friendListView = false;
                     // urlAJAX = '/api/allItems/0/' + numItems;
                     // ajaxRequest = null;
                     // addRealViews(html, urlAJAX);
@@ -27,6 +31,7 @@ $(document).ready(function() {
                     break;
 
                 case 'tab-friends':
+                    friendListView = true;
                     // urlAJAX = null;
                     // ajaxRequest = null;
 
@@ -40,7 +45,7 @@ $(document).ready(function() {
 
                         console.log(myFriends[i]);
 
-                        html += "<li class=\"list-group-item\" href=\"/profile/" + myFriends[i].userID + ">" + "<span class=\"tag tag-default tag-pill pull-xs-right\">14</span>" + myFriends[i].name +  "</li>";
+                        html += "<a class=\"list-group-item\" href=\"/profile/" + myFriends[i].userID + ">" + myFriends[i].name +  "</a>";
                     }
 
                     html += "</ul>";
@@ -280,7 +285,7 @@ $(document).ready(function() {
                 }
 
                 // Simulate Infinite Scroll and Content Population for UI/UX
-            } else if (test && triggered == 1) {
+            } else if (test && triggered == 1 && !friendListView) {
 
                 // Display AJAX Pre-Loader while loading
                 $("#loader").fadeTo(2000, 0.8);
