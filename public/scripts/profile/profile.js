@@ -16,7 +16,7 @@ $(function() {
                     // urlAJAX = '/api/friendItems/0/' + numItems;
                     // ajaxRequest = null;
                     // addRealViews(html, urlAJAX);
-                    addViews(6);
+                    addViews(4);
                     break;
 
                 case 'tab-gifted':
