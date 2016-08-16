@@ -133,6 +133,7 @@ function addRealViews(html, urlAJAX) {
         url: urlAJAX,
         dataType: "json",
         method: 'get',
+        cache: false,
         // Success Callback
         success: function(data) {
             flag = true;

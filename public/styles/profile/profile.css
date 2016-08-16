@@ -145,15 +145,57 @@ p {
 /* Profile Jumbotron */
 
 .block-container {
-    padding: 7.0rem;
+    /*padding: 8.5rem 4.5rem;*/
     padding-top: 10.5rem;
+    align: center;
     /*border-width: .2rem;*/
+}
+.profile-photo-holder {
+    vertical-align: center;
+    max-height: 15em;
+    max-width: 15em;
+}
+.counters {
+    padding-top: 0px;
+}
+.counter {
+    padding-bottom: 0px;
+}
+.count {
+    font-size: 1.5em;
+    padding: 0 0;
+}
+.count-label {
+    font-size: 0.8em;
+    padding: 0 0;
+    font-weight: bold;
+}
+.name {
+    font-size: 6.0vmin;
+}
+.text-holder {
+    vertical-align: center;
+}
+.profile-photo {
+    vertical-align: center;
+    max-height: 11em;
+}
+.tabs {
+    align: center;
+}
+.tabs li {
+    width: 33.3333%;
+    height: auto;
+    align: center;
+}
+.nav-tab-area {
+    /*padding: 0 50px;*/
 }
 
 /* Scroll Container */
 
 .infinite-scroll-container {
-    padding-top: 100px;
+    padding-top: 50px;
 }
 
 /* Thumbnail */
