@@ -44,9 +44,7 @@
 
 <body>
 
-    <script type='text/javascript'>
-        var myFriends = {{ friends | dump | safe }};
-    </script>
+    <script> var myFriends = <%- JSON.stringify(friends) %>; </script>
 
     <!-- Navigation Bar -->
     <nav class="navbar navbar-default navbar-fixed-top">
