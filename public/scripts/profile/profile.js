@@ -32,7 +32,7 @@ $(function() {
 
                     var html = "<ul class=\"list-group\">";
 
-                    var friends = !{friends};
+                    var friends = !{JSON.stringify(friends)}
 
                     console.log(friends.length);
 
