@@ -106,18 +106,19 @@ $(document).ready(function() {
 $(document).ready(function() {
     $(".cd-main-nav a").on("click", function() {
         var name = $(this).parent().attr('id');
+        console.log(name);
 
         switch (name) {
             case "but-snagged":
-                document.getElementById('tab-snagged').click();
+                document.getElementById('snagged-link').click();
                 break;
 
             case "but-gifted":
-                document.getElementById('tab-gifted').click();
+                document.getElementById('gifted-link').click();
                 break;
 
             case "but-friends":
-                document.getElementById('tab-friends').click();
+                document.getElementById('friends-link').click();
                 break;
 
             default:
