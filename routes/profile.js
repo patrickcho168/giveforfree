@@ -59,7 +59,7 @@ module.exports = function(app) {
                                         userGive: userGive.models,
                                         userGiven: userGiven.models,
                                         friendProperty: req.user.fbFriendsToPropertyMap,
-                                        friends: JSON.stringify(data.models)
+                                        friends: data.models
                                     });
                                 });
 

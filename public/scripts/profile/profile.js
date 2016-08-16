@@ -1,5 +1,5 @@
 // Navbar Selection Fix
-$(function() {
+$(document).ready(function() {
     $(".nav a").on("click", function() {
         if (!$(this).parent().hasClass('active') && $(this).parent().attr('id') !== $(this).parent().find(".active").attr('id')) {
             // TODO:Add logic to determine whether to clear or not

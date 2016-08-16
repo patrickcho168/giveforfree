@@ -42,12 +42,10 @@
 
 </head>
 
-
 <body>
 
     <script type='text/javascript'>
-        var myFriends = !{friends};
-        myFriends = jQuery.parseJSON( myFriends );
+        var myFriends = {{ friends | dump | safe }};
     </script>
 
     <!-- Navigation Bar -->
