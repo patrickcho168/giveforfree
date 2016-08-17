@@ -49,11 +49,11 @@
         var isMine = true;
         $(window).load(function() {
             myFriends = <%- JSON.stringify(friends) %>;
-            isMine = <%= mine %>;
+            isMine = <%- JSON.stringify(myProfile) %>;
         });
         $(document).ready(function() {
             myFriends = <%- JSON.stringify(friends) %>;
-            isMine = <%= mine %>;
+            isMine = <%- JSON.stringify(myProfile) %>;
         });
     </script>
 
