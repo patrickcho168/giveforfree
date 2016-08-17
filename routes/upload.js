@@ -88,8 +88,7 @@ module.exports = function(app) {
         res.render("upload", {
             myProfile: mine,
             user: req.user.attributes,
-            id: req.user.appUserId,
-            link: req.file.key
+            id: req.user.appUserId
         });
     });
 
