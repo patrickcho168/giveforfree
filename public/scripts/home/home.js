@@ -156,16 +156,16 @@ function addRealViews(html, urlAJAX) {
                 $.each(data, function(key, value) {
                     html = '<div class="col-sm-6 col-md-4 item">';
                     // Main Item Photo
-                    html += '<div class="card">';
+                    html += '<div>';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
-                    html += '<img class="card-img-top" style="height: 200px; width: 100%; display: block;" data-holder-rendered="true" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
+                    html += '<img style="height: 200px; width: 100%; display: block;" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
                     // Item Title
-                    html += '<div class="card-block caption-area">';
-                    html += '<h6 class="card-title item-header">' + value.title + '</h6>';
+                    html += '<div class="caption-area">';
+                    html += '<h6 class="item-header">' + value.title + '</h6>';
                     // Item Owner
-                    html += '<p class="card-text item-author">' + value.ownedBy.name + '</p>';
+                    html += '<p class="item-author">' + value.ownedBy.name + '</p>';
                     // Item Caption
-                    html += '<p class="card-text item-caption">' + value.description + '</p>';
+                    html += '<p class="item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
                     html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag" itemId="' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
                     // Item Snag Counts
