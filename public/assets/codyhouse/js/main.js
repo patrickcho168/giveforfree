@@ -15,8 +15,7 @@ jQuery(document).ready(function($){
 	$('.cd-nav-trigger').on('click', function(){
 		$(this).toggleClass('menu-is-open');
 		//we need to remove the transitionEnd event handler (we add it when scolling up with the menu open)
-		mainNavigation.off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend');
-
+		mainNavigation.off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend').toggleClass('is-visible');
 	});
 
 	function checkMenu() {
@@ -47,7 +46,7 @@ jQuery(document).ready(function($){
 				navigationContainer.removeClass('is-fixed');
 				mainNavigation.removeClass('has-transitions');
 			}
-			
+
 			$(".nav-tab-area").removeClass('hidden');
 
 		}
