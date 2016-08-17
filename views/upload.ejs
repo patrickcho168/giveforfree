@@ -165,11 +165,35 @@
                         <input class="form-control" type="text" name="description" placeholder="Enter some description of your object" required>
 
                     </div>
+
                     <div class="form-group has-warning">
+
                         <label>Select an image to upload (less than 100kb):</label>
-                        <input class="form-control-file" type="file" name="avatar" required>
+
+                        <!-- <input class="form-control-file" type="file" name="avatar" required> -->
+
+                        <!-- image-preview-filename input [CUT FROM HERE]-->
+                        <div class="input-group image-preview">
+                            <input type="text" class="form-control form-control-file image-preview-filename" disabled="disabled" type="file" name="avatar" required>
+                            <!-- don't give a name === doesn't send on POST/GET -->
+                            <span class="input-group-btn">
+                                <!-- image-preview-clear button -->
+                                <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                                    <span class="glyphicon glyphicon-remove">Clear</span>
+                                </button>
+                                <!-- image-preview-input -->
+                                <div class="btn btn-default image-preview-input">
+                                    <span class="glyphicon glyphicon-folder-open"></span>
+                                    <span class="image-preview-input-title">Browse</span>
+                                    <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" />
+                                <!-- rename it -->
+                                </div>
+                            </span>
+                        </div>
+                        <!-- /input-group image-preview [TO HERE]-->
 
                     </div>
+
                     <div class="form-group">
                         <label>Number of Days</label>
                         <select class="form-control" name="no_of_days">
