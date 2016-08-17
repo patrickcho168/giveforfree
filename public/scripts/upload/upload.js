@@ -54,7 +54,7 @@ $(function() {
             img.attr('src', e.target.result);
             $(".image-preview").attr("data-content", $(img)[0].outerHTML).popover("show");
         }
-        var file    = document.querySelector('input[type=file]').files[0];
+        var file = document.querySelector('input[type=file]').files[0];
         if (file) {
             reader.readAsDataURL(file);
         }
