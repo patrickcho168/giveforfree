@@ -174,12 +174,14 @@
 
                         <!-- image-preview-filename input [CUT FROM HERE]-->
                         <div class="input-group image-preview">
-                            <input type="text" class="form-control form-control-file image-preview-filename" disabled="disabled" type="file" name="avatar" required>
+                            <input class="form-control form-control-file image-preview-filename" disabled="disabled" type="file" name="avatar" required>
                             <!-- don't give a name === doesn't send on POST/GET -->
                             <span class="input-group-btn">
                                 <!-- image-preview-clear button -->
                                 <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
-                                    <span class="glyphicon glyphicon-remove">Clear</span>
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                    <span class="image-preview-input-title">Clear</span>
+
                                 </button>
                                 <!-- image-preview-input -->
                                 <div class="btn btn-default image-preview-input">
