@@ -159,19 +159,11 @@ p {
 /* Create Gift Button */
 
 .create-gift-button {
-    position: fixed;
-    top: 70px;
-    right: 20px;
+    font-size: 20px;
     z-index: 100;
-}
-.btn-circle-lg {
-    width: 79px;
-    height: 79px;
     text-align: center;
-    padding: 13px 0;
-    font-size: 30px;
     line-height: 2.00;
-    border-radius: 70px;
+
 }
 
 /* Scroll Container */
