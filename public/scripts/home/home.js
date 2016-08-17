@@ -156,7 +156,7 @@ function addRealViews(html, urlAJAX) {
                 $.each(data, function(key, value) {
                     html = '<div class="col-sm-6 col-md-4 item">';
                     // Main Item Photo
-                    html += '<div>';
+                    html += '<div class="thumbnail">';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
                     html += '<img style="height: 200px; width: 100%; display: block;" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
                     // Item Title
