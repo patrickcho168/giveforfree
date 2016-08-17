@@ -34,6 +34,20 @@
 
 <body>
 
+    <script>
+        var filename = <%= req.file.key %>;
+
+        console.log(filename);
+
+        $(window).load(function() {
+            filename = <%= req.file.key %>;
+        });
+        $(document).ready(function() {
+            filename = <%= req.file.key %>;
+        });
+
+    </script>
+
     <!-- Navigation Bar -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
@@ -174,7 +188,7 @@
 
                         <!-- image-preview-filename input [CUT FROM HERE]-->
                         <div class="input-group image-preview">
-                            <input class="form-control-file image-preview-filename" disabled="disabled" type="file" name="avatar" required>
+                            <input class="form-control image-preview-filename" disabled="disabled" type="file" name="avatar" required>
                             <!-- don't give a name === doesn't send on POST/GET -->
                             <span class="input-group-btn">
                                 <!-- image-preview-clear button -->
