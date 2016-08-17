@@ -1,12 +1,12 @@
 $(document).on('click', '#close-preview', function() {
-    $('.image-preview').popover('hide');
+    $('.image-preview').hide();
     // Hover befor close the preview
     $('.image-preview').hover(
         function() {
-            $('.image-preview').popover('show');
+            $('.image-preview').show();
         },
         function() {
-            $('.image-preview').popover('hide');
+            $('.image-preview').hide();
         }
     );
 });
@@ -21,16 +21,16 @@ $(function() {
     });
     closebtn.attr("class", "close pull-right");
     // Set the popover default content
-    $('.image-preview').popover({
-        trigger: 'manual',
-        html: true,
-        title: "<strong>Preview</strong>" + $(closebtn)[0].outerHTML,
-        content: "There's no image",
-        placement: 'top'
-    });
+    // $('.image-preview').popover({
+    //     trigger: 'manual',
+    //     html: true,
+    //     title: "<strong>Preview</strong>" + $(closebtn)[0].outerHTML,
+    //     content: "There's no image",
+    //     placement: 'top'
+    // });
     // Clear event
     $('.image-preview-clear').click(function() {
-        $('.image-preview').attr("data-content", "").popover('hide');
+        $('.image-preview').attr("data-content", "").hide();
         $('.image-preview-filename').val("");
         $('.image-preview-clear').hide();
         $('.image-preview-input input:file').val("");
@@ -51,7 +51,7 @@ $(function() {
             $(".image-preview-clear").show();
             $(".image-preview-filename").val("input-file-preview");
             img.attr('src', e.target.result);
-            $(".image-preview").attr("data-content", $(img)[0].outerHTML).popover("show");
+            $(".image-preview").attr("data-content", $(img)[0].outerHTML).show();
         }
         var file    = document.querySelector('input[type=file]').files[0];
         if (file) {
