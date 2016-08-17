@@ -135,6 +135,16 @@ p {
     }
 }
 
+.fab {
+    position: fixed;
+    bottom: 20px;
+    right: 5%;
+    border-radius: 0.25em;
+    width: 44px;
+    height: 44px;
+    background: #337ab7;
+}
+
 /* Navbar */
 
 .navbar-right {
