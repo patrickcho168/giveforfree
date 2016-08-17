@@ -1,39 +1,106 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
-    <title>Simple Upload Example</title>
+
+    <!-- Metadata and Responsive Viewport -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Give For Free - Meeting the needs of others</title>
 
     <!-- Bootstrap Support -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Other Scripts -->
+    <script src="../scripts/upload/upload.js"></script>
+
     <!-- CSS Styles -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/upload/upload.css">
+    <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
+
+    <!-- Font Support -->
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
 </head>
 
 <body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+
+            <!-- Left Header Icon -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Give For Free</a>
+            </div>
+
+            <!-- Menu -->
+            <div class="collapse navbar-collapse" id="nav-menu">
+
+                <!-- Navbar Search -->
+                <!-- <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="#tags, people, items">
+                    </div>
+                </form> -->
+
+                <!-- User Actions Menu -->
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- <li class="dropdown"> -->
+                    <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a> -->
+                    <!-- <ul class="dropdown-menu">
+                            <li><a href="/profile/>">Profile</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/logout">Logout</a></li>
+                        </ul> -->
+                    <!-- </li> -->
+                    <li id="nav-feed"><a href="/">Feed</a></li>
+                    <!-- <li id="nav-discover"><a href="#discover">Discover</a></li>
+                    <li id="nav-gift"><a href="#gift">Gift</a></li> -->
+                    <li class="active" id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
+                    <li id="nav-logout"><a href="/logout">Logout</a></li>
+                </ul>
+
+            </div>
+
+        </div>
+    </nav>
+
     <div class="container">
         <h1>Post a new item</h1>
         <form action="/upload" enctype="multipart/form-data" method="post">
-            <% if (locals.error_messages) { 
+            <% if (locals.error_messages) {
                 error_messages.forEach(function(message) { %>
             <div class="alert alert-warning"><strong>Error: </strong> <%= message %></div>
-            <% }); 
+            <% });
             } %>
             <div class="form-group has-warning">
                 <label>Title</label>
                     <input type="text" class="form-control" name="title" placeholder="Enter the name of your object" required>
-                
+
             </div>
             <div class="form-group has-warning">
                 <label>Description</label>
                     <input class="form-control" type="text" name="description" placeholder="Enter some description of your object" required>
-                
+
             </div>
             <div class="form-group has-warning">
-                <label>Select an image to upload (less than 100kb):</label>   
+                <label>Select an image to upload (less than 100kb):</label>
                     <input class="form-control-file" type="file" name="avatar" required>
-                
+
             </div>
             <div class="form-group">
                 <label>Number of Days</label>
