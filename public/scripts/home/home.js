@@ -38,7 +38,7 @@ $(function() {
 
 });
 
-// Want or Unwant
+// Want
 $(document).on("click", ".snag", function() {
     var itemId = $(this).attr('itemId');
     console.log("Item", itemId, "has been snagged");
@@ -54,6 +54,10 @@ $(document).on("click", ".snag", function() {
     $(this).removeClass("snag");
     $(this).addClass("unsnag");
 
+    // Increment number of people snagging
+    var snag_count = parseInt($(this).parent().siblings('small').text()) + 1;
+    $(this).parent().siblings('small').text(String(snag_count) + (snag_count === 1 ? ' person' : ' people') + ' snagged this.');
+
     // Send post request
     // Should check for success
     $.post("/api/want/" + itemId)
@@ -68,6 +72,7 @@ $(document).on("click", ".snag", function() {
         });
 });
 
+// Unwant
 $(document).on("click", ".unsnag", function() {
     var itemId = $(this).attr('itemId');
     console.log("Item", itemId, "has been unsnagged");
@@ -82,6 +87,11 @@ $(document).on("click", ".unsnag", function() {
     // Change type
     $(this).removeClass("unsnag");
     $(this).addClass("snag");
+
+    // Decrement number of people snagging
+    var snag_count = parseInt($(this).parent().siblings('small').text()) - 1;
+    $(this).parent().siblings('small').text(String(snag_count) + (snag_count === 1 ? ' person' : ' people') + ' snagged this.');
+
 
     // Send post request
     $.post("/api/unwant/" + itemId)
@@ -231,7 +241,7 @@ function addRealViews(html, urlAJAX) {
                         html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag" itemId="' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
                     }
                     // Item Snag Counts
-                    html += '<small class="item-snags text-muted">' + value.numWants + ' people snagged this.</p>';
+                    html += '<small class="item-snags text-muted">' + value.numWants + (value.numWants == 1 ? ' person' : ' people') + ' snagged this.</p>';
                     html += '</div>';
                     html += '</div>';
                     html += '</div>';

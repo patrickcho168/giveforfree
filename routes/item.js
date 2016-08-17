@@ -17,10 +17,28 @@ function inArray(needle,haystack)
 
 module.exports = function(app) {
 
+  // Display item page
+  app.get('/item/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
+    var itemId = parseInt(req.params.itemId);
+    var giver_name;
+    var myItem;
+
+    db.Item.where({itemID: itemId}).fetch().then(function(item) { 
+      db.User.where({userID: item.attributes.giverID}).fetch().then(function(user) {
+     
+        res.render('item', 
+          {myItem: item.attributes.giverID === req.user.appUserId, 
+          giver_name: giver_name,
+          item: JSON.parse(JSON.stringify(item))
+        });
+      });
+    });
+  });
+
   // This is for giving to random person
   app.post('/api/give/:itemId', ensureLogin.ensureLoggedIn(), function(req,res) {
     var userId = parseInt(req.user.appUserId);
-    var itemId = parseInt(req.param.itemId);
+    var itemId = parseInt(req.params.itemId);
     db.Item.where({itemID: itemId}).fetch().then(function(data) {
       // If item exists
       if (data !== null) { 
@@ -52,7 +70,7 @@ module.exports = function(app) {
   // This is for giving to specific person
   app.post('/api/give/:itemId/:takerId', ensureLogin.ensureLoggedIn(), function(req,res) {
     var userId = parseInt(req.user.appUserId);
-    var itemId = parseInt(req.param.itemId);
+    var itemId = parseInt(req.params.itemId);
     var wanterId = parseInt(req.param.takerId);
     db.Item.where({itemID: itemId}).fetch().then(function(data) {
       // If item exists
@@ -77,29 +95,37 @@ module.exports = function(app) {
 
   // Want a product (given itemID and userID)
   // Should return success header?
-  app.post('/api/want/:itemId', ensureLogin.ensureLoggedIn(), function (req, res) {
+  app.post('/api/want/:itemId', ensureLogin.ensureLoggedIn(), function (req, res, next) {
     var itemId = parseInt(req.params.itemId);
     var userId = parseInt(req.user.appUserId);
 
-    // Check if item already wanted by this person
     db.Want.where({itemID: itemId, wanterID: userId}).fetch().then(function (oldWant) {
-      if (oldWant === null) {
+      db.Item.where({itemID: itemId}).fetch().then(function(item) {
+        console.log(item);
+        // Check if item is owned by this person
+        if (item.giverID != userId) {
+          // Check if item already wanted by this person
+          if (oldWant === null) {
 
-        // Register a new claim for the item
-        var newWant = new db.Want({
-          itemID: itemId,
-          wanterID: userId,
-          timeWanted: moment().format("YYYY-MM-DD HH:mm:ss")
-        });
+            // Register a new claim for the item
+            var newWant = new db.Want({
+              itemID: itemId,
+              wanterID: userId,
+              timeWanted: moment().format("YYYY-MM-DD HH:mm:ss")
+            });
 
-        // Store in db
-        newWant.save();
-      }
+            // Store in db
+            newWant.save();
+          }
+        }
+      });
     });
+
+    next();
   })
 
   // Want a product (given itemID and userID)
-  app.post('/api/unwant/:itemId', ensureLogin.ensureLoggedIn(), function (req,res) {
+  app.post('/api/unwant/:itemId', ensureLogin.ensureLoggedIn(), function (req,res,next) {
     var itemId = parseInt(req.params.itemId);
     var userId = parseInt(req.user.appUserId);
 
@@ -111,6 +137,8 @@ module.exports = function(app) {
         oldWant.where({itemID: itemId, wanterID: userId}).destroy();
       }
     });
+
+    next();
   })
 
   app.get('/api/myWants/:lastItemId/:loadNum/:profileId', ensureLogin.ensureLoggedIn(), function(req, res) {
