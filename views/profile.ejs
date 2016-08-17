@@ -47,13 +47,15 @@
     <script>
         var myFriends = null;
         var isMine = true;
+        isMine = <%- JSON.stringify(myProfile) %>;
+
+        console.log(isMine);
+
         $(window).load(function() {
             myFriends = <%- JSON.stringify(friends) %>;
-            isMine = <%- JSON.stringify(myProfile) %>;
         });
         $(document).ready(function() {
             myFriends = <%- JSON.stringify(friends) %>;
-            isMine = <%- JSON.stringify(myProfile) %>;
         });
     </script>
 
