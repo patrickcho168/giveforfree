@@ -45,8 +45,12 @@
 <body>
 
     <script>
+        var myFriends = null;
+        $(window).load(function() {
+            myFriends = <%- JSON.stringify(friends) %>;
+        });
         $(document).ready(function() {
-            var myFriends = <%- JSON.stringify(friends) %>;
+            myFriends = <%- JSON.stringify(friends) %>;
         });
     </script>
 
