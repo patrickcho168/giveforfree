@@ -2,6 +2,12 @@
 var friendListView = false;
 
 $(document).ready(function() {
+
+    if (!isMine) {
+        document.getElementById('but-friends').addClass("hidden");
+        document.getElementById('tab-friends').addClass("hidden");
+    }
+
     $(".nav a").on("click", function() {
         if (!$(this).parent().hasClass('active') && $(this).parent().attr('id') !== $(this).parent().find(".active").attr('id')) {
             // TODO:Add logic to determine whether to clear or not
