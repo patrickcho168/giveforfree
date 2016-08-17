@@ -40,8 +40,8 @@ $(function() {
     $(".image-preview-input input:file").change(function() {
         var img = $('<img/>', {
             id: 'dynamic',
-            width: 250,
-            height: 200
+            width: 256,
+            height: 256
         });
         // var file = filename;
         var reader = new FileReader();
@@ -53,6 +53,9 @@ $(function() {
             img.attr('src', e.target.result);
             $(".image-preview").attr("data-content", $(img)[0].outerHTML).popover("show");
         }
-        reader.readAsDataURL(file);
+        var file    = document.querySelector('input[type=file]').files[0];
+        if (file) {
+            reader.readAsDataURL(file);
+        }
     });
 });
