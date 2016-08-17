@@ -4,8 +4,8 @@ var multer = require("multer");
 var crypto = require("crypto");
 var mime = require("mime");
 var multers3 = require("multer-s3");
-var moment = require('moment');
-var aws = require('aws-sdk');
+var moment = require("moment");
+var aws = require("aws-sdk");
 var config = require('../config');
 var db = require('../models/db');
 var ensureLogin = require('connect-ensure-login');
@@ -89,6 +89,11 @@ module.exports = function(app) {
         console.log(err.message);
         req.flash('error_messages', err.message);
         res.redirect('/upload');
+
+      } else if (!(req.file)) {
+        req.flash('error_messages', 'Please upload an image.');
+        res.redirect('/upload');
+
       } else {
         // Check appUserId exists
         if (!(req.user.appUserId)) {
@@ -96,50 +101,60 @@ module.exports = function(app) {
         }
 
         // Simple form validation
-        if (req.body.title && req.body.description) {
-          // Create item based on form
-          console.log(req.user);
+        req.checkBody('title', 'Please fill in a valid title.').notEmpty();
+        req.checkBody('description', 'Please fill in a valid description.').notEmpty();
 
+        req.sanitizeBody('title');
+        req.sanitizeBody('description');
+
+        var errors = req.validationErrors();
+        console.log(errors);
+        console.log(req.file);
+
+        if (errors) {
+          errors.forEach(function(error) {
+            req.flash('error_messages', error.msg);
+          });
+          
+          res.redirect('/upload');
+        } else {
+          // Create item based on form
           var newItem = new db.Item({
             giverID: req.user.appUserId,
             timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
             timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
             title: req.body.title,
             description: req.body.description,
-            randomAssign: 0,
+            // Change name asap
+            randomAssign: req.body.postToFacebook ? 1 : 0,
             imageLocation: req.file.key
           });
 
           // Save item to database
-        newItem.save().then(function(newSavedItem) {
-          var userFbId = req.user.id;
-          var newItemTitle = newSavedItem.attributes.title;
-          var newItemId = newSavedItem.attributes.itemID;
-          var newItemUrl = newSavedItem.attributes.imageLocation;
-          var apiCall =  '/' + userFbId +'/feed';
-          console.log(apiCall);
-          facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data){
-            console.log(data);
+          newItem.save().then(function(newSavedItem) {
+
+            // Create facebook post
+            var userFbId = req.user.id;
+            var newItemTitle = newSavedItem.attributes.title;
+            var newItemId = newSavedItem.attributes.itemID;
+            var newItemUrl = newSavedItem.attributes.imageLocation;
+            var apiCall =  '/' + userFbId +'/feed';
+            console.log(apiCall);
+            facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data){
+              console.log(data);
+            });
+            // console.log(newSavedItem);
+            // var newItemId = newSavedItem.attributes.itemID;
+            // var newItemUrl = newSavedItem.attributes.imageLocation;
+            // var newItemDesc = newSavedItem.attributes.description;
+            // var newItemTitle = newSavedItem.attributes.title;
+            // var objString = createFbItem(newItemUrl, newItemTitle, newItemDesc, newItemId);
+            // console.log('%7B%22' + objString + '%22%7D');
           });
-          // console.log(newSavedItem);
-          // var newItemId = newSavedItem.attributes.itemID;
-          // var newItemUrl = newSavedItem.attributes.imageLocation;
-          // var newItemDesc = newSavedItem.attributes.description;
-          // var newItemTitle = newSavedItem.attributes.title;
-          // var objString = createFbItem(newItemUrl, newItemTitle, newItemDesc, newItemId);
-          // console.log('%7B%22' + objString + '%22%7D');
-        });
 
           res.redirect("/");
-        } else if (req.body.title) {
-          req.flash('error_messages', "Please fill in a valid description.");
-
-          res.redirect('/upload');
-        } else {
-          req.flash('error_messages', "Please fill in a valid title.")
-
-          res.redirect('/upload');
-        }
+        
+        } 
       }
     });
   });
