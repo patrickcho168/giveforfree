@@ -35,15 +35,15 @@
 <body>
 
     <script>
-        var filename = <%= req.file.key %>;
+        var filename = <%= link %>;
 
         console.log(filename);
 
         $(window).load(function() {
-            filename = <%= req.file.key %>;
+            filename = <%= link %>;
         });
         $(document).ready(function() {
-            filename = <%= req.file.key %>;
+            filename = <%= link %>;
         });
 
     </script>
