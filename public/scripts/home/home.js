@@ -158,18 +158,18 @@ function addRealViews(html, urlAJAX) {
                     // Main Item Photo
                     html += '<div class="card">';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
-                    html += '<img src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
+                    html += '<img class="card-img-top" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
                     // Item Title
                     html += '<div class="caption-area">';
-                    html += '<h6 class="item-header">' + value.title + '</h6>';
+                    html += '<h6 class="card-title item-header">' + value.title + '</h6>';
                     // Item Owner
-                    html += '<p class="item-author">' + value.ownedBy.name + '</p>';
+                    html += '<p class="card-text item-author">' + value.ownedBy.name + '</p>';
                     // Item Caption
-                    html += '<p class="item-caption">' + value.description + '</p>';
+                    html += '<p class="card-text item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
                     html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag" itemId="' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
                     // Item Snag Counts
-                    html += '<p class="item-snags">' + '123' + ' people snagged this.</p>';
+                    html += '<small class="item-snags text-muted">' + '123' + ' people snagged this.</p>';
                     html += '</div>';
                     html += '</div>';
                     html += '</div>';
