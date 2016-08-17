@@ -1,7 +1,8 @@
 "use strict"
 
 var express = require("express");
-var flash = require('connect-flash');
+var flash = require("connect-flash");
+var expressValidator = require("express-validator");
 var fbLogin = require('./routes/facebookLogin');
 var upload = require('./routes/upload');
 var profile = require('./routes/profile');
@@ -20,6 +21,7 @@ app.set('view engine', 'ejs');
 
 // app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true })); // For parsing forms
+app.use(expressValidator());
 // use cookie session instead of express session for lightweight
 app.use(require('cookie-session')({
   // Do we need to use a session store?

@@ -16,6 +16,8 @@
     <!-- Bootstrap Support -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous"> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script> -->
 
     <!-- Other Scripts -->
     <script src="../scripts/upload/upload.js"></script>
@@ -143,6 +145,13 @@
                         </select>
                     </div>
 
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="postToFacebook" value="1">
+                    Post to Facebook?
+                </label>
+            </div>
+
                     <button type="submit" class="btn btn-primary">Submit</button>
         </form> -->
 
@@ -174,22 +183,22 @@
 
                         <!-- image-preview-filename input [CUT FROM HERE]-->
                         <div class="input-group image-preview">
-                            <input class="form-control image-preview-filename" disabled="disabled" type="text" name="input-file-preview" required>
+                            <input class="form-control image-preview-filename" type="text" name="input-file-preview" required>
                             <!-- don't give a name === doesn't send on POST/GET -->
                             <span class="input-group-btn">
                                 <!-- image-preview-clear button -->
                                 <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
                                     <span class="glyphicon glyphicon-remove"></span>
-                                    <span class="image-preview-input-title">Clear</span>
+                            <span class="image-preview-input-title">Clear</span>
 
-                                </button>
-                                <!-- image-preview-input -->
-                                <div class="btn btn-default image-preview-input">
-                                    <span class="glyphicon glyphicon-folder-open"></span>
-                                    <span class="image-preview-input-title">Browse</span>
-                                    <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" />
+                            </button>
+                            <!-- image-preview-input -->
+                            <div class="btn btn-default image-preview-input">
+                                <span class="glyphicon glyphicon-folder-open"></span>
+                                <span class="image-preview-input-title">Browse</span>
+                                <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" />
                                 <!-- rename it -->
-                                </div>
+                            </div>
                             </span>
                         </div>
                         <!-- /input-group image-preview [TO HERE]-->
@@ -204,9 +213,31 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-success btn-block">List Item!</button>
         </form>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1 text-center">
+                    <hr class="small">
+                    <ul class="col-sm-6 list-unstyled contact-list">
+                        <li>
+                            <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 6123 4567
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">contact@giveforfree.com</a>
+                        </li>
+                    </ul>
+                    <p class="col-sm-6 text-muted">Copyright &copy; Give For Free 2016 </p>
+                </div>
+            </div>
+        </div>
+        <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
+    </footer>
+
 </body>
 
 </html>

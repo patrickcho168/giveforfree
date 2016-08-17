@@ -1,3 +1,43 @@
+$(function() {
+
+    'use strict';
+    ////
+
+    var $container = $('.grid');
+
+    $container.imagesLoaded(function() {
+        $container.masonry({
+            itemSelector: '.grid-item',
+            columnWidth: '.grid-item'
+        });
+    });
+
+    // $container.infinitescroll({
+    //         navSelector: '#rh_nav_below',
+    //         nextSelector: '#rh_nav_below .rh_nav_next a',
+    //         itemSelector: '.grid-item',
+    //         loading: {
+    //             finishedMsg: 'No more pages to load.',
+    //             img: 'http://i.imgur.com/6RMhx.gif'
+    //         }
+    //     },
+    //     function(newElements) {
+    //         var $newElems = $(newElements).css({
+    //             opacity: 0
+    //         });
+    //         $newElems.imagesLoaded(function() {
+    //             $newElems.animate({
+    //                 opacity: 1
+    //             });
+    //             $container.masonry('appended', $newElems, true);
+    //         });
+    //     }
+    // );
+
+    ////
+
+});
+
 // Navbar Selection Fix
 var friendListView = false;
 
