@@ -1,5 +1,5 @@
 // Want or Unwant
-$(document).on("click",".snag", function() {
+$(document).on("click", ".snag", function() {
     var itemId = $(this).attr('itemId');
     console.log("Item", itemId, "has been snagged");
 
@@ -19,7 +19,7 @@ $(document).on("click",".snag", function() {
     $.post("api/want/" + itemId);
 });
 
-$(document).on("click",".unsnag", function() {
+$(document).on("click", ".unsnag", function() {
     var itemId = $(this).attr('itemId');
     console.log("Item", itemId, "has been unsnagged");
 
@@ -41,7 +41,7 @@ $(document).on("click",".unsnag", function() {
 // Navbar Selection Fix
 $(function() {
     $(".nav a").on("click", function() {
-        if ( !$(this).parent().hasClass('active') && $(this).parent().attr('id') !== 'nav-user' ) {
+        if (!$(this).parent().hasClass('active') && $(this).parent().attr('id') !== 'nav-user') {
             // TODO:Add logic to determine whether to clear or not
             // Clear section
             var node = document.getElementById('infinite-scroll-container');
@@ -83,12 +83,12 @@ $(function() {
                     ajaxRequest = null;
                     break;
 
-                // default:
-                //     urlAJAX = '/api/friendItems/0/' + numItems;
-                //     ajaxRequest = null;
+                    // default:
+                    //     urlAJAX = '/api/friendItems/0/' + numItems;
+                    //     ajaxRequest = null;
             }
 
-            
+
         }
 
     });
@@ -146,7 +146,7 @@ function addRealViews(html, urlAJAX) {
                 // $('#first').val(first + 1);
                 // $('#limit').val(data.pagesFiltered);
                 // totalPages = data.pagesFiltered;
-                lastItemId = data[data.length-1].itemID;
+                lastItemId = data[data.length - 1].itemID;
 
                 /*** Factory for views ***/
 
@@ -158,7 +158,7 @@ function addRealViews(html, urlAJAX) {
                     // Main Item Photo
                     html += '<div class="thumbnail">';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
-                    html += '<img src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
+                    html += '<img style="height: 200px; width: 100%; display: block;" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
                     // Item Title
                     html += '<div class="caption-area">';
                     html += '<h6 class="item-header">' + value.title + '</h6>';
@@ -169,7 +169,7 @@ function addRealViews(html, urlAJAX) {
                     // Item Call-to-Action Snag Button
                     html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag" itemId="' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
                     // Item Snag Counts
-                    html += '<p class="item-snags">' + '123' + ' people snagged this.</p>';
+                    html += '<small class="item-snags text-muted">' + '123' + ' people snagged this.</p>';
                     html += '</div>';
                     html += '</div>';
                     html += '</div>';
@@ -260,9 +260,9 @@ $(document).ready(function() {
                         ajaxRequest = null;
                         break;
 
-                    // default:
-                    //     urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
-                    //     ajaxRequest = null;
+                        // default:
+                        //     urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
+                        //     ajaxRequest = null;
                 }
 
                 // Display AJAX Pre-Loader while loading

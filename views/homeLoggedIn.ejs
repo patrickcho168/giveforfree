@@ -17,11 +17,15 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous"> -->
+	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script> -->
+
 	<!-- Other Scripts -->
 	<script src="scripts/home/home.js"></script>
 
 	<!-- CSS Styles -->
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous"> -->
 	<link rel="stylesheet" href="styles/home/home.css">
 	<link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
 
@@ -75,25 +79,27 @@
 			<div class="collapse navbar-collapse" id="nav-menu">
 
 				<!-- Navbar Search -->
-				<form class="navbar-form navbar-left" role="search">
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="#tags, people, items">
-					</div>
-				</form>
+				<!-- <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="#tags, people, items">
+                    </div>
+                </form> -->
 
 				<!-- User Actions Menu -->
 				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown" id="nav-user">
-						<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="/profile/<%= user.appUserId %>">Profile</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="/logout">Logout</a></li>
-						</ul>
-					</li>
-					<li class="active" id="nav-feed"><a>Feed</a></li>
-					<li id="nav-discover"><a>Discover</a></li>
-					<li id="nav-gift"><a>Gift</a></li>
+					<!-- <li class="dropdown"> -->
+					<!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a> -->
+					<!-- <ul class="dropdown-menu">
+                            <li><a href="/profile/>">Profile</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/logout">Logout</a></li>
+                        </ul> -->
+					<!-- </li> -->
+					<li id="nav-feed"><a href="/">Feed</a></li>
+					<!-- <li id="nav-discover"><a href="#discover">Discover</a></li>
+                    <li id="nav-gift"><a href="#gift">Gift</a></li> -->
+					<li id="nav-profile"><a href="/profile/<%= user.id %>">Profile</a></li>
+					<li id="nav-logout"><a href="/logout">Logout</a></li>
 				</ul>
 
 			</div>
@@ -101,33 +107,33 @@
 		</div>
 	</nav>
 
-	<a href="/upload" type="button" class="btn btn-danger btn-circle-lg create-gift-button">
-		<span class="glyphicon glyphicon-gift"></span>
+	<a href="/upload" type="button" class="btn create-gift-button fab">
+		<span class="glyphicon glyphicon-gift white" align="center"></span>
 	</a>
 
 	<!-- Scroll Container -->
 	<div class="infinite-scroll-container col-lg-10 col-lg-offset-1" id="infinite-scroll-container"></div>
 
 	<!-- Footer -->
-	<footer>
-		<div class="container col-lg-10 col-lg-offset-1">
-			<div class="row">
-				<div class="col-lg-10 col-lg-offset-1 text-center">
-					<hr class="small">
-					<ul class="col-lg-6 list-unstyled contact-list">
-						<li>
-							<span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 6123 4567
-						</li>
-						<li>
-							<span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">contact@giveforfree.com</a>
-						</li>
-					</ul>
-					<p class="col-lg-6 text-muted">Copyright &copy; Give For Free 2016 </p>
-				</div>
-			</div>
-		</div>
-		<a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
-	</footer>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1 text-center">
+                    <hr class="small">
+                    <ul class="col-sm-6 list-unstyled contact-list">
+                        <li>
+                            <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 6123 4567
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">contact@giveforfree.com</a>
+                        </li>
+                    </ul>
+                    <p class="col-sm-6 text-muted">Copyright &copy; Give For Free 2016 </p>
+                </div>
+            </div>
+        </div>
+        <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
+    </footer>
 
 </body>
 
