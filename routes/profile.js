@@ -25,48 +25,69 @@ module.exports = function(app) {
         function(req, res) {
             var otherUserId = parseInt(req.params.id);
             var mine = otherUserId === req.user.appUserId;
+            console.log(req.user);
             db.User.where({
                 userID: otherUserId
             }).fetch().then(function(user) {
-                if (user === null || (inArray(otherUserId, req.user.fbFriendsId) === false && mine === false)) { // WHAT IF NOT FRIEND
-                    res.redirect('/profile/' + req.user.appUserId);
-                    //   res.redirect('/profile/');
-                } else {
-                    // Get Profile Wants
-                    db.Want.where({
-                        wanterID: otherUserId
-                    }).fetchAll().then(function(userWants) {
-                        // Get Profile Giving Out and Given Out
-                        db.Item.where({
-                            giverID: otherUserId
-                        }).where({
-                            takerID: null
-                        }).fetchAll().then(function(userGive) {
-
-                            db.Item.where({
-                                giverID: otherUserId
-                            }).where({
-                                takerID: !null
-                            }).fetchAll().then(function(userGiven) {
-                                // If Need Profile Taken
-                                // db.Item.where({takerID: otherUserId}).fetchAll().then(function(userTaken) {
-                                // })
-                                db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
-                                    res.render('profile', {
-                                        myProfile: mine,
-                                        user: user.attributes,
-                                        id: req.user.appUserId,
-                                        userWants: userWants.models,
-                                        userGive: userGive.models,
-                                        userGiven: userGiven.models,
-                                        friendProperty: req.user.fbFriendsToPropertyMap,
-                                        friends: data.models
-                                    });
-                                });
-
+                db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
+                    db.Item.where({giverID: otherUserId, takerID: !null}).fetchAll().then(function(gifted) {
+                        db.Item.where({takerID: otherUserId}).fetchAll().then(function(taken) {
+                            res.render('profile', {
+                                myProfile: mine,
+                                user: user.attributes,
+                                id: req.user.appUserId,
+                                friendProperty: req.user.fbFriendsToPropertyMap,
+                                friends: data.models,
+                                totalGifted: gifted.models.length,
+                                totalTaken: taken.models.length,
+                                totalKarma: gifted.models.length*10
                             });
                         });
                     });
+                });
+            });
+            // db.User.where({
+            //     userID: otherUserId
+            // }).fetch().then(function(user) {
+            //     if (user === null || (inArray(otherUserId, req.user.fbFriendsId) === false && mine === false)) { // WHAT IF NOT FRIEND
+            //         res.redirect('/profile/' + req.user.appUserId);
+            //         //   res.redirect('/profile/');
+            //     } else {
+            //         // Get Profile Wants
+            //         db.Want.where({
+            //             wanterID: otherUserId
+            //         }).fetchAll().then(function(userWants) {
+            //             // Get Profile Giving Out and Given Out
+            //             db.Item.where({
+            //                 giverID: otherUserId
+            //             }).where({
+            //                 takerID: null
+            //             }).fetchAll().then(function(userGive) {
+
+            //                 db.Item.where({
+            //                     giverID: otherUserId
+            //                 }).where({
+            //                     takerID: !null
+            //                 }).fetchAll().then(function(userGiven) {
+            //                     // If Need Profile Taken
+            //                     // db.Item.where({takerID: otherUserId}).fetchAll().then(function(userTaken) {
+            //                     // })
+            //                     db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
+            //                         res.render('profile', {
+            //                             myProfile: mine,
+            //                             user: user.attributes,
+            //                             id: req.user.appUserId,
+            //                             userWants: userWants.models,
+            //                             userGive: userGive.models,
+            //                             userGiven: userGiven.models,
+            //                             friendProperty: req.user.fbFriendsToPropertyMap,
+            //                             friends: data.models
+            //                         });
+            //                     });
+
+            //                 });
+            //             });
+            //         });
                     // console.log(user.attributes);
                     // var accessToken = req.user.passport.user.accessToken;
                     // var otherUserFbId = user.attributes.fbID;
@@ -89,8 +110,8 @@ module.exports = function(app) {
                     //     }
                     //   })
                     // })
-                }
-            });
+                // }
+            // });
         });
 
     app.get('/friends',

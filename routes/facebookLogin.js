@@ -11,7 +11,7 @@ passport.use(new Strategy({
         clientID: config.fbClientID,
         clientSecret: config.fbClientSecret,
         callbackURL: '/login/facebook/return',
-        profileFields: ['id', 'displayName', 'photos', 'email', 'birthday', 'gender', 'friends']
+        profileFields: ['id', 'displayName', 'photos', 'email', 'birthday', 'gender', 'friends', 'hometown']
     },
     function(accessToken, refreshToken, profile, cb) {
         profile.accessToken = accessToken;
@@ -105,6 +105,10 @@ module.exports = function(app) {
     // DISPLAY ALL ITEMS FROM FRIENDS OR ALL ITEMS
     // MIGHT WANT TO ADD ITEMS THAT ARE ALLOWED TO BE GIVEN TO EVERYONE
     app.get('/', ensureLogin.ensureLoggedIn(), function(req, res) {
+        var userId = req.user.appUserId;
+        db.ItemQuery(userId, function(data) {
+            console.log(data);
+        })
         console.log(req.user.accessToken);
         console.log(req.user.id);
         db.Item.where({

@@ -53,10 +53,30 @@ var Want = bookshelf.Model.extend({
   }
 });
 
+var ItemQuery = function(userId, cb) {
+  var a = knex.select().table('item');
+  console.log(a);
+  knex
+    .from('item as i')
+    .leftJoin('user as u', 'u.userID', 'i.giverID')
+    .leftJoin('itemWanter as iw', 'iw.itemID', 'i.itemID')
+    .leftJoin('itemWanter as iwu', function() {
+      this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
+    })
+    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'u.name'])
+    .count('iw.itemID as numWants')
+    .count('iwu.itemID as meWant')
+    .groupBy('i.itemID')
+    .then(function(result){
+    return cb(result);
+  });
+}
+
 var db = {}
 db.Item = Item;
 db.User = User;
 db.Want = Want;
+db.ItemQuery = ItemQuery;
 // db.getNextItems = function(pageNum, fbFriends, cb) {
 //   console.log("HERE");
 //   pm(Item).forge().orderBy('timeCreated', 'DESC').limit(6).where({takerID: null}).where('giverID', 'in', fbFriends).page(pageNum).paginate({withRelated: ['ownedBy']}).end().then(function(results) {
