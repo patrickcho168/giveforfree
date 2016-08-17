@@ -17,7 +17,7 @@ Description: <%= item.description %><br/>
 <% if (myItem === true) { %>
   Giver: You<br/>
 <% } else { %>
-  Giver: <a href="/profile/<%=item.giverID%>"><%= friendProperty[item.giverID].name %></a><br/>
+  Giver: <a href="/profile/<%=item.giverID%>"><%= giver_name %></a><br/>
 <% } %>
 TimeCreated: <%= item.timeCreated %><br/>
 TimeExpire: <%= item.timeExpired %><br/>

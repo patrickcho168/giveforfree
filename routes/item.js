@@ -20,11 +20,18 @@ module.exports = function(app) {
   // Display item page
   app.get('/item/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
     var itemId = parseInt(req.params.itemId);
+    var giver_name;
+    var myItem;
 
-    db.Item.where({itemID: itemId}).fetch().then(function(data) {      
-      res.render('item', {myItem: false, 
-        friendProperty: req.user.fbFriendsToPropertyMap,
-        item: JSON.parse(JSON.stringify(data))});
+    db.Item.where({itemID: itemId}).fetch().then(function(item) { 
+      db.User.where({userID: item.attributes.giverID}).fetch().then(function(user) {
+     
+        res.render('item', 
+          {myItem: item.attributes.giverID === req.user.appUserId, 
+          giver_name: giver_name,
+          item: JSON.parse(JSON.stringify(item))
+        });
+      });
     });
   });
 
