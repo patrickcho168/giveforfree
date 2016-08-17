@@ -19,6 +19,8 @@
 
     <!-- Other Scripts -->
     <script src="../scripts/upload/upload.js"></script>
+    <script src="../assets/fileinput/js/canvas-to-blob.js"></script>
+    <script src="../assets/fileinput/js/fileinput.min.js"></script>
 
     <!-- CSS Styles -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -70,7 +72,7 @@
                     <li id="nav-feed"><a href="/">Feed</a></li>
                     <!-- <li id="nav-discover"><a href="#discover">Discover</a></li>
                     <li id="nav-gift"><a href="#gift">Gift</a></li> -->
-                    <li class="active" id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
+                    <li id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
                     <li id="nav-logout"><a href="/logout">Logout</a></li>
                 </ul>
 
@@ -81,37 +83,104 @@
 
     <div class="container">
         <h1>Post a new item</h1>
+
         <form action="/upload" enctype="multipart/form-data" method="post">
             <% if (locals.error_messages) {
                 error_messages.forEach(function(message) { %>
-            <div class="alert alert-warning"><strong>Error: </strong> <%= message %></div>
-            <% });
+                <div class="alert alert-warning"><strong>Error: </strong>
+                    <%= message %>
+                </div>
+                <% });
             } %>
-            <div class="form-group has-warning">
-                <label>Title</label>
-                    <input type="text" class="form-control" name="title" placeholder="Enter the name of your object" required>
 
-            </div>
-            <div class="form-group has-warning">
-                <label>Description</label>
-                    <input class="form-control" type="text" name="description" placeholder="Enter some description of your object" required>
+                    <div class="form-group has-warning">
+                        <label>Title</label>
+                        <input type="text" class="form-control" name="title" placeholder="Enter the name of your object" required>
 
-            </div>
-            <div class="form-group has-warning">
-                <label>Select an image to upload (less than 100kb):</label>
-                    <input class="form-control-file" type="file" name="avatar" required>
+                    </div>
+                    <div class="form-group has-warning">
+                        <label>Description</label>
+                        <input class="form-control" type="text" name="description" placeholder="Enter some description of your object" required>
 
-            </div>
-            <div class="form-group">
-                <label>Number of Days</label>
-                    <select class="form-control" name="no_of_days">
-                        <option value="7">7</option>
-                        <option value="14">14</option>
-                    </select>
-            </div>
+                    </div>
+                    <div class="form-group has-warning">
+                        <label>Select an image to upload (less than 100kb):</label>
+                        <input id="input-image-1" name="input-image" type="file" class="file-loading" accept="image/*" required>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+                        <!-- an example modal dialog to display confirmation of the resized image -->
+                        <div id="kv-success-modal" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Yippee!</h4>
+                                    </div>
+                                    <div id="kv-success-box" class="modal-body">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            $("#input-image-1").fileinput({
+                                uploadUrl: "/site/image-upload",
+                                allowedFileExtensions: ["jpg", "png", "gif"],
+                                maxImageWidth: 200,
+                                maxFileCount: 1,
+                                resizeImage: true
+                            }).on('filepreupload', function() {
+                                $('#kv-success-box').html('');
+                            }).on('fileuploaded', function(event, data) {
+                                $('#kv-success-box').append(data.response.link);
+                                $('#kv-success-modal').modal('show');
+                            });
+                        </script>
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Days</label>
+                        <select class="form-control" name="no_of_days">
+                            <option value="7">7</option>
+                            <option value="14">14</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+
+
+        <!-- <form action="/upload" enctype="multipart/form-data" method="post">
+            <% if (locals.error_messages) {
+                error_messages.forEach(function(message) { %>
+                <div class="alert alert-warning"><strong>Error: </strong>
+                    <%= message %>
+                </div>
+                <% });
+            } %>
+                    <div class="form-group has-warning">
+                        <label>Title</label>
+                        <input type="text" class="form-control" name="title" placeholder="Enter the name of your object" required>
+
+                    </div>
+                    <div class="form-group has-warning">
+                        <label>Description</label>
+                        <input class="form-control" type="text" name="description" placeholder="Enter some description of your object" required>
+
+                    </div>
+                    <div class="form-group has-warning">
+                        <label>Select an image to upload (less than 100kb):</label>
+                        <input class="form-control-file" type="file" name="avatar" required>
+
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Days</label>
+                        <select class="form-control" name="no_of_days">
+                            <option value="7">7</option>
+                            <option value="14">14</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+        </form> -->
     </div>
 </body>
 
