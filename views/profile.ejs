@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
 
     <!-- Metadata and Responsive Viewport -->
@@ -18,6 +17,22 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- Other Scripts -->
+    <script>
+        var myFriends = null;
+        var isMine = false;
+        isMine = <%= myProfile %>;
+        myName = "<%= user.name %>";
+
+        console.log(isMine);
+        console.log(<%= id %>);
+
+        $(window).load(function() {
+            myFriends = <%- JSON.stringify(friends) %>;
+        });
+        $(document).ready(function() {
+            myFriends = <%- JSON.stringify(friends) %>;
+        });
+    </script>
     <script src="../scripts/profile/profile.js"></script>
 
     <!-- Nav Tab Menu -->
@@ -43,22 +58,6 @@
 </head>
 
 <body>
-
-    <script>
-        var myFriends = null;
-        var isMine = false;
-        isMine = <%= myProfile %>;
-
-        console.log(isMine);
-        console.log(<%= id %>);
-
-        $(window).load(function() {
-            myFriends = <%- JSON.stringify(friends) %>;
-        });
-        $(document).ready(function() {
-            myFriends = <%- JSON.stringify(friends) %>;
-        });
-    </script>
 
     <!-- Navigation Bar -->
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -118,11 +117,11 @@
                 <div class="col-sm-8 text-holder">
                     <h1 class="display-3 name"><%= user.name %></h1>
                     <!-- <hr class="m-y-6"></hr> -->
-                    <p>Woodlands, Singapore</p>
+                    <p>Singapore</p>
                     <div class="counters col-sm-10 col-sm-offset-1" align="center">
                         <div align="center" class="col-sm-4 counter">
                             <p align="center" class="count">
-                                123
+                                <%= totalTaken %>
                             </p>
                             <!-- <hr class="m-y-2" /> -->
                             <p align="center" class="count-label">
@@ -131,7 +130,7 @@
                         </div>
                         <div align="center" class="col-sm-4 counter">
                             <p align="center" class="count">
-                                123
+                                <%= totalGifted %>
                             </p>
                             <!-- <hr class="m-y-2" /> -->
                             <p align="center" class="count-label">
@@ -140,7 +139,7 @@
                         </div>
                         <div align="center" class="col-sm-4 counter">
                             <p align="center" class="count">
-                                123
+                                <%= totalKarma %>
                             </p>
                             <!-- <hr class="m-y-2" /> -->
                             <p align="center" class="count-label">
@@ -168,7 +167,7 @@
 
         <nav id="cd-main-nav" class="cd-main-nav">
             <ul class="has-transitions">
-                <li class="tab-snagged" id="but-snagged"><a>Snagged Items</a></li>
+                <li class="active tab-snagged" id="but-snagged"><a>Snagged Items</a></li>
                 <li class="tab-gifted" id="but-gifted"><a>Given Out</a></li>
                 <li class="tab-friends" id="but-friends"><a>Friends List</a></li>
             </ul>
@@ -177,7 +176,7 @@
 
     <div class="col-sm-4 col-sm-offset-4 nav-tab-area">
         <ul class="nav nav-pills nav-justified tabs">
-            <li class="tab-snagged" id="tab-snagged"><a id="snagged-link">Snagged Items</a></li>
+            <li class="active tab-snagged" id="tab-snagged"><a id="snagged-link">Snagged Items</a></li>
             <li class="tab-gifted" id="tab-gifted"><a id="gifted-link">Given Out</a></li>
             <li class="tab-friends" id="tab-friends"><a id="friends-link">Friends List</a></li>
         </ul>

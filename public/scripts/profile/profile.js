@@ -1,14 +1,9 @@
 // Navbar Selection Fix
 var friendListView = false;
 
-$(document).ready(function() {
-
-    if (!isMine) {
-        $("#but-friends").addClass("hidden");
-        $("#tab-friends").addClass("hidden");
-    }
-
-    $(".nav a").on("click", function() {
+$(function() {
+    $(".tabs a").on("click", function() {
+        console.log($(this));
         if (!$(this).parent().hasClass('active') && $(this).parent().attr('id') !== $(this).parent().find(".active").attr('id')) {
             // TODO:Add logic to determine whether to clear or not
             // Clear section
@@ -22,34 +17,21 @@ $(document).ready(function() {
             switch (currentTab) {
                 case 'tab-snagged':
                     friendListView = false;
-                    // urlAJAX = '/api/friendItems/0/' + numItems;
-                    // ajaxRequest = null;
-                    // addRealViews(html, urlAJAX);
-                    addViews(4);
+                    urlAJAX = '/api/myWants/0/' + numItems;
+                    addRealViews(html, urlAJAX);
                     break;
 
                 case 'tab-gifted':
                     friendListView = false;
-                    // urlAJAX = '/api/allItems/0/' + numItems;
-                    // ajaxRequest = null;
-                    // addRealViews(html, urlAJAX);
-                    addViews(5);
+                    urlAJAX = '/api/myItems/0/' + numItems;
+                    addRealViews(html, urlAJAX);
                     break;
 
                 case 'tab-friends':
                     friendListView = true;
-                    // urlAJAX = null;
-                    // ajaxRequest = null;
 
                     var html = "<div class=\"list-group\">";
-
-                    // var myFriends = !{friends};
-
-                    console.log(myFriends);
-
                     for (var i = 0; i < myFriends.length; i++) {
-
-                        console.log(myFriends[i]);
 
                         html += "<a class=\"list-group-item list-group-item-action\" href=\"/profile/" + myFriends[i].userID + "\">" + myFriends[i].name + "</a>";
                     }
@@ -64,53 +46,13 @@ $(document).ready(function() {
                     //...
             }
 
-            $(".nav").find(".active").removeClass("active");
+            $(".tabs").find(".active").removeClass("active");
             $(this).parent().addClass("active");
-
-            //     // addViews(3);
-            //     var activeTab = $(".nav").find(".active");
-            //     var name = "null";
-            //     lastItemId = 0;
-            //
-            //     var ajaxRequest = null;
-            //
-            //     if (activeTab != null) {
-            //         name = activeTab.attr('id');
-            //     }
-            //     console.log(name);
-            //
-            //     // Construct AJAX Request based on type
-            //     switch (name) {
-            //         case 'nav-feed':
-            //             urlAJAX = '/api/friendItems/0/' + numItems;
-            //             ajaxRequest = null;
-            //             addRealViews(html, urlAJAX);
-            //             break;
-            //
-            //         case 'nav-discover':
-            //             urlAJAX = '/api/allItems/0/' + numItems;
-            //             ajaxRequest = null;
-            //             addRealViews(html, urlAJAX);
-            //             break;
-            //
-            //         case 'nav-gift':
-            //             urlAJAX = null;
-            //             ajaxRequest = null;
-            //             break;
-            //
-            //         // default:
-            //         //     urlAJAX = '/api/friendItems/0/' + numItems;
-            //         //     ajaxRequest = null;
-            //     }
-            //
-            //
         }
-
     });
 });
-
 $(document).ready(function() {
-    $(".cd-main-nav a").on("click", function() {
+    $(".tabs a").on("click", function() {
         var name = $(this).parent().attr('id');
         console.log(name);
 
@@ -178,12 +120,6 @@ function addRealViews(html, urlAJAX) {
 
             if (data.length > 0) {
 
-                // Increment trackers to track load state
-                // first = parseInt($('#first').val());
-                // limit = parseInt($('#limit').val());
-                // $('#first').val(first + 1);
-                // $('#limit').val(data.pagesFiltered);
-                // totalPages = data.pagesFiltered;
                 lastItemId = data[data.length - 1].itemID;
 
                 /*** Factory for views ***/
@@ -201,7 +137,7 @@ function addRealViews(html, urlAJAX) {
                     html += '<div class="caption-area">';
                     html += '<h6 class="item-header">' + value.title + '</h6>';
                     // Item Owner
-                    html += '<p class="item-author">' + value.ownedBy.name + '</p>';
+                    html += '<p class="item-author">' + myName + '</p>';
                     // Item Caption
                     html += '<p class="item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
@@ -243,36 +179,31 @@ var numItems = 6;
 
 $(document).ready(function() {
 
+    if (!isMine) {
+        $("#but-friends").addClass("hidden");
+        $("#tab-friends").addClass("hidden");
+    }
     // Test Mode
-    var test = true;
-    // $('#first').val(1);
-    // $('#limit').val(1);
-    // addViews(6);
-    // first = $('#first').val();
-    // limit = $('#limit').val();
-    urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
+    console.log("HELLO1");
+    var test = false;
+    urlAJAX = '/api/myItems/' + lastItemId + '/' + numItems;
     console.log(urlAJAX);
-    // addRealViews(html, urlAJAX);
-    addViews(6);
+    addRealViews(html, urlAJAX);
 
-    // AJAX Server-End URL
-    // var urlAJAX = 'ajax.php';
     flag = true;
 
     $(window).scroll(function() {
 
         // Trigger the loading early
         if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-            first = $('#first').val();
-            limit = $('#limit').val();
             no_data = true;
 
             triggered += 1;
 
             if (flag && no_data && !test && triggered == 1) {
                 flag = false;
-
-                var activeTab = $(".nav").find(".active");
+                console.log($(".tabs").find(".active"));
+                var activeTab = $(".tabs").find(".active");
                 var name = "null";
 
                 var ajaxRequest = null;
@@ -282,20 +213,18 @@ $(document).ready(function() {
                 }
 
                 // Construct AJAX Request based on type
-                console.log(name);
-                console.log(lastItemId);
                 switch (name) {
-                    case 'nav-feed':
-                        urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
+                    case 'tab-snagged':
+                        urlAJAX = '/api/myItems/' + lastItemId + '/' + numItems;
                         ajaxRequest = null;
                         break;
 
-                    case 'nav-discover':
+                    case 'tab-gifted':
                         urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
                         ajaxRequest = null;
                         break;
 
-                    case 'nav-gift':
+                    case 'tab-friends':
                         ajaxRequest = null;
                         break;
 

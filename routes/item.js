@@ -113,6 +113,25 @@ module.exports = function(app) {
   })
 
   // Find items posted from friends
+  app.get('/api/myItems/:lastItemId/:loadNum', ensureLogin.ensureLoggedIn(), function(req, res) {
+    // db.getNextItems(req.params.pageNum, req.user.fbFriendsId, function(result) {
+    //   res.json(result);
+    // });
+    var lastSeenItem = parseInt(req.params.lastItemId);
+    var numItems = parseInt(req.params.loadNum);
+    var userId = parseInt(req.user.appUserId);
+    if (lastSeenItem === 0) {
+      db.Item.where({giverID: userId}).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll().then(function(data3) {
+        res.json(data3.models);
+      });
+    } else {
+      db.Item.where('itemID', '<', lastSeenItem).where({giverID: userId}).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll().then(function(data3) {
+        res.json(data3.models);
+      });
+    }
+  });
+
+  // Find items posted from friends
   app.get('/api/friendItems/:lastItemId/:loadNum', ensureLogin.ensureLoggedIn(), function(req, res) {
     // db.getNextItems(req.params.pageNum, req.user.fbFriendsId, function(result) {
     //   res.json(result);
