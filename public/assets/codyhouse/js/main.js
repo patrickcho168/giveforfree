@@ -48,7 +48,7 @@ jQuery(document).ready(function($){
 			}
 
 			$(".nav-tab-area").removeClass('hidden');
-
+			mainNavigation.addClass('hidden');
 		}
 	}
 });
