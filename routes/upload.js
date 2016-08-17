@@ -97,77 +97,79 @@ module.exports = function(app) {
     app.post('/upload', function(req, res, next) {
         uploading(req, res, function(err) {
             console.log("HERE");
+            // Image upload errors
             if (err) {
                 console.log(err.message);
                 req.flash('error_messages', err.message);
                 res.redirect('/upload');
 
-      } else if (!(req.file)) {
-        req.flash('error_messages', 'Please upload an image.');
-        res.redirect('/upload');
+            // No image uploaded
+            } else if (!(req.file)) {
+              req.flash('error_messages', 'Please upload an image.');
+              res.redirect('/upload');
+
+              // Check appUserId exists
+            } else if (!(req.user.appUserId)) {
+                  next(new Error("User does not have appUserId"));
 
             } else {
-                // Check appUserId exists
-                if (!(req.user.appUserId)) {
-                    next(new Error("User does not have appUserId"));
-                }
+              // Simple form validation
+              req.checkBody('title', 'Please fill in a valid title.').notEmpty();
+              req.checkBody('description', 'Please fill in a valid description.').notEmpty();
 
-                // Simple form validation
-        req.checkBody('title', 'Please fill in a valid title.').notEmpty();
-        req.checkBody('description', 'Please fill in a valid description.').notEmpty();
+              req.sanitizeBody('title');
+              req.sanitizeBody('description');
 
-        req.sanitizeBody('title');
-        req.sanitizeBody('description');
+              var errors = req.validationErrors();
+              console.log(errors);
+              console.log(req.file);
 
-        var errors = req.validationErrors();
-        console.log(errors);
-        console.log(req.file);
+              if (errors) {
+                errors.forEach(function(error) {
+                  req.flash('error_messages', error.msg);
+                });
+                
+                res.redirect('/upload');
 
-        if (errors) {
-          errors.forEach(function(error) {
-            req.flash('error_messages', error.msg);
+              } else {
+                // Create item based on form
+                var newItem = new db.Item({
+                  giverID: req.user.appUserId,
+                  timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+                  timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
+                  title: req.body.title,
+                  description: req.body.description,
+                  // Change name asap
+                  randomAssign: req.body.postToFacebook ? 1 : 0,
+                  imageLocation: req.file.key
+                });
+
+                // Save item to database
+                newItem.save().then(function(newSavedItem) {
+
+                  // Create facebook post
+                  var userFbId = req.user.id;
+                  var newItemTitle = newSavedItem.attributes.title;
+                  var newItemId = newSavedItem.attributes.itemID;
+                  var newItemUrl = newSavedItem.attributes.imageLocation;
+                  var apiCall =  '/' + userFbId +'/feed';
+                  console.log(apiCall);
+                  facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data){
+                    console.log(data);
+                  });
+                  // console.log(newSavedItem);
+                  // var newItemId = newSavedItem.attributes.itemID;
+                  // var newItemUrl = newSavedItem.attributes.imageLocation;
+                  // var newItemDesc = newSavedItem.attributes.description;
+                  // var newItemTitle = newSavedItem.attributes.title;
+                  // var objString = createFbItem(newItemUrl, newItemTitle, newItemDesc, newItemId);
+                  // console.log('%7B%22' + objString + '%22%7D');
+                });
+
+                res.redirect("/");
+              
+              }
+            } 
           });
-          
-          res.redirect('/upload');
-        } else {
-          // Create item based on form
-                    var newItem = new db.Item({
-                        giverID: req.user.appUserId,
-                        timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
-                        timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
-                        title: req.body.title,
-                        description: req.body.description,
-            // Change name asap
-            randomAssign: req.body.postToFacebook ? 1 : 0,
-                        imageLocation: req.file.key
-                    });
-
-                    // Save item to database
-          newItem.save().then(function(newSavedItem) {
-
-            // Create facebook post
-            var userFbId = req.user.id;
-            var newItemTitle = newSavedItem.attributes.title;
-            var newItemId = newSavedItem.attributes.itemID;
-            var newItemUrl = newSavedItem.attributes.imageLocation;
-            var apiCall =  '/' + userFbId +'/feed';
-            console.log(apiCall);
-            facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data){
-              console.log(data);
-            });
-            // console.log(newSavedItem);
-            // var newItemId = newSavedItem.attributes.itemID;
-            // var newItemUrl = newSavedItem.attributes.imageLocation;
-            // var newItemDesc = newSavedItem.attributes.description;
-            // var newItemTitle = newSavedItem.attributes.title;
-            // var objString = createFbItem(newItemUrl, newItemTitle, newItemDesc, newItemId);
-            // console.log('%7B%22' + objString + '%22%7D');
-          });
-
-                    res.redirect("/");
-        
-        } 
-            }
-        });
     });
 }
