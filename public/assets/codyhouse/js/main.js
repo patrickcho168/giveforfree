@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) {
     // browser window scroll (in pixels) after which the "menu" link is shown
-    var offset = 300;
+    var offset = $(window).height();
 
     var navigationContainer = $('#cd-nav'),
         mainNavigation = navigationContainer.find('#cd-main-nav ul');
@@ -47,10 +47,7 @@ jQuery(document).ready(function($) {
                 mainNavigation.removeClass('has-transitions');
             }
 
-            if ($(window).scrollTop() <= $(window).height()) {
-                $(".nav-tab-area").removeClass('hidden');
-                mainNavigation.addClass('hidden');
-            }
+            $(".nav-tab-area").removeClass('hidden');
         }
     }
 });
