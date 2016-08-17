@@ -122,8 +122,6 @@ module.exports = function(app) {
     var userId = parseInt(req.user.appUserId);
     if (lastSeenItem === 0) {
       db.Item.where({giverID: userId}).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll().then(function(data3) {
-        console.log("HEREEEEE");
-        console.log(data3.models);
         res.json(data3.models);
       });
     } else {
@@ -160,13 +158,19 @@ module.exports = function(app) {
     var numItems = parseInt(req.params.loadNum);
     var userId = req.user.appUserId;
     if (lastSeenItem === 0) {
-      db.Item.where({takerID: null}).where('giverID', '!=', userId).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
-        res.json(data3.models);
-      });
+      db.HomePageItemQuery(userId, numItems, function(data) {
+        res.json(data);
+      })
+      // db.Item.where({takerID: null}).where('giverID', '!=', userId).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
+      //   res.json(data3.models);
+      // });
     } else {
-      db.Item.where('itemID', '<', lastSeenItem).where({takerID: null}).where('giverID', '!=', userId).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
-        res.json(data3.models);
-      });
+      db.HomePageItemQueryBeforeId(userId, numItems, lastSeenItem, function(data) {
+        res.json(data);
+      })
+      // db.Item.where('itemID', '<', lastSeenItem).where({takerID: null}).where('giverID', '!=', userId).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
+      //   res.json(data3.models);
+      // });
     }
   });
 
