@@ -1,36 +1,42 @@
-/* Demo Scripts for Making Twitter Bootstrap 3 Tab Play Nicely With The Masonry Library
- * on SitePoint by Maria Antonietta Perna
- */
+$(function() {
 
-//Initialize Masonry inside Bootstrap 3 Tab component
+    'use strict';
+    ////
 
-(function($) {
+    var $container = $('.grid');
 
-    var $container = $('.masonry-container');
     $container.imagesLoaded(function() {
         $container.masonry({
-            columnWidth: '.item',
-            itemSelector: '.item'
+            itemSelector: '.item',
+            columnWidth: '.item'
         });
     });
 
-    //Reinitialize masonry inside each panel after the relative tab link is clicked -
-    $('a[data-toggle=tab]').each(function() {
-        var $this = $(this);
+    // $container.infinitescroll({
+    //         navSelector: '#rh_nav_below',
+    //         nextSelector: '#rh_nav_below .rh_nav_next a',
+    //         itemSelector: '.grid-item',
+    //         loading: {
+    //             finishedMsg: 'No more pages to load.',
+    //             img: 'http://i.imgur.com/6RMhx.gif'
+    //         }
+    //     },
+    //     function(newElements) {
+    //         var $newElems = $(newElements).css({
+    //             opacity: 0
+    //         });
+    //         $newElems.imagesLoaded(function() {
+    //             $newElems.animate({
+    //                 opacity: 1
+    //             });
+    //             $container.masonry('appended', $newElems, true);
+    //         });
+    //     }
+    // );
 
-        $this.on('shown.bs.tab', function() {
+    ////
 
-            $container.imagesLoaded(function() {
-                $container.masonry({
-                    columnWidth: '.item',
-                    itemSelector: '.item'
-                });
-            });
-
-        }); //end shown
-    }); //end each
-
-})(jQuery);
+});
 
 // Want or Unwant
 $(document).on("click", ".snag", function() {

@@ -1,43 +1,54 @@
-/* Demo Scripts for Making Twitter Bootstrap 3 Tab Play Nicely With The Masonry Library
- * on SitePoint by Maria Antonietta Perna
- */
+$(function() {
 
-//Initialize Masonry inside Bootstrap 3 Tab component
+    'use strict';
+    ////
 
-(function($) {
+    var $container = $('.grid');
 
-    var $container = $('.masonry-container');
     $container.imagesLoaded(function() {
         $container.masonry({
-            columnWidth: '.item',
-            itemSelector: '.item'
+            itemSelector: '.item',
+            columnWidth: '.item'
         });
     });
 
-    //Reinitialize masonry inside each panel after the relative tab link is clicked -
-    $('a[data-toggle=tab]').each(function() {
-        var $this = $(this);
+    // $container.infinitescroll({
+    //         navSelector: '#rh_nav_below',
+    //         nextSelector: '#rh_nav_below .rh_nav_next a',
+    //         itemSelector: '.grid-item',
+    //         loading: {
+    //             finishedMsg: 'No more pages to load.',
+    //             img: 'http://i.imgur.com/6RMhx.gif'
+    //         }
+    //     },
+    //     function(newElements) {
+    //         var $newElems = $(newElements).css({
+    //             opacity: 0
+    //         });
+    //         $newElems.imagesLoaded(function() {
+    //             $newElems.animate({
+    //                 opacity: 1
+    //             });
+    //             $container.masonry('appended', $newElems, true);
+    //         });
+    //     }
+    // );
 
-        $this.on('shown.bs.tab', function() {
+    ////
 
-            $container.imagesLoaded(function() {
-                $container.masonry({
-                    columnWidth: '.item',
-                    itemSelector: '.item'
-                });
-            });
-
-        }); //end shown
-    }); //end each
-
-})(jQuery);
+});
 
 // Navbar Selection Fix
 var friendListView = false;
 
-$(function() {
-    $(".tabs a").on("click", function() {
-        console.log($(this));
+$(document).ready(function() {
+
+    if (!isMine) {
+        $("#but-friends").addClass("hidden");
+        $("#tab-friends").addClass("hidden");
+    }
+
+    $(".nav a").on("click", function() {
         if (!$(this).parent().hasClass('active') && $(this).parent().attr('id') !== $(this).parent().find(".active").attr('id')) {
             // TODO:Add logic to determine whether to clear or not
             // Clear section
@@ -51,21 +62,34 @@ $(function() {
             switch (currentTab) {
                 case 'tab-snagged':
                     friendListView = false;
-                    urlAJAX = '/api/myWants/0/' + numItems;
-                    addRealViews(html, urlAJAX);
+                    // urlAJAX = '/api/friendItems/0/' + numItems;
+                    // ajaxRequest = null;
+                    // addRealViews(html, urlAJAX);
+                    addViews(4);
                     break;
 
                 case 'tab-gifted':
                     friendListView = false;
-                    urlAJAX = '/api/myItems/0/' + numItems;
-                    addRealViews(html, urlAJAX);
+                    // urlAJAX = '/api/allItems/0/' + numItems;
+                    // ajaxRequest = null;
+                    // addRealViews(html, urlAJAX);
+                    addViews(5);
                     break;
 
                 case 'tab-friends':
                     friendListView = true;
+                    // urlAJAX = null;
+                    // ajaxRequest = null;
 
                     var html = "<div class=\"list-group\">";
+
+                    // var myFriends = !{friends};
+
+                    console.log(myFriends);
+
                     for (var i = 0; i < myFriends.length; i++) {
+
+                        console.log(myFriends[i]);
 
                         html += "<a class=\"list-group-item list-group-item-action\" href=\"/profile/" + myFriends[i].userID + "\">" + myFriends[i].name + "</a>";
                     }
@@ -80,13 +104,53 @@ $(function() {
                     //...
             }
 
-            $(".tabs").find(".active").removeClass("active");
+            $(".nav").find(".active").removeClass("active");
             $(this).parent().addClass("active");
+
+            //     // addViews(3);
+            //     var activeTab = $(".nav").find(".active");
+            //     var name = "null";
+            //     lastItemId = 0;
+            //
+            //     var ajaxRequest = null;
+            //
+            //     if (activeTab != null) {
+            //         name = activeTab.attr('id');
+            //     }
+            //     console.log(name);
+            //
+            //     // Construct AJAX Request based on type
+            //     switch (name) {
+            //         case 'nav-feed':
+            //             urlAJAX = '/api/friendItems/0/' + numItems;
+            //             ajaxRequest = null;
+            //             addRealViews(html, urlAJAX);
+            //             break;
+            //
+            //         case 'nav-discover':
+            //             urlAJAX = '/api/allItems/0/' + numItems;
+            //             ajaxRequest = null;
+            //             addRealViews(html, urlAJAX);
+            //             break;
+            //
+            //         case 'nav-gift':
+            //             urlAJAX = null;
+            //             ajaxRequest = null;
+            //             break;
+            //
+            //         // default:
+            //         //     urlAJAX = '/api/friendItems/0/' + numItems;
+            //         //     ajaxRequest = null;
+            //     }
+            //
+            //
         }
+
     });
 });
+
 $(document).ready(function() {
-    $(".tabs a").on("click", function() {
+    $(".cd-main-nav a").on("click", function() {
         var name = $(this).parent().attr('id');
         console.log(name);
 
@@ -154,6 +218,12 @@ function addRealViews(html, urlAJAX) {
 
             if (data.length > 0) {
 
+                // Increment trackers to track load state
+                // first = parseInt($('#first').val());
+                // limit = parseInt($('#limit').val());
+                // $('#first').val(first + 1);
+                // $('#limit').val(data.pagesFiltered);
+                // totalPages = data.pagesFiltered;
                 lastItemId = data[data.length - 1].itemID;
 
                 /*** Factory for views ***/
@@ -171,7 +241,7 @@ function addRealViews(html, urlAJAX) {
                     html += '<div class="caption-area">';
                     html += '<h6 class="item-header">' + value.title + '</h6>';
                     // Item Owner
-                    html += '<p class="item-author">' + myName + '</p>';
+                    html += '<p class="item-author">' + value.ownedBy.name + '</p>';
                     // Item Caption
                     html += '<p class="item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
@@ -213,31 +283,36 @@ var numItems = 6;
 
 $(document).ready(function() {
 
-    if (!isMine) {
-        $("#but-friends").addClass("hidden");
-        $("#tab-friends").addClass("hidden");
-    }
     // Test Mode
-    console.log("HELLO1");
-    var test = false;
-    urlAJAX = '/api/myItems/' + lastItemId + '/' + numItems;
+    var test = true;
+    // $('#first').val(1);
+    // $('#limit').val(1);
+    // addViews(6);
+    // first = $('#first').val();
+    // limit = $('#limit').val();
+    urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
     console.log(urlAJAX);
-    addRealViews(html, urlAJAX);
+    // addRealViews(html, urlAJAX);
+    addViews(6);
 
+    // AJAX Server-End URL
+    // var urlAJAX = 'ajax.php';
     flag = true;
 
     $(window).scroll(function() {
 
         // Trigger the loading early
         if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+            first = $('#first').val();
+            limit = $('#limit').val();
             no_data = true;
 
             triggered += 1;
 
             if (flag && no_data && !test && triggered == 1) {
                 flag = false;
-                console.log($(".tabs").find(".active"));
-                var activeTab = $(".tabs").find(".active");
+
+                var activeTab = $(".nav").find(".active");
                 var name = "null";
 
                 var ajaxRequest = null;
@@ -247,18 +322,20 @@ $(document).ready(function() {
                 }
 
                 // Construct AJAX Request based on type
+                console.log(name);
+                console.log(lastItemId);
                 switch (name) {
-                    case 'tab-snagged':
-                        urlAJAX = '/api/myItems/' + lastItemId + '/' + numItems;
+                    case 'nav-feed':
+                        urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
                         ajaxRequest = null;
                         break;
 
-                    case 'tab-gifted':
+                    case 'nav-discover':
                         urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
                         ajaxRequest = null;
                         break;
 
-                    case 'tab-friends':
+                    case 'nav-gift':
                         ajaxRequest = null;
                         break;
 
