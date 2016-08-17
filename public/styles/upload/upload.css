@@ -38,6 +38,11 @@ p {
     z-index: 99999;
 }
 
+/* Main Container */
+.main-container {
+    padding-top: 70px;
+}
+
 /* Footer */
 
 footer {}
