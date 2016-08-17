@@ -169,22 +169,24 @@
     <div id="cd-nav" class="is-fixed hidden">
         <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
 
-        <nav id="cd-main-nav" class="cd-main-nav">
+        <nav class="cd-main-nav col-sm-4 col-sm-offset-4 nav-tab-area" id="cd-main-nav">
+            <ul class="nav nav-pills nav-justified tabs has-transitions">
+                <li class="active tab-snagged" id="tab-snagged"><a id="snagged-link">Snagged Items</a></li>
+                <li class="tab-gifted" id="tab-gifted"><a id="gifted-link">Given Out</a></li>
+                <li class="tab-friends" id="tab-friends"><a id="friends-link">Friends List</a></li>
+            </ul>
+        </nav>
+
+        <!-- <nav id="cd-main-nav" class="cd-main-nav">
             <ul class="has-transitions">
                 <li class="active tab-snagged" id="but-snagged"><a>Snagged Items</a></li>
                 <li class="tab-gifted" id="but-gifted"><a>Given Out</a></li>
                 <li class="tab-friends" id="but-friends"><a>Friends List</a></li>
             </ul>
-        </nav>
+        </nav> -->
     </div>
 
-    <div class="col-sm-4 col-sm-offset-4 nav-tab-area">
-        <ul class="nav nav-pills nav-justified tabs">
-            <li class="active tab-snagged" id="tab-snagged"><a id="snagged-link">Snagged Items</a></li>
-            <li class="tab-gifted" id="tab-gifted"><a id="gifted-link">Given Out</a></li>
-            <li class="tab-friends" id="tab-friends"><a id="friends-link">Friends List</a></li>
-        </ul>
-    </div>
+
 
     <!-- Scroll Container -->
     <div class="infinite-scroll-container col-sm-10 col-sm-offset-1" id="infinite-scroll-container"></div>
