@@ -97,7 +97,7 @@
                             <li><a href="/logout">Logout</a></li>
                         </ul> -->
 					<!-- </li> -->
-					<li id="nav-feed"><a href="/">Feed</a></li>
+					<li id="nav-feed" class="active"><a href="/">Feed</a></li>
 					<!-- <li id="nav-discover"><a href="#discover">Discover</a></li>
                     <li id="nav-gift"><a href="#gift">Gift</a></li> -->
 					<li id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
@@ -141,38 +141,3 @@
 
 
 </html>
-
-<!-- <p>
-	Hello, <%= user.displayName %>. View your <a href="/profile/<%= user.appUserId %>">profile</a>.
-</p>
-
-Items Available From Your Friends:
-<% if (availItems.length > 0) { %>
-<table style="width:100%">
-	<tr>
-		<th>Item Name</th>
-		<th>Item Description</th>
-		<th>Item timeCreated</th>
-		<th>Item timeExpired</th>
-		<th>Item Giver</th>
-		<th>Item Image</th>
-	</tr>
- 	<% for(var i=0; i<availItems.length; i++) { %>
- 		<tr>
- 			<td><a href="/item/<%=availItems[i].attributes.itemID%>"><%= availItems[i].attributes.title         %></a></td>
- 			<td><%= availItems[i].attributes.description   %></td>
- 			<td><%= availItems[i].attributes.timeCreated   %></td>
- 			<td><%= availItems[i].attributes.timeExpired   %></td>
- 			<td><a href="/profile/<%=availItems[i].attributes.giverID%>"><%= friendProperty[availItems[i].attributes.giverID].name%></a></td>
- 			<td><img src="https://d24uwljj8haz6q.cloudfront.net/<%= availItems[i].attributes.imageLocation %>" width="50"></td>
- 		</tr>
-	<% } %>
-</table>
-<% } else { %>
-	<p> No items available for taking currently. Try posting an item! </p>
-<% } %><br/>
-
-Visit your <a href="/friends">friends</a>.<br/>
-<a href="/upload">Upload</a> an Item.<br/>
-<a href="/logout">Logout</a>.
-</p> -->

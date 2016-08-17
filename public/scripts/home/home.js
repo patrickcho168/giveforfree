@@ -273,7 +273,7 @@ $(document).ready(function() {
             if (flag && no_data && !test && triggered == 1) {
                 flag = false;
 
-                var activeTab = $(".nav").find(".active");
+                var activeTab = $(".navbar-nav").find(".active");
                 var name = "null";
 
                 var ajaxRequest = null;

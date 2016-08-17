@@ -122,6 +122,8 @@ module.exports = function(app) {
     var userId = parseInt(req.user.appUserId);
     if (lastSeenItem === 0) {
       db.Item.where({giverID: userId}).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll().then(function(data3) {
+        console.log("HEREEEEE");
+        console.log(data3.models);
         res.json(data3.models);
       });
     } else {

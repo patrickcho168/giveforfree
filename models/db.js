@@ -54,8 +54,6 @@ var Want = bookshelf.Model.extend({
 });
 
 var ItemQuery = function(userId, cb) {
-  var a = knex.select().table('item');
-  console.log(a);
   knex
     .from('item as i')
     .leftJoin('user as u', 'u.userID', 'i.giverID')
