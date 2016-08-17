@@ -1,3 +1,11 @@
+var $container = $('.masonry-container');
+$container.imagesLoaded( function () {
+  $container.masonry({
+    columnWidth: '.item',
+    itemSelector: '.item'
+  });
+});
+
 // Want or Unwant
 $(document).on("click", ".snag", function() {
     var itemId = $(this).attr('itemId');
@@ -158,7 +166,7 @@ function addRealViews(html, urlAJAX) {
                     // Main Item Photo
                     html += '<div class="thumbnail">';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
-                    html += '<img style="height: 200px; width: 100%; display: block;" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
+                    html += '<img style="display: block;" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
                     // Item Title
                     html += '<div class="caption-area">';
                     html += '<h6 class="item-header">' + value.title + '</h6>';
