@@ -50,6 +50,7 @@
         isMine = <%= myProfile %>;
 
         console.log(isMine);
+        console.log(<%= id %>);
 
         $(window).load(function() {
             myFriends = <%- JSON.stringify(friends) %>;
