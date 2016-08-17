@@ -62,34 +62,21 @@ $(document).ready(function() {
             switch (currentTab) {
                 case 'tab-snagged':
                     friendListView = false;
-                    // urlAJAX = '/api/friendItems/0/' + numItems;
-                    // ajaxRequest = null;
-                    // addRealViews(html, urlAJAX);
-                    addViews(4);
+                    urlAJAX = '/api/myWants/0/' + numItems;
+                    addRealViews(html, urlAJAX);
                     break;
 
                 case 'tab-gifted':
                     friendListView = false;
-                    // urlAJAX = '/api/allItems/0/' + numItems;
-                    // ajaxRequest = null;
-                    // addRealViews(html, urlAJAX);
-                    addViews(5);
+                    urlAJAX = '/api/myItems/0/' + numItems;
+                    addRealViews(html, urlAJAX);
                     break;
 
                 case 'tab-friends':
                     friendListView = true;
-                    // urlAJAX = null;
-                    // ajaxRequest = null;
 
                     var html = "<div class=\"list-group\">";
-
-                    // var myFriends = !{friends};
-
-                    console.log(myFriends);
-
                     for (var i = 0; i < myFriends.length; i++) {
-
-                        console.log(myFriends[i]);
 
                         html += "<a class=\"list-group-item list-group-item-action\" href=\"/profile/" + myFriends[i].userID + "\">" + myFriends[i].name + "</a>";
                     }
@@ -105,6 +92,9 @@ $(document).ready(function() {
             }
 
             $(".nav").find(".active").removeClass("active");
+            $(this).parent().addClass("active");
+
+            $(".tabs").find(".active").removeClass("active");
             $(this).parent().addClass("active");
 
             //     // addViews(3);
@@ -241,13 +231,14 @@ function addRealViews(html, urlAJAX) {
                     html += '<div class="caption-area">';
                     html += '<h6 class="item-header">' + value.title + '</h6>';
                     // Item Owner
-                    html += '<p class="item-author">' + value.ownedBy.name + '</p>';
+                    // html += '<p class="item-author">' + value.ownedBy.name + '</p>';
                     // Item Caption
+                    html += '<p class="item-author">' + myName + '</p>';
                     html += '<p class="item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
                     html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary itemcall" id="itemcall' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
                     // Item Snag Counts
-                    html += '<p class="item-snags">' + '123' + ' people snagged this.</p>';
+                    html += '<small class="item-snags">' + '123' + ' people snagged this.</small>';
                     html += '</div>';
                     html += '</div>';
                     html += '</div>';
@@ -282,18 +273,23 @@ var lastItemId = 0;
 var numItems = 6;
 
 $(document).ready(function() {
+    if (!isMine) {
+        $("#but-friends").addClass("hidden");
+        $("#tab-friends").addClass("hidden");
+    }
 
     // Test Mode
-    var test = true;
+    var test = false;
     // $('#first').val(1);
     // $('#limit').val(1);
     // addViews(6);
     // first = $('#first').val();
     // limit = $('#limit').val();
-    urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
+    // urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
+    urlAJAX = '/api/myItems/' + lastItemId + '/' + numItems;
     console.log(urlAJAX);
     // addRealViews(html, urlAJAX);
-    addViews(6);
+    // addViews(6);
 
     // AJAX Server-End URL
     // var urlAJAX = 'ajax.php';
@@ -303,8 +299,8 @@ $(document).ready(function() {
 
         // Trigger the loading early
         if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-            first = $('#first').val();
-            limit = $('#limit').val();
+            // first = $('#first').val();
+            // limit = $('#limit').val();
             no_data = true;
 
             triggered += 1;
@@ -312,7 +308,8 @@ $(document).ready(function() {
             if (flag && no_data && !test && triggered == 1) {
                 flag = false;
 
-                var activeTab = $(".nav").find(".active");
+                console.log($(".tabs").find(".active"));
+                var activeTab = $(".tabs").find(".active");
                 var name = "null";
 
                 var ajaxRequest = null;
@@ -325,17 +322,17 @@ $(document).ready(function() {
                 console.log(name);
                 console.log(lastItemId);
                 switch (name) {
-                    case 'nav-feed':
-                        urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
+                    case 'tab-snagged':
+                        urlAJAX = '/api/myItems/' + lastItemId + '/' + numItems;
                         ajaxRequest = null;
                         break;
 
-                    case 'nav-discover':
+                    case 'tab-gifted':
                         urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
                         ajaxRequest = null;
                         break;
 
-                    case 'nav-gift':
+                    case 'tab-friends':
                         ajaxRequest = null;
                         break;
 
