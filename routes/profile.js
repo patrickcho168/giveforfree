@@ -55,6 +55,7 @@ module.exports = function(app) {
                                     res.render('profile', {
                                         myProfile: mine,
                                         user: user.attributes,
+                                        id: req.user.appUserId,
                                         userWants: userWants.models,
                                         userGive: userGive.models,
                                         userGiven: userGiven.models,
