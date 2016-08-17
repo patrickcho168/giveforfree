@@ -24,7 +24,9 @@ var uploading = multer({
 
     // Only accept image files
     fileFilter: function(req, file, cb) {
+        console.log("HERE1");
         console.log(typeof(file.mimetype));
+        console.log("HERE2");
         // Checks the file extension
         if (file.mimetype.indexOf("image") == -1) {
             cb(new Error("This is not an image file."), false);
@@ -94,6 +96,7 @@ module.exports = function(app) {
 
     app.post('/upload', function(req, res, next) {
         uploading(req, res, function(err) {
+            console.log("HERE");
             if (err) {
                 console.log(err.message);
                 req.flash('error_messages', err.message);
