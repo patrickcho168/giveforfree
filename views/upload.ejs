@@ -107,7 +107,6 @@
                         <label>Select an image to upload (less than 100kb):</label>
                         <input id="input-image-1" name="input-image" type="file" class="file-loading" accept="image/*" required>
 
-                        <!-- an example modal dialog to display confirmation of the resized image -->
                         <div id="kv-success-modal" class="modal fade">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -148,7 +147,7 @@
         </form> -->
 
 
-        <!-- <form action="/upload" enctype="multipart/form-data" method="post">
+        <form action="/upload" enctype="multipart/form-data" method="post">
             <% if (locals.error_messages) {
                 error_messages.forEach(function(message) { %>
                 <div class="alert alert-warning"><strong>Error: </strong>
@@ -180,7 +179,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>
-        </form> -->
+        </form>
     </div>
 </body>
 
