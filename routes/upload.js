@@ -53,7 +53,7 @@ var uploading = multer({
             });
         }
     })
-}).single('avatar');
+}).single('input-file-preview');
 
 // function createFbItem(imgUrl, title, desc, itemId) {
 //   var object = {
