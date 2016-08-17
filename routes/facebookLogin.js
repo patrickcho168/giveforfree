@@ -102,44 +102,17 @@ module.exports = function(app) {
     app.use(onlyNotLogout(facebookCache));
 
     // HOME PAGE
-    // DISPLAY ALL ITEMS FROM FRIENDS OR ALL ITEMS
-    // MIGHT WANT TO ADD ITEMS THAT ARE ALLOWED TO BE GIVEN TO EVERYONE
     app.get('/', ensureLogin.ensureLoggedIn(), function(req, res) {
-        // JUST TRYING OUT
         var userId = req.user.appUserId;
-        db.ItemQuery(userId, function(data) {
+        db.HomePageItemQuery(userId, 6, function(data) {
             console.log(data);
         })
-        console.log(req.user.accessToken);
-        console.log(req.user.id);
         res.render('homeLoggedIn', {id: userId});
-        // db.Item.where({
-        //     takerID: null
-        // }).where('giverID', 'in', req.user.fbFriendsId).fetchAll().then(function(data3) {
-        //     res.render('homeLoggedIn', {
-        //         user: req.user,
-        //         availItems: data3.models,
-        //         friendProperty: req.user.fbFriendsToPropertyMap,
-        //         id: userId
-        //     });
-        // });
     });
 
     app.get('/login', function(req, res) {
         res.render('loginSS');
     });
-
-    // TESTING
-    // app.get('/login',
-    //   function(req, res){
-    //     res.render('homeLoggedIn', {user:req.user});
-    //   //   res.render('loginSS');
-    //   });
-
-    // app.get('/login',
-    //   function(req, res){
-    //     res.render('profile');
-    //   });
 
     app.get('/login/facebook',
         passport.authenticate('facebook', {

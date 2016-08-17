@@ -51,12 +51,21 @@ $(document).on("click", ".snag", function() {
     $(this).addClass("btn-danger");
 
     // Change type
-    $(this).removeClass("snag")
-    $(this).addClass("unsnag")
+    $(this).removeClass("snag");
+    $(this).addClass("unsnag");
 
     // Send post request
     // Should check for success
-    $.post("api/want/" + itemId);
+    $.post("api/want/" + itemId)
+        .done(function() {
+
+        })
+        .fail(function() {
+
+        })
+        .always(function() {
+
+        });
 });
 
 $(document).on("click", ".unsnag", function() {
@@ -71,11 +80,20 @@ $(document).on("click", ".unsnag", function() {
     $(this).addClass("btn-primary");
 
     // Change type
-    $(this).removeClass("unsnag")
-    $(this).addClass("snag")
+    $(this).removeClass("unsnag");
+    $(this).addClass("snag");
 
     // Send post request
     $.post("api/unwant/" + itemId)
+        .done(function() {
+
+        })
+        .fail(function() {
+
+        })
+        .always(function() {
+
+        });
 });
 
 // Navbar Selection Fix
@@ -107,7 +125,7 @@ $(function() {
             // Construct AJAX Request based on type
             switch (name) {
                 case 'nav-feed':
-                    urlAJAX = '/api/friendItems/0/' + numItems;
+                    urlAJAX = '/api/allItems/0/' + numItems;
                     ajaxRequest = null;
                     addRealViews(html, urlAJAX);
                     break;
@@ -124,7 +142,7 @@ $(function() {
                     break;
 
                     // default:
-                    //     urlAJAX = '/api/friendItems/0/' + numItems;
+                    //     urlAJAX = '/api/allItems/0/' + numItems;
                     //     ajaxRequest = null;
             }
 
@@ -203,13 +221,17 @@ function addRealViews(html, urlAJAX) {
                     html += '<div class="caption-area">';
                     html += '<h6 class="item-header">' + value.title + '</h6>';
                     // Item Owner
-                    html += '<p class="item-author">' + value.ownedBy.name + '</p>';
+                    html += '<p class="item-author">' + value.name + '</p>';
                     // Item Caption
                     html += '<p class="item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
-                    html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag" itemId="' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
+                    if (value.meWant > 0) {
+                        html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-danger unsnag" itemId="' + value.itemID + '" role="button">UNSNAG</a></div>';
+                    } else {
+                        html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag" itemId="' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
+                    }
                     // Item Snag Counts
-                    html += '<small class="item-snags text-muted">' + '123' + ' people snagged this.</p>';
+                    html += '<small class="item-snags text-muted">' + value.numWants + ' people snagged this.</p>';
                     html += '</div>';
                     html += '</div>';
                     html += '</div>';
@@ -252,7 +274,7 @@ $(document).ready(function() {
     // addViews(6);
     // first = $('#first').val();
     // limit = $('#limit').val();
-    urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
+    urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
     console.log(urlAJAX);
     addRealViews(html, urlAJAX);
 
@@ -287,7 +309,7 @@ $(document).ready(function() {
                 console.log(lastItemId);
                 switch (name) {
                     case 'nav-feed':
-                        urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
+                        urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
                         ajaxRequest = null;
                         break;
 
@@ -301,7 +323,7 @@ $(document).ready(function() {
                         break;
 
                         // default:
-                        //     urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
+                        //     urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
                         //     ajaxRequest = null;
                 }
 
