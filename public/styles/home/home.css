@@ -145,6 +145,10 @@ p {
     background: #337ab7;
 }
 
+.white, .white a {
+    color: #ffffff;
+}
+
 /* Navbar */
 
 .navbar-right {

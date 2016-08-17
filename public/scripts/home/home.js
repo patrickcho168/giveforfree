@@ -160,7 +160,7 @@ function addRealViews(html, urlAJAX) {
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
                     html += '<img class="card-img-top" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
                     // Item Title
-                    html += '<div class="caption-area">';
+                    html += '<div class="card-block caption-area">';
                     html += '<h6 class="card-title item-header">' + value.title + '</h6>';
                     // Item Owner
                     html += '<p class="card-text item-author">' + value.ownedBy.name + '</p>';
