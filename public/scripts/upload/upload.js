@@ -49,7 +49,7 @@ $(function() {
         reader.onload = function(e) {
             $(".image-preview-input-title").text("Change");
             $(".image-preview-clear").show();
-            $(".image-preview-filename").val("image filename");
+            $(".image-preview-filename").val("input-file-preview");
             img.attr('src', e.target.result);
             $(".image-preview").attr("data-content", $(img)[0].outerHTML).popover("show");
         }
