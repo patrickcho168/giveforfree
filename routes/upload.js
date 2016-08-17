@@ -83,7 +83,7 @@ function createFbPost(title, itemId, imgUrl) {
 }
 
 module.exports = function(app) {
-    app.get('/upload', function(req, res, next) {
+    app.get('/upload', ensureLogin.ensureLoggedIn(), function(req, res, next) {
         var otherUserId = parseInt(req.params.id);
         var mine = otherUserId === req.user.appUserId;
 
@@ -94,7 +94,7 @@ module.exports = function(app) {
         });
     });
 
-    app.post('/upload', function(req, res, next) {
+    app.post('/upload', ensureLogin.ensureLoggedIn(), function(req, res, next) {
         uploading(req, res, function(err) {
             console.log("HERE");
             // Image upload errors
@@ -129,7 +129,11 @@ module.exports = function(app) {
                   req.flash('error_messages', error.msg);
                 });
                 
-                res.redirect('/upload');
+                res.redirect('/upload', {
+                    myProfile: mine,
+                    user: req.user.attributes,
+                    id: req.user.appUserId
+                });
 
               } else {
                 // Create item based on form
@@ -139,7 +143,7 @@ module.exports = function(app) {
                   timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
                   title: req.body.title,
                   description: req.body.description,
-                  // Change name asap
+                  // Actl don't have to save to db?
                   randomAssign: req.body.postToFacebook ? 1 : 0,
                   imageLocation: req.file.key
                 });
@@ -147,16 +151,20 @@ module.exports = function(app) {
                 // Save item to database
                 newItem.save().then(function(newSavedItem) {
 
-                  // Create facebook post
-                  var userFbId = req.user.id;
-                  var newItemTitle = newSavedItem.attributes.title;
-                  var newItemId = newSavedItem.attributes.itemID;
-                  var newItemUrl = newSavedItem.attributes.imageLocation;
-                  var apiCall =  '/' + userFbId +'/feed';
-                  console.log(apiCall);
-                  facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data){
-                    console.log(data);
-                  });
+                  if (req.body.postToFacebook) {
+                    
+                    // Create facebook post
+                    var userFbId = req.user.id;
+                    var newItemTitle = newSavedItem.attributes.title;
+                    var newItemId = newSavedItem.attributes.itemID;
+                    var newItemUrl = newSavedItem.attributes.imageLocation;
+                    var apiCall =  '/' + userFbId +'/feed';
+                    console.log(apiCall);
+                    facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data){
+                      console.log(data);
+                    });
+
+                  }
                   // console.log(newSavedItem);
                   // var newItemId = newSavedItem.attributes.itemID;
                   // var newItemUrl = newSavedItem.attributes.imageLocation;

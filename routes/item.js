@@ -17,10 +17,21 @@ function inArray(needle,haystack)
 
 module.exports = function(app) {
 
+  // Display item page
+  app.get('/item/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
+    var itemId = parseInt(req.params.itemId);
+
+    db.Item.where({itemID: itemId}).fetch().then(function(data) {      
+      res.render('item', {myItem: false, 
+        friendProperty: req.user.fbFriendsToPropertyMap,
+        item: JSON.parse(JSON.stringify(data))});
+    });
+  });
+
   // This is for giving to random person
   app.post('/api/give/:itemId', ensureLogin.ensureLoggedIn(), function(req,res) {
     var userId = parseInt(req.user.appUserId);
-    var itemId = parseInt(req.param.itemId);
+    var itemId = parseInt(req.params.itemId);
     db.Item.where({itemID: itemId}).fetch().then(function(data) {
       // If item exists
       if (data !== null) { 
@@ -52,7 +63,7 @@ module.exports = function(app) {
   // This is for giving to specific person
   app.post('/api/give/:itemId/:takerId', ensureLogin.ensureLoggedIn(), function(req,res) {
     var userId = parseInt(req.user.appUserId);
-    var itemId = parseInt(req.param.itemId);
+    var itemId = parseInt(req.params.itemId);
     var wanterId = parseInt(req.param.takerId);
     db.Item.where({itemID: itemId}).fetch().then(function(data) {
       // If item exists
@@ -81,20 +92,26 @@ module.exports = function(app) {
     var itemId = parseInt(req.params.itemId);
     var userId = parseInt(req.user.appUserId);
 
-    // Check if item already wanted by this person
     db.Want.where({itemID: itemId, wanterID: userId}).fetch().then(function (oldWant) {
-      if (oldWant === null) {
+      db.Item.where({itemID: itemId}).fetch().then(function(item) {
+        console.log(item);
+        // Check if item is owned by this person
+        if (item.giverID != userId) {
+          // Check if item already wanted by this person
+          if (oldWant === null) {
 
-        // Register a new claim for the item
-        var newWant = new db.Want({
-          itemID: itemId,
-          wanterID: userId,
-          timeWanted: moment().format("YYYY-MM-DD HH:mm:ss")
-        });
+            // Register a new claim for the item
+            var newWant = new db.Want({
+              itemID: itemId,
+              wanterID: userId,
+              timeWanted: moment().format("YYYY-MM-DD HH:mm:ss")
+            });
 
-        // Store in db
-        newWant.save();
-      }
+            // Store in db
+            newWant.save();
+          }
+        }
+      });
     });
   })
 
