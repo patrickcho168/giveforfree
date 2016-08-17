@@ -158,7 +158,7 @@ function addRealViews(html, urlAJAX) {
                     // Main Item Photo
                     html += '<div class="card">';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
-                    html += '<img class="card-img-top" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
+                    html += '<img class="card-img-top" style="height: 200px; width: 100%; display: block;" data-holder-rendered="true" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
                     // Item Title
                     html += '<div class="card-block caption-area">';
                     html += '<h6 class="card-title item-header">' + value.title + '</h6>';
