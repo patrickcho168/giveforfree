@@ -48,6 +48,7 @@ $(function() {
         // Set preview image into the popover data-content
         reader.onload = function(e) {
             $(".image-preview-input-title").text("Change");
+            $(".image-preview-clear").text("Clear");
             $(".image-preview-clear").show();
             $(".image-preview-filename").val("input-file-preview");
             img.attr('src', e.target.result);

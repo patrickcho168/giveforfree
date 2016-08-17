@@ -162,8 +162,6 @@ p {
     font-size: 20px;
     z-index: 100;
     text-align: center;
-    line-height: 2.00;
-
 }
 
 /* Scroll Container */
@@ -183,7 +181,7 @@ p {
 
 /* Thumbnail */
 
-.item-header {
+/*.item-header {
     font-size: 1.5em;
 }
 .item-author {
@@ -200,15 +198,15 @@ p {
 .item-call {
     font-weight: bold;
     align-content: center;
-}
+}*/
 .call-button {
     padding: 10px 0;
 }
-.item-snags {
+/*.item-snags {
     font-size: 0.8em;
     text-align: right;
     padding-top: 10px;
-}
+}*/
 
 /* Footer */
 
