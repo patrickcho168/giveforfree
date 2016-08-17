@@ -117,7 +117,8 @@ module.exports = function(app) {
             res.render('homeLoggedIn', {
                 user: req.user,
                 availItems: data3.models,
-                friendProperty: req.user.fbFriendsToPropertyMap
+                friendProperty: req.user.fbFriendsToPropertyMap,
+                id: userId
             });
         });
     });
