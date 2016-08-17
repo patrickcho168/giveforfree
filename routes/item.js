@@ -107,47 +107,71 @@ module.exports = function(app) {
     db.Want.where({itemID: itemId, wanterID: userId}).fetch().then(function (oldWant) {
       if (oldWant) {
         // Remove
+        console.log(oldWant);
         oldWant.where({itemID: itemId, wanterID: userId}).destroy();
       }
     });
   })
 
-  // Find items posted from friends
-  app.get('/api/myItems/:lastItemId/:loadNum', ensureLogin.ensureLoggedIn(), function(req, res) {
+  app.get('/api/myWants/:lastItemId/:loadNum/:profileId', ensureLogin.ensureLoggedIn(), function(req, res) {
     // db.getNextItems(req.params.pageNum, req.user.fbFriendsId, function(result) {
     //   res.json(result);
     // });
     var lastSeenItem = parseInt(req.params.lastItemId);
     var numItems = parseInt(req.params.loadNum);
     var userId = parseInt(req.user.appUserId);
+    var profileId = parseInt(req.params.profileId);
     if (lastSeenItem === 0) {
-      db.Item.where({giverID: userId}).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll().then(function(data3) {
-        res.json(data3.models);
+      db.ProfilePageWantQuery(userId, profileId, numItems, function(data) {
+        console.log(data);
+        res.json(data);
+      });
+      // db.Item.where({giverID: userId}).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll().then(function(data3) {
+      //   res.json(data3.models);
+      // });
+    } else {
+      db.ProfilePageWantQueryBeforeId(userId, profileId, numItems, lastSeenItem, function(data) {
+        res.json(data);
+      });
+      // db.Item.where('itemID', '<', lastSeenItem).where({giverID: userId}).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll().then(function(data3) {
+      //   res.json(data3.models);
+      // });
+    }
+  });
+
+  app.get('/api/myItems/:lastItemId/:loadNum/:profileId', ensureLogin.ensureLoggedIn(), function(req, res) {
+    var lastSeenItem = parseInt(req.params.lastItemId);
+    var numItems = parseInt(req.params.loadNum);
+    var userId = parseInt(req.user.appUserId);
+    var profileId = parseInt(req.params.profileId);
+    if (lastSeenItem === 0) {
+      db.ProfilePageGiveQuery(userId, profileId, numItems, function(data) {
+        res.json(data);
       });
     } else {
-      db.Item.where('itemID', '<', lastSeenItem).where({giverID: userId}).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll().then(function(data3) {
-        res.json(data3.models);
+      db.ProfilePageGiveQueryBeforeId(userId, profileId, numItems, lastSeenItem, function(data) {
+        res.json(data);
       });
     }
   });
 
-  // Find items posted from friends
-  app.get('/api/friendItems/:lastItemId/:loadNum', ensureLogin.ensureLoggedIn(), function(req, res) {
-    // db.getNextItems(req.params.pageNum, req.user.fbFriendsId, function(result) {
-    //   res.json(result);
-    // });
-    var lastSeenItem = parseInt(req.params.lastItemId);
-    var numItems = parseInt(req.params.loadNum);
-    if (lastSeenItem === 0) {
-      db.Item.where({takerID: null}).where('giverID', 'in', req.user.fbFriendsId).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
-        res.json(data3.models);
-      });
-    } else {
-      db.Item.where('itemID', '<', lastSeenItem).where({takerID: null}).where('giverID', 'in', req.user.fbFriendsId).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
-        res.json(data3.models);
-      });
-    }
-  });
+  // UNCOMMENT IF WANT TO SHOW ITEMS FROM FRIENDS: Find items posted from friends
+  // app.get('/api/friendItems/:lastItemId/:loadNum', ensureLogin.ensureLoggedIn(), function(req, res) {
+  //   // db.getNextItems(req.params.pageNum, req.user.fbFriendsId, function(result) {
+  //   //   res.json(result);
+  //   // });
+  //   var lastSeenItem = parseInt(req.params.lastItemId);
+  //   var numItems = parseInt(req.params.loadNum);
+  //   if (lastSeenItem === 0) {
+  //     db.Item.where({takerID: null}).where('giverID', 'in', req.user.fbFriendsId).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
+  //       res.json(data3.models);
+  //     });
+  //   } else {
+  //     db.Item.where('itemID', '<', lastSeenItem).where({takerID: null}).where('giverID', 'in', req.user.fbFriendsId).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
+  //       res.json(data3.models);
+  //     });
+  //   }
+  // });
 
   // Find items posted by anyone other than yourself
   app.get('/api/allItems/:lastItemId/:loadNum', ensureLogin.ensureLoggedIn(), function(req, res) {
@@ -156,24 +180,20 @@ module.exports = function(app) {
     // });
     var lastSeenItem = parseInt(req.params.lastItemId);
     var numItems = parseInt(req.params.loadNum);
-    var userId = req.user.appUserId;
+    var userId = parseInt(req.user.appUserId);
     if (lastSeenItem === 0) {
       db.HomePageItemQuery(userId, numItems, function(data) {
         res.json(data);
       })
-      // db.Item.where({takerID: null}).where('giverID', '!=', userId).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
-      //   res.json(data3.models);
-      // });
     } else {
       db.HomePageItemQueryBeforeId(userId, numItems, lastSeenItem, function(data) {
         res.json(data);
       })
-      // db.Item.where('itemID', '<', lastSeenItem).where({takerID: null}).where('giverID', '!=', userId).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll({withRelated: ['ownedBy']}).then(function(data3) {
-      //   res.json(data3.models);
-      // });
     }
   });
 
+
+  // ITEM PAGE
   app.get('/item/:id', ensureLogin.ensureLoggedIn(), function(req, res){
     var itemId = req.params.id;
     // Find Item

@@ -56,7 +56,7 @@ $(document).on("click", ".snag", function() {
 
     // Send post request
     // Should check for success
-    $.post("api/want/" + itemId)
+    $.post("/api/want/" + itemId)
         .done(function() {
 
         })
@@ -84,7 +84,7 @@ $(document).on("click", ".unsnag", function() {
     $(this).addClass("snag");
 
     // Send post request
-    $.post("api/unwant/" + itemId)
+    $.post("/api/unwant/" + itemId)
         .done(function() {
 
         })

@@ -104,9 +104,6 @@ module.exports = function(app) {
     // HOME PAGE
     app.get('/', ensureLogin.ensureLoggedIn(), function(req, res) {
         var userId = req.user.appUserId;
-        db.HomePageItemQuery(userId, 6, function(data) {
-            console.log(data);
-        })
         res.render('homeLoggedIn', {id: userId});
     });
 
@@ -117,7 +114,7 @@ module.exports = function(app) {
     app.get('/login/facebook',
         passport.authenticate('facebook', {
             scope: ['user_friends', 'publish_actions']
-        })); // NEED TO ADD POST ITEM SCOPE
+        }));
 
     app.get('/login/facebook/return',
         passport.authenticate('facebook', {
@@ -129,9 +126,6 @@ module.exports = function(app) {
 
     app.get('/logout', function(req, res) {
         req.logout();
-        // req.session.destroy(function(err2) {
-        //   res.redirect('/login');
-        // });
         req.session = null;
         res.redirect('/login');
     })

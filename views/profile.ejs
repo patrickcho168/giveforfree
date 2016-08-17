@@ -23,10 +23,9 @@
         var myFriends = null;
         var isMine = false;
         isMine = <%= myProfile %>;
-        myName = "<%= user.name %>";
-
-        console.log(isMine);
-        console.log(<%= id %>);
+        var myName = "<%= user.name %>";
+        var myAppId = <%= id %>;
+        var appProfileId = <%= user.userID %>;
 
         $(window).load(function() {
             myFriends = <%- JSON.stringify(friends) %>;

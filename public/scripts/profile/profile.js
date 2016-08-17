@@ -38,6 +38,64 @@ $(function() {
 
 });
 
+// Want or Unwant
+$(document).on("click", ".snag", function() {
+    var itemId = $(this).attr('itemId');
+    console.log("Item", itemId, "has been snagged");
+
+    // Change text
+    $(this).text("UNSNAG");
+
+    // Change color
+    $(this).removeClass("btn-primary");
+    $(this).addClass("btn-danger");
+
+    // Change type
+    $(this).removeClass("snag");
+    $(this).addClass("unsnag");
+
+    // Send post request
+    // Should check for success
+    $.post("/api/want/" + itemId)
+        .done(function() {
+            console.log("DONE");
+        })
+        .fail(function() {
+            console.log("ERROR");
+        })
+        .always(function() {
+
+        });
+});
+
+$(document).on("click", ".unsnag", function() {
+    var itemId = $(this).attr('itemId');
+    console.log("Item", itemId, "has been unsnagged");
+
+    // Change text
+    $(this).text("SNAG THIS ITEM");
+
+    // Change color
+    $(this).removeClass("btn-danger");
+    $(this).addClass("btn-primary");
+
+    // Change type
+    $(this).removeClass("unsnag");
+    $(this).addClass("snag");
+
+    // Send post request
+    $.post("/api/unwant/" + itemId)
+        .done(function() {
+            console.log("DONE");
+        })
+        .fail(function() {
+            console.log("ERROR");
+        })
+        .always(function() {
+
+        });
+});
+
 // Navbar Selection Fix
 var friendListView = false;
 
@@ -62,13 +120,13 @@ $(document).ready(function() {
             switch (currentTab) {
                 case 'tab-snagged':
                     friendListView = false;
-                    urlAJAX = '/api/myWants/0/' + numItems;
+                    urlAJAX = '/api/myWants/0/' + numItems + '/' + appProfileId;
                     addRealViews(html, urlAJAX);
                     break;
 
                 case 'tab-gifted':
                     friendListView = false;
-                    urlAJAX = '/api/myItems/0/' + numItems;
+                    urlAJAX = '/api/myItems/0/' + numItems + '/' + appProfileId;
                     addRealViews(html, urlAJAX);
                     break;
 
@@ -164,37 +222,37 @@ $(document).ready(function() {
 });
 
 // AJAX Call for Infinite Scroll
-function addViews(amount) {
-    for (i = 1; i <= amount; ++i) {
-        html = '<div class="col-sm-6 col-md-4 item">';
-        // Main Item Photo
-        html += '<div class="thumbnail">';
-        html += '<a href="#" class="">';
-        html += '<img src="' + '/images/home/default-placeholder.png' + '">';
-        // Item Title
-        html += '<div class="caption-area">';
-        html += '<h6 class="item-header">' + 'Thumbnail label' + '</h6>';
-        // Item Owner
-        html += '<p class="item-author">' + 'Owner\'s name' + '</p>';
-        // Item Caption
-        html += '<p class="item-caption">' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ' + '</p>';
-        // Item Call-to-Action Snag Button
-        html += '<div class="col-lg-12 text-center call-button"><a href="#" class="btn btn-primary item-call" role="button">SNAG THIS ITEM</a></div>';
-        // Item Snag Counts
-        html += '<p class="item-snags">' + '123' + ' people snagged this.</p>';
-        html += '</div>';
-        html += '</a>';
-        html += '</div>';
-        html += '</div>';
-        $('#infinite-scroll-container').append(html);
-    }
+// function addViews(amount) {
+//     for (i = 1; i <= amount; ++i) {
+//         html = '<div class="col-sm-6 col-md-4 item">';
+//         // Main Item Photo
+//         html += '<div class="thumbnail">';
+//         html += '<a href="#" class="">';
+//         html += '<img src="' + '/images/home/default-placeholder.png' + '">';
+//         // Item Title
+//         html += '<div class="caption-area">';
+//         html += '<h6 class="item-header">' + 'Thumbnail label' + '</h6>';
+//         // Item Owner
+//         html += '<p class="item-author">' + 'Owner\'s name' + '</p>';
+//         // Item Caption
+//         html += '<p class="item-caption">' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ' + '</p>';
+//         // Item Call-to-Action Snag Button
+//         html += '<div class="col-lg-12 text-center call-button"><a href="#" class="btn btn-primary item-call" role="button">SNAG THIS ITEM</a></div>';
+//         // Item Snag Counts
+//         html += '<p class="item-snags">' + '123' + ' people snagged this.</p>';
+//         html += '</div>';
+//         html += '</a>';
+//         html += '</div>';
+//         html += '</div>';
+//         $('#infinite-scroll-container').append(html);
+//     }
 
-    triggered = 0;
+//     triggered = 0;
 
-    // "loading" done -> revert to normal state
-    $("#loader").fadeTo(2000, 0.0);
+//     // "loading" done -> revert to normal state
+//     $("#loader").fadeTo(2000, 0.0);
 
-}
+// }
 
 function addRealViews(html, urlAJAX) {
     // AJAX to fetch JSON objects from server
@@ -202,6 +260,7 @@ function addRealViews(html, urlAJAX) {
         url: urlAJAX,
         dataType: "json",
         method: 'get',
+        cache: false,
         // Success Callback
         success: function(data) {
             flag = true;
@@ -233,12 +292,16 @@ function addRealViews(html, urlAJAX) {
                     // Item Owner
                     // html += '<p class="item-author">' + value.ownedBy.name + '</p>';
                     // Item Caption
-                    html += '<p class="item-author">' + myName + '</p>';
+                    html += '<p class="item-author">' + value.name + '</p>';
                     html += '<p class="item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
-                    html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary itemcall" id="itemcall' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
+                    if (value.giverID !== myAppId && value.meWant === 0) {
+                        html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag" itemId="' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
+                    } else if (value.giverID !== myAppId && value.meWant > 0) {
+                        html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-danger unsnag" itemId="' + value.itemID + '" role="button">UNSNAG</a></div>';
+                    }
                     // Item Snag Counts
-                    html += '<small class="item-snags">' + '123' + ' people snagged this.</small>';
+                    html += '<small class="item-snags">' + value.numWants + ' people snagged this.</small>';
                     html += '</div>';
                     html += '</div>';
                     html += '</div>';
@@ -280,27 +343,15 @@ $(document).ready(function() {
 
     // Test Mode
     var test = false;
-    // $('#first').val(1);
-    // $('#limit').val(1);
-    // addViews(6);
-    // first = $('#first').val();
-    // limit = $('#limit').val();
-    // urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
-    urlAJAX = '/api/myItems/' + lastItemId + '/' + numItems;
+    urlAJAX = '/api/myWants/' + lastItemId + '/' + numItems + '/' + appProfileId;
     console.log(urlAJAX);
-    // addRealViews(html, urlAJAX);
-    // addViews(6);
-
-    // AJAX Server-End URL
-    // var urlAJAX = 'ajax.php';
+    addRealViews(html, urlAJAX);
     flag = true;
 
     $(window).scroll(function() {
 
         // Trigger the loading early
         if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-            // first = $('#first').val();
-            // limit = $('#limit').val();
             no_data = true;
 
             triggered += 1;
@@ -323,12 +374,12 @@ $(document).ready(function() {
                 console.log(lastItemId);
                 switch (name) {
                     case 'tab-snagged':
-                        urlAJAX = '/api/myItems/' + lastItemId + '/' + numItems;
+                        urlAJAX = '/api/myWants/' + lastItemId + '/' + numItems + '/' + appProfileId;
                         ajaxRequest = null;
                         break;
 
                     case 'tab-gifted':
-                        urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
+                        urlAJAX = '/api/myItems/' + lastItemId + '/' + numItems + '/' + appProfileId;
                         ajaxRequest = null;
                         break;
 
