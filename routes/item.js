@@ -95,7 +95,7 @@ module.exports = function(app) {
 
   // Want a product (given itemID and userID)
   // Should return success header?
-  app.post('/api/want/:itemId', ensureLogin.ensureLoggedIn(), function (req, res) {
+  app.post('/api/want/:itemId', ensureLogin.ensureLoggedIn(), function (req, res, next) {
     var itemId = parseInt(req.params.itemId);
     var userId = parseInt(req.user.appUserId);
 
@@ -120,10 +120,12 @@ module.exports = function(app) {
         }
       });
     });
+
+    next();
   })
 
   // Want a product (given itemID and userID)
-  app.post('/api/unwant/:itemId', ensureLogin.ensureLoggedIn(), function (req,res) {
+  app.post('/api/unwant/:itemId', ensureLogin.ensureLoggedIn(), function (req,res,next) {
     var itemId = parseInt(req.params.itemId);
     var userId = parseInt(req.user.appUserId);
 
@@ -134,6 +136,8 @@ module.exports = function(app) {
         oldWant.where({itemID: itemId, wanterID: userId}).destroy();
       }
     });
+
+    next();
   })
 
   // Find items posted from friends
