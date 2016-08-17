@@ -4,8 +4,8 @@ var friendListView = false;
 $(document).ready(function() {
 
     if (!isMine) {
-        document.getElementById('but-friends').addClass("hidden");
-        document.getElementById('tab-friends').addClass("hidden");
+        $("#but-friends").addClass("hidden");
+        $("#tab-friends").addClass("hidden");
     }
 
     $(".nav a").on("click", function() {
