@@ -12,30 +12,6 @@ $(function() {
         });
     });
 
-    // $container.infinitescroll({
-    //         navSelector: '#rh_nav_below',
-    //         nextSelector: '#rh_nav_below .rh_nav_next a',
-    //         itemSelector: '.grid-item',
-    //         loading: {
-    //             finishedMsg: 'No more pages to load.',
-    //             img: 'http://i.imgur.com/6RMhx.gif'
-    //         }
-    //     },
-    //     function(newElements) {
-    //         var $newElems = $(newElements).css({
-    //             opacity: 0
-    //         });
-    //         $newElems.imagesLoaded(function() {
-    //             $newElems.animate({
-    //                 opacity: 1
-    //             });
-    //             $container.masonry('appended', $newElems, true);
-    //         });
-    //     }
-    // );
-
-    ////
-
 });
 
 // Want or Unwant
@@ -148,111 +124,10 @@ $(document).ready(function() {
                 default:
                     //...
             }
-
-            $(".cd-main-nav").find(".active").removeClass("active");
-            $(this).parent().addClass("active");
-
-            $(".tabs").find(".active").removeClass("active");
-            $(this).parent().addClass("active");
-
-            //     // addViews(3);
-            //     var activeTab = $(".nav").find(".active");
-            //     var name = "null";
-            //     lastItemId = 0;
-            //
-            //     var ajaxRequest = null;
-            //
-            //     if (activeTab != null) {
-            //         name = activeTab.attr('id');
-            //     }
-            //     console.log(name);
-            //
-            //     // Construct AJAX Request based on type
-            //     switch (name) {
-            //         case 'nav-feed':
-            //             urlAJAX = '/api/friendItems/0/' + numItems;
-            //             ajaxRequest = null;
-            //             addRealViews(html, urlAJAX);
-            //             break;
-            //
-            //         case 'nav-discover':
-            //             urlAJAX = '/api/allItems/0/' + numItems;
-            //             ajaxRequest = null;
-            //             addRealViews(html, urlAJAX);
-            //             break;
-            //
-            //         case 'nav-gift':
-            //             urlAJAX = null;
-            //             ajaxRequest = null;
-            //             break;
-            //
-            //         // default:
-            //         //     urlAJAX = '/api/friendItems/0/' + numItems;
-            //         //     ajaxRequest = null;
-            //     }
-            //
-            //
         }
 
     });
 });
-
-$(document).ready(function() {
-    // $(".cd-main-nav a").on("click", function() {
-    //     var name = $(this).parent().attr('id');
-    //     console.log(name);
-    //
-    //     switch (name) {
-    //         case "but-snagged":
-    //             document.getElementById('snagged-link').click();
-    //             break;
-    //
-    //         case "but-gifted":
-    //             document.getElementById('gifted-link').click();
-    //             break;
-    //
-    //         case "but-friends":
-    //             document.getElementById('friends-link').click();
-    //             break;
-    //
-    //         default:
-    //
-    //     }
-    // });
-});
-
-// AJAX Call for Infinite Scroll
-// function addViews(amount) {
-//     for (i = 1; i <= amount; ++i) {
-//         html = '<div class="col-sm-6 col-md-4 item">';
-//         // Main Item Photo
-//         html += '<div class="thumbnail">';
-//         html += '<a href="#" class="">';
-//         html += '<img src="' + '/images/home/default-placeholder.png' + '">';
-//         // Item Title
-//         html += '<div class="caption-area">';
-//         html += '<h6 class="item-header">' + 'Thumbnail label' + '</h6>';
-//         // Item Owner
-//         html += '<p class="item-author">' + 'Owner\'s name' + '</p>';
-//         // Item Caption
-//         html += '<p class="item-caption">' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ' + '</p>';
-//         // Item Call-to-Action Snag Button
-//         html += '<div class="col-lg-12 text-center call-button"><a href="#" class="btn btn-primary item-call" role="button">SNAG THIS ITEM</a></div>';
-//         // Item Snag Counts
-//         html += '<p class="item-snags">' + '123' + ' people snagged this.</p>';
-//         html += '</div>';
-//         html += '</a>';
-//         html += '</div>';
-//         html += '</div>';
-//         $('#infinite-scroll-container').append(html);
-//     }
-
-//     triggered = 0;
-
-//     // "loading" done -> revert to normal state
-//     $("#loader").fadeTo(2000, 0.0);
-
-// }
 
 function addRealViews(html, urlAJAX) {
     // AJAX to fetch JSON objects from server
