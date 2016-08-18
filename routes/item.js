@@ -315,6 +315,7 @@ module.exports = function(app) {
         var accessToken = req.user.accessToken;
         // Find Item
         db.ItemPageQuery(userId, itemId, function(data) {
+            console.log(data);
             var date = moment(data[0].timeExpired);
             var processedDate = date.locale('en-gb').format("LLL");
             facebook.getFbData(accessToken, '/' + req.user.id, '', function(fbdata) {
