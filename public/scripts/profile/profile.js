@@ -132,6 +132,8 @@ $(document).ready(function() {
                 default:
                     //...
             }
+            $('.cd-nav-trigger').toggleClass('menu-is-open');
+            navigationContainer.find('#cd-main-nav ul').off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend').toggleClass('is-visible');
         }
 
     });
