@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) {
     // browser window scroll (in pixels) after which the "menu" link is shown
-    var offset = $(window).height();
+    var offset = $(window).height() x 0.5;
 
     var navigationContainer = $('#cd-nav'),
         mainNavigation = navigationContainer.find('#cd-main-nav ul');
@@ -21,7 +21,7 @@ jQuery(document).ready(function($) {
     function checkMenu() {
         if ($(window).scrollTop() > offset && !navigationContainer.hasClass('is-fixed')) {
             navigationContainer.removeClass('hidden');
-            $(".nav-tab-area").addClass('hidden');
+            // $(".nav-tab-area").addClass('hidden');
 
             navigationContainer.addClass('is-fixed').find('.cd-nav-trigger').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function() {
                 mainNavigation.addClass('has-transitions');
@@ -47,7 +47,7 @@ jQuery(document).ready(function($) {
                 mainNavigation.removeClass('has-transitions');
             }
 
-            $(".nav-tab-area").removeClass('hidden');
+            // $(".nav-tab-area").removeClass('hidden');
         }
     }
 });
