@@ -1,6 +1,6 @@
 jQuery(document).ready(function($){
 	// browser window scroll (in pixels) after which the "menu" link is shown
-	var offset = 300;
+	var offset = $(window).height() * 0.666;
 
 	var navigationContainer = $('#cd-nav'),
 		mainNavigation = navigationContainer.find('#cd-main-nav ul');
@@ -27,12 +27,12 @@ jQuery(document).ready(function($){
 				mainNavigation.addClass('has-transitions');
 			});
 
-			mainNavigation.toggleClass("nav nav-pills nav-justified tabs");
+			// mainNavigation.toggleClass("nav nav-pills nav-justified tabs");
 
 		} else if ($(window).scrollTop() <= offset) {
 
-			mainNavigation.toggleClass("nav nav-pills nav-justified tabs");
-			
+			// mainNavigation.toggleClass("nav nav-pills nav-justified tabs");
+
 			//check if the menu is open when scrolling up
 			if( mainNavigation.hasClass('is-visible')  && !$('html').hasClass('no-csstransitions') ) {
 				//close the menu with animation
