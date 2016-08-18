@@ -54,44 +54,34 @@ p {
     background-image: none
 }
 
-.profile-header-img {
-    text-align: left;
-    align-self: left;
-    position: absolute;
+/**
+ * Profile image component
+ */
+.profile-header-container{
+    margin: 0 auto;
+    text-align: center;
+    align-self: center;
+    /*position: relative;
     top: 50%;
-    left: 10%
-    transform: translateY(-50%);
+    transform: translateY(-50%);*/
+}
+
+.profile-header-img {
+    /*padding: 10px;*/
 }
 
 .profile-header-img > img.img-circle {
-    max-width: 120px;
-    max-height: 120px;
     width: 70px;
-    height: 70px;
+    height:70px;
+    min-width: 48px;
+    min-height: 48px;
+    max-width: 100px;
+    max-height: 100px;
     border: 2px solid #51D2B7;
-    text-align: left;
-    align-self: left;
-    position: absolute;
-    top: 50%;
-    left: 10%
-    transform: translateY(-50%);
 }
 
-/*.profile-header {
+.profile-header {
     /*margin-top: 43px;*/
-    text-align: left;
-    align-self: left;
-    position: absolute;
-    top: 50%;
-    left: 10%
-    transform: translateY(-50%);
-}*/
-
-.profile-header-container {
-    /*margin-top: 43px;*/
-    display: flex;
-    justify-content: center;
-    position: relative;
 }
 
 /**
@@ -99,10 +89,8 @@ p {
  */
 .rank-label-container {
     margin-top: -19px;
-     /*z-index: 1000; */
+    /* z-index: 1000; */
     text-align: center;
-    align-self: center;
-    position: absolute;
 }
 
 .label.label-default.rank-label {
@@ -110,18 +98,15 @@ p {
     padding: 5px 10px 5px 10px;
     border-radius: 27px;
     text-align: center;
-    align-self: center;
-    position: absolute;
 }
 
 .profile-name-container {
     margin: 0 auto;
-    text-align: left;
-    align-self: left;
+    text-align: center;
+    align-self: center;
     position: absolute;
     top: 50%;
-    transform: translateY(-50%), translateX(-20%);
-    /*margin-left: 15vw;*/
+    transform: translateY(-50%);
 }
 
 .profile-panel {
