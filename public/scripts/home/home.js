@@ -242,7 +242,7 @@ function addRealViews(html, urlAJAX) {
                         html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag" itemId="' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
                     }
                     // Item Snag Counts
-                    html += '<small class="item-snags text-muted">' + value.numWants + (value.numWants == 1 ? ' person' : ' people') + ' snagged this.</p>';
+                    html += '<small class="item-snags text-muted">' + value.numWants + (value.numWants == 1 ? ' person' : ' people') + ' snagged this.</small>';
                     html += '</div>';
                     html += '</a>';
                     html += '</div>';
