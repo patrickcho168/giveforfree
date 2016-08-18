@@ -185,6 +185,7 @@ p {
     width: 20vw;
     height:20vw;
     max-height: 11em;
+    max-width: 11em;
 }
 .tabs {
     align: center;

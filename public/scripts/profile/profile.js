@@ -165,15 +165,15 @@ function addRealViews(html, urlAJAX) {
                     html += '<img src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
                     // Item Title
                     html += '<div class="caption-area">';
-                    html += '<h6 class="item-header">' + value.title + '</h6>';
+                    html += '<h6 class="item-header"><a href="/item/' + value.itemID + '" target="_blank">' + value.title + '</a></h6>';
                     // Item Owner
                     // html += '<p class="item-author">' + value.ownedBy.name + '</p>';
                     // Item Caption
-                    html += '<p class="item-author">' + value.name + '</p>';
+                    html += '<p class="item-author"><a href="/profile/' + value.userID + '" target="_blank">' + value.name + '</a></p>';
                     html += '<p class="item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
                     if (value.giverID !== myAppId && value.meWant === 0) {
-                        html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag" itemId="' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
+                        html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag" itemId="' + value.itemID + '" role="button">SNAG</a></div>';
                     } else if (value.giverID !== myAppId && value.meWant > 0) {
                         html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-danger unsnag" itemId="' + value.itemID + '" role="button">UNSNAG</a></div>';
                     }

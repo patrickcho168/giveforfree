@@ -61,7 +61,7 @@ var HomePageItemQuery = function(userId, numItems, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'u.name'])
+    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'u.name', 'u.userID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -82,7 +82,7 @@ var HomePageItemQueryBeforeId = function(userId, numItems, beforeId, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'u.name'])
+    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'u.name', 'u.userID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -104,7 +104,7 @@ var ProfilePageGiveQuery = function(userId, profileId, numItems, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name'])
+    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -124,7 +124,7 @@ var ProfilePageGiveQueryBeforeId = function(userId, profileId, numItems, beforeI
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name'])
+    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -146,7 +146,7 @@ var ProfilePageWantQuery = function(userId, profileId, numItems, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name'])
+    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -167,7 +167,7 @@ var ProfilePageWantQueryBeforeId = function(userId, profileId, numItems, beforeI
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name'])
+    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
