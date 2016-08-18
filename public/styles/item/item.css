@@ -60,7 +60,7 @@ p {
 .profile-header-container{
     margin: 0 auto;
     text-align: center;
-    align-self: center;
+    /*align-self: center;*/
     /*position: relative;
     top: 50%;
     transform: translateY(-50%);*/
