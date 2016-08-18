@@ -61,9 +61,9 @@ p {
     margin: 0 auto;
     text-align: center;
     align-self: center;
-    position: relative;
+    /*position: relative;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-50%);*/
 }
 
 .profile-header-img {
@@ -104,7 +104,7 @@ p {
     margin: 0 auto;
     text-align: center;
     align-self: center;
-    position: relative;
+    position: absolute;
     top: 50%;
     transform: translateY(-50%);
 }
@@ -112,6 +112,7 @@ p {
 .profile-panel {
     display: flex;
     justify-content: center;
+    position: relative;
 }
 
 .owner-name {
