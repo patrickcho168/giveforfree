@@ -126,7 +126,7 @@ $(document).ready(function() {
                     break;
 
                 case 'tab-self':
-                    document.getElementById("nav-profile").click();
+                    document.getElementById("myprofile-link").click();
                     break;
 
                 default:
