@@ -106,7 +106,7 @@ $(document).ready(function() {
         $("#tab-friends").addClass("hidden");
     }
 
-    $(".nav a").on("click", function() {
+    $(".cd-main-nav a").on("click", function() {
         if (!$(this).parent().hasClass('active') && $(this).parent().attr('id') !== $(this).parent().find(".active").attr('id')) {
             // TODO:Add logic to determine whether to clear or not
             // Clear section
@@ -198,27 +198,27 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    $(".cd-main-nav a").on("click", function() {
-        var name = $(this).parent().attr('id');
-        console.log(name);
-
-        switch (name) {
-            case "but-snagged":
-                document.getElementById('snagged-link').click();
-                break;
-
-            case "but-gifted":
-                document.getElementById('gifted-link').click();
-                break;
-
-            case "but-friends":
-                document.getElementById('friends-link').click();
-                break;
-
-            default:
-
-        }
-    });
+    // $(".cd-main-nav a").on("click", function() {
+    //     var name = $(this).parent().attr('id');
+    //     console.log(name);
+    //
+    //     switch (name) {
+    //         case "but-snagged":
+    //             document.getElementById('snagged-link').click();
+    //             break;
+    //
+    //         case "but-gifted":
+    //             document.getElementById('gifted-link').click();
+    //             break;
+    //
+    //         case "but-friends":
+    //             document.getElementById('friends-link').click();
+    //             break;
+    //
+    //         default:
+    //
+    //     }
+    // });
 });
 
 // AJAX Call for Infinite Scroll
