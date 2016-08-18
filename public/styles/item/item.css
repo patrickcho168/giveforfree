@@ -191,3 +191,8 @@ p {
 .bs-callout-info h4 {
     color: #5bc0de;
 }
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
