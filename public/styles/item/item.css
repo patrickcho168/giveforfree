@@ -104,9 +104,6 @@ p {
     margin: 0 auto;
     text-align: center;
     align-self: center;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .profile-panel {
