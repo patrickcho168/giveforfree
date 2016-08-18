@@ -63,17 +63,19 @@ p {
 }
 
 .profile-header-img {
-    padding: 54px;
+    padding: 10px;
 }
 
 .profile-header-img > img.img-circle {
-    width: 120px;
-    height: 120px;
+    width: 15vw;
+    height:15vw;
+    min-width: 48px;
+    min-height: 48px;
     border: 2px solid #51D2B7;
 }
 
 .profile-header {
-    margin-top: 43px;
+    /*margin-top: 43px;*/
 }
 
 /**
