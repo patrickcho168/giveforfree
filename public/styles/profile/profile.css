@@ -152,8 +152,6 @@ p {
     padding-bottom: 2.5rem;
     border-radius: 6px;
     background-color: #eee;
-    margin-left: 10.0rem;
-    margin-right: 10.0rem;
     align-self: center;
 }
 .profile-photo-holder {
@@ -245,4 +243,10 @@ footer {}
 }
 .copyright {
     text-align: center;
+}
+
+@media (min-width: 1200px) {
+    .container{
+        max-width: 970px;
+    }
 }
