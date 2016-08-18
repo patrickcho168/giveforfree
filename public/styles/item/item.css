@@ -59,7 +59,6 @@ p {
  */
 .profile-header-container{
     margin: 0 auto;
-    margin-left: -100%;
     text-align: center;
     align-self: center;
     /*position: relative;
@@ -104,7 +103,7 @@ p {
 .profile-name-container {
     margin: 0 auto;
     text-align: center;
-    align-self: left;
+    align-self: center;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
