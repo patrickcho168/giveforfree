@@ -268,6 +268,7 @@ $(document).ready(function() {
                         break;
 
                     case 'tab-friends':
+                        urlAJAX = null;
                         ajaxRequest = null;
                         break;
 
@@ -283,7 +284,9 @@ $(document).ready(function() {
                 console.log(lastItemId);
                 if (lastItemId >= 1) {
                     console.log(urlAJAX);
-                    addRealViews(html, urlAJAX);
+                    if (urlAJAX != null) {
+                        addRealViews(html, urlAJAX);
+                    }
                 }
 
                 // Simulate Infinite Scroll and Content Population for UI/UX
