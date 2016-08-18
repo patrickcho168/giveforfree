@@ -140,7 +140,7 @@
                                     <img class="img-circle" src="http://graph.facebook.com/<%= item.fbID %>/picture?type=large" />
                                     <!-- badge -->
                                     <div class="rank-label-container">
-                                        <span class="label label-default rank-label">100 karma</span>
+                                        <span class="label label-default rank-label"><%= karma %> karma</span>
                                     </div>
                                 </div>
                             </div>
@@ -154,36 +154,42 @@
                         </div>
 
                         <div class="row button-group">
-                            <% if (mine) { %>
-                                <button type="button" class="btn btn-danger">Delete</button>
-                                <button type="button" class="btn btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw
-                                </button>
-                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Pick <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu scrollable-menu dropdown-menu-right" role="menu">
-                                    <li><a href="#">User 1</a></li>
-                                    <li><a href="#">User 2</a></li>
-                                    <li><a href="#">User 3</a></li>
-                                    <li><a href="#">User 4</a></li>
-                                    <li><a href="#">User 5</a></li>
-                                    <li><a href="#">User 6</a></li>
-                                    <li><a href="#">User 7</a></li>
-                                    <li><a href="#">User 8</a></li>
-                                    <li><a href="#">User 9</a></li>
-                                    <li><a href="#">User 10</a></li>
-                                    <li><a href="#">User 11</a></li>
-                                    <li><a href="#">User 12</a></li>
-                                    <li><a href="#">User 13</a></li>
-                                    <li><a href="#">User 14</a></li>
-                                    <li><a href="#">User 15</a></li>
-                                    <li><a href="#">User 16</a></li>
-                                    <li><a href="#">User 17</a></li>
-                                    <li><a href="#">User 18</a></li>
-                                </ul>
-                                <% } else { %>
-                                    <button type="button" class="btn btn-primary btn-block"><a class="message-button" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Owner</a></button>
+                            <center>
+                                <% if (mine && item.takerID === null) { %>
+                                    <button type="button" class="btn btn-danger">Delete</button>
+                                    <% if (item.numWants > 0) { %>
+                                        <button type="button" class="btn btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw
+                                        </button>
+                                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Pick <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu scrollable-menu dropdown-menu-right" role="menu">
+                                            <li><a href="#">User 1</a></li>
+                                            <li><a href="#">User 2</a></li>
+                                            <li><a href="#">User 3</a></li>
+                                            <li><a href="#">User 4</a></li>
+                                            <li><a href="#">User 5</a></li>
+                                            <li><a href="#">User 6</a></li>
+                                            <li><a href="#">User 7</a></li>
+                                            <li><a href="#">User 8</a></li>
+                                            <li><a href="#">User 9</a></li>
+                                            <li><a href="#">User 10</a></li>
+                                            <li><a href="#">User 11</a></li>
+                                            <li><a href="#">User 12</a></li>
+                                            <li><a href="#">User 13</a></li>
+                                            <li><a href="#">User 14</a></li>
+                                            <li><a href="#">User 15</a></li>
+                                            <li><a href="#">User 16</a></li>
+                                            <li><a href="#">User 17</a></li>
+                                            <li><a href="#">User 18</a></li>
+                                        </ul>
                                     <% } %>
+                                <% } else if (item.takerID === null || item.takerID === id) { %>
+                                    <button type="button" class="btn btn-primary btn-block"><a class="message-button" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Owner</a></button>
+                                <% } else if (item.giverID === id && item.takerID !== null) { %>
+                                    <button type="button" class="btn btn-primary btn-block"><a class="message-button" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.takerFbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Recipient</a></button>
+                                <% } %>
+                            </center>
                         </div>
                     </div>
                 </div>
@@ -197,12 +203,10 @@
                         <h5 class="panel-title pull-left"> Item Details
 
                         </h5>
-
-                        <$ if(mine) { %>
+                        <% if (mine && !expired && item.takerID !== null) { %>
                             <button class="btn btn-default pull-right" data-toggle="modal" data-target="#editModal">Edit</button>
-                            <% } %>
-
-                                <div class="clearfix"></div>
+                        <% } %>
+                        <div class="clearfix"></div>
                     </div>
                     <div class="panel-body snag-num">
                         <%= item.description %>
@@ -222,12 +226,12 @@
                                 <% } %>
                 </div>
                 <% if (!mine) { %>
-                    <% if (item.meWant === 1 && !expired) { %>
+                    <% if (item.meWant === 1 && !expired && item.takerID === null) { %>
                         <a class="btn btn-lg btn-danger btn-block unsnag active" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> UNSNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
-                        <% } else if (!expired) { %>
-                            <a class="btn btn-lg btn-primary btn-block snag active" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> SNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
-                            <% } %>
-                                <% } %>
+                    <% } else if (!expired && item.takerID === null) { %>
+                        <a class="btn btn-lg btn-primary btn-block snag active" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> SNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
+                    <% } %>
+                <% } %>
 
             </div>
         </div>
