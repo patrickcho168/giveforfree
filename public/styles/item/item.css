@@ -61,6 +61,9 @@ p {
     margin: 0 auto;
     text-align: center;
     align-self: center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .profile-header-img {
@@ -101,6 +104,9 @@ p {
     margin: 0 auto;
     text-align: center;
     align-self: center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .profile-panel {
@@ -113,5 +119,5 @@ p {
 }
 
 .owner-location {
-    font-size: 1.0rem;
+    font-size: 1.6rem;
 }
