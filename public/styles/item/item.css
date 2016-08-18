@@ -59,8 +59,8 @@ p {
  */
 .profile-header-container{
     margin: 0 auto;
-    text-align: left;
-    align-self: left;
+    text-align: center;
+    align-self: center;
 }
 
 .profile-header-img {
@@ -79,7 +79,7 @@ p {
 
 .profile-header {
     /*margin-top: 43px;*/
-    align-self: left;
+    align-self: center;
 }
 
 /**
@@ -101,15 +101,16 @@ p {
 .profile-name-container {
     margin: 0 auto;
     text-align: center;
-    align-self: left;
+    align-self: center;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    margin-left: 15vw;
 }
 
 .profile-panel {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     position: relative;
 }
 
