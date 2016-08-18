@@ -61,15 +61,15 @@ p {
 .profile-header-img > img.img-circle {
     max-width: 120px;
     max-height: 120px;
-    width: 15vw;
-    height: 15vw;
+    width: 70px;
+    height: 70px;
     border: 2px solid #51D2B7;
 }
 
 .profile-header {
     /*margin-top: 43px;*/
-    text-align: center;
-    align-self: center;
+    text-align: left;
+    align-self: left;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -84,8 +84,6 @@ p {
     text-align: center;
     align-self: center;
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .label.label-default.rank-label {
@@ -95,14 +93,12 @@ p {
     text-align: center;
     align-self: center;
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .profile-name-container {
     margin: 0 auto;
-    text-align: center;
-    align-self: center;
+    text-align: left;
+    align-self: left;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
