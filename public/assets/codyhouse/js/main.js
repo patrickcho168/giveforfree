@@ -1,6 +1,6 @@
 jQuery(document).ready(function($){
 	// browser window scroll (in pixels) after which the "menu" link is shown
-	var offset = $(window).height() * 0.666;
+	var offset = $(window).height();
 
 	var navigationContainer = $('#cd-nav'),
 		mainNavigation = navigationContainer.find('#cd-main-nav ul');
