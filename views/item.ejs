@@ -202,8 +202,9 @@
                         <h5 class="panel-title pull-left"> Item Details
 
                         </h5>
-
-                        <button class="btn btn-default pull-right">Edit</button>
+                        <% if (mine && !expired && item.takerID !== null) { %>
+                            <button class="btn btn-default pull-right">Edit</button>
+                        <% } %>
                         <div class="clearfix"></div>
                     </div>
                     <div class="panel-body snag-num">
