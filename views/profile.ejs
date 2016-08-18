@@ -112,51 +112,49 @@
 
     <!-- Profile Header Jumbotron -->
 
-    <div class="container" align="center">
+    <div class="container profile-area" align="center">
 
-        <div class="jumbotron">
-
-            <div align="center" class="profile-photo-holder" vertical-align="center">
-                <img align="center" src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large" class="img-circle img-thumbnail profile-photo" vertical-align="center">
-            </div>
-            <div class="col-sm-8 col-sm-offset-2 text-holder">
-                <h1 class="display-3 name"><%= user.name %></h1>
-                <!-- <hr class="m-y-6"></hr> -->
-                <p>Singapore</p>
-                <div class="counters col-sm-10 col-sm-offset-1" align="center">
-                    <div align="center" class="col-sm-4 counter">
-                        <p align="center" class="count">
-                            <%= totalTaken %>
-                        </p>
-                        <!-- <hr class="m-y-2" /> -->
-                        <p align="center" class="count-label">
-                            Received
-                        </p>
-                    </div>
-                    <div align="center" class="col-sm-4 counter">
-                        <p align="center" class="count">
-                            <%= totalGifted %>
-                        </p>
-                        <!-- <hr class="m-y-2" /> -->
-                        <p align="center" class="count-label">
-                            Gifted
-                        </p>
-                    </div>
-                    <div align="center" class="col-sm-4 counter">
-                        <p align="center" class="count">
-                            <%= totalKarma %>
-                        </p>
-                        <!-- <hr class="m-y-2" /> -->
-                        <p align="center" class="count-label">
-                            Karma
-                        </p>
-                    </div>
-                </div>
-
-            </div>
+        <div align="center" class="profile-photo-holder" vertical-align="center">
+            <img align="center" src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large" class="img-circle img-thumbnail profile-photo" vertical-align="center">
         </div>
+        <div class="col-sm-8 col-sm-offset-2 text-holder">
+            <h1 class="display-3 name"><%= user.name %></h1>
+            <!-- <hr class="m-y-6"></hr> -->
+            <p>Singapore</p>
+            <div class="counters col-sm-10 col-sm-offset-1" align="center">
+                <div align="center" class="col-sm-4 counter">
+                    <p align="center" class="count">
+                        <%= totalTaken %>
+                    </p>
+                    <!-- <hr class="m-y-2" /> -->
+                    <p align="center" class="count-label">
+                        Received
+                    </p>
+                </div>
+                <div align="center" class="col-sm-4 counter">
+                    <p align="center" class="count">
+                        <%= totalGifted %>
+                    </p>
+                    <!-- <hr class="m-y-2" /> -->
+                    <p align="center" class="count-label">
+                        Gifted
+                    </p>
+                </div>
+                <div align="center" class="col-sm-4 counter">
+                    <p align="center" class="count">
+                        <%= totalKarma %>
+                    </p>
+                    <!-- <hr class="m-y-2" /> -->
+                    <p align="center" class="count-label">
+                        Karma
+                    </p>
+                </div>
+            </div>
 
+        </div>
     </div>
+
+
 
     <!-- <nav class="bar bar-standard">
         <div class="segmented-control">
