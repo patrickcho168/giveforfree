@@ -232,9 +232,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Edit Item</h4>
                 </div>
-                <div class="modal-body">
+                <form action="/api/update/<%= item.itemID %>" class="form-horizontal form" role="form" method="post">
+                    <div class="modal-body">
 
-                    <form action="api/update/:itemId" class="form-horizontal form" role="form" method="post">
+                    
                         <% if (locals.error_messages) {
                             error_messages.forEach(function(message) { %>
                             <div class="alert alert-warning"><strong>Error: </strong>
@@ -265,13 +266,14 @@
                             });
                         </script>
 
-                    </form>
+                    
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" type="submit">Save changes</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" type="submit">Save changes</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -135,7 +135,7 @@ module.exports = function(app) {
     })
 
     // Update an item
-    app.post('api/update/:itemId', ensureLogin.ensureLoggedIn(), function(req, res, next) {
+    app.post('/api/update/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
         var itemId = parseInt(req.params.itemId);
         var userId = parseInt(req.user.appUserId);
         db.Item.where({
@@ -144,21 +144,20 @@ module.exports = function(app) {
         }).fetch().then(function(item) {
             // If this item exists
             if (item) {
-                item.where({
-                    itemID: itemId,
-                    giverID: userId
-                }).update({
+                item.save({
                     title: req.body.title,
                     description: req.body.description
-                })
+                }).then(function() {
+                    res.redirect("/item/" + itemId);
+                });
+            } else {
+                res.redirect("/item/" + itemId);
             }
         });
-
-        next();
     });
 
     // Delete an item
-    app.post('api/delete/:itemId', ensureLogin.ensureLoggedIn(), function(req, res, next) {
+    app.post('/api/delete/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
         var itemId = parseInt(req.params.itemId);
         var userId = parseInt(req.user.appUserId);
         db.Item.where({
@@ -171,10 +170,11 @@ module.exports = function(app) {
                     itemID: itemId,
                     giverID: userId
                 }).destroy();
+                res.redirect("/");
+            } else {
+                res.redirect("/item/" + itemId);
             }
         });
-
-        next();
     });
 
     // Want a product (given itemID and userID)
