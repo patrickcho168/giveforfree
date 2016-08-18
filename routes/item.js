@@ -33,7 +33,8 @@ module.exports = function(app) {
                 res.render('item', {
                     myItem: item.attributes.giverID === req.user.appUserId,
                     giver_name: giver_name,
-                    item: JSON.parse(JSON.stringify(item))
+                    item: JSON.parse(JSON.stringify(item)),
+                    id: req.user.appUserId
                 });
             });
         });
