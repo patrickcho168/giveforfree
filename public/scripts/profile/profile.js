@@ -149,7 +149,7 @@ $(document).ready(function() {
                     //...
             }
 
-            $(".nav").find(".active").removeClass("active");
+            $(".cd-main-nav").find(".active").removeClass("active");
             $(this).parent().addClass("active");
 
             $(".tabs").find(".active").removeClass("active");
