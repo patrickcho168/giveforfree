@@ -112,51 +112,53 @@
 
     <!-- Profile Header Jumbotron -->
 
-    <div class="container profile-area" align="center">
+    <div class="main-display-area">
 
-        <div align="center" class="profile-photo-holder" vertical-align="center">
-            <img align="center" src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large" class="img-circle img-thumbnail profile-photo" vertical-align="center">
-        </div>
-        <div class="col-sm-8 col-sm-offset-2 text-holder">
-            <h1 class="display-3 name"><%= user.name %></h1>
-            <!-- <hr class="m-y-6"></hr> -->
-            <p>Singapore</p>
-            <div class="counters col-sm-10 col-sm-offset-1" align="center">
-                <div align="center" class="col-sm-4 counter">
-                    <p align="center" class="count">
-                        <%= totalTaken %>
-                    </p>
-                    <!-- <hr class="m-y-2" /> -->
-                    <p align="center" class="count-label">
-                        Received
-                    </p>
-                </div>
-                <div align="center" class="col-sm-4 counter">
-                    <p align="center" class="count">
-                        <%= totalGifted %>
-                    </p>
-                    <!-- <hr class="m-y-2" /> -->
-                    <p align="center" class="count-label">
-                        Gifted
-                    </p>
-                </div>
-                <div align="center" class="col-sm-4 counter">
-                    <p align="center" class="count">
-                        <%= totalKarma %>
-                    </p>
-                    <!-- <hr class="m-y-2" /> -->
-                    <p align="center" class="count-label">
-                        Karma
-                    </p>
-                </div>
+        <div class="container profile-area" align="center">
+
+            <div align="center" class="profile-photo-holder" vertical-align="center">
+                <img align="center" src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large" class="img-circle img-thumbnail profile-photo" vertical-align="center">
             </div>
+            <div class="col-sm-8 col-sm-offset-2 text-holder">
+                <h1 class="display-3 name"><%= user.name %></h1>
+                <!-- <hr class="m-y-6"></hr> -->
+                <p>Singapore</p>
+                <div class="counters col-sm-10 col-sm-offset-1" align="center">
+                    <div align="center" class="col-sm-4 counter">
+                        <p align="center" class="count">
+                            <%= totalTaken %>
+                        </p>
+                        <!-- <hr class="m-y-2" /> -->
+                        <p align="center" class="count-label">
+                            Received
+                        </p>
+                    </div>
+                    <div align="center" class="col-sm-4 counter">
+                        <p align="center" class="count">
+                            <%= totalGifted %>
+                        </p>
+                        <!-- <hr class="m-y-2" /> -->
+                        <p align="center" class="count-label">
+                            Gifted
+                        </p>
+                    </div>
+                    <div align="center" class="col-sm-4 counter">
+                        <p align="center" class="count">
+                            <%= totalKarma %>
+                        </p>
+                        <!-- <hr class="m-y-2" /> -->
+                        <p align="center" class="count-label">
+                            Karma
+                        </p>
+                    </div>
+                </div>
 
+            </div>
         </div>
-    </div>
 
 
 
-    <!-- <nav class="bar bar-standard">
+        <!-- <nav class="bar bar-standard">
         <div class="segmented-control">
             <a class="control-item active">Thing one</a>
             <a class="control-item">Thing two</a>
@@ -164,25 +166,27 @@
         </div>
     </nav> -->
 
-    <!-- Nav Button -->
-    <div class="col-sm-10 col-sm-offset-1">
+        <!-- Nav Button -->
+        <div class="container" align="center">
 
-        <div id="cd-nav" class="is-fixed">
-            <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
+            <div id="cd-nav" class="is-fixed">
+                <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
 
-            <nav id="cd-main-nav" class="cd-main-nav">
+                <nav id="cd-main-nav" class="cd-main-nav">
 
-                <ul class="has-transitions">
-                    <li class="active tab-snagged" id="tab-snagged"><a id="snagged-link">Snagged Items</a></li>
-                    <li class="tab-gifted" id="tab-gifted"><a id="gifted-link">Given Out</a></li>
-                    <li class="tab-friends" id="tab-friends"><a id="friends-link">Friends List</a></li>
-                </ul>
-            </nav>
+                    <ul class="has-transitions">
+                        <li class="active tab-snagged" id="tab-snagged"><a id="snagged-link">Snagged Items</a></li>
+                        <li class="tab-gifted" id="tab-gifted"><a id="gifted-link">Given Out</a></li>
+                        <li class="tab-friends" id="tab-friends"><a id="friends-link">Friends List</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-    </div>
 
-    <!-- Scroll Container -->
-    <div class="infinite-scroll-container col-sm-10 col-sm-offset-1" id="infinite-scroll-container"></div>
+        <!-- Scroll Container -->
+        <div class="infinite-scroll-container col-sm-10 col-sm-offset-1" id="infinite-scroll-container"></div>
+
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -203,6 +207,7 @@
             <!-- </div> -->
         </div>
     </footer>
+
 
 </body>
 
