@@ -85,7 +85,7 @@
 
     <div class="container top">
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 carousel-section">
-            <div id="carousel-example-generic" class="carousel slide img-thumbnail" data-ride="carousel">
+            <div id="carousel-example-generic" class="carousel slide img-thumbnail carousel-window" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -160,7 +160,7 @@
                                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Pick <span class="caret"></span>
                                 </button>
-                                <ul class="dropdown-menu scrollable-menu" role="menu">
+                                <ul class="dropdown-menu scrollable-menu dropdown-menu-right" role="menu">
                                     <li><a href="#">User 1</a></li>
                                     <li><a href="#">User 2</a></li>
                                     <li><a href="#">User 3</a></li>
@@ -181,7 +181,7 @@
                                     <li><a href="#">User 18</a></li>
                                 </ul>
                                 <% } else { %>
-                                    <button type="button" class="btn btn-primary btn-block"><a href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Owner</a></button>
+                                    <button type="button" class="btn btn-primary btn-block"><a class="message-button" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Owner</a></button>
                                     <% } %>
                         </div>
                     </div>
