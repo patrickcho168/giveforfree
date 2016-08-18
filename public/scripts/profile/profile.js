@@ -133,7 +133,7 @@ $(document).ready(function() {
                     //...
             }
             $('.cd-nav-trigger').toggleClass('menu-is-open');
-            navigationContainer.find('#cd-main-nav ul').off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend').toggleClass('is-visible');
+            $('#cd-nav').find('#cd-main-nav ul').off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend').toggleClass('is-visible');
         }
 
     });
