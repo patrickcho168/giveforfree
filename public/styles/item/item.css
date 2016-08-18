@@ -59,6 +59,7 @@ p {
  */
 .profile-header-container{
     margin: 0 auto;
+    margin-left: -25%;
     text-align: center;
     align-self: center;
     /*position: relative;
