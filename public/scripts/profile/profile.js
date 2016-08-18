@@ -30,6 +30,10 @@ $(document).on("click", ".snag", function() {
     $(this).removeClass("snag");
     $(this).addClass("unsnag");
 
+    // Increment number of people snagging
+    var snag_count = parseInt($(this).parent().siblings('small').text()) + 1;
+    $(this).parent().siblings('small').text(String(snag_count) + (snag_count === 1 ? ' person' : ' people') + ' snagged this.');
+
     // Send post request
     // Should check for success
     $.post("/api/want/" + itemId)
@@ -58,6 +62,10 @@ $(document).on("click", ".unsnag", function() {
     // Change type
     $(this).removeClass("unsnag");
     $(this).addClass("snag");
+
+    // Decrement number of people snagging
+    var snag_count = parseInt($(this).parent().siblings('small').text()) - 1;
+    $(this).parent().siblings('small').text(String(snag_count) + (snag_count === 1 ? ' person' : ' people') + ' snagged this.');
 
     // Send post request
     $.post("/api/unwant/" + itemId)

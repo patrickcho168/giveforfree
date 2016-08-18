@@ -95,8 +95,10 @@ module.exports = function(app) {
     });
 
     app.post('/upload', ensureLogin.ensureLoggedIn(), function(req, res, next) {
+        var otherUserId = parseInt(req.params.id);
+        var mine = otherUserId === req.user.appUserId;
+
         uploading(req, res, function(err) {
-            console.log("HERE");
             // Image upload errors
             if (err) {
                 console.log(err.message);
@@ -114,9 +116,27 @@ module.exports = function(app) {
 
             } else {
               // Simple form validation
-              req.checkBody('title', 'Please fill in a valid title.').notEmpty();
-              req.checkBody('description', 'Please fill in a valid description.').notEmpty();
+              req.checkBody({
+               'title': {
+                  notEmpty: true,
+                  isLength: {
+                    options: [{ min: 1, max: 50 }],
+                    errorMessage: 'Title must be less than 50 characters' // Error message for the validator, takes precedent over parameter message
+                  },
 
+                  errorMessage: 'Please fill in a valid title.'
+                },
+                'description': {
+                  notEmpty: true,
+                  isLength: {
+                    options: [{ min: 1, max: 200 }],
+                    errorMessage: 'Description must be less than 200 characters' // Error message for the validator, takes precedent over parameter message
+                  },
+
+                  errorMessage: 'Please fill in a valid description.'
+                }
+              });
+              
               req.sanitizeBody('title');
               req.sanitizeBody('description');
 
@@ -128,12 +148,7 @@ module.exports = function(app) {
                 errors.forEach(function(error) {
                   req.flash('error_messages', error.msg);
                 });
-                
-                res.redirect('/upload', {
-                    myProfile: mine,
-                    user: req.user.attributes,
-                    id: req.user.appUserId
-                });
+                res.redirect(301, '/upload');
 
               } else {
                 // Create item based on form
@@ -143,8 +158,6 @@ module.exports = function(app) {
                   timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
                   title: req.body.title,
                   description: req.body.description,
-                  // Actl don't have to save to db?
-                  randomAssign: req.body.postToFacebook ? 1 : 0,
                   imageLocation: req.file.key
                 });
 
