@@ -98,11 +98,20 @@ p {
 }
 
 .profile-name-container {
-    vertical-align: middle;
+    margin: 0 auto;
+    text-align: center;
     align-self: center;
 }
 
 .profile-panel {
     display: flex;
     justify-content: center;
+}
+
+.owner-name {
+    font-size: 8.0em;
+}
+
+.owner-location {
+    font-size: 6.0em;
 }
