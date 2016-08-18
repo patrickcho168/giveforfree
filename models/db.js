@@ -210,6 +210,20 @@ var ItemPageQuery = function(userId, itemId, cb) {
   });
 }
 
+var ItemPageManualQuery = function(itemId, cb) {
+  knex
+    .from('itemWanter as iw')
+    .leftJoin('user as u', 'iw.wanterID', 'u.userID')
+    .leftJoin('item as i', 'i.giverID', 'u.userID')
+    .select(['u.name', 'u.userID', 'u.fbID'])
+    .count('i.takerID as numGiven')
+    .groupBy('u.userID')
+    .where('iw.itemID', '=', itemId)
+    .then(function(result){
+    return cb(result);
+  });
+}
+
 var ProfilePageTotalGivenQuery = function(userId, cb) {
   knex
     .from('item as i')
@@ -246,5 +260,6 @@ db.ProfilePageWantQueryBeforeId = ProfilePageWantQueryBeforeId;
 db.ItemPageQuery = ItemPageQuery;
 db.ProfilePageTotalTakenQuery = ProfilePageTotalTakenQuery;
 db.ProfilePageTotalGivenQuery = ProfilePageTotalGivenQuery;
+db.ItemPageManualQuery = ItemPageManualQuery;
 
 module.exports = db;

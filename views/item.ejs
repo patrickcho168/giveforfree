@@ -158,30 +158,15 @@
                                 <% if (mine && item.takerID === null) { %>
                                     <button type="button" class="btn btn-danger">Delete</button>
                                     <% if (item.numWants > 0) { %>
-                                        <button type="button" class="btn btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw
+                                        <button type="button" class="btn btn-warning"><a href="/api/give/<%= item.itemID %>"> Random Draw</a>
                                         </button>
                                         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Pick <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu scrollable-menu dropdown-menu-right" role="menu">
-                                            <li><a href="#">User 1</a></li>
-                                            <li><a href="#">User 2</a></li>
-                                            <li><a href="#">User 3</a></li>
-                                            <li><a href="#">User 4</a></li>
-                                            <li><a href="#">User 5</a></li>
-                                            <li><a href="#">User 6</a></li>
-                                            <li><a href="#">User 7</a></li>
-                                            <li><a href="#">User 8</a></li>
-                                            <li><a href="#">User 9</a></li>
-                                            <li><a href="#">User 10</a></li>
-                                            <li><a href="#">User 11</a></li>
-                                            <li><a href="#">User 12</a></li>
-                                            <li><a href="#">User 13</a></li>
-                                            <li><a href="#">User 14</a></li>
-                                            <li><a href="#">User 15</a></li>
-                                            <li><a href="#">User 16</a></li>
-                                            <li><a href="#">User 17</a></li>
-                                            <li><a href="#">User 18</a></li>
+                                            <% for (var i=0; i<manual.length; i++) { %>
+                                                <li><a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>"><%= manual[i].name %></a></li>
+                                            <% } %>
                                         </ul>
                                         <% } %>
                                             <% } else if (item.takerID === null || item.takerID === id) { %>

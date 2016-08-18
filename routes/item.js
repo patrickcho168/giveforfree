@@ -66,7 +66,6 @@ module.exports = function(app) {
         }).fetch().then(function(data) {
             console.log(data);
             // If item exists
-            console.log("GIVING AWAY RANDOMLY");
             if (data !== null) {
                 // Ensure item belongs to user currently logged in
                 if (data.attributes && data.attributes.giverID === userId) {
@@ -77,7 +76,6 @@ module.exports = function(app) {
                             itemID: itemId
                         }).fetchAll().then(function(wantData) {
                             // Ensure at least someone wants the item
-                            console.log(wantData);
                             if (wantData !== null) {
                                 var allWantUserIds = [];
                                 // Record all users who want the item
@@ -101,28 +99,32 @@ module.exports = function(app) {
     })
 
     // This is for giving to specific person
-    app.post('/api/give/:itemId/:takerId', ensureLogin.ensureLoggedIn(), function(req, res) {
+    app.get('/api/give/:itemId/:takerId', ensureLogin.ensureLoggedIn(), function(req, res) {
         var userId = parseInt(req.user.appUserId);
         var itemId = parseInt(req.params.itemId);
-        var wanterId = parseInt(req.param.takerId);
+        var wanterId = parseInt(req.params.takerId);
+        console.log(wanterId);
         db.Item.where({
             itemID: itemId
         }).fetch().then(function(data) {
             // If item exists
             if (data !== null) {
                 // Ensure item belongs to user currently logged in
-                if (data.attributes && data.attributes.takerID === userId) {
+                if (data.attributes && data.attributes.giverID === userId) {
                     // Ensure item has not been given out before
-                    if (data.attributes.giverID === null) {
+                    if (data.attributes.takerID === null) {
                         // Check whether taker really wants the item
                         db.Want.where({
                             itemID: itemId,
                             wanterID: wanterId
                         }).fetch().then(function(wantData) {
+                            console.log(wantData);
                             // Update item row
                             if (wantData !== null) {
                                 data.save({
                                     takerID: wanterId
+                                }).then(function(noUse) {
+                                    res.redirect("/item/" + itemId);
                                 });
                             }
                         })
@@ -327,16 +329,34 @@ module.exports = function(app) {
             var processedDate = date.locale('en-gb').format("LLL");
             facebook.getFbData(accessToken, '/' + req.user.id, '', function(fbdata) {
                 db.ProfilePageTotalGivenQuery(data[0].giverID, function(gifted) {
-                    res.render('item', {
-                        id: userId,
-                        item: data[0],
-                        mine: userId === data[0].giverID,
-                        appId: config.fbClientID,
-                        domain: config.domain,
-                        date: processedDate,
-                        expired: expiredMin > 0,
-                        karma: gifted[0].numGiven * 10
-                    });
+                    var mine = userId === data[0].giverID;
+                    if (mine && data[0].takerID === null && data[0].numWants > 0) {
+                        db.ItemPageManualQuery(itemId, function(data2) {
+                            console.log(data2);
+                            res.render('item', {
+                                id: userId,
+                                item: data[0],
+                                mine: mine,
+                                appId: config.fbClientID,
+                                domain: config.domain,
+                                date: processedDate,
+                                expired: expiredMin > 0,
+                                karma: gifted[0].numGiven * 10,
+                                manual: data2
+                            });
+                        });
+                    } else {
+                        res.render('item', {
+                            id: userId,
+                            item: data[0],
+                            mine: mine,
+                            appId: config.fbClientID,
+                            domain: config.domain,
+                            date: processedDate,
+                            expired: expiredMin > 0,
+                            karma: gifted[0].numGiven * 10
+                        });
+                    }
                 });
             });
         })
