@@ -80,6 +80,8 @@ $(document).ready(function() {
     if (!isMine) {
         $("#but-friends").addClass("hidden");
         $("#tab-friends").addClass("hidden");
+    } else {
+        $("#tab-self").addClass("hidden");
     }
 
     $(".cd-main-nav a").on("click", function() {
@@ -121,6 +123,10 @@ $(document).ready(function() {
 
                     $('#infinite-scroll-container').append(html);
 
+                    break;
+
+                case 'tab-self':
+                    document.getElementById("nav-profile").click();
                     break;
 
                 default:
