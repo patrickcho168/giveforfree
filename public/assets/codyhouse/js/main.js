@@ -28,8 +28,11 @@ jQuery(document).ready(function($){
 			});
 
 			mainNavigation.toggleClass("nav nav-pills nav-justified tabs");
-			
+
 		} else if ($(window).scrollTop() <= offset) {
+
+			mainNavigation.toggleClass("nav nav-pills nav-justified tabs");
+			
 			//check if the menu is open when scrolling up
 			if( mainNavigation.hasClass('is-visible')  && !$('html').hasClass('no-csstransitions') ) {
 				//close the menu with animation
