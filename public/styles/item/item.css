@@ -59,8 +59,8 @@ p {
  */
 .profile-header-container{
     margin: 0 auto;
-    text-align: center;
-    /*align-self: center;*/
+    text-align: left;
+    align-self: left;
     /*position: relative;
     top: 50%;
     transform: translateY(-50%);*/
@@ -71,8 +71,8 @@ p {
 }
 
 .profile-header-img > img.img-circle {
-    width: 15vw;
-    height:15vw;
+    width: 16vw;
+    height:16vw;
     min-width: 48px;
     min-height: 48px;
     max-width: 100px;
