@@ -176,7 +176,7 @@ header h1 {
   #cd-nav ul {
     /* the navigation moves to the top */
     /*position: absolute;*/
-    width: 100%;
+    /*width: 100%;*/
     max-width: none;
     bottom: auto;
     /*top: 36px;*/
