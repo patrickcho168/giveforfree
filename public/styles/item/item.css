@@ -68,6 +68,11 @@ p {
 
 .profile-header {
     /*margin-top: 43px;*/
+    text-align: center;
+    align-self: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /**
@@ -75,14 +80,23 @@ p {
  */
 .rank-label-container {
     margin-top: -19px;
-    /* z-index: 1000; */
+     /*z-index: 1000; */
     text-align: center;
+    align-self: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .label.label-default.rank-label {
     background-color: rgb(81, 210, 183);
     padding: 5px 10px 5px 10px;
     border-radius: 27px;
+    text-align: center;
+    align-self: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .profile-name-container {
@@ -92,7 +106,7 @@ p {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    margin-left: 15vw;
+    /*margin-left: 15vw;*/
 }
 
 .profile-panel {
