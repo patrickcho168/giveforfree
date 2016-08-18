@@ -152,8 +152,9 @@ p {
     padding-bottom: 2.5rem;
     border-radius: 6px;
     background-color: #eee;
-    margin-left: 2.5rem;
-    margin-right: 2.5rem;
+    margin-left: 10.0rem;
+    margin-right: 10.0rem;
+    align-self: center;
 }
 .profile-photo-holder {
     vertical-align: center;
