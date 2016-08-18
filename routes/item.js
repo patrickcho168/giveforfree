@@ -58,23 +58,26 @@ module.exports = function(app) {
     // });
 
     // This is for giving to random person
-    app.post('/api/give/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
+    app.get('/api/give/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
         var userId = parseInt(req.user.appUserId);
         var itemId = parseInt(req.params.itemId);
         db.Item.where({
             itemID: itemId
         }).fetch().then(function(data) {
+            console.log(data);
             // If item exists
+            console.log("GIVING AWAY RANDOMLY");
             if (data !== null) {
                 // Ensure item belongs to user currently logged in
-                if (data.attributes && data.attributes.takerID === userId) {
+                if (data.attributes && data.attributes.giverID === userId) {
                     // Ensure item has not been given out before
-                    if (data.attributes.giverID === null) {
+                    if (data.attributes.takerID === null) {
                         // Find who wants the item
                         db.Want.where({
                             itemID: itemId
-                        }).fetchall().then(function(wantData) {
+                        }).fetchAll().then(function(wantData) {
                             // Ensure at least someone wants the item
+                            console.log(wantData);
                             if (wantData !== null) {
                                 var allWantUserIds = [];
                                 // Record all users who want the item
@@ -86,6 +89,8 @@ module.exports = function(app) {
                                 // Update item row
                                 data.save({
                                     takerID: wantUserId
+                                }).then(function(noUse) {
+                                    res.redirect("/item/" + itemId);
                                 });
                             }
                         })
@@ -317,6 +322,8 @@ module.exports = function(app) {
         db.ItemPageQuery(userId, itemId, function(data) {
             console.log(data);
             var date = moment(data[0].timeExpired);
+            var expiredMin = moment().diff(date, 'minutes');
+            console.log(expiredMin);
             var processedDate = date.locale('en-gb').format("LLL");
             facebook.getFbData(accessToken, '/' + req.user.id, '', function(fbdata) {
                 res.render('item', {
@@ -325,7 +332,8 @@ module.exports = function(app) {
                     mine: userId === data[0].giverID,
                     appId: config.fbClientID,
                     domain: config.domain,
-                    date: processedDate
+                    date: processedDate,
+                    expired: expiredMin > 0
                 });
             });
         })

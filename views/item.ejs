@@ -160,7 +160,7 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a href="#">Manual</a></li>
-                                    <li><a href="#">Random Draw</a></li>
+                                    <li><a href="/api/give/<%= item.itemID %>">Random Draw</a></li>
                                 </ul>
                             <% } else { %>
                                 <button type="button" class="btn btn-primary"><a href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message</a></button>
@@ -186,12 +186,18 @@
                 </div>
 
                 <div class="bs-callout bs-callout-warning">
-                    <h5>Giveaway Deadline</h5> This giveaway will end on <b><%= date %></b>.
+                    <% if (item.takerID === null && !expired) { %>
+                        <h5>Giveaway Deadline</h5> This giveaway will end on <b><%= date %></b>.
+                    <% } else if (item.takerID === null) { %>
+                        <h5>Giveaway Deadline</h5> This giveaway has ended.
+                    <% } else { %>
+                        <h5>Giveaway Deadline</h5> This item has been given away to <a href="/profile/<%= item.takerId %>"><%= item.takerName%></a>.
+                    <% } %>
                 </div>
                 <% if (!mine) { %>
-                    <% if (item.meWant === 1) { %>
+                    <% if (item.meWant === 1 && !expired) { %>
                         <a class="btn btn-lg btn-danger btn-block unsnag active" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> UNSNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
-                    <% } else { %>
+                    <% } else if (!expired) { %>
                         <a class="btn btn-lg btn-primary btn-block snag active" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> SNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
                     <% } %>
                 <% } %>

@@ -184,11 +184,12 @@ var ItemPageQuery = function(userId, itemId, cb) {
   knex
     .from('item as i')
     .leftJoin('user as u', 'u.userID', 'i.giverID')
+    .leftJoin('user as t', 't.userID', 'i.takerID')
     .leftJoin('itemWanter as iw', 'iw.itemID', 'i.itemID')
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.timeExpired', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID', 'u.fbID'])
+    .select(['i.itemID', 'i.timeExpired', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID', 'u.fbID', 't.name as takerName', 't.userID as takerId'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
