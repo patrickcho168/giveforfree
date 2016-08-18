@@ -175,6 +175,7 @@ header h1 {
 @media only screen and (min-width: 1170px) {
   #cd-nav ul {
     /* the navigation moves to the top */
+    display: none;
     position: absolute;
     width: auto;
     max-width: none;
