@@ -18,7 +18,7 @@ function inArray(needle, haystack) {
 module.exports = function(app) {
 
     // Display item page
-    app.get('/item/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
+    app.get('/item/:itemId', ensureLogin.ensureLoggedIn(), function(req, res, next) {
         var itemId = parseInt(req.params.itemId);
         var giver_name;
         var myItem;
@@ -26,6 +26,10 @@ module.exports = function(app) {
         db.Item.where({
             itemID: itemId
         }).fetch().then(function(item) {
+            if (!(item)) {
+                res.render('404');
+                return;
+            }
             db.User.where({
                 userID: item.attributes.giverID
             }).fetch().then(function(user) {
@@ -110,6 +114,25 @@ module.exports = function(app) {
         });
     })
 
+    // Delete an item
+    app.post('api/delete/:itemId', ensureLogin.ensureLoggedIn(), function(req, res, next) {
+        var itemId = parseInt(req.params.itemId);
+        var userId = parseInt(req.user.appUserId);
+        db.Item.where({
+            itemID: itemId,
+            giverID: userId
+        }).fetch().then(function(item) {
+            // If this item exists
+            if (item) {
+                item.where({
+                    itemID: itemId,
+                    giverID: userId
+                }).destroy();
+            }
+        });
+
+        next();
+    });
 
     // Want a product (given itemID and userID)
     // Should return success header?
@@ -159,7 +182,6 @@ module.exports = function(app) {
         }).fetch().then(function(oldWant) {
             if (oldWant) {
                 // Remove
-                console.log(oldWant);
                 oldWant.where({
                     itemID: itemId,
                     wanterID: userId
