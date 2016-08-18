@@ -155,8 +155,8 @@ p {
 }
 .profile-photo-holder {
     vertical-align: center;
-    /*max-height: 15em;
-    max-width: 15em;*/
+    max-height: 15em;
+    /*max-width: 15em;*/
     width: 20vw;
     height:20vw;
 }
@@ -182,6 +182,8 @@ p {
     vertical-align: center;
 }
 .profile-photo {
+    width: 20vw;
+    height:20vw;
     max-height: 11em;
 }
 .tabs {
