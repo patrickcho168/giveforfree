@@ -119,3 +119,16 @@ p {
 .owner-location {
     font-size: 1.6rem;
 }
+
+.button-group {
+    padding-top: 20px;
+}
+
+.panel-heading h5 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: normal;
+    width: 75%;
+    padding-top: 8px;
+}
