@@ -144,6 +144,11 @@ p {
 
 /* Profile Jumbotron */
 
+.container .jumbotron, .container-fluid .jumbotron {
+    padding-right: 10em;
+    padding-left: 10em;
+    border-radius: 6px;
+}
 .profile-area {
     /*padding: 8.5rem 4.5rem;*/
     padding-top: 10.5rem;
