@@ -144,10 +144,11 @@ p {
 
 /* Profile Jumbotron */
 
-.block-container {
+.profile-area {
     /*padding: 8.5rem 4.5rem;*/
     padding-top: 10.5rem;
     align: center;
+    text-align: center;
     /*border-width: .2rem;*/
 }
 .profile-photo-holder {
