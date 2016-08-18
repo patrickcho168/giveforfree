@@ -195,6 +195,7 @@ p {
     height: auto;
     max-height: 200px;
     overflow-x: hidden;
+    align-self: flex-end;
 }
 .button .a {
     color: white;
