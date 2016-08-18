@@ -118,6 +118,7 @@ p {
 
 .owner-location {
     font-size: 1.6rem;
+    margin-top: -10px;
 }
 
 .button-group {
@@ -131,4 +132,5 @@ p {
     line-height: normal;
     width: 75%;
     padding-top: 8px;
+    font-weight: bold;
 }
