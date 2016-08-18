@@ -235,9 +235,7 @@ p {
 footer {}
 .contact-list {
     text-align: left;
-    padding-top: 20px;
 }
-.text-muted {
+.copyright {
     text-align: right;
-    padding-top: 20px;
 }
