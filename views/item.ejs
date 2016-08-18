@@ -152,7 +152,7 @@
                             </div>
                         </div>
 
-                        <div class="row button-group">
+                        <div class="row btn-group">
                             <% if (mine) { %>
                                 <button type="button" class="btn btn-danger">Delete</button>
                                 <button type="button" class="btn btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw
@@ -181,7 +181,7 @@
                                     <li><a href="#">User 18</a></li>
                                 </ul>
                                 <% } else { %>
-                                    <button type="button" class="btn btn-primary"><a href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message</a></button>
+                                    <button type="button" class="btn btn-primary btn-block"><a href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Owner</a></button>
                                     <% } %>
                         </div>
                     </div>
