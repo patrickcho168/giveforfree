@@ -234,7 +234,14 @@
                 </div>
                 <div class="modal-body">
 
-                    <form action="api/update/:itemId" class="form-horizontal" role="form" method="post">
+                    <form action="api/update/:itemId" class="form-horizontal form" role="form" method="post">
+                        <% if (locals.error_messages) {
+                            error_messages.forEach(function(message) { %>
+                            <div class="alert alert-warning"><strong>Error: </strong>
+                                <%= message %>
+                            </div>
+                            <% });
+                        } %>
                         <div class="form-group has-warning">
                             <label class="col-sm-2 control-label" for="title">Title</label>
                             <div class="col-sm-10">
