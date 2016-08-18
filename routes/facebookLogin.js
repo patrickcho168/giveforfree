@@ -104,7 +104,9 @@ module.exports = function(app) {
     // HOME PAGE
     app.get('/', ensureLogin.ensureLoggedIn(), function(req, res) {
         var userId = req.user.appUserId;
-        res.render('homeLoggedIn', {id: userId});
+        res.render('homeLoggedIn', {
+            id: userId
+        });
     });
 
     app.get('/login', function(req, res) {

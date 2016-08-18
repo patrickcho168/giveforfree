@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
 
     <!-- Metadata and Responsive Viewport -->
@@ -16,13 +15,15 @@
     <!-- Bootstrap Support -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- Other Scripts -->
+    <script src="scripts/common/common.js"></script>
     <script src="scripts/landing/landing.js"></script>
 
     <!-- CSS Styles -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles/landing/default.css">
+    <link rel="stylesheet" href="styles/common/common.css">
+    <link rel="stylesheet" href="styles/landing/landing.css">
     <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
 
     <!-- Font Support -->
@@ -192,23 +193,23 @@
                 <div class="col-lg-10 col-lg-offset-1 text-center">
                     <h2>Our Team</h2>
                     <hr class="small">
-                    <div class="contact-row col-md-12">
+                    <div class="contact-row col-sm-12">
 
-                        <div class="col-md-6 contact-item">
-                            <div class="col-md-4">
+                        <div class="col-sm-6 contact-item">
+                            <div class="col-sm-4">
                                 <span class="glyphicon glyphicon-bullhorn" id="bullhorn-icon" aria-hidden="true"></span>
                             </div>
-                            <div class="col-md-8 teammate-description">
+                            <div class="col-sm-8 teammate-description">
                                 <h5> Ng Xu Jie </h5>
                                 <p> Xu Jie is our team manager, marketeer and front-end developer. </p>
                             </div>
                         </div>
 
-                        <div class="col-md-6 contact-item">
-                            <div class="col-md-4">
+                        <div class="col-sm-6 contact-item">
+                            <div class="col-sm-4">
                                 <span class="glyphicon glyphicon-blackboard" id="blackboard-icon" aria-hidden="true"></span>
                             </div>
-                            <div class="col-md-8 teammate-description">
+                            <div class="col-sm-8 teammate-description">
                                 <h5> Huang Lie Jun </h5>
                                 <p> Lie Jun is our UX/UI designer and front-end developer. </p>
                             </div>
@@ -217,23 +218,23 @@
                     </div>
 
 
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
 
-                        <div class="col-md-6 contact-item">
-                            <div class="col-md-4">
+                        <div class="col-sm-6 contact-item">
+                            <div class="col-sm-4">
                                 <span class="glyphicon glyphicon-cog" id="cog-icon" aria-hidden="true"></span>
                             </div>
-                            <div class="col-md-8 teammate-description">
+                            <div class="col-sm-8 teammate-description">
                                 <h5> Ken Oung Yong Quan </h5>
                                 <p> Ken is our back-end developer, managing ... </p>
                             </div>
                         </div>
 
-                        <div class="col-md-6 contact-item">
-                            <div class="col-md-4">
+                        <div class="col-sm-6 contact-item">
+                            <div class="col-sm-4">
                                 <span class="glyphicon glyphicon-globe" id="globe-icon" aria-hidden="true"></span>
                             </div>
-                            <div class="col-md-8 teammate-description">
+                            <div class="col-sm-8 teammate-description">
                                 <h5> Patrick Cho </h5>
                                 <p> Patrick is our back-end developer, managing ... </p>
                             </div>
@@ -250,22 +251,22 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="row">
-                <div class="col-lg-10 col-lg-offset-1 text-center">
-                    <hr class="small">
-                    <ul class="col-lg-6 list-unstyled contact-list">
-                        <li>
-                            <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 6123 4567
-                        </li>
-                        <li>
-                            <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">contact@giveforfree.com</a>
-                        </li>
-                    </ul>
-                    <p class="col-lg-6 text-muted">Copyright &copy; Give For Free 2016 </p>
+            <div class="col-xs-10 col-xs-offset-1 text-center">
+                <hr class="xsall">
+                <ul class="col-xs-12 list-unstyled contact-list">
+                    <li>
+                        <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 6123 4567
+                    </li>
+                    <li>
+                        <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">contact@giveforfree.com</a>
+                    </li>
+                </ul>
+
+                <div class="col-xs-12 text-center">
+                    <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
                 </div>
             </div>
         </div>
-        <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
     </footer>
 
 </body>

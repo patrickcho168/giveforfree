@@ -105,92 +105,98 @@ module.exports = function(app) {
                 req.flash('error_messages', err.message);
                 res.redirect('/upload');
 
-            // No image uploaded
+                // No image uploaded
             } else if (!(req.file)) {
-              req.flash('error_messages', 'Please upload an image.');
-              res.redirect('/upload');
+                req.flash('error_messages', 'Please upload an image.');
+                res.redirect('/upload');
 
-              // Check appUserId exists
+                // Check appUserId exists
             } else if (!(req.user.appUserId)) {
-                  next(new Error("User does not have appUserId"));
+                next(new Error("User does not have appUserId"));
 
             } else {
-              // Simple form validation
-              req.checkBody({
-               'title': {
-                  notEmpty: true,
-                  isLength: {
-                    options: [{ min: 1, max: 50 }],
-                    errorMessage: 'Title must be less than 50 characters' // Error message for the validator, takes precedent over parameter message
-                  },
+                // Simple form validation
+                req.checkBody({
+                    'title': {
+                        notEmpty: true,
+                        isLength: {
+                            options: [{
+                                min: 1,
+                                max: 50
+                            }],
+                            errorMessage: 'Title must be less than 50 characters' // Error message for the validator, takes precedent over parameter message
+                        },
 
-                  errorMessage: 'Please fill in a valid title.'
-                },
-                'description': {
-                  notEmpty: true,
-                  isLength: {
-                    options: [{ min: 1, max: 200 }],
-                    errorMessage: 'Description must be less than 200 characters' // Error message for the validator, takes precedent over parameter message
-                  },
+                        errorMessage: 'Please fill in a valid title.'
+                    },
+                    'description': {
+                        notEmpty: true,
+                        isLength: {
+                            options: [{
+                                min: 1,
+                                max: 200
+                            }],
+                            errorMessage: 'Description must be less than 200 characters' // Error message for the validator, takes precedent over parameter message
+                        },
 
-                  errorMessage: 'Please fill in a valid description.'
-                }
-              });
-              
-              req.sanitizeBody('title');
-              req.sanitizeBody('description');
-
-              var errors = req.validationErrors();
-              console.log(errors);
-              console.log(req.file);
-
-              if (errors) {
-                errors.forEach(function(error) {
-                  req.flash('error_messages', error.msg);
-                });
-                res.redirect(301, '/upload');
-
-              } else {
-                // Create item based on form
-                var newItem = new db.Item({
-                  giverID: req.user.appUserId,
-                  timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
-                  timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
-                  title: req.body.title,
-                  description: req.body.description,
-                  imageLocation: req.file.key
+                        errorMessage: 'Please fill in a valid description.'
+                    }
                 });
 
-                // Save item to database
-                newItem.save().then(function(newSavedItem) {
+                req.sanitizeBody('title');
+                req.sanitizeBody('description');
 
-                  if (req.body.postToFacebook) {
-                    
-                    // Create facebook post
-                    var userFbId = req.user.id;
-                    var newItemTitle = newSavedItem.attributes.title;
-                    var newItemId = newSavedItem.attributes.itemID;
-                    var newItemUrl = newSavedItem.attributes.imageLocation;
-                    var apiCall =  '/' + userFbId +'/feed';
-                    console.log(apiCall);
-                    facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data){
-                      console.log(data);
+                var errors = req.validationErrors();
+                console.log(errors);
+                console.log(req.file);
+
+                if (errors) {
+                    errors.forEach(function(error) {
+                        req.flash('error_messages', error.msg);
+                    });
+                    res.redirect(301, '/upload');
+
+                } else {
+                    // Create item based on form
+                    var newItem = new db.Item({
+                        giverID: req.user.appUserId,
+                        timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+                        timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
+                        title: req.body.title,
+                        description: req.body.description,
+                        imageLocation: req.file.key
                     });
 
-                  }
-                  // console.log(newSavedItem);
-                  // var newItemId = newSavedItem.attributes.itemID;
-                  // var newItemUrl = newSavedItem.attributes.imageLocation;
-                  // var newItemDesc = newSavedItem.attributes.description;
-                  // var newItemTitle = newSavedItem.attributes.title;
-                  // var objString = createFbItem(newItemUrl, newItemTitle, newItemDesc, newItemId);
-                  // console.log('%7B%22' + objString + '%22%7D');
-                });
+                    // Save item to database
+                    newItem.save().then(function(newSavedItem) {
 
-                res.redirect("/");
-              
-              }
-            } 
-          });
+                        if (req.body.postToFacebook) {
+
+                            // Create facebook post
+                            var userFbId = req.user.id;
+                            var newItemTitle = newSavedItem.attributes.title;
+                            var newItemId = newSavedItem.attributes.itemID;
+                            var newItemUrl = newSavedItem.attributes.imageLocation;
+                            var apiCall = '/' + userFbId + '/feed';
+                            console.log(apiCall);
+                            facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {
+                                console.log(data);
+                            });
+
+                        }
+                        // console.log(newSavedItem);
+                        // var newItemId = newSavedItem.attributes.itemID;
+                        // var newItemUrl = newSavedItem.attributes.imageLocation;
+                        // var newItemDesc = newSavedItem.attributes.description;
+                        // var newItemTitle = newSavedItem.attributes.title;
+                        // var objString = createFbItem(newItemUrl, newItemTitle, newItemDesc, newItemId);
+                        // console.log('%7B%22' + objString + '%22%7D');
+                    });
+
+                    res.redirect("/");
+
+                }
+            }
+        });
     });
 }

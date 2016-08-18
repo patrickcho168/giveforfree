@@ -40,7 +40,7 @@ module.exports = function(app) {
                                 friends: data.models,
                                 totalGifted: gifted[0].numGiven,
                                 totalTaken: taken[0].numTaken,
-                                totalKarma: gifted[0].numGiven*10
+                                totalKarma: gifted[0].numGiven * 10
                             });
                         });
                     });

@@ -195,14 +195,15 @@ p {
     font-style: normal;
 }
 
-.button > a {
+/*.button a {
     color: white;
     font-weight: bold;
     font-style: normal;
-}
+}*/
 
 .carousel-window {
     width: 100%;
+    height: 100%;
 }
 
 .modal-body .form-horizontal .col-sm-2,

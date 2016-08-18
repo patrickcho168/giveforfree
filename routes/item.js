@@ -322,17 +322,30 @@ module.exports = function(app) {
         var accessToken = req.user.accessToken;
         // Find Item
         db.ItemPageQuery(userId, itemId, function(data) {
-            console.log(data);
-            var date = moment(data[0].timeExpired);
-            var expiredMin = moment().diff(date, 'minutes');
-            console.log(expiredMin);
-            var processedDate = date.locale('en-gb').format("LLL");
-            facebook.getFbData(accessToken, '/' + req.user.id, '', function(fbdata) {
-                db.ProfilePageTotalGivenQuery(data[0].giverID, function(gifted) {
-                    var mine = userId === data[0].giverID;
-                    if (mine && data[0].takerID === null && data[0].numWants > 0) {
-                        db.ItemPageManualQuery(itemId, function(data2) {
-                            console.log(data2);
+                console.log(data);
+                var date = moment(data[0].timeExpired);
+                var expiredMin = moment().diff(date, 'minutes');
+                console.log(expiredMin);
+                var processedDate = date.locale('en-gb').format("LLL");
+                facebook.getFbData(accessToken, '/' + req.user.id, '', function(fbdata) {
+                    db.ProfilePageTotalGivenQuery(data[0].giverID, function(gifted) {
+                        var mine = userId === data[0].giverID;
+                        if (mine && data[0].takerID === null && data[0].numWants > 0) {
+                            db.ItemPageManualQuery(itemId, function(data2) {
+                                console.log(data2);
+                                res.render('item', {
+                                    id: userId,
+                                    item: data[0],
+                                    mine: mine,
+                                    appId: config.fbClientID,
+                                    domain: config.domain,
+                                    date: processedDate,
+                                    expired: expiredMin > 0,
+                                    karma: gifted[0].numGiven * 10,
+                                    manual: data2
+                                });
+                            });
+                        } else {
                             res.render('item', {
                                 id: userId,
                                 item: data[0],
@@ -341,37 +354,24 @@ module.exports = function(app) {
                                 domain: config.domain,
                                 date: processedDate,
                                 expired: expiredMin > 0,
-                                karma: gifted[0].numGiven * 10,
-                                manual: data2
+                                karma: gifted[0].numGiven * 10
                             });
-                        });
-                    } else {
-                        res.render('item', {
-                            id: userId,
-                            item: data[0],
-                            mine: mine,
-                            appId: config.fbClientID,
-                            domain: config.domain,
-                            date: processedDate,
-                            expired: expiredMin > 0,
-                            karma: gifted[0].numGiven * 10
-                        });
-                    }
+                        }
+                    });
                 });
-            });
-        })
-        // db.Item.where({
-        //     itemID: itemId
-        // }).fetch().then(function(itemData) {
-        //     // Is it my item?
-        //     var giverId = itemData.attributes.giverID;
-        //     var mine = req.user.appUserId == giverId;
-        //     var friend;
-        //     res.render('item', {
-        //         myItem: mine,
-        //         item: itemData.attributes,
-        //         id: req.user.appUserId
-        //     });
+            })
+            // db.Item.where({
+            //     itemID: itemId
+            // }).fetch().then(function(itemData) {
+            //     // Is it my item?
+            //     var giverId = itemData.attributes.giverID;
+            //     var mine = req.user.appUserId == giverId;
+            //     var friend;
+            //     res.render('item', {
+            //         myItem: mine,
+            //         item: itemData.attributes,
+            //         id: req.user.appUserId
+            //     });
             // if (inArray(giverId, req.user.fbFriendsId)) {
             //     friend = true;
             // } else {

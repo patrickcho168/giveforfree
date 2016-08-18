@@ -18,8 +18,6 @@
     <!-- Bootstrap Support -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous"> -->
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script> -->
 
     <!-- Other Scripts -->
     <script src="../scripts/item/item.js"></script>
@@ -235,7 +233,7 @@
                 <form action="/api/update/<%= item.itemID %>" class="form-horizontal form" role="form" method="post">
                     <div class="modal-body">
 
-                    
+
                         <% if (locals.error_messages) {
                             error_messages.forEach(function(message) { %>
                             <div class="alert alert-warning"><strong>Error: </strong>
@@ -266,7 +264,7 @@
                             });
                         </script>
 
-                    
+
 
                     </div>
                     <div class="modal-footer">
