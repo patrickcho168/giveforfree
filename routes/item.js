@@ -114,6 +114,29 @@ module.exports = function(app) {
         });
     })
 
+    // Update an item
+    app.post('api/update/:itemId', ensureLogin.ensureLoggedIn(), function(req, res, next) {
+        var itemId = parseInt(req.params.itemId);
+        var userId = parseInt(req.user.appUserId);
+        db.Item.where({
+            itemID: itemId,
+            giverID: userId
+        }).fetch().then(function(item) {
+            // If this item exists
+            if (item) {
+                item.where({
+                    itemID: itemId,
+                    giverID: userId
+                }).update({
+                    title: req.body.title,
+                    description: req.body.description
+                })
+            }
+        });
+
+        next();
+    });
+
     // Delete an item
     app.post('api/delete/:itemId', ensureLogin.ensureLoggedIn(), function(req, res, next) {
         var itemId = parseInt(req.params.itemId);
