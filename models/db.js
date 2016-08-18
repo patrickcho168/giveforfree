@@ -180,6 +180,26 @@ var ProfilePageWantQueryBeforeId = function(userId, profileId, numItems, beforeI
   });
 }
 
+var ItemPageQuery = function(userId, itemId, cb) {
+  knex
+    .from('item as i')
+    .leftJoin('user as u', 'u.userID', 'i.giverID')
+    .leftJoin('itemWanter as iw', 'iw.itemID', 'i.itemID')
+    .leftJoin('itemWanter as iwu', function() {
+      this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
+    })
+    .select(['i.itemID', 'i.timeExpired', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID', 'u.fbID'])
+    .count('iw.itemID as numWants')
+    .countDistinct('iwu.itemID as meWant')
+    .groupBy('i.itemID')
+    .where('i.itemID', '=', itemId)
+    .orderBy('i.itemID', 'DESC')
+    .limit(1)
+    .then(function(result){
+    return cb(result);
+  });
+}
+
 var db = {}
 db.Item = Item;
 db.User = User;
@@ -190,5 +210,6 @@ db.ProfilePageGiveQuery = ProfilePageGiveQuery;
 db.ProfilePageGiveQueryBeforeId = ProfilePageGiveQueryBeforeId;
 db.ProfilePageWantQuery = ProfilePageWantQuery;
 db.ProfilePageWantQueryBeforeId = ProfilePageWantQueryBeforeId;
+db.ItemPageQuery = ItemPageQuery;
 
 module.exports = db;

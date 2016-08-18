@@ -49,7 +49,7 @@ $(document).on("click", ".unsnag", function() {
     console.log("Item", itemId, "has been unsnagged");
 
     // Change text
-    $(this).text("SNAG THIS ITEM");
+    $(this).text("SNAG");
 
     // Change color
     $(this).removeClass("btn-danger");
@@ -80,6 +80,8 @@ $(document).ready(function() {
     if (!isMine) {
         $("#but-friends").addClass("hidden");
         $("#tab-friends").addClass("hidden");
+    } else {
+        $("#tab-self").addClass("hidden");
     }
 
     $(".cd-main-nav a").on("click", function() {
@@ -123,9 +125,15 @@ $(document).ready(function() {
 
                     break;
 
+                case 'tab-self':
+                    document.getElementById("myprofile-link").click();
+                    break;
+
                 default:
                     //...
             }
+            $('.cd-nav-trigger').toggleClass('menu-is-open');
+            $('#cd-nav').find('#cd-main-nav ul').off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend').toggleClass('is-visible');
         }
 
     });
@@ -262,6 +270,7 @@ $(document).ready(function() {
                         break;
 
                     case 'tab-friends':
+                        urlAJAX = null;
                         ajaxRequest = null;
                         break;
 
@@ -277,7 +286,9 @@ $(document).ready(function() {
                 console.log(lastItemId);
                 if (lastItemId >= 1) {
                     console.log(urlAJAX);
-                    addRealViews(html, urlAJAX);
+                    if (urlAJAX != null) {
+                        addRealViews(html, urlAJAX);
+                    }
                 }
 
                 // Simulate Infinite Scroll and Content Population for UI/UX

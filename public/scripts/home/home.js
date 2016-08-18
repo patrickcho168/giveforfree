@@ -78,7 +78,7 @@ $(document).on("click", ".unsnag", function() {
     console.log("Item", itemId, "has been unsnagged");
 
     // Change text
-    $(this).text("SNAG THIS ITEM");
+    $(this).text("SNAG");
 
     // Change color
     $(this).removeClass("btn-danger");
@@ -225,6 +225,7 @@ function addRealViews(html, urlAJAX) {
                     html = '<div class="col-sm-6 col-md-4 item">';
                     // Main Item Photo
                     html += '<div class="thumbnail">';
+                    html += '<a href="/item/' + value.itemID + '" class=\"item-link\">';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
                     html += '<img style="display: block;" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
                     // Item Title
@@ -243,6 +244,7 @@ function addRealViews(html, urlAJAX) {
                     // Item Snag Counts
                     html += '<small class="item-snags text-muted">' + value.numWants + (value.numWants == 1 ? ' person' : ' people') + ' snagged this.</p>';
                     html += '</div>';
+                    html += '</a>';
                     html += '</div>';
                     html += '</div>';
                     $('#infinite-scroll-container').append(html);

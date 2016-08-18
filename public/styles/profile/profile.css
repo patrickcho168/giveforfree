@@ -7,6 +7,7 @@ html, body {
 body {
     font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 150%;
+    padding-top: 70px;
 }
 h1 {
     font-size: 2.75em;
@@ -152,13 +153,14 @@ p {
     padding-bottom: 2.5rem;
     border-radius: 6px;
     background-color: #eee;
+    align-self: center;
 }
 .profile-photo-holder {
     vertical-align: center;
-    max-height: 15em;
-    /*max-width: 15em;*/
-    width: 20vw;
-    height:20vw;
+    width: 15vw;
+    height:15vw;
+    min-width: 48px;
+    min-height: 48px;
 }
 .counters {
     padding-top: 0px;
@@ -182,10 +184,14 @@ p {
     vertical-align: center;
 }
 .profile-photo {
-    width: 20vw;
+/*    width: 20vw;
     height:20vw;
     max-height: 11em;
-    max-width: 11em;
+    max-width: 11em;*/
+    width: 15vw;
+    height:15vw;
+    min-width: 48px;
+    min-height: 48px;
 }
 .tabs {
     align: center;
@@ -239,9 +245,13 @@ p {
 footer {}
 .contact-list {
     text-align: left;
-    padding-top: 20px;
 }
-.text-muted {
-    text-align: right;
-    padding-top: 20px;
+.copyright {
+    text-align: center;
+}
+
+@media (min-width: 1200px) {
+    .container{
+        max-width: 980px;
+    }
 }

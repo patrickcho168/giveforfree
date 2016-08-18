@@ -46,9 +46,9 @@
 
     <!-- JSON -->
     <script src="../assets/JSON/js/cycle.js"></script>
-    <script src="../assets/JSON/js/json_parse_state.js"></script>>
-    <script src="../assets/JSON/js/json_parse.js"></script>>
-    <script src="../assets/JSON/js/json2.js"></script>>
+    <script src="../assets/JSON/js/json_parse_state.js"></script>
+    <script src="../assets/JSON/js/json_parse.js"></script>
+    <script src="../assets/JSON/js/json2.js"></script>
 
     <!-- CSS Styles -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -101,7 +101,7 @@
                     <li id="nav-feed"><a href="/">Feed</a></li>
                     <!-- <li id="nav-discover"><a href="#discover">Discover</a></li>
                     <li id="nav-gift"><a href="#gift">Gift</a></li> -->
-                    <li class="active" id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
+                    <li class="active" id="nav-profile"><a id="myprofile-link" href="/profile/<%= id %>">Profile</a></li>
                     <li id="nav-logout"><a href="/logout">Logout</a></li>
                 </ul>
 
@@ -122,32 +122,32 @@
                 <h1 class="display-3 name"><%= user.name %></h1>
                 <!-- <hr class="m-y-6"></hr> -->
                 <p>Singapore</p>
-                <div class="counters col-sm-10 col-sm-offset-1" align="center">
-                    <div align="center" class="col-sm-4 counter">
+                <div class="counters col-xs-10 col-xs-offset-1" align="center">
+                    <div align="center" class="col-xs-4 counter">
                         <p align="center" class="count">
                             <%= totalTaken %>
                         </p>
                         <!-- <hr class="m-y-2" /> -->
                         <p align="center" class="count-label">
-                            Received
+                            Snagged Items
                         </p>
                     </div>
-                    <div align="center" class="col-sm-4 counter">
+                    <div align="center" class="col-xs-4 counter">
                         <p align="center" class="count">
                             <%= totalGifted %>
                         </p>
                         <!-- <hr class="m-y-2" /> -->
                         <p align="center" class="count-label">
-                            Gifted
+                            Contributions
                         </p>
                     </div>
-                    <div align="center" class="col-sm-4 counter">
+                    <div align="center" class="col-xs-4 counter">
                         <p align="center" class="count">
                             <%= totalKarma %>
                         </p>
                         <!-- <hr class="m-y-2" /> -->
                         <p align="center" class="count-label">
-                            Karma
+                            Karma Points
                         </p>
                     </div>
                 </div>
@@ -172,28 +172,30 @@
                 <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
 
                 <nav id="cd-main-nav" class="cd-main-nav">
-
                     <ul class="has-transitions">
-                        <li class="active tab-snagged" id="tab-snagged"><a id="snagged-link">SNAGGED</a></li>
-                        <li class="tab-gifted" id="tab-gifted"><a id="gifted-link">DONATED><a></li>
-                        <li class="tab-friends" id="tab-friends"><a id="friends-link">FRIENDS</a></li>
+                        <li class="active tab-snagged" id="tab-snagged"><a id="snagged-link">Snagged Items</a></li>
+                        <li class="tab-gifted" id="tab-gifted"><a id="gifted-link">Contributions</a></li>
+                        <li class="tab-friends" id="tab-friends"><a id="friends-link">My Friends</a></li>
+                        <li class="tab-self" id="tab-self"><a id="self-link">Back to My Profile</a></li>
+
                     </ul>
                 </nav>
             </div>
+
         </div>
 
         <!-- Scroll Container -->
-        <div class="infinite-scroll-container col-sm-10 col-sm-offset-1" id="infinite-scroll-container"></div>
+        <div class="infinite-scroll-container col-xs-10 col-xs-offset-1" id="infinite-scroll-container"></div>
 
     </div>
 
     <!-- Footer -->
     <footer>
-        <div class=" masonry-container">
+        <div class="container">
             <!-- <div class="row"> -->
-            <div class="col-sm-10 col-sm-offset-1 text-center">
-                <hr class="small">
-                <ul class="col-sm-6 list-unstyled contact-list">
+            <div class="col-xs-10 col-xs-offset-1 text-center">
+                <hr class="xsall">
+                <ul class="col-xs-12 list-unstyled contact-list">
                     <li>
                         <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 6123 4567
                     </li>
@@ -201,7 +203,10 @@
                         <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">contact@giveforfree.com</a>
                     </li>
                 </ul>
-                <p class="col-sm-6 text-muted">Copyright &copy; Give For Free 2016 </p>
+
+                <div class="col-xs-12 text-center">
+                    <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </p>
+                </div>
             </div>
             <!-- </div> -->
         </div>
