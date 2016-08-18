@@ -155,8 +155,10 @@ p {
 }
 .profile-photo-holder {
     vertical-align: center;
-    /*max-height: 15em;
-    max-width: 15em;*/
+    max-height: 15em;
+    /*max-width: 15em;*/
+    width: 20vw;
+    height:20vw;
 }
 .counters {
     padding-top: 0px;
