@@ -44,3 +44,11 @@ p {
 .control-section {
     padding: 10px 0;
 }
+
+.photos{
+    border-radius: 6px;
+}
+
+.carousel-control.left, .carousel-control.right {
+    background-image: none
+}
