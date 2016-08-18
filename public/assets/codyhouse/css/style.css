@@ -93,7 +93,7 @@ header h1 {
 
 #cd-nav ul {
   /* mobile first */
-  /*position: fixed;*/
+  position: fixed;
   width: 90%;
   max-width: 400px;
   right: 5%;
