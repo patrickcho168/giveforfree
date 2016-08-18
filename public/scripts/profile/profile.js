@@ -91,6 +91,8 @@ $(document).ready(function() {
                 node.removeChild(node.lastChild);
             }
 
+            $(".cd-main-nav").find(".active").removeClass("active");
+            $(this).parent().addClass("active");
             var currentTab = $(this).parent().attr('id');
 
             switch (currentTab) {
@@ -209,6 +211,7 @@ var html = '';
 var triggered = 0;
 var lastItemId = 0;
 var numItems = 6;
+var actualClass = ".cd-main-nav";
 
 $(document).ready(function() {
     if (!isMine) {
@@ -234,8 +237,8 @@ $(document).ready(function() {
             if (flag && no_data && !test && triggered == 1) {
                 flag = false;
 
-                console.log($(".tabs").find(".active"));
-                var activeTab = $(".tabs").find(".active");
+                console.log($(actualClass).find(".active"));
+                var activeTab = $(actualClass).find(".active");
                 var name = "null";
 
                 var ajaxRequest = null;
