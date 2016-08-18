@@ -155,8 +155,8 @@ p {
 }
 .profile-photo-holder {
     vertical-align: center;
-    width: 20vw;
-    height:20vw;
+    width: 15vw;
+    height:15vw;
 }
 .counters {
     padding-top: 0px;
@@ -180,8 +180,8 @@ p {
     vertical-align: center;
 }
 .profile-photo {
-    width: 20vw;
-    height:20vw;
+    width: 15vw;
+    height:15vw;
 }
 .tabs {
     align: center;
