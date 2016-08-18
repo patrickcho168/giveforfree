@@ -110,6 +110,8 @@ p {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    right: 50%;
+    transform: translateX(-50%);
 }
 
 .profile-panel {
