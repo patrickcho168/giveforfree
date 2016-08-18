@@ -15,7 +15,7 @@ jQuery(document).ready(function($){
 	$('.cd-nav-trigger').on('click', function(){
 		$(this).toggleClass('menu-is-open');
 		//we need to remove the transitionEnd event handler (we add it when scolling up with the menu open)
-		mainNavigation.off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend').toggleClass('is-visible nav nav-pills nav-justified tabs');
+		mainNavigation.off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend').toggleClass('is-visible');
 	});
 
 	function checkMenu() {
@@ -26,6 +26,9 @@ jQuery(document).ready(function($){
 			navigationContainer.addClass('is-fixed').find('.cd-nav-trigger').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(){
 				mainNavigation.addClass('has-transitions');
 			});
+
+			mainNavigation.toggleClass("nav nav-pills nav-justified tabs");
+			
 		} else if ($(window).scrollTop() <= offset) {
 			//check if the menu is open when scrolling up
 			if( mainNavigation.hasClass('is-visible')  && !$('html').hasClass('no-csstransitions') ) {
