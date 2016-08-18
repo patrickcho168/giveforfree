@@ -40,6 +40,7 @@ p {
 }
 .carousel-section {
     padding: 10px 0;
+    z-index: 999;
 }
 .control-section {
     padding: 10px 0;

@@ -129,17 +129,33 @@
 
         <div class="col-md-4 col-md-offset-1 control-section">
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h6 class="panel-title">Item Details</h6>
-                </div>
-                <div class="panel-body">
-                    
-                    <p><b></b></p>
+            <div class="row">
+                <div class="profile-header-container">
+                    <div class="profile-header-img">
+                        <img class="img-circle" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" />
+                        <!-- badge -->
+                        <div class="rank-label-container">
+                            <span class="label label-default rank-label">100 puntos</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <% if (myItem === true) { %>
+            <div class="row">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">Item Details</h6>
+                    </div>
+                    <div class="panel-body">
+
+                        <p><b></b></p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- <% if (myItem === true) { %>
                 <p> This is your item! </p>
                 <% } else { %>
                     <p> This is someone else's item! </p>
@@ -171,7 +187,7 @@
                                                         <% if (myItem === true) { %>
                                                             <p> This is your item. Give away now? </p>
                                                             <% } %>
-                        </p>
+                        </p> -->
         </div>
     </div>
 
