@@ -326,14 +326,17 @@ module.exports = function(app) {
             console.log(expiredMin);
             var processedDate = date.locale('en-gb').format("LLL");
             facebook.getFbData(accessToken, '/' + req.user.id, '', function(fbdata) {
-                res.render('item', {
-                    id: userId,
-                    item: data[0],
-                    mine: userId === data[0].giverID,
-                    appId: config.fbClientID,
-                    domain: config.domain,
-                    date: processedDate,
-                    expired: expiredMin > 0
+                db.ProfilePageTotalGivenQuery(data[0].giverID, function(gifted) {
+                    res.render('item', {
+                        id: userId,
+                        item: data[0],
+                        mine: userId === data[0].giverID,
+                        appId: config.fbClientID,
+                        domain: config.domain,
+                        date: processedDate,
+                        expired: expiredMin > 0,
+                        karma: gifted[0].numGiven * 10
+                    });
                 });
             });
         })

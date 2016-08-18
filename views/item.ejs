@@ -139,7 +139,7 @@
                                     <img class="img-circle" src="http://graph.facebook.com/<%= item.fbID %>/picture?type=large" />
                                     <!-- badge -->
                                     <div class="rank-label-container">
-                                        <span class="label label-default rank-label">100 karma</span>
+                                        <span class="label label-default rank-label"><%= karma %> karma</span>
                                     </div>
                                 </div>
                             </div>
@@ -153,8 +153,10 @@
                         </div>
 
                         <div class="row button-group">
-                            <% if (mine) { %>
+                            <center>
+                            <% if (mine && item.takerID === null) { %>
                                 <button type="button" class="btn btn-danger">Delete</button>
+                            <% if (item.numWants > 0) { %>
                                 <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Pick <span class="caret"></span>
                                 </button>
@@ -162,9 +164,11 @@
                                     <li><a href="#">Manual</a></li>
                                     <li><a href="/api/give/<%= item.itemID %>">Random Draw</a></li>
                                 </ul>
-                            <% } else { %>
+                            <% } %>
+                            <% } else if (item.takerID === null || item.takerID === id) { %>
                                 <button type="button" class="btn btn-primary"><a href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message</a></button>
                             <% } %>
+                            </center>
                         </div>
                     </div>
                 </div>
@@ -195,9 +199,9 @@
                     <% } %>
                 </div>
                 <% if (!mine) { %>
-                    <% if (item.meWant === 1 && !expired) { %>
+                    <% if (item.meWant === 1 && !expired && item.takerID === null) { %>
                         <a class="btn btn-lg btn-danger btn-block unsnag active" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> UNSNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
-                    <% } else if (!expired) { %>
+                    <% } else if (!expired && item.takerID === null) { %>
                         <a class="btn btn-lg btn-primary btn-block snag active" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> SNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
                     <% } %>
                 <% } %>

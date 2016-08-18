@@ -29,17 +29,18 @@ module.exports = function(app) {
                 userID: otherUserId
             }).fetch().then(function(user) {
                 db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
-                    db.Item.where({giverID: otherUserId, takerID: !null}).fetchAll().then(function(gifted) {
-                        db.Item.where({takerID: otherUserId}).fetchAll().then(function(taken) {
+                    db.ProfilePageTotalGivenQuery(otherUserId, function(gifted) {
+                        console.log(gifted);
+                        db.ProfilePageTotalTakenQuery(otherUserId, function(taken) {
                             res.render('profile', {
                                 myProfile: mine,
                                 user: user.attributes,
                                 id: req.user.appUserId,
                                 friendProperty: req.user.fbFriendsToPropertyMap,
                                 friends: data.models,
-                                totalGifted: gifted.models.length,
-                                totalTaken: taken.models.length,
-                                totalKarma: gifted.models.length*10
+                                totalGifted: gifted[0].numGiven,
+                                totalTaken: taken[0].numTaken,
+                                totalKarma: gifted[0].numGiven*10
                             });
                         });
                     });

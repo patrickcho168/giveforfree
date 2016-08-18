@@ -54,6 +54,7 @@ var Want = bookshelf.Model.extend({
 });
 
 var HomePageItemQuery = function(userId, numItems, cb) {
+  console.log(knex.raw('CURRENT_TIMESTAMP'));
   knex
     .from('item as i')
     .leftJoin('user as u', 'u.userID', 'i.giverID')
@@ -67,6 +68,7 @@ var HomePageItemQuery = function(userId, numItems, cb) {
     .groupBy('i.itemID')
     .whereNull('i.takerID')
     .where('i.giverID', '!=', userId)
+    .where('i.timeExpired', '>', knex.raw('NOW()'))
     .orderBy('i.itemID', 'DESC')
     .limit(numItems)
     .then(function(result){
@@ -89,6 +91,7 @@ var HomePageItemQueryBeforeId = function(userId, numItems, beforeId, cb) {
     .whereNull('i.takerID')
     .where('i.giverID', '!=', userId)
     .where('i.itemID', '<', beforeId)
+    .where('i.timeExpired', '>', knex.raw('NOW()'))
     .orderBy('i.itemID', 'DESC')
     .limit(numItems)
     .then(function(result){
@@ -104,7 +107,7 @@ var ProfilePageGiveQuery = function(userId, profileId, numItems, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID'])
+    .select(['i.itemID', 'i.timeExpired', knex.raw('i.timeExpired < NOW() as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -124,7 +127,7 @@ var ProfilePageGiveQueryBeforeId = function(userId, profileId, numItems, beforeI
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID'])
+    .select(['i.itemID', 'i.timeExpired', knex.raw('i.timeExpired < NOW() as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -146,11 +149,14 @@ var ProfilePageWantQuery = function(userId, profileId, numItems, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID'])
+    .select(['i.itemID', 'i.timeExpired', knex.raw('i.timeExpired < NOW() as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
     .where('w.wanterID', '=', profileId)
+    .where(function() {
+      this.whereNull('i.takerID').orWhere('i.takerID', '=', userId)
+    })
     .orderBy('i.itemID', 'DESC')
     .limit(numItems)
     .then(function(result){
@@ -167,12 +173,15 @@ var ProfilePageWantQueryBeforeId = function(userId, profileId, numItems, beforeI
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID'])
+    .select(['i.itemID', 'i.timeExpired', knex.raw('i.timeExpired < NOW() as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
     .where('w.wanterID', '=', profileId)
     .where('i.itemID', '<', beforeId)
+    .where(function() {
+      this.whereNull('i.takerID').orWhere('i.takerID', '=', userId)
+    })
     .orderBy('i.itemID', 'DESC')
     .limit(numItems)
     .then(function(result){
@@ -201,6 +210,29 @@ var ItemPageQuery = function(userId, itemId, cb) {
   });
 }
 
+var ProfilePageTotalGivenQuery = function(userId, cb) {
+  knex
+    .from('item as i')
+    .count('i.itemID as numGiven')
+    .where('i.giverID', '=', userId)
+    .whereNotNull('i.takerID')
+    .orderBy('i.itemID', 'DESC')
+    .then(function(result){
+    return cb(result);
+  });
+}
+
+var ProfilePageTotalTakenQuery = function(userId, cb) {
+  knex
+    .from('item as i')
+    .count('i.itemID as numTaken')
+    .where('i.takerID', '=', userId)
+    .orderBy('i.itemID', 'DESC')
+    .then(function(result){
+    return cb(result);
+  });
+}
+
 var db = {}
 db.Item = Item;
 db.User = User;
@@ -212,5 +244,7 @@ db.ProfilePageGiveQueryBeforeId = ProfilePageGiveQueryBeforeId;
 db.ProfilePageWantQuery = ProfilePageWantQuery;
 db.ProfilePageWantQueryBeforeId = ProfilePageWantQueryBeforeId;
 db.ItemPageQuery = ItemPageQuery;
+db.ProfilePageTotalTakenQuery = ProfilePageTotalTakenQuery;
+db.ProfilePageTotalGivenQuery = ProfilePageTotalGivenQuery;
 
 module.exports = db;
