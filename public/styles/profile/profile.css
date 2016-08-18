@@ -152,11 +152,15 @@ p {
     padding-bottom: 2.5rem;
     border-radius: 6px;
     background-color: #eee;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
 }
 .profile-photo-holder {
     vertical-align: center;
     width: 15vw;
     height:15vw;
+    min-width: 48px;
+    min-height: 48px;
 }
 .counters {
     padding-top: 0px;
@@ -182,6 +186,8 @@ p {
 .profile-photo {
     width: 15vw;
     height:15vw;
+    min-width: 48px;
+    min-height: 48px;
 }
 .tabs {
     align: center;
