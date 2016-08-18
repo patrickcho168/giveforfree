@@ -75,6 +75,12 @@ p {
     transform: translateY(-50%);
 }
 
+.profile-header-container {
+    text-align: left;
+    align-self: left;
+    position: relative;
+}
+
 /**
  * Ranking component
  */
