@@ -203,7 +203,8 @@
                         <h5 class="panel-title pull-left"> Item Details
 
                         </h5>
-                        <% if (mine && !expired && item.takerID !== null) { %>
+                        <% console.log(mine) %>
+                        <% if (mine && !expired && item.takerID == null) { %>
                             <button class="btn btn-default pull-right" data-toggle="modal" data-target="#editModal">Edit</button>
                         <% } %>
                         <div class="clearfix"></div>
