@@ -195,6 +195,12 @@ p {
     font-style: normal;
 }
 
+.button > a {
+    color: white;
+    font-weight: bold;
+    font-style: normal;
+}
+
 .carousel-window {
     width: 100%;
 }
