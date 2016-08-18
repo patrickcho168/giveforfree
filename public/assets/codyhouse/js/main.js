@@ -15,13 +15,13 @@ jQuery(document).ready(function($){
 	$('.cd-nav-trigger').on('click', function(){
 		$(this).toggleClass('menu-is-open');
 		//we need to remove the transitionEnd event handler (we add it when scolling up with the menu open)
-		mainNavigation.off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend').toggleClass('is-visible');
+		mainNavigation.off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend').toggleClass('is-visible nav nav-pills nav-justified tabs');
 	});
 
 	function checkMenu() {
 		if( $(window).scrollTop() > offset && !navigationContainer.hasClass('is-fixed')) {
 			navigationContainer.removeClass('hidden');
-			$(".nav-tab-area").addClass('hidden');
+			// $(".nav-tab-area").addClass('hidden');
 
 			navigationContainer.addClass('is-fixed').find('.cd-nav-trigger').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(){
 				mainNavigation.addClass('has-transitions');
@@ -47,7 +47,7 @@ jQuery(document).ready(function($){
 				mainNavigation.removeClass('has-transitions');
 			}
 
-			$(".nav-tab-area").removeClass('hidden');
+			// $(".nav-tab-area").removeClass('hidden');
 
 		}
 	}
