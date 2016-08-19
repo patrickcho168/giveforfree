@@ -162,7 +162,7 @@ $(document).ready(function() {
     addRealViews(html, urlAJAX);
 
     // AJAX Server-End URL
-    flag = true;
+    var flag = true;
 
     // Infinite Scroll
     $(window).scroll(function() {

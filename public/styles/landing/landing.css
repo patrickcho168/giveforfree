@@ -124,10 +124,10 @@ span.glyphicon-globe {
 
 footer {}
 .contact-list {
-    text-align: left;
+    text-align: center;
     padding-top: 20px;
 }
 .text-muted {
-    text-align: right;
+    text-align: center;
     padding-top: 20px;
 }
