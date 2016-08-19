@@ -24,9 +24,6 @@ var uploading = multer({
 
     // Only accept image files
     fileFilter: function(req, file, cb) {
-        console.log("HERE1");
-        console.log(typeof(file.mimetype));
-        console.log("HERE2");
         // Checks the file extension
         if (file.mimetype.indexOf("image") == -1) {
             cb(new Error("This is not an image file."), false);
@@ -35,9 +32,9 @@ var uploading = multer({
         }
     },
 
-    // Files must be smaller than 100kb
+    // Files must be smaller than 5mb
     limits: {
-        fileSize: 100 * 1000
+        fileSize: 5 * 1000 * 1000
     },
 
     // Save to Amazon S3 bucket
