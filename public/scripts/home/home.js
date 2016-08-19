@@ -85,7 +85,8 @@ $(document).ready(function() {
     // Images Loaded
     $container.imagesLoaded.progress(function() {
         $container.masonry({
-            $container.masonry('layout');
+            itemSelector: '.grid-item',
+            columnWidth: 400
         });
 
     });
