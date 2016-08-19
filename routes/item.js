@@ -170,11 +170,9 @@ module.exports = function(app) {
                     itemID: itemId,
                     giverID: userId
                 }).destroy();
-                res.redirect("/");
-            } else {
-                res.redirect("/item/" + itemId);
             }
         });
+        res.redirect("/");
     });
 
     // Want a product (given itemID and userID)
