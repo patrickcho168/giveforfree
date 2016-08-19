@@ -215,9 +215,9 @@
                 </div>
                 <% if (!mine) { %>
                     <% if (item.meWant === 1 && !expired && item.takerID === null) { %>
-                        <a class="btn btn-danger btn-block unsnag raised" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> UNSNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
+                        <a class="btn btn-lg btn-danger btn-block unsnag raised" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> UNSNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
                         <% } else if (!expired && item.takerID === null) { %>
-                            <a class="btn btn-primary btn-block snag raised" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> SNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
+                            <a class="btn btn-lg btn-primary btn-block snag raised" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> SNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
                             <% } %>
                                 <% } %>
             </div>
