@@ -155,7 +155,7 @@ $(document).ready(function() {
     var test = false;
 
     // AJAX Address
-    urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
+    var urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
     console.log(urlAJAX);
 
     // Preload with views
