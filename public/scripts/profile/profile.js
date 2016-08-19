@@ -40,9 +40,9 @@ function addRealViews(html, urlAJAX) {
                     // html += '<p class="item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
                     if (value.giverID !== myAppId && value.takerID !== null && value.takerID !== myAppId) {
-                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-default other-given raised bold-link" itemId="' + value.itemID + '" role="button">TAKEN</a></div>';
+                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-default other-given raised bold-link" itemId="' + value.itemID + '" role="button">TAKEN BY OTHERS</a></div>';
                     } else if (value.giverID !== myAppId && value.takerID !== null && value.takerID === myAppId) {
-                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success given-to-you raised bold-link" itemId="' + value.itemID + '" role="button">REWARDED</a></div>';
+                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success given-to-you raised bold-link" itemId="' + value.itemID + '" role="button">GIVEN TO YOU</a></div>';
                     } else if (value.giverID !== myAppId && value.meWant === 0 && !value.expired) { // NEED TO ADD NOT EXPIRED
                         html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag raised bold-link" itemId="' + value.itemID + '" role="button">SNAG</a></div>';
                     } else if (value.giverID !== myAppId && value.meWant > 0 && !value.expired) {
@@ -50,7 +50,7 @@ function addRealViews(html, urlAJAX) {
                     } else if (value.giverID !== myAppId && value.expired) {
                         html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success wait raised bold-link" itemId="' + value.itemID + '" role="button">EXPIRED</a></div>';
                     } else if (value.giverID === myAppId && value.takerID !== null) {
-                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success given raised bold-link" itemId="' + value.itemID + '" role="button">GIVEN TO YOU</a></div>';
+                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success given raised bold-link" itemId="' + value.itemID + '" role="button">GIVEN AWAY BY YOU</a></div>';
                     } else if (value.takerID === null) {
                         html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-primary not-given raised bold-link" itemId="' + value.itemID + '" role="button">PENDING SNAGGERS</a></div>';
                     }
