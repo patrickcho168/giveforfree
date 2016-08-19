@@ -171,9 +171,9 @@
                                         </ul>
                                         <% } %>
                                             <% } else if (item.takerID === null || item.takerID === id) { %>
-                                                <button type="button" class="btn btn-primary btn-block"><a class="message-button" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Owner</a></button>
+                                                <a type="button" class="btn btn-primary" class="message-button" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Owner</a>
                                                 <% } else if (item.giverID === id && item.takerID !== null) { %>
-                                                    <button type="button" class="btn btn-primary btn-block"><a class="message-button" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.takerFbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Recipient</a></button>
+                                                    <a type="button" class="btn btn-primary " class="message-button" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.takerFbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Recipient</a>
                                                     <% } %>
                             </center>
                         </div>
@@ -215,9 +215,9 @@
                 </div>
                 <% if (!mine) { %>
                     <% if (item.meWant === 1 && !expired && item.takerID === null) { %>
-                        <a class="btn btn-lg btn-danger btn-block raised unsnag active" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> UNSNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
+                        <a class="btn btn-lg btn-danger raised unsnag active" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> UNSNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
                         <% } else if (!expired && item.takerID === null) { %>
-                            <a class="btn btn-lg btn-primary btn-block raised snag active" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> SNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
+                            <a class="btn btn-lg btn-primary raised snag active" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> SNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
                             <% } %>
                                 <% } %>
             </div>
