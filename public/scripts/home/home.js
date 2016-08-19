@@ -24,7 +24,7 @@ function addRealViews(html, urlAJAX) {
                 /*** Factory for views ***/
 
                 $.each(data, function(key, value) {
-                    html = '<div class="col-sm-6 col-md-4 item">';
+                    html = '<div class="col-sm-6 col-md-4 grid-item item">';
                     // Main Item Photo
                     html += '<div class="thumbnail">';
                     html += '<a href="/item/' + value.itemID + '" class=\"item-link\">';
@@ -77,11 +77,17 @@ $(document).ready(function() {
 
     // Masonry Loading
     var $container = $('.grid');
-    $container.imagesLoaded(function() {
+    $container.masonry({
+        itemSelector: '.grid-item',
+        columnWidth: 400
+    });
+
+    // Images Loaded
+    $container.imagesLoaded.progress(function() {
         $container.masonry({
-            itemSelector: '.item',
-            columnWidth: '.item'
+            $container.masonry('layout');
         });
+
     });
 
     // FAB Navigation Logic
@@ -113,40 +119,6 @@ $(document).ready(function() {
         $(".nav").find(".active").removeClass("active");
         $(this).parent().addClass("active");
 
-        // var activeTab = $(".nav").find(".active");
-        // var name = "null";
-        // lastItemId = 0;
-        //
-        // var ajaxRequest = null;
-        //
-        // if (activeTab != null) {
-        //     name = activeTab.attr('id');
-        // }
-        //
-        // console.log(name);
-        //
-        // // Construct AJAX Request based on type
-        // switch (name) {
-        //     case 'nav-feed':
-        //         urlAJAX = '/api/allItems/0/' + numItems;
-        //         ajaxRequest = null;
-        //         addRealViews(html, urlAJAX);
-        //         break;
-        //
-        //     case 'nav-discover':
-        //         urlAJAX = '/api/allItems/0/' + numItems;
-        //         ajaxRequest = null;
-        //         addRealViews(html, urlAJAX);
-        //         break;
-        //
-        //     case 'nav-gift':
-        //         urlAJAX = null;
-        //         ajaxRequest = null;
-        //         break;
-        //
-        //     default:
-        //
-        // }
     });
 
     // Want|Snagging
