@@ -25,34 +25,34 @@ function addRealViews(html, urlAJAX) {
                 /*** Factory for views ***/
 
                 $.each(data, function(key, value) {
-                    html = '<div class="col-sm-6 col-md-4 item">';
+                    html = '<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 grid-item item">';
                     // Main Item Photo
                     html += '<div class="thumbnail">';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
-                    html += '<img src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
+                    html += '<img img style="display: block;" class="clipped" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
                     // Item Title
                     html += '<div class="caption-area">';
-                    html += '<h6 class="item-header"><a href="/item/' + value.itemID + '" target="_blank">' + value.title + '</a></h6>';
+                    html += '<h6 class="item-header hide-overflow"><a href="/item/' + value.itemID + '" target="_blank">' + value.title + '</a></h6>';
                     // Item Owner
                     // html += '<p class="item-author">' + value.ownedBy.name + '</p>';
                     // Item Caption
-                    html += '<p class="item-author"><a href="/profile/' + value.userID + '" target="_blank">' + value.name + '</a></p>';
-                    html += '<p class="item-caption">' + value.description + '</p>';
+                    html += '<p class="item-author hide-overflow"><a href="/profile/' + value.userID + '" target="_blank">' + value.name + '</a></p>';
+                    // html += '<p class="item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
                     if (value.giverID !== myAppId && value.takerID !== null && value.takerID !== myAppId) {
-                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success other-given raised bold-link" itemId="' + value.itemID + '" role="button">ITEM HAS BEEN TAKEN</a></div>';
+                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-default other-given raised bold-link" itemId="' + value.itemID + '" role="button">TAKEN</a></div>';
                     } else if (value.giverID !== myAppId && value.takerID !== null && value.takerID === myAppId) {
-                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success given-to-you raised bold-link" itemId="' + value.itemID + '" role="button">ITEM HAS BEEN GIVEN TO YOU</a></div>';
+                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success given-to-you raised bold-link" itemId="' + value.itemID + '" role="button">REWARDED</a></div>';
                     } else if (value.giverID !== myAppId && value.meWant === 0 && !value.expired) { // NEED TO ADD NOT EXPIRED
                         html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag raised bold-link" itemId="' + value.itemID + '" role="button">SNAG</a></div>';
                     } else if (value.giverID !== myAppId && value.meWant > 0 && !value.expired) {
                         html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-danger unsnag raised bold-link" itemId="' + value.itemID + '" role="button">UNSNAG</a></div>';
                     } else if (value.giverID !== myAppId && value.expired) {
-                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success wait raised bold-link" itemId="' + value.itemID + '" role="button">WAITING FOR ITEM TO BE GIVEN OUT</a></div>';
+                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success wait raised bold-link" itemId="' + value.itemID + '" role="button">EXPIRED</a></div>';
                     } else if (value.giverID === myAppId && value.takerID !== null) {
-                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success given raised bold-link" itemId="' + value.itemID + '" role="button">YOU HAVE GIVEN THIS ITEM</a></div>';
+                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success given raised bold-link" itemId="' + value.itemID + '" role="button">GIVEN TO YOU</a></div>';
                     } else if (value.takerID === null) {
-                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-primary not-given raised bold-link" itemId="' + value.itemID + '" role="button">YOU HAVE NOT GIVEN THIS ITEM</a></div>';
+                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-primary not-given raised bold-link" itemId="' + value.itemID + '" role="button">PENDING SNAGGERS</a></div>';
                     }
                     // Item Snag Counts
                     if (value.numWants > 1) {
