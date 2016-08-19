@@ -119,6 +119,10 @@ a:active {
 
 /* Footer */
 
+.footer{
+    background-color: white;
+}
+
 .contact-list {
     text-align: center;
 }
