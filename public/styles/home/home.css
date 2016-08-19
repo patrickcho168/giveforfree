@@ -55,6 +55,9 @@
 }
 .call-button {
     padding: 10px 0;
+    position: absolute;
+    bottom: 10;
+    right: 10;
 }
 .item-snags {
     font-size: 0.8em;
