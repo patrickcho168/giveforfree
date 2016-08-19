@@ -29,7 +29,7 @@ function addRealViews(html, urlAJAX) {
                     html += '<div class="thumbnail">';
                     html += '<a href="/item/' + value.itemID + '" class=\"item-link\">';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
-                    html += '<img style="display: block;" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
+                    html += '<img style="display: block;" class="clipped" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
                     // Item Title
                     html += '<div class="caption-area">';
                     html += '<h6 class="item-header"><a href="/item/' + value.itemID + '" target="_blank">' + value.title + '</h6>';

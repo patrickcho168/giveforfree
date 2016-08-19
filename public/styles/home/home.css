@@ -97,3 +97,13 @@
  padding:  0;
  width:98%;
 }*/
+
+/* Image Resizing */
+img.clipped {
+    width: 150%;
+    float: left;
+    float: right;
+}
+.thumbnail {
+    overflow: hidden;
+}
