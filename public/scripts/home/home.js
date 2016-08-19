@@ -39,9 +39,9 @@ function addRealViews(html, urlAJAX) {
                     // html += '<p class="item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
                     if (value.meWant > 0) {
-                        html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-sm btn-danger raised unsnag" itemId="' + value.itemID + '" role="button"><b>UNSNAG</b></a></div>';
+                        html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-sm btn-danger raised unsnag bold-link" itemId="' + value.itemID + '" role="button">UNSNAG</a></div>';
                     } else {
-                        html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-sm btn-primary raised snag" itemId="' + value.itemID + '" role="button"><b>SNAG</b></a></div>';
+                        html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-sm btn-primary raised snag bold-link" itemId="' + value.itemID + '" role="button">SNAG</a></div>';
                     }
                     // Item Snag Counts
                     html += '<small class="item-snags text-muted">' + value.numWants + (value.numWants == 1 ? ' person' : ' people') + ' snagged this.</small>';

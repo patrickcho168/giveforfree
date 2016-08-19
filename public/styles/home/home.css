@@ -37,7 +37,6 @@
 .item-header {
     font-size: 1.2em;
     font-weight: bold;
-
 }
 .item-author {
     font-size: 1.0em;
@@ -62,16 +61,27 @@
     text-align: right;
     padding-top: 10px;
 }
-
 .hide-overflow {
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow:ellipsis;
-    width:100%;
-    display:block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
+}
+
+/* Image Resizing */
+
+img.clipped {
+    width: 150%;
+    float: left;
+    float: right;
+}
+.thumbnail {
+    overflow: hidden;
 }
 
 /* MASONRY APPROACH #1 */
+
 
 /**, *:before, *:after {
     box-sizing: border-box !important;
@@ -92,7 +102,10 @@
     display: block;
 }*/
 
+
 /* MASONRY APPROACH #2 */
+
+
 /*.grid-row {
  -moz-column-width: 25em;
  -webkit-column-width: 25em;
@@ -107,13 +120,3 @@
  padding:  0;
  width:98%;
 }*/
-
-/* Image Resizing */
-img.clipped {
-    width: 150%;
-    float: left;
-    float: right;
-}
-.thumbnail {
-    overflow: hidden;
-}
