@@ -49,7 +49,7 @@ function addRealViews(html, urlAJAX) {
                     html += '</a>';
                     html += '</div>';
                     html += '</div>';
-                    $('#infinite-scroll-container').append(html);
+                    $('#infinite-scroll-row').append(html);
                 });
 
                 triggered = 0;
@@ -76,20 +76,20 @@ $(document).ready(function() {
     'use strict';
 
     // Masonry Loading
-    var $container = $('.grid');
-    $container.masonry({
-        itemSelector: '.grid-item',
-        columnWidth: 400
-    });
+    // var $container = $('.grid');
+    // $container.masonry({
+    //     itemSelector: '.grid-item',
+    //     columnWidth: 400
+    // });
 
     // Images Loaded
-    $container.imagesLoaded.progress(function() {
-        $container.masonry({
-            itemSelector: '.grid-item',
-            columnWidth: 400
-        });
-
-    });
+    // $container.imagesLoaded.progress(function() {
+    //     $container.masonry({
+    //         itemSelector: '.grid-item',
+    //         columnWidth: 400
+    //     });
+    //
+    // });
 
     // FAB Navigation Logic
     $(".cd-main-nav a").on("click", function() {
