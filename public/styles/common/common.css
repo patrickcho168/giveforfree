@@ -43,6 +43,99 @@ a:active {
     text-decoration: none;
 }
 
+/* Buttons */
+
+.button {
+    border: 0;
+    background: #0087cc;
+    border-radius: 4px;
+    box-shadow: 0 5px 0 #006599;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    font: inherit;
+    margin: 0;
+    outline: 0;
+    padding: 12px 20px;
+    transition: all .1s linear;
+}
+.button:active {
+    box-shadow: 0 2px 0 #006599;
+    transform: translateY(3px);
+}
+.btn-primary {
+    border: 0;
+    background: #0087cc;
+    border-radius: 4px;
+    box-shadow: 0 5px 0 #006599;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    font: inherit;
+    margin: 0;
+    outline: 0;
+    padding: 12px 20px;
+    transition: all .1s linear;
+}
+.btn-primary:active {
+    box-shadow: 0 2px 0 #006599;
+    transform: translateY(3px);
+}
+.btn-warning {
+    border: 0;
+    background: #0087cc;
+    border-radius: 4px;
+    box-shadow: 0 5px 0 #006599;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    font: inherit;
+    margin: 0;
+    outline: 0;
+    padding: 12px 20px;
+    transition: all .1s linear;
+}
+.btn-warning:active {
+    box-shadow: 0 2px 0 #006599;
+    transform: translateY(3px);
+}
+.btn-danger {
+    border: 0;
+    background: #0087cc;
+    border-radius: 4px;
+    box-shadow: 0 5px 0 #006599;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    font: inherit;
+    margin: 0;
+    outline: 0;
+    padding: 12px 20px;
+    transition: all .1s linear;
+}
+.btn-danger:active {
+    box-shadow: 0 2px 0 #006599;
+    transform: translateY(3px);
+}
+.btn-success {
+    border: 0;
+    background: #0087cc;
+    border-radius: 4px;
+    box-shadow: 0 5px 0 #006599;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    font: inherit;
+    margin: 0;
+    outline: 0;
+    padding: 12px 20px;
+    transition: all .1s linear;
+}
+.btn-success:active {
+    box-shadow: 0 2px 0 #006599;
+    transform: translateY(3px);
+}
+
 /* Footer */
 
 .contact-list {
