@@ -70,8 +70,8 @@ function addRealViews(html, urlAJAX) {
             no_data = false;
 
             triggered = 0;
-            console.log(data);
-            alert('Something went wrong, Please contact administrator.');
+            // console.log(data);
+            // alert('Something went wrong, Please contact administrator.');
         }
     });
 }
@@ -131,7 +131,7 @@ $(document).ready(function() {
     // Want|Snagging
     $(document).on("click", ".snag", function() {
         var itemId = $(this).attr('itemId');
-        console.log("Item", itemId, "has been snagged");
+        // console.log("Item", itemId, "has been snagged");
 
         // Change text
         $(this).text("UNSNAG");
@@ -166,7 +166,7 @@ $(document).ready(function() {
     // Unwant|Unsnagging
     $(document).on("click", ".unsnag", function() {
         var itemId = $(this).attr('itemId');
-        console.log("Item", itemId, "has been unsnagged");
+        // console.log("Item", itemId, "has been unsnagged");
 
         // Change text
         $(this).text("SNAG");
@@ -232,8 +232,8 @@ $(window).scroll(function() {
             }
 
             // Construct AJAX Request based on type
-            console.log(name);
-            console.log(lastItemId);
+            // console.log(name);
+            // console.log(lastItemId);
 
             switch (name) {
                 case 'nav-feed':
@@ -258,9 +258,9 @@ $(window).scroll(function() {
             }
 
             // AJAX to fetch JSON objects from server
-            console.log(lastItemId);
+            // console.log(lastItemId);
             if (lastItemId >= 1) {
-                console.log(urlAJAX);
+                // console.log(urlAJAX);
                 addRealViews(html, urlAJAX);
             }
         }
