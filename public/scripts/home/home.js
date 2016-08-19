@@ -169,8 +169,6 @@ $(document).ready(function() {
 
         // Trigger the loading early
         if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-            first = $('#first').val();
-            limit = $('#limit').val();
             no_data = true;
 
             // Do not entertain multiple identical AJAX calls
