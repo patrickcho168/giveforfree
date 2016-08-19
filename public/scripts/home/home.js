@@ -24,7 +24,7 @@ function addRealViews(html, urlAJAX) {
                 /*** Factory for views ***/
 
                 $.each(data, function(key, value) {
-                    html = '<div class="col-sm-6 col-md-4 grid-item item">';
+                    html = '<div class="col-xs-10 col-xs-offset-1 col-sm-3 col-sm-offset-2 col-md-2 col-md-offset-1 col-lg-1 col-lg-offset-1 grid-item item">';
                     // Main Item Photo
                     html += '<div class="thumbnail">';
                     html += '<a href="/item/' + value.itemID + '" class=\"item-link\">';
