@@ -68,8 +68,8 @@ $(document).on("click", ".unsnag", function() {
 // Carousel Logic
 jQuery(document).ready(function($) {
 
-    $('#myCarousel').carousel({
-        interval: 0;
+    $('.carousel').carousel({
+        interval: 10000;
     });
 
     $('#carousel-text').html($('#slide-content-0').html());
@@ -83,7 +83,7 @@ jQuery(document).ready(function($) {
 
 
     // When the carousel slides, auto update the text
-    $('#myCarousel').on('slid.bs.carousel', function(e) {
+    $('.carousel').on('slid.bs.carousel', function(e) {
         var id = $('.item.active').data('slide-number');
         $('#carousel-text').html($('#slide-content-' + id).html());
     });
