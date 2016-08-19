@@ -64,9 +64,11 @@
 }
 
 .hide-overflow {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width:100%;
+    display:block;
 }
 
 /* MASONRY APPROACH #1 */
