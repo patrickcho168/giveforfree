@@ -56,8 +56,8 @@
 .call-button {
     padding: 10px 0;
     position: absolute;
-    bottom: 10;
-    right: 10;
+    bottom: 0;
+    right: 0;
 }
 .item-snags {
     font-size: 0.8em;
@@ -81,6 +81,7 @@ img.clipped {
 }
 .thumbnail {
     overflow: hidden;
+    position: relative;
 }
 
 /* MASONRY APPROACH #1 */
