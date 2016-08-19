@@ -1,152 +1,12 @@
-$(function() {
-
-    'use strict';
-    ////
-
-    var $container = $('.grid');
-
-    $container.imagesLoaded(function() {
-        $container.masonry({
-            itemSelector: '.item',
-            columnWidth: '.item'
-        });
-    });
-
-});
-
-// Want or Unwant
-$(document).on("click", ".snag", function() {
-    var itemId = $(this).attr('itemId');
-    console.log("Item", itemId, "has been snagged");
-
-    // Change text
-    $(this).text("UNSNAG");
-
-    // Change color
-    $(this).removeClass("btn-primary");
-    $(this).addClass("btn-danger");
-
-    // Change type
-    $(this).removeClass("snag");
-    $(this).addClass("unsnag");
-
-    // Increment number of people snagging
-    var snag_count = parseInt($(this).parent().siblings('small').text()) + 1;
-    $(this).parent().siblings('small').text(String(snag_count) + (snag_count === 1 ? ' person' : ' people') + ' snagged this.');
-
-    // Send post request
-    // Should check for success
-    $.post("/api/want/" + itemId)
-        .done(function() {
-            console.log("DONE");
-        })
-        .fail(function() {
-            console.log("ERROR");
-        })
-        .always(function() {
-
-        });
-});
-
-$(document).on("click", ".unsnag", function() {
-    var itemId = $(this).attr('itemId');
-    console.log("Item", itemId, "has been unsnagged");
-
-    // Change text
-    $(this).text("SNAG");
-
-    // Change color
-    $(this).removeClass("btn-danger");
-    $(this).addClass("btn-primary");
-
-    // Change type
-    $(this).removeClass("unsnag");
-    $(this).addClass("snag");
-
-    // Decrement number of people snagging
-    var snag_count = parseInt($(this).parent().siblings('small').text()) - 1;
-    $(this).parent().siblings('small').text(String(snag_count) + (snag_count === 1 ? ' person' : ' people') + ' snagged this.');
-
-    // Send post request
-    $.post("/api/unwant/" + itemId)
-        .done(function() {
-            console.log("DONE");
-        })
-        .fail(function() {
-            console.log("ERROR");
-        })
-        .always(function() {
-
-        });
-});
-
-// Navbar Selection Fix
+var html = '';
+var triggered = 0;
+var lastItemId = 0;
+var numItems = 6;
+var flag = false;
+var actualClass = ".cd-main-nav";
 var friendListView = false;
 
-$(document).ready(function() {
-
-    if (!isMine) {
-        $("#but-friends").addClass("hidden");
-        $("#tab-friends").addClass("hidden");
-    } else {
-        $("#tab-self").addClass("hidden");
-    }
-
-    $(".cd-main-nav a").on("click", function() {
-        if (!$(this).parent().hasClass('active') && $(this).parent().attr('id') !== $(this).parent().find(".active").attr('id')) {
-            // TODO:Add logic to determine whether to clear or not
-            // Clear section
-            var node = document.getElementById('infinite-scroll-container');
-            while (node.hasChildNodes()) {
-                node.removeChild(node.lastChild);
-            }
-
-            $(".cd-main-nav").find(".active").removeClass("active");
-            $(this).parent().addClass("active");
-            var currentTab = $(this).parent().attr('id');
-
-            switch (currentTab) {
-                case 'tab-snagged':
-                    friendListView = false;
-                    urlAJAX = '/api/myWants/0/' + numItems + '/' + appProfileId;
-                    addRealViews(html, urlAJAX);
-                    break;
-
-                case 'tab-gifted':
-                    friendListView = false;
-                    urlAJAX = '/api/myItems/0/' + numItems + '/' + appProfileId;
-                    addRealViews(html, urlAJAX);
-                    break;
-
-                case 'tab-friends':
-                    friendListView = true;
-
-                    var html = "<div class=\"list-group\">";
-                    for (var i = 0; i < myFriends.length; i++) {
-
-                        html += "<a class=\"list-group-item list-group-item-action\" href=\"/profile/" + myFriends[i].userID + "\">" + myFriends[i].name + "</a>";
-                    }
-
-                    html += "</div>";
-
-                    $('#infinite-scroll-container').append(html);
-
-                    break;
-
-                case 'tab-self':
-                    document.getElementById("myprofile-link").click();
-                    break;
-
-                default:
-                    //...
-            }
-            $('.cd-nav-trigger').toggleClass('menu-is-open');
-            $('#cd-nav').find('#cd-main-nav ul').off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend').toggleClass('is-visible');
-        }
-
-    });
-});
-
+// AJAX Infinite Scrolling Function
 function addRealViews(html, urlAJAX) {
     // AJAX to fetch JSON objects from server
     $.ajax({
@@ -160,18 +20,9 @@ function addRealViews(html, urlAJAX) {
 
             if (data.length > 0) {
 
-                // Increment trackers to track load state
-                // first = parseInt($('#first').val());
-                // limit = parseInt($('#limit').val());
-                // $('#first').val(first + 1);
-                // $('#limit').val(data.pagesFiltered);
-                // totalPages = data.pagesFiltered;
                 lastItemId = data[data.length - 1].itemID;
 
                 /*** Factory for views ***/
-
-                // Section headers, if applicable
-                // $('#infinite-scroll-container').append('<li class="year">' + year + '</li>');
 
                 $.each(data, function(key, value) {
                     html = '<div class="col-sm-6 col-md-4 item">';
@@ -233,25 +84,142 @@ function addRealViews(html, urlAJAX) {
     });
 }
 
-var html = '';
-var triggered = 0;
-var lastItemId = 0;
-var numItems = 6;
-var flag = false;
-var actualClass = ".cd-main-nav";
+// Snag
+$(document).on("click", ".snag", function() {
+    var itemId = $(this).attr('itemId');
+    console.log("Item", itemId, "has been snagged");
 
+    // Change text
+    $(this).text("UNSNAG");
+
+    // Change color
+    $(this).removeClass("btn-primary");
+    $(this).addClass("btn-danger");
+
+    // Change type
+    $(this).removeClass("snag");
+    $(this).addClass("unsnag");
+
+    // Increment number of people snagging
+    var snag_count = parseInt($(this).parent().siblings('small').text()) + 1;
+    $(this).parent().siblings('small').text(String(snag_count) + (snag_count === 1 ? ' person' : ' people') + ' snagged this.');
+
+    // Send post request
+    // Should check for success
+    $.post("/api/want/" + itemId)
+        .done(function() {
+            console.log("DONE");
+        })
+        .fail(function() {
+            console.log("ERROR");
+        })
+        .always(function() {
+
+        });
+});
+
+// Unsnag
+$(document).on("click", ".unsnag", function() {
+    var itemId = $(this).attr('itemId');
+    console.log("Item", itemId, "has been unsnagged");
+
+    // Change text
+    $(this).text("SNAG");
+
+    // Change color
+    $(this).removeClass("btn-danger");
+    $(this).addClass("btn-primary");
+
+    // Change type
+    $(this).removeClass("unsnag");
+    $(this).addClass("snag");
+
+    // Decrement number of people snagging
+    var snag_count = parseInt($(this).parent().siblings('small').text()) - 1;
+    $(this).parent().siblings('small').text(String(snag_count) + (snag_count === 1 ? ' person' : ' people') + ' snagged this.');
+
+    // Send post request
+    $.post("/api/unwant/" + itemId)
+        .done(function() {
+            console.log("DONE");
+        })
+        .fail(function() {
+            console.log("ERROR");
+        })
+        .always(function() {
+
+        });
+});
+
+// Main Navigation and Load Logic
 $(document).ready(function() {
+
     if (!isMine) {
         $("#but-friends").addClass("hidden");
         $("#tab-friends").addClass("hidden");
+    } else {
+        $("#tab-self").addClass("hidden");
     }
 
-    // Test Mode
     var test = false;
     urlAJAX = '/api/myWants/' + lastItemId + '/' + numItems + '/' + appProfileId;
     console.log(urlAJAX);
     addRealViews(html, urlAJAX);
-    
+
+    $(".cd-main-nav a").on("click", function() {
+        if (!$(this).parent().hasClass('active') && $(this).parent().attr('id') !== $(this).parent().find(".active").attr('id')) {
+
+            // Clear section
+            var node = document.getElementById('infinite-scroll-container');
+
+            while (node.hasChildNodes()) {
+                node.removeChild(node.lastChild);
+            }
+
+            $(".cd-main-nav").find(".active").removeClass("active");
+            $(this).parent().addClass("active");
+            var currentTab = $(this).parent().attr('id');
+
+            switch (currentTab) {
+                case 'tab-snagged':
+                    friendListView = false;
+                    urlAJAX = '/api/myWants/0/' + numItems + '/' + appProfileId;
+                    addRealViews(html, urlAJAX);
+                    break;
+
+                case 'tab-gifted':
+                    friendListView = false;
+                    urlAJAX = '/api/myItems/0/' + numItems + '/' + appProfileId;
+                    addRealViews(html, urlAJAX);
+                    break;
+
+                case 'tab-friends':
+                    friendListView = true;
+
+                    var html = "<div class=\"list-group\">";
+                    for (var i = 0; i < myFriends.length; i++) {
+
+                        html += "<a class=\"list-group-item list-group-item-action\" href=\"/profile/" + myFriends[i].userID + "\">" + myFriends[i].name + "</a>";
+                    }
+
+                    html += "</div>";
+
+                    $('#infinite-scroll-container').append(html);
+
+                    break;
+
+                case 'tab-self':
+                    document.getElementById("myprofile-link").click();
+                    break;
+
+                default:
+                    //...
+            }
+            $('.cd-nav-trigger').toggleClass('menu-is-open');
+            $('#cd-nav').find('#cd-main-nav ul').off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend').toggleClass('is-visible');
+        }
+
+    });
 
     $(window).scroll(function() {
 
@@ -293,14 +261,10 @@ $(document).ready(function() {
                         ajaxRequest = null;
                         break;
 
-                        // default:
-                        //     urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
-                        //     ajaxRequest = null;
+                    default:
+
                 }
 
-                // Display AJAX Pre-Loader while loading
-                $("#loader").fadeTo(2000, 0.8);
-                // console.log(urlAJAX);
                 // AJAX to fetch JSON objects from server
                 console.log(lastItemId);
                 if (lastItemId >= 1) {
@@ -309,19 +273,7 @@ $(document).ready(function() {
                         addRealViews(html, urlAJAX);
                     }
                 }
-
-                // Simulate Infinite Scroll and Content Population for UI/UX
-            } else if (test && triggered == 1 && !friendListView) {
-
-                // Display AJAX Pre-Loader while loading
-                $("#loader").fadeTo(2000, 0.8);
-
-                // Load and Append
-                setTimeout(addViews, 1000, 3);
             }
         }
     });
-
-
-
 });
