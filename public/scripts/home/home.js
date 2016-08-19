@@ -276,6 +276,7 @@ var html = '';
 var triggered = 0;
 var lastItemId = 0;
 var numItems = 6;
+var flag = false;
 
 $(document).ready(function() {
 
@@ -292,7 +293,6 @@ $(document).ready(function() {
 
     // AJAX Server-End URL
     // var urlAJAX = 'ajax.php';
-    flag = true;
 
     $(window).scroll(function() {
 
