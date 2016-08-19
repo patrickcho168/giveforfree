@@ -320,32 +320,29 @@ module.exports = function(app) {
         var itemId = req.params.id;
         var userId = req.user.appUserId;
         var accessToken = req.user.accessToken;
+
+        console.log('itemId', itemId)
+        console.log('userId', userId)
+        console.log('accessToken', accessToken)
         // Find Item
         db.ItemPageQuery(userId, itemId, function(data) {
-                console.log(data);
-                var date = moment(data[0].timeExpired);
-                var expiredMin = moment().diff(date, 'minutes');
-                console.log(expiredMin);
-                var processedDate = date.locale('en-gb').format("LLL");
-                facebook.getFbData(accessToken, '/' + req.user.id, '', function(fbdata) {
-                    db.ProfilePageTotalGivenQuery(data[0].giverID, function(gifted) {
-                        var mine = userId === data[0].giverID;
-                        if (mine && data[0].takerID === null && data[0].numWants > 0) {
-                            db.ItemPageManualQuery(itemId, function(data2) {
-                                console.log(data2);
-                                res.render('item', {
-                                    id: userId,
-                                    item: data[0],
-                                    mine: mine,
-                                    appId: config.fbClientID,
-                                    domain: config.domain,
-                                    date: processedDate,
-                                    expired: expiredMin > 0,
-                                    karma: gifted[0].numGiven * 10,
-                                    manual: data2
-                                });
-                            });
-                        } else {
+            console.log('data', data.length);
+
+            if (!(data.length)) {
+                res.render('404');
+                return;
+            }
+
+            var date = moment(data[0].timeExpired);
+            var expiredMin = moment().diff(date, 'minutes');
+            console.log(expiredMin);
+            var processedDate = date.locale('en-gb').format("LLL");
+            facebook.getFbData(accessToken, '/' + req.user.id, '', function(fbdata) {
+                db.ProfilePageTotalGivenQuery(data[0].giverID, function(gifted) {
+                    var mine = userId === data[0].giverID;
+                    if (mine && data[0].takerID === null && data[0].numWants > 0) {
+                        db.ItemPageManualQuery(itemId, function(data2) {
+                            console.log(data2);
                             res.render('item', {
                                 id: userId,
                                 item: data[0],
@@ -354,12 +351,25 @@ module.exports = function(app) {
                                 domain: config.domain,
                                 date: processedDate,
                                 expired: expiredMin > 0,
-                                karma: gifted[0].numGiven * 10
+                                karma: gifted[0].numGiven * 10,
+                                manual: data2
                             });
-                        }
-                    });
+                        });
+                    } else {
+                        res.render('item', {
+                            id: userId,
+                            item: data[0],
+                            mine: mine,
+                            appId: config.fbClientID,
+                            domain: config.domain,
+                            date: processedDate,
+                            expired: expiredMin > 0,
+                            karma: gifted[0].numGiven * 10
+                        });
+                    }
                 });
-            })
+            });
+        })
             // db.Item.where({
             //     itemID: itemId
             // }).fetch().then(function(itemData) {

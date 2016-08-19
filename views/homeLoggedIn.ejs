@@ -17,18 +17,28 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous"> -->
-	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script> -->
+	<!-- Codyhouse Navigation FAB Support -->
+	<script src="assets/codyhouse/js/main.js"></script>
+	<script src="assets/codyhouse/js/modernizr.js"></script>
+	<link rel="stylesheet" href="assets/codyhouse/css/reset.css">
+	<link rel="stylesheet" href="assets/codyhouse/css/style.css">
 
-	<!-- Other Scripts -->
-	<script src="scripts/home/home.js"></script>
+	<!-- Masonry and ImagesLoaded Support -->
 	<script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
 	<script src="https://npmcdn.com/masonry-layout@4.1.1/dist/masonry.pkgd.min.js"></script>
 
-	<!-- CSS Styles -->
+	<!-- Other Scripts -->
+	<script src="scripts/common/common.js"></script>
+	<script src="scripts/home/home.js"></script>
+
+	<!-- Bootstrap CSS (override) -->
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous"> -->
+
+	<!-- CSS Styles -->
+	<link rel="stylesheet" href="styles/common/common.css">
 	<link rel="stylesheet" href="styles/home/home.css">
+
+	<!-- Animation -->
 	<link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
 
 	<!-- Font Support -->
@@ -39,31 +49,9 @@
 
 <body>
 
-	<!-- AJAX Action Pre-Loader -->
-	<!-- <div class="loader">
-		<div class="loader-inner">
-			<div class="loader-line-wrap">
-				<div class="loader-line"></div>
-			</div>
-			<div class="loader-line-wrap">
-				<div class="loader-line"></div>
-			</div>
-			<div class="loader-line-wrap">
-				<div class="loader-line"></div>
-			</div>
-			<div class="loader-line-wrap">
-				<div class="loader-line"></div>
-			</div>
-			<div class="loader-line-wrap">
-				<div class="loader-line"></div>
-			</div>
-		</div>
-	</div> -->
-
-	<!-- <div class="loader" id="loader"></div> -->
-
 	<!-- Navigation Bar -->
 	<nav class="navbar navbar-default navbar-fixed-top">
+
 		<div class="container-fluid">
 
 			<!-- Left Header Icon -->
@@ -80,26 +68,9 @@
 			<!-- Menu -->
 			<div class="collapse navbar-collapse" id="nav-menu">
 
-				<!-- Navbar Search -->
-				<!-- <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="#tags, people, items">
-                    </div>
-                </form> -->
-
 				<!-- User Actions Menu -->
 				<ul class="nav navbar-nav navbar-right">
-					<!-- <li class="dropdown"> -->
-					<!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a> -->
-					<!-- <ul class="dropdown-menu">
-                            <li><a href="/profile/>">Profile</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="/logout">Logout</a></li>
-                        </ul> -->
-					<!-- </li> -->
 					<li id="nav-feed" class="active"><a href="/">Feed</a></li>
-					<!-- <li id="nav-discover"><a href="#discover">Discover</a></li>
-                    <li id="nav-gift"><a href="#gift">Gift</a></li> -->
 					<li id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
 					<li id="nav-logout"><a href="/logout">Logout</a></li>
 				</ul>
@@ -107,37 +78,51 @@
 			</div>
 
 		</div>
+
 	</nav>
 
-	<a href="/upload" type="button" class="btn create-gift-button fab">
-		<span class="glyphicon glyphicon-gift white" align="center"></span>
-	</a>
+	<!-- Navigation FAB -->
+	<div class="container" align="center">
+
+		<div id="cd-nav" class="is-fixed">
+			<a class="cd-nav-trigger">Menu<span></span></a>
+
+			<nav id="cd-main-nav" class="cd-main-nav">
+				<ul class="has-transitions">
+					<li class="active tab-create" id="tab-create"><a id="create-link">Create a gift!</a></li>
+				</ul>
+			</nav>
+
+		</div>
+
+	</div>
 
 	<!-- Scroll Container -->
-	<div class="infinite-scroll-container col-lg-10 col-lg-offset-1" id="infinite-scroll-container"></div>
+	<div class="infinite-scroll-container col-xs-10 col-xs-offset-1 grid" id="infinite-scroll-container">
+		<div class="grid-row" id="infinite-scroll-row">
+		</div>
+	</div>
 
 	<!-- Footer -->
 	<footer>
-        <div class="container">
-            <!-- <div class="row"> -->
-            <div class="col-xs-10 col-xs-offset-1 text-center">
-                <hr class="xsall">
-                <ul class="col-xs-12 list-unstyled contact-list">
-                    <li>
-                        <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 6123 4567
-                    </li>
-                    <li>
-                        <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">contact@giveforfree.com</a>
-                    </li>
-                </ul>
+		<div class="container">
+			<div class="col-xs-10 col-xs-offset-1 text-center">
+				<hr class="xsall">
+				<ul class="col-xs-12 list-unstyled contact-list">
+					<li>
+						<span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 6123 4567
+					</li>
+					<li>
+						<span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">contact@giveforfree.com</a>
+					</li>
+				</ul>
 
-                <div class="col-xs-12 text-center">
-                    <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
-                </div>
-            </div>
-            <!-- </div> -->
-        </div>
-    </footer>
+				<div class="col-xs-12 text-center">
+					<small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
+				</div>
+			</div>
+		</div>
+	</footer>
 
 </body>
 
