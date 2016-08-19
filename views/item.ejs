@@ -153,13 +153,12 @@
                             <!-- Manage different rights for users -->
                             <center>
                                 <% if (mine && item.takerID === null) { %>
-                                    <button type="button" class="btn btn-danger raised">Delete</button>
+                                    <a type="button" class="btn btn-danger raised">Delete</a>
                                     <% if (item.numWants > 0) { %>
-                                        <button type="button" class="btn btn-warning raised"><a href="/api/give/<%= item.itemID %>"> Random Draw</a>
-                                        </button>
-                                        <button type="button" class="btn btn-success raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a type="button" class="btn btn-warning raised" href="/api/give/<%= item.itemID %>"> Random Draw</a>
+                                        <a type="button" class="btn btn-success raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Pick <span class="caret"></span>
-                                        </button>
+                                        </a>
                                         <ul class="dropdown-menu scrollable-menu dropdown-menu-right" role="menu">
                                             <% for (var i=0; i<manual.length; i++) { %>
                                                 <li>
