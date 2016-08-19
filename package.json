@@ -15,6 +15,7 @@
     "bookshelf": "~0.10.0",
     "bookshelf-pagemaker": "~1.0.6",
     "bootstrap": "3.3.7",
+    "compression": "^1.6.2",
     "connect-ensure-login": "~0.1.1",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",

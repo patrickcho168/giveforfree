@@ -154,7 +154,8 @@
                             <!-- Manage different rights for users -->
                             <center>
                                 <% if (mine && item.takerID === null) { %>
-                                    <a type="button" class="btn btn-danger raised">Delete</a>
+                                    <a href="/api/delete/<%= item.itemID %>" class="btn btn-danger">Delete</a>
+
                                     <% if (item.numWants > 0) { %>
                                         <a type="button" class="btn btn-warning raised" href="/api/give/<%= item.itemID %>"> Random Draw</a>
                                         <a type="button" class="btn btn-success raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
