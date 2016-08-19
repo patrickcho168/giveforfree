@@ -284,10 +284,17 @@ module.exports = function(app) {
     });
 
     // ITEM PAGE
-    app.get('/item/:id', ensureLogin.ensureLoggedIn(), function(req, res) {
+    app.get('/item/:id', function(req, res) {
         var itemId = req.params.id;
-        var userId = req.user.appUserId;
-        var accessToken = req.user.accessToken;
+        var userId;
+        var loggedIn;
+        if (req.user === undefined) {
+            userId = 0;
+            loggedIn = false;
+        } else {
+            userId = req.user.appUserId;
+            loggedIn = true;
+        }
 
         // Find Item
         db.ItemPageQuery(userId, itemId, function(data) {
@@ -300,24 +307,10 @@ module.exports = function(app) {
             var date = moment(data[0].timeExpired);
             var expiredMin = moment().diff(date, 'minutes');
             var processedDate = date.locale('en-gb').format("LLL");
-            facebook.getFbData(accessToken, '/' + req.user.id, '', function(fbdata) {
-                db.ProfilePageTotalGivenQuery(data[0].giverID, function(gifted) {
-                    var mine = userId === data[0].giverID;
-                    if (mine && data[0].takerID === null && data[0].numWants > 0) {
-                        db.ItemPageManualQuery(itemId, function(data2) {
-                            res.render('item', {
-                                id: userId,
-                                item: data[0],
-                                mine: mine,
-                                appId: config.fbClientID,
-                                domain: config.domain,
-                                date: processedDate,
-                                expired: expiredMin > 0,
-                                karma: gifted[0].numGiven * 10,
-                                manual: data2
-                            });
-                        });
-                    } else {
+            db.ProfilePageTotalGivenQuery(data[0].giverID, function(gifted) {
+                var mine = userId === data[0].giverID;
+                if (mine && data[0].takerID === null && data[0].numWants > 0) {
+                    db.ItemPageManualQuery(itemId, function(data2) {
                         res.render('item', {
                             id: userId,
                             item: data[0],
@@ -326,10 +319,24 @@ module.exports = function(app) {
                             domain: config.domain,
                             date: processedDate,
                             expired: expiredMin > 0,
-                            karma: gifted[0].numGiven * 10
+                            karma: gifted[0].numGiven * 10,
+                            manual: data2,
+                            loggedIn: loggedIn
                         });
-                    }
-                });
+                    });
+                } else {
+                    res.render('item', {
+                        id: userId,
+                        item: data[0],
+                        mine: mine,
+                        appId: config.fbClientID,
+                        domain: config.domain,
+                        date: processedDate,
+                        expired: expiredMin > 0,
+                        karma: gifted[0].numGiven * 10,
+                        loggedIn: loggedIn
+                    });
+                }
             });
         })
     });

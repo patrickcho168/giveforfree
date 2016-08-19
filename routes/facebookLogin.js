@@ -116,7 +116,11 @@ module.exports = function(app) {
     });
 
     app.get('/login', function(req, res) {
-        res.render('loginSS');
+        if (req.user === undefined) {
+            res.render('loginSS');
+        } else {
+            res.redirect('/');
+        }
     });
 
     app.get('/login/facebook',

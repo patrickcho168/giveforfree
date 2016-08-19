@@ -23,6 +23,9 @@
     <script src="../assets/simplyCountable/js/jquery.simplyCountable.js"></script>
 
     <!-- Other Scripts -->
+    <script>
+        var loggedIn = <%= loggedIn %>;
+    </script>
     <script src="../scripts/common/common.js"></script>
     <script src="../scripts/item/item.js"></script>
 
@@ -64,10 +67,15 @@
 
                 <!-- User Actions Menu -->
                 <ul class="nav navbar-nav navbar-right">
-
-                    <li id="nav-feed"><a href="/">Feed</a></li>
-                    <li id="nav-profile"><a id="myprofile-link" href="/profile/<%= id %>">Profile</a></li>
-                    <li id="nav-logout"><a href="/logout">Logout</a></li>
+                    <% if (!loggedIn) { %>
+                        <li id="nav-login"><a href="/login">Login</a></li>
+                        <li id="nav-about"><a href="/login#about">About</a></li>
+                        <li id="nav-contact"><a href="/login#contact">Contact Us</a></li>
+                    <% } else { %>
+                        <li id="nav-feed" class="active"><a href="/">Feed</a></li>
+                        <li id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
+                        <li id="nav-logout"><a href="/logout">Logout</a></li>
+                    <% } %>
                 </ul>
 
             </div>
@@ -153,7 +161,7 @@
                         <div class="row button-group">
                             <!-- Manage different rights for users -->
                             <center>
-                                <% if (mine && item.takerID === null) { %>
+                                <% if (loggedIn && mine && item.takerID === null) { %>
                                     <a href="/api/delete/<%= item.itemID %>" class="btn btn-danger">Delete</a>
 
                                     <% if (item.numWants > 0) { %>
@@ -170,12 +178,12 @@
                                                 </li>
                                                 <% } %>
                                         </ul>
-                                        <% } %>
-                                            <% } else if (item.takerID === null || item.takerID === id) { %>
-                                                <a type="button" class="btn btn-primary message-button raised" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Owner</a>
-                                                <% } else if (item.giverID === id && item.takerID !== null) { %>
-                                                    <a type="button" class="btn btn-primary message-button raised" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.takerFbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Recipient</a>
-                                                    <% } %>
+                                    <% } %>
+                                <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
+                                    <a type="button" class="btn btn-primary message-button raised" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Owner</a>
+                                <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
+                                    <a type="button" class="btn btn-primary message-button raised" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.takerFbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Recipient</a>
+                                <% } %>
                             </center>
                         </div>
                     </div>
@@ -191,11 +199,10 @@
                         <h5 class="panel-title pull-left"> Item Details
 
                         </h5>
-                        <% console.log(mine) %>
-                            <% if (mine && !expired && item.takerID == null) { %>
+                            <% if (loggedIn && mine && !expired && item.takerID == null) { %>
                                 <button class="btn btn-default raised pull-right" data-toggle="modal" data-target="#editModal">Edit</button>
-                                <% } %>
-                                    <div class="clearfix"></div>
+                            <% } %>
+                            <div class="clearfix"></div>
                     </div>
                     <div class="panel-body snag-num">
                         <p class="hide"><b><u><%= item.title %></u></b><br/></p>
@@ -206,22 +213,24 @@
                 <div class="bs-callout bs-callout-warning">
                     <% if (item.takerID === null && !expired) { %>
                         <h5>Giveaway Deadline</h5> This giveaway will end on <b><%= date %></b>.
-                        <% } else if (item.takerID === null) { %>
-                            <h5>Giveaway Deadline</h5> This giveaway has ended.
-                            <% } else { %>
-                                <h5>Giveaway Deadline</h5> This item has been given away to
-                                <a href="/profile/<%= item.takerId %>">
-                                    <%= item.takerName%>
-                                </a>.
-                                <% } %>
+                    <% } else if (item.takerID === null) { %>
+                        <h5>Giveaway Deadline</h5> This giveaway has ended.
+                    <% } else { %>
+                        <h5>Giveaway Deadline</h5> This item has been given away to
+                        <a href="/profile/<%= item.takerId %>">
+                            <%= item.takerName%>
+                        </a>.
+                    <% } %>
                 </div>
                 <% if (!mine) { %>
-                    <% if (item.meWant === 1 && !expired && item.takerID === null) { %>
-                        <a class="btn btn-lg btn-danger btn-block unsnag raised" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> UNSNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
-                        <% } else if (!expired && item.takerID === null) { %>
-                            <a class="btn btn-lg btn-primary btn-block snag raised" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> SNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
-                            <% } %>
-                                <% } %>
+                    <% if (!loggedIn && !expired && item.takerID === null) { %>
+                        <a href="/login" class="btn btn-lg btn-primary btn-block raised"><span class="glyphicon glyphicon-gift"></span> <b> LOGIN TO SNAG</b> <span class="badge"><%= item.numWants %></span> </a>
+                    <% } else if (item.meWant === 1 && !expired && item.takerID === null) { %>
+                        <a class="btn btn-lg btn-danger btn-block unsnag raised" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> UNSNAG</b> <span class="badge"><%= item.numWants %></span> </a>
+                    <% } else if (!expired && item.takerID === null) { %>
+                        <a class="btn btn-lg btn-primary btn-block snag raised" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> SNAG</b> <span class="badge"><%= item.numWants %></span> </a>
+                    <% } %>
+                <% } %>
             </div>
         </div>
     </div>

@@ -31,7 +31,7 @@ function addRealViews(html, urlAJAX) {
                     html = '<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 grid-item item">';
                     // Main Item Photo
                     html += '<div class="thumbnail">';
-                    html += '<a href="/item/' + value.itemID + '" class=\"item-link\">';
+                    html += '<a href="/item/' + value.itemID + '" target="_blank" class=\"item-link\">';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
                     html += '<img style="display: block;" class="clipped" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
                     // Item Title
