@@ -4,6 +4,10 @@ var triggered = 0;
 var lastItemId = 0;
 var numItems = 6;
 var no_data = true;
+var flag = false;
+// AJAX Address
+var urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
+console.log(urlAJAX);
 
 function addRealViews(html, urlAJAX) {
     // AJAX to fetch JSON objects from server
@@ -27,7 +31,7 @@ function addRealViews(html, urlAJAX) {
                     html = '<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 grid-item item">';
                     // Main Item Photo
                     html += '<div class="thumbnail">';
-                    html += '<a href="/item/' + value.itemID + '" class=\"item-link\">';
+                    html += '<a href="/item/' + value.itemID + '" target="_blank" class=\"item-link\">';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
                     html += '<img style="display: block;" class="clipped" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
                     // Item Title
@@ -38,7 +42,9 @@ function addRealViews(html, urlAJAX) {
                     // Item Caption
                     // html += '<p class="item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
-                    if (value.meWant > 0) {
+                    if (!loggedIn) {
+                        html += '<div class="col-lg-12 text-center call-button"><a href="/login" class="btn btn-sm btn-primary raised bold-link" role="button">LOGIN TO SNAG</a></div>';
+                    } else if (value.meWant > 0) {
                         html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-sm btn-danger raised unsnag bold-link" itemId="' + value.itemID + '" role="button">UNSNAG</a></div>';
                     } else {
                         html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-sm btn-primary raised snag bold-link" itemId="' + value.itemID + '" role="button">SNAG</a></div>';
@@ -64,8 +70,8 @@ function addRealViews(html, urlAJAX) {
             no_data = false;
 
             triggered = 0;
-            console.log(data);
-            alert('Something went wrong, Please contact administrator.');
+            // console.log(data);
+            // alert('Something went wrong, Please contact administrator.');
         }
     });
 }
@@ -125,7 +131,7 @@ $(document).ready(function() {
     // Want|Snagging
     $(document).on("click", ".snag", function() {
         var itemId = $(this).attr('itemId');
-        console.log("Item", itemId, "has been snagged");
+        // console.log("Item", itemId, "has been snagged");
 
         // Change text
         $(this).text("UNSNAG");
@@ -160,7 +166,7 @@ $(document).ready(function() {
     // Unwant|Unsnagging
     $(document).on("click", ".unsnag", function() {
         var itemId = $(this).attr('itemId');
-        console.log("Item", itemId, "has been unsnagged");
+        // console.log("Item", itemId, "has been unsnagged");
 
         // Change text
         $(this).text("SNAG");
@@ -196,15 +202,11 @@ $(document).ready(function() {
 // Test Mode
 var test = false;
 
-// AJAX Address
-var urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
-console.log(urlAJAX);
-
 // Preload with views
 addRealViews(html, urlAJAX);
 
 // AJAX Server-End URL
-var flag = false;
+
 
 // Infinite Scroll
 $(window).scroll(function() {
@@ -230,8 +232,8 @@ $(window).scroll(function() {
             }
 
             // Construct AJAX Request based on type
-            console.log(name);
-            console.log(lastItemId);
+            // console.log(name);
+            // console.log(lastItemId);
 
             switch (name) {
                 case 'nav-feed':
@@ -249,13 +251,16 @@ $(window).scroll(function() {
                     break;
 
                 default:
+                    urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
+                    ajaxRequest = null;
+                    break;
 
             }
 
             // AJAX to fetch JSON objects from server
-            console.log(lastItemId);
+            // console.log(lastItemId);
             if (lastItemId >= 1) {
-                console.log(urlAJAX);
+                // console.log(urlAJAX);
                 addRealViews(html, urlAJAX);
             }
         }

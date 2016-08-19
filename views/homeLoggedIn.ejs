@@ -24,6 +24,9 @@
 	<link rel="stylesheet" href="assets/codyhouse/css/style.css">
 
 	<!-- Other Scripts -->
+	<script>
+		var loggedIn = <%= loggedIn %>;
+	</script>
 	<script src="scripts/common/common.js"></script>
 	<script src="scripts/home/home.js"></script>
 
@@ -68,9 +71,15 @@
 
 				<!-- User Actions Menu -->
 				<ul class="nav navbar-nav navbar-right">
-					<li id="nav-feed" class="active"><a href="/">Feed</a></li>
-					<li id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
-					<li id="nav-logout"><a href="/logout">Logout</a></li>
+                    <% if (!loggedIn) { %>
+                        <li id="nav-login"><a href="/login">Login</a></li>
+                        <li id="nav-about"><a href="/login#about">About</a></li>
+                        <li id="nav-contact"><a href="/login#contact">Contact Us</a></li>
+                    <% } else { %>
+                        <li id="nav-feed" class="active"><a href="/">Feed</a></li>
+                        <li id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
+                        <li id="nav-logout"><a href="/logout">Logout</a></li>
+                    <% } %>
 				</ul>
 
 			</div>

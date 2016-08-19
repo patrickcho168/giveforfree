@@ -53,9 +53,15 @@
 
                 <!-- User Actions Menu -->
                 <ul class="nav navbar-nav navbar-right">
-                    <li id="nav-feed" class="active"><a href="/">Feed</a></li>
-                    <li id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
-                    <li id="nav-logout"><a href="/logout">Logout</a></li>
+                    <% if (!loggedIn) { %>
+                        <li id="nav-login"><a href="/login">Login</a></li>
+                        <li id="nav-about"><a href="/login#about">About</a></li>
+                        <li id="nav-contact"><a href="/login#contact">Contact Us</a></li>
+                    <% } else { %>
+                        <li id="nav-feed" class="active"><a href="/">Feed</a></li>
+                        <li id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
+                        <li id="nav-logout"><a href="/logout">Logout</a></li>
+                    <% } %>
                 </ul>
 
             </div>
@@ -64,122 +70,126 @@
 
     </nav>
 
-    <h2 id="appendix---privacy-policy" style="padding-top: 80px;">Appendix - Privacy Policy</h2>
+    <div class="main-display-area container">
 
-    <p>This Privacy Policy describes how users’ personal information is handled in order to engage in the services available on our application. It applies generally to web pages where this policy appears in the footer. By accepting the Privacy Policy, you
-        express consent to our collection, storage, use and disclosure of your personal information as described in this Privacy Policy. This Privacy Policy is effective upon acceptance for new users and is otherwise effective on Monday, 8 August 2016.</p>
+        <h2 id="appendix---privacy-policy" style="padding-top: 80px;">Appendix - Privacy Policy</h2>
 
-    <h3 id="definitions">Definitions</h3>
+        <p>This Privacy Policy describes how users’ personal information is handled in order to engage in the services available on our application. It applies generally to web pages where this policy appears in the footer. By accepting the Privacy Policy, you
+            express consent to our collection, storage, use and disclosure of your personal information as described in this Privacy Policy. This Privacy Policy is effective upon acceptance for new users and is otherwise effective on Monday, 8 August 2016.</p>
 
-    <ol>
-        <li>
-            <p>References to “Our”, “We”, “Us” and <strong>[Your Application Name]</strong> shall be references to <strong>[Your Application]</strong></p>
-        </li>
-        <li>
-            <p>References to “You”, “Users” and “Your” shall mean references to user(s) visiting this web site, as the context requires.</p>
-        </li>
-    </ol>
+        <h3 id="definitions">Definitions</h3>
 
-    <h3 id="information-collection">Information Collection</h3>
+        <ol>
+            <li>
+                <p>References to “Our”, “We”, “Us” and <strong>"Give For Free"</strong> shall be references to <strong>Give For Free</strong></p>
+            </li>
+            <li>
+                <p>References to “You”, “Users” and “Your” shall mean references to user(s) visiting this web site, as the context requires.</p>
+            </li>
+        </ol>
 
-    <p>Browsing our websites does not require your identities to be revealed. However, under the following circumstances, you are not anonymous to us.</p>
+        <h3 id="information-collection">Information Collection</h3>
 
-    <h3 id="user">User</h3>
+        <p>Browsing our websites does not require your identities to be revealed. However, under the following circumstances, you are not anonymous to us.</p>
 
-    <p>We will ask for your personal information. The personal information collected includes but not restricting to the following:</p>
+        <h3 id="user">User</h3>
 
-    <ol>
-        <li>
-            <p>Private information such as name and birthdate</p>
-        </li>
-        <li>
-            <p>Contact information such as email address, mobile number and physical address</p>
-        </li>
-        <li>
-            <p>Additional information which we may ask for if we believe the site policies are violated</p>
-        </li>
-    </ol>
+        <p>We will ask for your personal information. The personal information collected includes but not restricting to the following:</p>
 
-    <p>Once you log into the account, your identity will be revealed to us.</p>
+        <ol>
+            <li>
+                <p>Private information such as name and birthdate</p>
+            </li>
+            <li>
+                <p>Contact information such as email address, mobile number and physical address</p>
+            </li>
+            <li>
+                <p>Additional information which we may ask for if we believe the site policies are violated</p>
+            </li>
+        </ol>
 
-    <h3 id="information-usage">Information Usage</h3>
+        <p>Once you log into the account, your identity will be revealed to us.</p>
 
-    <p>The primary purpose in collecting personal information is to provide the users with a smooth and customized experience.</p>
+        <h3 id="information-usage">Information Usage</h3>
 
-    <p>We will use the information collected for the following purposes</p>
+        <p>The primary purpose in collecting personal information is to provide the users with a smooth and customized experience.</p>
 
-    <ol>
-        <li>
-            <p>To provide its intended services</p>
-        </li>
-        <li>
-            <p>To resolve disputes, and troubleshoot problems and errors</p>
-        </li>
-        <li>
-            <p>To assist in law enforcement purposes and prevent/restrict the occurrences of potentially illegal or prohibited activities</p>
-        </li>
-    </ol>
+        <p>We will use the information collected for the following purposes</p>
 
-    <h3 id="disclosure-of-information">Disclosure of information</h3>
+        <ol>
+            <li>
+                <p>To provide its intended services</p>
+            </li>
+            <li>
+                <p>To resolve disputes, and troubleshoot problems and errors</p>
+            </li>
+            <li>
+                <p>To assist in law enforcement purposes and prevent/restrict the occurrences of potentially illegal or prohibited activities</p>
+            </li>
+        </ol>
 
-    <p>We may share information with governmental agencies or other companies assisting us in fraud prevention or investigation. We may do so when:</p>
+        <h3 id="disclosure-of-information">Disclosure of information</h3>
 
-    <ol>
-        <li>
-            <p>Permitted or required by law; or,</p>
-        </li>
-        <li>
-            <p>Trying to protect against or prevent actual or potential fraud or unauthorized transactions; or,</p>
-        </li>
-        <li>
-            <p>Investigating fraud which has already taken place.</p>
-        </li>
-    </ol>
+        <p>We may share information with governmental agencies or other companies assisting us in fraud prevention or investigation. We may do so when:</p>
 
-    <p>The information is not provided to these companies for marketing purposes.
-    </p>
+        <ol>
+            <li>
+                <p>Permitted or required by law; or,</p>
+            </li>
+            <li>
+                <p>Trying to protect against or prevent actual or potential fraud or unauthorized transactions; or,</p>
+            </li>
+            <li>
+                <p>Investigating fraud which has already taken place.</p>
+            </li>
+        </ol>
 
-    <h3 id="usage-of-cookies">Usage of Cookies</h3>
+        <p>The information is not provided to these companies for marketing purposes.
+        </p>
 
-    <p>Cookies are small files placed in your computer hard drives. We use it to analyse our site traffic. We have also used cookies to maintain your signed in status when you login to our websites.</p>
+        <h3 id="usage-of-cookies">Usage of Cookies</h3>
 
-    <h3 id="commitment-to-data-security">Commitment to Data Security</h3>
+        <p>Cookies are small files placed in your computer hard drives. We use it to analyse our site traffic. We have also used cookies to maintain your signed in status when you login to our websites.</p>
 
-    <p>Your personally identifiable information is kept secure. Only authorized employees, agents and contractors (who have agreed to keep information secure and confidential) have access to this information. All emails and newsletters from this site allow
-        you to opt out of further mailings.</p>
+        <h3 id="commitment-to-data-security">Commitment to Data Security</h3>
 
-    <h3 id="changes-to-the-policies">Changes to the Policies</h3>
+        <p>Your personally identifiable information is kept secure. Only authorized employees, agents and contractors (who have agreed to keep information secure and confidential) have access to this information. All emails and newsletters from this site allow
+            you to opt out of further mailings.</p>
 
-    <p>We reserved the rights to amend this Privacy Policy at any time. Upon posting of new policies, it will take immediate effect. We may notify you should there be any major changes to the policies.</p>
+        <h3 id="changes-to-the-policies">Changes to the Policies</h3>
 
-    <hr />
-    <p>
-        <br />
-    </p>
+        <p>We reserved the rights to amend this Privacy Policy at any time. Upon posting of new policies, it will take immediate effect. We may notify you should there be any major changes to the policies.</p>
 
-    <!-- Footer -->
-	<footer>
-        <div class="container">
-            <div class="col-xs-10 col-xs-offset-1 text-center">
-                <hr class="xsall">
-                <ul class="col-xs-12 list-unstyled contact-list">
-                    <li>
-                        <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 6123 4567
-                    </li>
-                    <li>
-                        <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">contact@giveforfree.com</a>
-                    </li>
-                    <li>
-                        <span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span> : <a href="/privacy">Privacy Clause</a>
-                    </li>
-                </ul>
+        <hr />
+        <p>
+            <br />
+        </p>
 
-                <div class="col-xs-12 text-center">
-                    <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
+        <!-- Footer -->
+    	<footer>
+            <div class="container">
+                <div class="col-xs-10 col-xs-offset-1 text-center">
+                    <hr class="xsall">
+                    <ul class="col-xs-12 list-unstyled contact-list">
+                        <li>
+                            <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 6123 4567
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">contact@giveforfree.com</a>
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span> : <a href="/privacy">Privacy Clause</a>
+                        </li>
+                    </ul>
+
+                    <div class="col-xs-12 text-center">
+                        <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
+
+    </div>
 
 </body>
 

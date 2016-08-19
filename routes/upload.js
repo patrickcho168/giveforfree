@@ -144,8 +144,7 @@ module.exports = function(app) {
                 req.sanitizeBody('description');
 
                 var errors = req.validationErrors();
-                console.log(errors);
-                console.log(req.file);
+
 
                 if (errors) {
                     errors.forEach(function(error) {
@@ -175,10 +174,7 @@ module.exports = function(app) {
                             var newItemId = newSavedItem.attributes.itemID;
                             var newItemUrl = newSavedItem.attributes.imageLocation;
                             var apiCall = '/' + userFbId + '/feed';
-                            console.log(apiCall);
-                            facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {
-                                console.log(data);
-                            });
+                            facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {});
 
                         }
                         // console.log(newSavedItem);
