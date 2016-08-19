@@ -69,7 +69,7 @@ $(document).on("click", ".unsnag", function() {
 jQuery(document).ready(function($) {
 
     $('#myCarousel').carousel({
-        interval: false;
+        interval: 0;
     });
 
     $('#carousel-text').html($('#slide-content-0').html());
