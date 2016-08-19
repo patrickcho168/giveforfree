@@ -16,17 +16,19 @@
     <!-- Bootstrap Support -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous"> -->
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script> -->
 
     <!-- Other Scripts -->
+    <script src="../scripts/common/common.js"></script>
     <script src="../scripts/upload/upload.js"></script>
-    <!-- <script src="assets/fileinput/js/canvas-to-blob.js"></script>
-    <script src="assets/fileinput/js/fileinput.min.js"></script> -->
+
+    <!-- Bootstrap CSS (Override) -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- CSS Styles -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/common/common.css">
     <link rel="stylesheet" href="../styles/upload/upload.css">
+
+    <!-- Animations -->
     <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
 
     <!-- Font Support -->
@@ -54,26 +56,9 @@
             <!-- Menu -->
             <div class="collapse navbar-collapse" id="nav-menu">
 
-                <!-- Navbar Search -->
-                <!-- <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="#tags, people, items">
-                    </div>
-                </form> -->
-
                 <!-- User Actions Menu -->
                 <ul class="nav navbar-nav navbar-right">
-                    <!-- <li class="dropdown"> -->
-                    <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a> -->
-                    <!-- <ul class="dropdown-menu">
-                            <li><a href="/profile/>">Profile</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="/logout">Logout</a></li>
-                        </ul> -->
-                    <!-- </li> -->
                     <li id="nav-feed"><a href="/">Feed</a></li>
-                    <!-- <li id="nav-discover"><a href="#discover">Discover</a></li>
-                    <li id="nav-gift"><a href="#gift">Gift</a></li> -->
                     <li id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
                     <li id="nav-logout"><a href="/logout">Logout</a></li>
                 </ul>
@@ -84,7 +69,8 @@
     </nav>
 
     <div class="container main-container">
-        <h1>Post a new item</h1>
+        <h1>Create A Gift</h1>
+        <br/>
 
         <!-- <form action="/upload" enctype="multipart/form-data" method="post">
             <% if (locals.error_messages) {
@@ -213,14 +199,13 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-success btn-block">List Item!</button>
+                    <button type="submit" class="btn btn-lg btn-success btn-block raised bold-link">Create Gift!</button>
         </form>
     </div>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <!-- <div class="row"> -->
             <div class="col-xs-10 col-xs-offset-1 text-center">
                 <hr class="xsall">
                 <ul class="col-xs-12 list-unstyled contact-list">
@@ -236,7 +221,6 @@
                     <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
                 </div>
             </div>
-            <!-- </div> -->
         </div>
     </footer>
 
