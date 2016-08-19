@@ -46,10 +46,6 @@
     vertical-align: center;
 }
 .profile-photo {
-    /*    width: 20vw;
-    height:20vw;
-    max-height: 11em;
-    max-width: 11em;*/
     width: 15vw;
     height: 15vw;
     min-width: 48px;
@@ -62,9 +58,6 @@
     width: 33.3333%;
     height: auto;
     align: center;
-}
-.nav-tab-area {
-    /*padding: 0 50px;*/
 }
 
 /* Scroll Container */

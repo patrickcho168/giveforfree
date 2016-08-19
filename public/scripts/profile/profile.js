@@ -1,20 +1,89 @@
-$(function() {
+var html = '';
+var triggered = 0;
+var lastItemId = 0;
+var numItems = 6;
+var flag = false;
+var actualClass = ".cd-main-nav";
+var friendListView = false;
 
-    'use strict';
-    ////
+// AJAX Infinite Scrolling Function
+function addRealViews(html, urlAJAX) {
+    // AJAX to fetch JSON objects from server
+    $.ajax({
+        url: urlAJAX,
+        dataType: "json",
+        method: 'get',
+        cache: false,
+        // Success Callback
+        success: function(data) {
+            flag = true;
 
-    var $container = $('.grid');
+            if (data.length > 0) {
 
-    $container.imagesLoaded(function() {
-        $container.masonry({
-            itemSelector: '.item',
-            columnWidth: '.item'
-        });
+                lastItemId = data[data.length - 1].itemID;
+
+                /*** Factory for views ***/
+
+                $.each(data, function(key, value) {
+                    html = '<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 grid-item item">';
+                    // Main Item Photo
+                    html += '<div class="thumbnail">';
+                    // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
+                    html += '<img img style="display: block;" class="clipped" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
+                    // Item Title
+                    html += '<div class="caption-area">';
+                    html += '<h6 class="item-header hide-overflow"><a href="/item/' + value.itemID + '" target="_blank">' + value.title + '</a></h6>';
+                    // Item Owner
+                    // html += '<p class="item-author">' + value.ownedBy.name + '</p>';
+                    // Item Caption
+                    html += '<p class="item-author hide-overflow"><a href="/profile/' + value.userID + '" target="_blank">' + value.name + '</a></p>';
+                    // html += '<p class="item-caption">' + value.description + '</p>';
+                    // Item Call-to-Action Snag Button
+                    if (value.giverID !== myAppId && value.takerID !== null && value.takerID !== myAppId) {
+                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-default other-given raised bold-link" itemId="' + value.itemID + '" role="button">TAKEN</a></div>';
+                    } else if (value.giverID !== myAppId && value.takerID !== null && value.takerID === myAppId) {
+                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success given-to-you raised bold-link" itemId="' + value.itemID + '" role="button">REWARDED</a></div>';
+                    } else if (value.giverID !== myAppId && value.meWant === 0 && !value.expired) { // NEED TO ADD NOT EXPIRED
+                        html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag raised bold-link" itemId="' + value.itemID + '" role="button">SNAG</a></div>';
+                    } else if (value.giverID !== myAppId && value.meWant > 0 && !value.expired) {
+                        html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-danger unsnag raised bold-link" itemId="' + value.itemID + '" role="button">UNSNAG</a></div>';
+                    } else if (value.giverID !== myAppId && value.expired) {
+                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success wait raised bold-link" itemId="' + value.itemID + '" role="button">EXPIRED</a></div>';
+                    } else if (value.giverID === myAppId && value.takerID !== null) {
+                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success given raised bold-link" itemId="' + value.itemID + '" role="button">GIVEN TO YOU</a></div>';
+                    } else if (value.takerID === null) {
+                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-primary not-given raised bold-link" itemId="' + value.itemID + '" role="button">PENDING SNAGGERS</a></div>';
+                    }
+                    // Item Snag Counts
+                    if (value.numWants > 1) {
+                        html += '<small class="item-snags">' + value.numWants + ' people snagged this.</small>';
+                    } else {
+                        html += '<small class="item-snags">' + value.numWants + ' person snagged this.</small>';
+
+                    }
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    $('#infinite-scroll-container').append(html);
+                });
+                triggered = 0;
+
+            } else {
+                // alert('No more data to show');
+                no_data = false;
+            }
+        },
+        error: function(data) {
+            flag = true;
+            no_data = false;
+            triggered = 0;
+            console.log(data);
+            alert('Something went wrong, Please contact administrator.');
+        }
     });
+}
 
-});
-
-// Want or Unwant
+// Snag
 $(document).on("click", ".snag", function() {
     var itemId = $(this).attr('itemId');
     console.log("Item", itemId, "has been snagged");
@@ -23,8 +92,8 @@ $(document).on("click", ".snag", function() {
     $(this).text("UNSNAG");
 
     // Change color
-    $(this).removeClass("btn-primary");
-    $(this).addClass("btn-danger");
+    $(this).removeClass("btn-primary raised");
+    $(this).addClass("btn-danger raised");
 
     // Change type
     $(this).removeClass("snag");
@@ -48,6 +117,7 @@ $(document).on("click", ".snag", function() {
         });
 });
 
+// Unsnag
 $(document).on("click", ".unsnag", function() {
     var itemId = $(this).attr('itemId');
     console.log("Item", itemId, "has been unsnagged");
@@ -56,8 +126,8 @@ $(document).on("click", ".unsnag", function() {
     $(this).text("SNAG");
 
     // Change color
-    $(this).removeClass("btn-danger");
-    $(this).addClass("btn-primary");
+    $(this).removeClass("btn-danger raised");
+    $(this).addClass("btn-primary raised");
 
     // Change type
     $(this).removeClass("unsnag");
@@ -80,9 +150,7 @@ $(document).on("click", ".unsnag", function() {
         });
 });
 
-// Navbar Selection Fix
-var friendListView = false;
-
+// Main Navigation and Load Logic
 $(document).ready(function() {
 
     if (!isMine) {
@@ -92,11 +160,17 @@ $(document).ready(function() {
         $("#tab-self").addClass("hidden");
     }
 
+    var test = false;
+    urlAJAX = '/api/myWants/' + lastItemId + '/' + numItems + '/' + appProfileId;
+    console.log(urlAJAX);
+    addRealViews(html, urlAJAX);
+
     $(".cd-main-nav a").on("click", function() {
         if (!$(this).parent().hasClass('active') && $(this).parent().attr('id') !== $(this).parent().find(".active").attr('id')) {
-            // TODO:Add logic to determine whether to clear or not
+
             // Clear section
             var node = document.getElementById('infinite-scroll-container');
+
             while (node.hasChildNodes()) {
                 node.removeChild(node.lastChild);
             }
@@ -145,113 +219,6 @@ $(document).ready(function() {
         }
 
     });
-});
-
-function addRealViews(html, urlAJAX) {
-    // AJAX to fetch JSON objects from server
-    $.ajax({
-        url: urlAJAX,
-        dataType: "json",
-        method: 'get',
-        cache: false,
-        // Success Callback
-        success: function(data) {
-            flag = true;
-
-            if (data.length > 0) {
-
-                // Increment trackers to track load state
-                // first = parseInt($('#first').val());
-                // limit = parseInt($('#limit').val());
-                // $('#first').val(first + 1);
-                // $('#limit').val(data.pagesFiltered);
-                // totalPages = data.pagesFiltered;
-                lastItemId = data[data.length - 1].itemID;
-
-                /*** Factory for views ***/
-
-                // Section headers, if applicable
-                // $('#infinite-scroll-container').append('<li class="year">' + year + '</li>');
-
-                $.each(data, function(key, value) {
-                    html = '<div class="col-sm-6 col-md-4 item">';
-                    // Main Item Photo
-                    html += '<div class="thumbnail">';
-                    // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
-                    html += '<img src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
-                    // Item Title
-                    html += '<div class="caption-area">';
-                    html += '<h6 class="item-header"><a href="/item/' + value.itemID + '" target="_blank">' + value.title + '</a></h6>';
-                    // Item Owner
-                    // html += '<p class="item-author">' + value.ownedBy.name + '</p>';
-                    // Item Caption
-                    html += '<p class="item-author"><a href="/profile/' + value.userID + '" target="_blank">' + value.name + '</a></p>';
-                    html += '<p class="item-caption">' + value.description + '</p>';
-                    // Item Call-to-Action Snag Button
-                    if (value.giverID !== myAppId && value.takerID !== null && value.takerID !== myAppId) {
-                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success other-given" itemId="' + value.itemID + '" role="button">ITEM HAS BEEN TAKEN</a></div>';
-                    } else if (value.giverID !== myAppId && value.takerID !== null && value.takerID === myAppId) {
-                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success given-to-you" itemId="' + value.itemID + '" role="button">ITEM HAS BEEN GIVEN TO YOU</a></div>';
-                    } else if (value.giverID !== myAppId && value.meWant === 0 && !value.expired) { // NEED TO ADD NOT EXPIRED
-                        html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag" itemId="' + value.itemID + '" role="button">SNAG</a></div>';
-                    } else if (value.giverID !== myAppId && value.meWant > 0 && !value.expired) {
-                        html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-danger unsnag" itemId="' + value.itemID + '" role="button">UNSNAG</a></div>';
-                    } else if (value.giverID !== myAppId && value.expired) {
-                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success wait" itemId="' + value.itemID + '" role="button">WAITING FOR ITEM TO BE GIVEN OUT</a></div>';
-                    } else if (value.giverID === myAppId && value.takerID !== null) {
-                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success given" itemId="' + value.itemID + '" role="button">YOU HAVE GIVEN THIS ITEM</a></div>';
-                    } else if (value.takerID === null) {
-                        html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-primary not-given" itemId="' + value.itemID + '" role="button">YOU HAVE NOT GIVEN THIS ITEM</a></div>';
-                    }
-                    // Item Snag Counts
-                    html += '<small class="item-snags">' + value.numWants + ' people snagged this.</small>';
-                    html += '</div>';
-                    html += '</div>';
-                    html += '</div>';
-                    $('#infinite-scroll-container').append(html);
-                });
-
-                $("#loader").fadeTo(2000, 0.0);
-
-                triggered = 0;
-
-            } else {
-                // alert('No more data to show');
-                no_data = false;
-            }
-        },
-        error: function(data) {
-            flag = true;
-            no_data = false;
-
-            $("#loader").fadeTo(2000, 0.0);
-
-            triggered = 0;
-            console.log(data);
-            alert('Something went wrong, Please contact administrator.');
-        }
-    });
-}
-
-var html = '';
-var triggered = 0;
-var lastItemId = 0;
-var numItems = 6;
-var flag = false;
-var actualClass = ".cd-main-nav";
-
-$(document).ready(function() {
-    if (!isMine) {
-        $("#but-friends").addClass("hidden");
-        $("#tab-friends").addClass("hidden");
-    }
-
-    // Test Mode
-    var test = false;
-    urlAJAX = '/api/myWants/' + lastItemId + '/' + numItems + '/' + appProfileId;
-    console.log(urlAJAX);
-    addRealViews(html, urlAJAX);
-    
 
     $(window).scroll(function() {
 
@@ -293,14 +260,10 @@ $(document).ready(function() {
                         ajaxRequest = null;
                         break;
 
-                        // default:
-                        //     urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
-                        //     ajaxRequest = null;
+                    default:
+
                 }
 
-                // Display AJAX Pre-Loader while loading
-                $("#loader").fadeTo(2000, 0.8);
-                // console.log(urlAJAX);
                 // AJAX to fetch JSON objects from server
                 console.log(lastItemId);
                 if (lastItemId >= 1) {
@@ -309,19 +272,7 @@ $(document).ready(function() {
                         addRealViews(html, urlAJAX);
                     }
                 }
-
-                // Simulate Infinite Scroll and Content Population for UI/UX
-            } else if (test && triggered == 1 && !friendListView) {
-
-                // Display AJAX Pre-Loader while loading
-                $("#loader").fadeTo(2000, 0.8);
-
-                // Load and Append
-                setTimeout(addViews, 1000, 3);
             }
         }
     });
-
-
-
 });

@@ -7,8 +7,8 @@ $(document).on("click", ".snag", function() {
     $(this).children('b').text("UNSNAG");
 
     // Change color
-    $(this).removeClass("btn-primary");
-    $(this).addClass("btn-danger");
+    $(this).removeClass("btn-primary raised");
+    $(this).addClass("btn-danger raised");
 
     // Change type
     $(this).removeClass("snag");
@@ -41,8 +41,8 @@ $(document).on("click", ".unsnag", function() {
     $(this).children('b').text("SNAG");
 
     // Change color
-    $(this).removeClass("btn-danger");
-    $(this).addClass("btn-primary");
+    $(this).removeClass("btn-danger raised");
+    $(this).addClass("btn-primary raised");
 
     // Change type
     $(this).removeClass("unsnag");
@@ -65,25 +65,26 @@ $(document).on("click", ".unsnag", function() {
         });
 });
 
+// Carousel Logic
 jQuery(document).ready(function($) {
 
-      $('#myCarousel').carousel({
-              interval: 5000
-      });
+    $('.carousel').carousel({
+        interval: false
+    });
 
-      $('#carousel-text').html($('#slide-content-0').html());
+    $('#carousel-text').html($('#slide-content-0').html());
 
-      //Handles the carousel thumbnails
-     $('[id^=carousel-selector-]').click( function(){
-          var id = this.id.substr(this.id.lastIndexOf("-") + 1);
-          var id = parseInt(id);
-          $('#myCarousel').carousel(id);
-      });
+    //Handles the carousel thumbnails
+    $('[id^=carousel-selector-]').click(function() {
+        var id = this.id.substr(this.id.lastIndexOf("-") + 1);
+        var id = parseInt(id);
+        $('#myCarousel').carousel(id);
+    });
 
 
-      // When the carousel slides, auto update the text
-      $('#myCarousel').on('slid.bs.carousel', function (e) {
-               var id = $('.item.active').data('slide-number');
-              $('#carousel-text').html($('#slide-content-'+id).html());
-      });
+    // When the carousel slides, auto update the text
+    $('.carousel').on('slid.bs.carousel', function(e) {
+        var id = $('.item.active').data('slide-number');
+        $('#carousel-text').html($('#slide-content-' + id).html());
+    });
 });
