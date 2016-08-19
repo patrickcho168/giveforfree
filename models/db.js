@@ -54,7 +54,6 @@ var Want = bookshelf.Model.extend({
 });
 
 var HomePageItemQuery = function(userId, numItems, cb) {
-  console.log(knex.raw('CURRENT_TIMESTAMP'));
   knex
     .from('item as i')
     .leftJoin('user as u', 'u.userID', 'i.giverID')

@@ -26,9 +26,9 @@
     <script src="../scripts/common/common.js"></script>
     <script src="../scripts/profile/profile.js"></script>
     <script>
+        var loggedIn = <%= loggedIn %>;
         var myFriends = null;
-        var isMine = false;
-        isMine = <%= myProfile %>;
+        var isMine = <%= myProfile %>;
         var myName = "<%= user.name %>";
         var myAppId = <%= id %>;
         var appProfileId = <%= user.userID %>;
@@ -78,15 +78,15 @@
             <div class="collapse navbar-collapse" id="nav-menu">
                 <!-- User Actions Menu -->
                 <ul class="nav navbar-nav navbar-right">
-                    <li id="nav-feed">
-                        <a href="/">Feed</a>
-                    </li>
-                    <li class="active" id="nav-profile">
-                        <a id="myprofile-link" href="/profile/<%= id %>">Profile</a>
-                    </li>
-                    <li id="nav-logout">
-                        <a href="/logout">Logout</a>
-                    </li>
+                    <% if (!loggedIn) { %>
+                        <li id="nav-login"><a href="/login">Login</a></li>
+                        <li id="nav-about"><a href="/login#about">About</a></li>
+                        <li id="nav-contact"><a href="/login#contact">Contact Us</a></li>
+                    <% } else { %>
+                        <li id="nav-feed"><a href="/">Feed</a></li>
+                        <li id="nav-profile" class="active"><a href="/profile/<%= id %>">Profile</a></li>
+                        <li id="nav-logout"><a href="/logout">Logout</a></li>
+                    <% } %>
                 </ul>
             </div>
 
@@ -147,7 +147,9 @@
                         <li class="active tab-snagged" id="tab-snagged"><a id="snagged-link">Snagged Items</a></li>
                         <li class="tab-gifted" id="tab-gifted"><a id="gifted-link">Contributions</a></li>
                         <li class="tab-friends" id="tab-friends"><a id="friends-link">My Friends</a></li>
-                        <li class="tab-self" id="tab-self"><a id="self-link">Back to My Profile</a></li>
+                        <% if (loggedIn) { %>
+                            <li class="tab-self" id="tab-self"><a id="self-link" href="/profile/<%= id %>">Back to My Profile</a></li>
+                        <% } %>
                         <li class="tab-create" id="tab-create"><a id="create-link" href="/upload">Create A Gift!</a></li>
                     </ul>
                 </nav>
