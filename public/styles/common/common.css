@@ -43,6 +43,15 @@ a:hover {
 a:active {
     text-decoration: none;
 }
+.wrap {
+    word-wrap: break-word;
+}
+.hide {
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 /* Buttons */
 
