@@ -62,8 +62,6 @@ function addRealViews(html, urlAJAX) {
             flag = true;
             no_data = false;
 
-            $("#loader").fadeTo(2000, 0.0);
-
             triggered = 0;
             console.log(data);
             alert('Something went wrong, Please contact administrator.');
