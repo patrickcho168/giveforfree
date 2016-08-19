@@ -172,7 +172,7 @@ header h1 {
 #cd-nav li:last-child a {
   border-bottom: none;
 }
-@media only screen and (min-width: 1170px) {
+@media only screen and (min-width: 320px) {
   #cd-nav ul {
     /* the navigation moves to the top */
     /*position: absolute;*/
