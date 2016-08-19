@@ -113,110 +113,40 @@ $(document).ready(function() {
         $(".nav").find(".active").removeClass("active");
         $(this).parent().addClass("active");
 
-        var activeTab = $(".nav").find(".active");
-        var name = "null";
-        lastItemId = 0;
-
-        var ajaxRequest = null;
-
-        if (activeTab != null) {
-            name = activeTab.attr('id');
-        }
-
-        console.log(name);
-
-        // Construct AJAX Request based on type
-        switch (name) {
-            case 'nav-feed':
-                urlAJAX = '/api/allItems/0/' + numItems;
-                ajaxRequest = null;
-                addRealViews(html, urlAJAX);
-                break;
-
-            case 'nav-discover':
-                urlAJAX = '/api/allItems/0/' + numItems;
-                ajaxRequest = null;
-                addRealViews(html, urlAJAX);
-                break;
-
-            case 'nav-gift':
-                urlAJAX = null;
-                ajaxRequest = null;
-                break;
-
-            default:
-
-        }
-    });
-
-    // Infinite Scroll
-    // Test Mode
-    var test = false;
-
-    // AJAX Address
-    var urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
-    console.log(urlAJAX);
-
-    // Preload with views
-    addRealViews(html, urlAJAX);
-
-    // AJAX Server-End URL
-    var flag = true;
-
-    // Infinite Scroll
-    $(window).scroll(function() {
-
-        // Trigger the loading early
-        if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-            no_data = true;
-
-            // Do not entertain multiple identical AJAX calls
-            triggered += 1;
-
-            // To call AJAX
-            if (flag && no_data && !test && triggered == 1) {
-                flag = false;
-
-                var activeTab = $(".navbar-nav").find(".active");
-                var name = "null";
-
-                var ajaxRequest = null;
-
-                if (activeTab != null) {
-                    name = activeTab.attr('id');
-                }
-
-                // Construct AJAX Request based on type
-                console.log(name);
-                console.log(lastItemId);
-
-                switch (name) {
-                    case 'nav-feed':
-                        urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
-                        ajaxRequest = null;
-                        break;
-
-                    case 'nav-discover':
-                        urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
-                        ajaxRequest = null;
-                        break;
-
-                    case 'nav-gift':
-                        ajaxRequest = null;
-                        break;
-
-                    default:
-
-                }
-
-                // AJAX to fetch JSON objects from server
-                console.log(lastItemId);
-                if (lastItemId >= 1) {
-                    console.log(urlAJAX);
-                    addRealViews(html, urlAJAX);
-                }
-            }
-        }
+        // var activeTab = $(".nav").find(".active");
+        // var name = "null";
+        // lastItemId = 0;
+        //
+        // var ajaxRequest = null;
+        //
+        // if (activeTab != null) {
+        //     name = activeTab.attr('id');
+        // }
+        //
+        // console.log(name);
+        //
+        // // Construct AJAX Request based on type
+        // switch (name) {
+        //     case 'nav-feed':
+        //         urlAJAX = '/api/allItems/0/' + numItems;
+        //         ajaxRequest = null;
+        //         addRealViews(html, urlAJAX);
+        //         break;
+        //
+        //     case 'nav-discover':
+        //         urlAJAX = '/api/allItems/0/' + numItems;
+        //         ajaxRequest = null;
+        //         addRealViews(html, urlAJAX);
+        //         break;
+        //
+        //     case 'nav-gift':
+        //         urlAJAX = null;
+        //         ajaxRequest = null;
+        //         break;
+        //
+        //     default:
+        //
+        // }
     });
 
     // Want|Snagging
@@ -287,4 +217,74 @@ $(document).ready(function() {
             });
     });
 
+});
+
+// Infinite Scroll
+// Test Mode
+var test = false;
+
+// AJAX Address
+var urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
+console.log(urlAJAX);
+
+// Preload with views
+addRealViews(html, urlAJAX);
+
+// AJAX Server-End URL
+var flag = true;
+
+// Infinite Scroll
+$(window).scroll(function() {
+
+    // Trigger the loading
+    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+        no_data = true;
+
+        // Do not entertain multiple identical AJAX calls
+        triggered += 1;
+
+        // To call AJAX
+        if (flag && no_data && !test && triggered == 1) {
+            flag = false;
+
+            var activeTab = $(".navbar-nav").find(".active");
+            var name = "null";
+
+            var ajaxRequest = null;
+
+            if (activeTab != null) {
+                name = activeTab.attr('id');
+            }
+
+            // Construct AJAX Request based on type
+            console.log(name);
+            console.log(lastItemId);
+
+            switch (name) {
+                case 'nav-feed':
+                    urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
+                    ajaxRequest = null;
+                    break;
+
+                case 'nav-discover':
+                    urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
+                    ajaxRequest = null;
+                    break;
+
+                case 'nav-gift':
+                    ajaxRequest = null;
+                    break;
+
+                default:
+
+            }
+
+            // AJAX to fetch JSON objects from server
+            console.log(lastItemId);
+            if (lastItemId >= 1) {
+                console.log(urlAJAX);
+                addRealViews(html, urlAJAX);
+            }
+        }
+    }
 });
