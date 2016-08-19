@@ -7,8 +7,8 @@ $(document).on("click", ".snag", function() {
     $(this).children('b').text("UNSNAG");
 
     // Change color
-    $(this).removeClass("btn-primary");
-    $(this).addClass("btn-danger");
+    $(this).removeClass("btn-primary raised");
+    $(this).addClass("btn-danger raised");
 
     // Change type
     $(this).removeClass("snag");
@@ -41,8 +41,8 @@ $(document).on("click", ".unsnag", function() {
     $(this).children('b').text("SNAG");
 
     // Change color
-    $(this).removeClass("btn-danger");
-    $(this).addClass("btn-primary");
+    $(this).removeClass("btn-danger raised");
+    $(this).addClass("btn-primary raised");
 
     // Change type
     $(this).removeClass("unsnag");
