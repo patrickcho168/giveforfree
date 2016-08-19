@@ -3,6 +3,7 @@ var html = '';
 var triggered = 0;
 var lastItemId = 0;
 var numItems = 6;
+var no_data = true;
 
 function addRealViews(html, urlAJAX) {
     // AJAX to fetch JSON objects from server
@@ -61,8 +62,6 @@ function addRealViews(html, urlAJAX) {
         error: function(data) {
             flag = true;
             no_data = false;
-
-            $("#loader").fadeTo(2000, 0.0);
 
             triggered = 0;
             console.log(data);
