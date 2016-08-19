@@ -157,7 +157,7 @@ module.exports = function(app) {
     });
 
     // Delete an item
-    app.post('/api/delete/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
+    app.get('/api/delete/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
         var itemId = parseInt(req.params.itemId);
         var userId = parseInt(req.user.appUserId);
         db.Item.where({

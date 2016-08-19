@@ -3,6 +3,7 @@
 var express = require("express");
 var flash = require("connect-flash");
 var expressValidator = require("express-validator");
+var compression = require("compression");
 var fbLogin = require('./routes/facebookLogin');
 var upload = require('./routes/upload');
 var profile = require('./routes/profile');

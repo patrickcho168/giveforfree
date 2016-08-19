@@ -147,7 +147,8 @@
                         <div class="row button-group">
                             <center>
                                 <% if (mine && item.takerID === null) { %>
-                                    <button type="button" class="btn btn-danger">Delete</button>
+                                    <a href="/api/delete/<%= item.itemID %>" class="btn btn-danger">Delete</a>
+
                                     <% if (item.numWants > 0) { %>
                                         <button type="button" class="btn btn-warning"><a href="/api/give/<%= item.itemID %>"> Random Draw</a>
                                         </button>
