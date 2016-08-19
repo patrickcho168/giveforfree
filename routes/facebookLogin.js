@@ -52,10 +52,8 @@ module.exports = function(app) {
     // CACHE THINGS HERE
     var facebookCache = function(req, res, next) {
         if (req.user && req.user.fbFriends && req.user.fbFriendsId && req.user.fbFriendsToPropertyMap) {
-            console.log("CACHED");
             next();
         } else {
-            console.log("NOT CACHED");
             if (req.user === undefined) {
                 next();
             } else {
@@ -102,11 +100,19 @@ module.exports = function(app) {
     app.use(onlyNotLogout(facebookCache));
 
     // HOME PAGE
-    app.get('/', ensureLogin.ensureLoggedIn(), function(req, res) {
-        var userId = req.user.appUserId;
-        res.render('homeLoggedIn', {
-            id: userId
-        });
+    app.get('/', function(req, res) {
+        if (req.user === undefined) {
+            res.render('homeLoggedIn', {
+                id: null,
+                loggedIn: false
+            });
+        } else {
+            var userId = req.user.appUserId;
+            res.render('homeLoggedIn', {
+                id: userId,
+                loggedIn: true
+            });
+        }
     });
 
     app.get('/login', function(req, res) {

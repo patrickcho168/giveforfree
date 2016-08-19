@@ -24,9 +24,6 @@ var uploading = multer({
 
     // Only accept image files
     fileFilter: function(req, file, cb) {
-        console.log("HERE1");
-        console.log(typeof(file.mimetype));
-        console.log("HERE2");
         // Checks the file extension
         if (file.mimetype.indexOf("image") == -1) {
             cb(new Error("This is not an image file."), false);
@@ -147,8 +144,7 @@ module.exports = function(app) {
                 req.sanitizeBody('description');
 
                 var errors = req.validationErrors();
-                console.log(errors);
-                console.log(req.file);
+
 
                 if (errors) {
                     errors.forEach(function(error) {
@@ -178,10 +174,7 @@ module.exports = function(app) {
                             var newItemId = newSavedItem.attributes.itemID;
                             var newItemUrl = newSavedItem.attributes.imageLocation;
                             var apiCall = '/' + userFbId + '/feed';
-                            console.log(apiCall);
-                            facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {
-                                console.log(data);
-                            });
+                            facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {});
 
                         }
                         // console.log(newSavedItem);

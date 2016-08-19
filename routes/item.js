@@ -19,44 +19,6 @@ function inArray(needle, haystack) {
 
 module.exports = function(app) {
 
-    // Display item page
-    // app.get('/item/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
-    //     var itemId = parseInt(req.params.itemId);
-    //     var giver_name;
-    //     var myItem;
-
-    //     db.Item.where({
-    //         itemID: itemId
-    //     }).fetch().then(function(item) {
-    //         db.User.where({
-    //             userID: item.attributes.giverID
-    //         }).fetch().then(function(user) {
-    // app.get('/item/:itemId', ensureLogin.ensureLoggedIn(), function(req, res, next) {
-    //     var itemId = parseInt(req.params.itemId);
-    //     var giver_name;
-    //     var myItem;
-
-    //     db.Item.where({
-    //         itemID: itemId
-    //     }).fetch().then(function(item) {
-    //         if (!(item)) {
-    //             res.render('404');
-    //             return;
-    //         }
-    //         db.User.where({
-    //             userID: item.attributes.giverID
-    //         }).fetch().then(function(user) {
-
-    //             res.render('item', {
-    //                 myItem: item.attributes.giverID === req.user.appUserId,
-    //                 giver_name: giver_name,
-    //                 item: JSON.parse(JSON.stringify(item)),
-    //                 id: req.user.appUserId
-    //             });
-    //         });
-    //     });
-    // });
-
     // This is for giving to random person
     app.get('/api/give/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
         var userId = parseInt(req.user.appUserId);
@@ -64,7 +26,6 @@ module.exports = function(app) {
         db.Item.where({
             itemID: itemId
         }).fetch().then(function(data) {
-            console.log(data);
             // If item exists
             if (data !== null) {
                 // Ensure item belongs to user currently logged in
@@ -103,7 +64,6 @@ module.exports = function(app) {
         var userId = parseInt(req.user.appUserId);
         var itemId = parseInt(req.params.itemId);
         var wanterId = parseInt(req.params.takerId);
-        console.log(wanterId);
         db.Item.where({
             itemID: itemId
         }).fetch().then(function(data) {
@@ -118,7 +78,6 @@ module.exports = function(app) {
                             itemID: itemId,
                             wanterID: wanterId
                         }).fetch().then(function(wantData) {
-                            console.log(wantData);
                             // Update item row
                             if (wantData !== null) {
                                 data.save({
@@ -188,7 +147,6 @@ module.exports = function(app) {
             db.Item.where({
                 itemID: itemId
             }).fetch().then(function(item) {
-                console.log(item);
                 // Check if item is owned by this person
                 if (item.giverID != userId) {
                     // Check if item already wanted by this person
@@ -243,19 +201,12 @@ module.exports = function(app) {
         var profileId = parseInt(req.params.profileId);
         if (lastSeenItem === 0) {
             db.ProfilePageWantQuery(userId, profileId, numItems, function(data) {
-                console.log(data);
                 res.json(data);
             });
-            // db.Item.where({giverID: userId}).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll().then(function(data3) {
-            //   res.json(data3.models);
-            // });
         } else {
             db.ProfilePageWantQueryBeforeId(userId, profileId, numItems, lastSeenItem, function(data) {
                 res.json(data);
             });
-            // db.Item.where('itemID', '<', lastSeenItem).where({giverID: userId}).orderBy('timeCreated', 'DESC').query(function (qb) {qb.limit(numItems);}).fetchAll().then(function(data3) {
-            //   res.json(data3.models);
-            // });
         }
     });
 
@@ -294,21 +245,33 @@ module.exports = function(app) {
     // });
 
     // Find items posted by anyone other than yourself
-    app.get('/api/allItems/:lastItemId/:loadNum', ensureLogin.ensureLoggedIn(), function(req, res) {
+    app.get('/api/allItems/:lastItemId/:loadNum', function(req, res) {
         // db.getNextItems(req.params.pageNum, req.user.fbFriendsId, function(result) {
         //   res.json(result);
         // });
         var lastSeenItem = parseInt(req.params.lastItemId);
         var numItems = parseInt(req.params.loadNum);
-        var userId = parseInt(req.user.appUserId);
-        if (lastSeenItem === 0) {
-            db.HomePageItemQuery(userId, numItems, function(data) {
-                res.json(data);
-            })
+        if (req.user === undefined) {
+            if (lastSeenItem === 0) {
+                db.HomePageItemQuery(0, numItems, function(data) {
+                    res.json(data);
+                })
+            } else {
+                db.HomePageItemQueryBeforeId(0, numItems, lastSeenItem, function(data) {
+                    res.json(data);
+                })
+            }
         } else {
-            db.HomePageItemQueryBeforeId(userId, numItems, lastSeenItem, function(data) {
-                res.json(data);
-            })
+            var userId = parseInt(req.user.appUserId);
+            if (lastSeenItem === 0) {
+                db.HomePageItemQuery(userId, numItems, function(data) {
+                    res.json(data);
+                })
+            } else {
+                db.HomePageItemQueryBeforeId(userId, numItems, lastSeenItem, function(data) {
+                    res.json(data);
+                })
+            }
         }
     });
 
@@ -319,12 +282,8 @@ module.exports = function(app) {
         var userId = req.user.appUserId;
         var accessToken = req.user.accessToken;
 
-        console.log('itemId', itemId)
-        console.log('userId', userId)
-        console.log('accessToken', accessToken)
         // Find Item
         db.ItemPageQuery(userId, itemId, function(data) {
-            console.log('data', data.length);
 
             if (!(data.length)) {
                 res.render('404');
@@ -333,14 +292,12 @@ module.exports = function(app) {
 
             var date = moment(data[0].timeExpired);
             var expiredMin = moment().diff(date, 'minutes');
-            console.log(expiredMin);
             var processedDate = date.locale('en-gb').format("LLL");
             facebook.getFbData(accessToken, '/' + req.user.id, '', function(fbdata) {
                 db.ProfilePageTotalGivenQuery(data[0].giverID, function(gifted) {
                     var mine = userId === data[0].giverID;
                     if (mine && data[0].takerID === null && data[0].numWants > 0) {
                         db.ItemPageManualQuery(itemId, function(data2) {
-                            console.log(data2);
                             res.render('item', {
                                 id: userId,
                                 item: data[0],
@@ -368,35 +325,5 @@ module.exports = function(app) {
                 });
             });
         })
-            // db.Item.where({
-            //     itemID: itemId
-            // }).fetch().then(function(itemData) {
-            //     // Is it my item?
-            //     var giverId = itemData.attributes.giverID;
-            //     var mine = req.user.appUserId == giverId;
-            //     var friend;
-            //     res.render('item', {
-            //         myItem: mine,
-            //         item: itemData.attributes,
-            //         id: req.user.appUserId
-            //     });
-            // if (inArray(giverId, req.user.fbFriendsId)) {
-            //     friend = true;
-            // } else {
-            //     friend = false;
-            // }
-            // // If Item not mine or not friends
-            // if (friend || mine) {
-            //     res.render('item', {
-            //         myItem: mine,
-            //         item: itemData.attributes,
-            //         friendProperty: req.user.fbFriendsToPropertyMap,
-            //         id: req.user.appUserId
-            //     });
-            // } else {
-            //     res.redirect('/');
-            // }
-
-        // });
     });
 }

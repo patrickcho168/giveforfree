@@ -30,7 +30,6 @@ module.exports = function(app) {
             }).fetch().then(function(user) {
                 db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
                     db.ProfilePageTotalGivenQuery(otherUserId, function(gifted) {
-                        console.log(gifted);
                         db.ProfilePageTotalTakenQuery(otherUserId, function(taken) {
                             res.render('profile', {
                                 myProfile: mine,
