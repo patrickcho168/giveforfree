@@ -171,9 +171,9 @@
                                         </ul>
                                         <% } %>
                                             <% } else if (item.takerID === null || item.takerID === id) { %>
-                                                <button type="button" class="btn btn-primary raised btn-block"><a class="message-button" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Owner</a></button>
+                                                <button type="button" class="btn btn-primary btn-block"><a class="message-button" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Owner</a></button>
                                                 <% } else if (item.giverID === id && item.takerID !== null) { %>
-                                                    <button type="button" class="btn btn-primary raised btn-block"><a class="message-button" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.takerFbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Recipient</a></button>
+                                                    <button type="button" class="btn btn-primary btn-block"><a class="message-button" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.takerFbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Recipient</a></button>
                                                     <% } %>
                             </center>
                         </div>

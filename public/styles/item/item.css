@@ -36,7 +36,7 @@
     min-height: 48px;
     max-width: 100px;
     max-height: 100px;
-    border: 2px solid #51D2B7;
+    border: 2px solid #ff3757;
 }
 
 /* Ranking component */
@@ -47,7 +47,7 @@
     text-align: center;
 }
 .label.label-default.rank-label {
-    background-color: rgb(81, 210, 183);
+    background-color: #ff3757;
     padding: 5px 10px 5px 10px;
     border-radius: 27px;
     text-align: center;
