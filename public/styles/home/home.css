@@ -72,18 +72,6 @@
     display: block;
 }
 
-/* Image Resizing */
-
-img.clipped {
-    width: 150%;
-    float: left;
-    float: right;
-}
-.thumbnail {
-    overflow: hidden;
-    position: relative;
-}
-
 /* MASONRY APPROACH #1 */
 
 
