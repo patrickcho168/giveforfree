@@ -79,8 +79,8 @@ function addRealViews(html, urlAJAX) {
             flag = true;
             no_data = false;
             triggered = 0;
-            console.log(data);
-            alert('Something went wrong, Please contact administrator.');
+            // console.log(data);
+            // alert('Something went wrong, Please contact administrator.');
         }
     });
 }
@@ -88,7 +88,7 @@ function addRealViews(html, urlAJAX) {
 // Snag
 $(document).on("click", ".snag", function() {
     var itemId = $(this).attr('itemId');
-    console.log("Item", itemId, "has been snagged");
+    // console.log("Item", itemId, "has been snagged");
 
     // Change text
     $(this).text("UNSNAG");
@@ -109,10 +109,10 @@ $(document).on("click", ".snag", function() {
     // Should check for success
     $.post("/api/want/" + itemId)
         .done(function() {
-            console.log("DONE");
+            // console.log("DONE");
         })
         .fail(function() {
-            console.log("ERROR");
+            // console.log("ERROR");
         })
         .always(function() {
 
@@ -122,7 +122,7 @@ $(document).on("click", ".snag", function() {
 // Unsnag
 $(document).on("click", ".unsnag", function() {
     var itemId = $(this).attr('itemId');
-    console.log("Item", itemId, "has been unsnagged");
+    // console.log("Item", itemId, "has been unsnagged");
 
     // Change text
     $(this).text("SNAG");
@@ -142,10 +142,10 @@ $(document).on("click", ".unsnag", function() {
     // Send post request
     $.post("/api/unwant/" + itemId)
         .done(function() {
-            console.log("DONE");
+            // console.log("DONE");
         })
         .fail(function() {
-            console.log("ERROR");
+            // console.log("ERROR");
         })
         .always(function() {
 
@@ -164,7 +164,7 @@ $(document).ready(function() {
 
     var test = false;
     urlAJAX = '/api/myWants/' + lastItemId + '/' + numItems + '/' + appProfileId;
-    console.log(urlAJAX);
+    // console.log(urlAJAX);
     addRealViews(html, urlAJAX);
 
     $(".cd-main-nav a").on("click", function() {
@@ -233,7 +233,7 @@ $(document).ready(function() {
             if (flag && no_data && !test && triggered == 1) {
                 flag = false;
 
-                console.log($(actualClass).find(".active"));
+                // console.log($(actualClass).find(".active"));
                 var activeTab = $(actualClass).find(".active");
                 var name = "null";
 
@@ -244,8 +244,8 @@ $(document).ready(function() {
                 }
 
                 // Construct AJAX Request based on type
-                console.log(name);
-                console.log(lastItemId);
+                // console.log(name);
+                // console.log(lastItemId);
                 switch (name) {
                     case 'tab-snagged':
                         urlAJAX = '/api/myWants/' + lastItemId + '/' + numItems + '/' + appProfileId;
@@ -267,9 +267,9 @@ $(document).ready(function() {
                 }
 
                 // AJAX to fetch JSON objects from server
-                console.log(lastItemId);
+                // console.log(lastItemId);
                 if (lastItemId >= 1) {
-                    console.log(urlAJAX);
+                    // console.log(urlAJAX);
                     if (urlAJAX != null) {
                         addRealViews(html, urlAJAX);
                     }

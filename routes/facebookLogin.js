@@ -101,6 +101,7 @@ module.exports = function(app) {
 
     // HOME PAGE
     app.get('/', function(req, res) {
+        console.log(req.user);
         if (req.user === undefined) {
             res.render('homeLoggedIn', {
                 id: null,
