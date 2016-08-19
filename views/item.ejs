@@ -162,7 +162,7 @@
                             <!-- Manage different rights for users -->
                             <center>
                                 <% if (loggedIn && mine && item.takerID === null) { %>
-                                    <a href="/api/delete/<%= item.itemID %>" class="btn btn-danger">Delete</a>
+                                    <a href="/api/delete/<%= item.itemID %>" class="btn btn-danger raised">Delete</a>
 
                                     <% if (item.numWants > 0) { %>
                                         <a type="button" class="btn btn-warning raised" href="/api/give/<%= item.itemID %>"> Random Draw</a>
