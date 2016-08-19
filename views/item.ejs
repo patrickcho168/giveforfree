@@ -76,8 +76,11 @@
 
 
     <div class="container top">
+
+        <!-- Carousel -->
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 carousel-section">
             <div id="carousel-example-generic" class="carousel slide img-thumbnail carousel-window" data-ride="carousel">
+
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -90,21 +93,21 @@
                     <div class="item active">
                         <img src="https://d24uwljj8haz6q.cloudfront.net/<%= item.imageLocation %>" alt="...">
                         <div class="carousel-caption">
-
+                            <%= item.title %>
+                        </div>
+                    </div>
+                    <!-- <div class="item">
+                        <img src="https://d24uwljj8haz6q.cloudfront.net/<%= item.imageLocation %>" alt="...">
+                        <div class="carousel-caption">
+                            <%= item.title %>
                         </div>
                     </div>
                     <div class="item">
                         <img src="https://d24uwljj8haz6q.cloudfront.net/<%= item.imageLocation %>" alt="...">
                         <div class="carousel-caption">
-
+                            <%= item.title %>
                         </div>
-                    </div>
-                    <div class="item">
-                        <img src="https://d24uwljj8haz6q.cloudfront.net/<%= item.imageLocation %>" alt="...">
-                        <div class="carousel-caption">
-
-                        </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- Controls -->
@@ -116,9 +119,11 @@
                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
+
             </div>
         </div>
 
+        <!-- Information Panels -->
         <div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-1 col-md-5 col-md-offset-1 col-lg-5 col-lg-offset-1 control-section">
 
             <div class="row">
@@ -145,13 +150,14 @@
                         </div>
 
                         <div class="row button-group">
+                            <!-- Manage different rights for users -->
                             <center>
                                 <% if (mine && item.takerID === null) { %>
-                                    <button type="button" class="btn btn-danger">Delete</button>
+                                    <button type="button" class="btn btn-danger raised">Delete</button>
                                     <% if (item.numWants > 0) { %>
-                                        <button type="button" class="btn btn-warning"><a href="/api/give/<%= item.itemID %>"> Random Draw</a>
+                                        <button type="button" class="btn btn-warning raised"><a href="/api/give/<%= item.itemID %>"> Random Draw</a>
                                         </button>
-                                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <button type="button" class="btn btn-success raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Pick <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu scrollable-menu dropdown-menu-right" role="menu">
@@ -165,9 +171,9 @@
                                         </ul>
                                         <% } %>
                                             <% } else if (item.takerID === null || item.takerID === id) { %>
-                                                <button type="button" class="btn btn-primary btn-block"><a class="message-button" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Owner</a></button>
+                                                <button type="button" class="btn btn-primary raised btn-block"><a class="message-button" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Owner</a></button>
                                                 <% } else if (item.giverID === id && item.takerID !== null) { %>
-                                                    <button type="button" class="btn btn-primary btn-block"><a class="message-button" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.takerFbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Recipient</a></button>
+                                                    <button type="button" class="btn btn-primary raised btn-block"><a class="message-button" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.takerFbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Recipient</a></button>
                                                     <% } %>
                             </center>
                         </div>
@@ -176,6 +182,7 @@
 
             </div>
 
+            <!-- Item Captions Area -->
             <div class="row">
 
                 <div class="panel panel-default">
@@ -185,7 +192,7 @@
                         </h5>
                         <% console.log(mine) %>
                             <% if (mine && !expired && item.takerID == null) { %>
-                                <button class="btn btn-default pull-right" data-toggle="modal" data-target="#editModal">Edit</button>
+                                <button class="btn btn-default raised pull-right" data-toggle="modal" data-target="#editModal">Edit</button>
                                 <% } %>
                                     <div class="clearfix"></div>
                     </div>
@@ -208,18 +215,18 @@
                 </div>
                 <% if (!mine) { %>
                     <% if (item.meWant === 1 && !expired && item.takerID === null) { %>
-                        <a class="btn btn-lg btn-danger btn-block unsnag active" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> UNSNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
+                        <a class="btn btn-lg btn-danger btn-block raised unsnag active" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> UNSNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
                         <% } else if (!expired && item.takerID === null) { %>
-                            <a class="btn btn-lg btn-primary btn-block snag active" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> SNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
+                            <a class="btn btn-lg btn-primary btn-block raised snag active" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> SNAG!</b> <span class="badge"><%= item.numWants %></span> </a>
                             <% } %>
                                 <% } %>
-
             </div>
         </div>
     </div>
 
     </div>
 
+    <!-- Modal Popup for editing -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -276,7 +283,6 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <!-- <div class="row"> -->
             <div class="col-xs-10 col-xs-offset-1 text-center">
                 <hr class="xsall">
                 <ul class="col-xs-12 list-unstyled contact-list">
@@ -292,12 +298,9 @@
                     <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
                 </div>
             </div>
-            <!-- </div> -->
         </div>
     </footer>
 
-
 </body>
-
 
 </html>
