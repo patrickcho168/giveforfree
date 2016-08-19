@@ -46,11 +46,24 @@ a:active {
 .wrap {
     word-wrap: break-word;
 }
-.hide {
-    width: 250px;
-    white-space: nowrap;
+.hide-overflow {
     overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
+    width: 100%;
+    display: block;
+}
+
+/* Image Resizing */
+
+img.clipped {
+    width: 150%;
+    float: left;
+    float: right;
+}
+.thumbnail {
+    overflow: hidden;
+    position: relative;
 }
 
 /* Buttons */
