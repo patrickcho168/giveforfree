@@ -204,7 +204,7 @@ console.log(urlAJAX);
 addRealViews(html, urlAJAX);
 
 // AJAX Server-End URL
-var flag = true;
+var flag = false;
 
 // Infinite Scroll
 $(window).scroll(function() {

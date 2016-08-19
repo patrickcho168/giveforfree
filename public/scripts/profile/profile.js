@@ -237,6 +237,7 @@ var html = '';
 var triggered = 0;
 var lastItemId = 0;
 var numItems = 6;
+var flag = false;
 var actualClass = ".cd-main-nav";
 
 $(document).ready(function() {
@@ -250,7 +251,7 @@ $(document).ready(function() {
     urlAJAX = '/api/myWants/' + lastItemId + '/' + numItems + '/' + appProfileId;
     console.log(urlAJAX);
     addRealViews(html, urlAJAX);
-    flag = true;
+    
 
     $(window).scroll(function() {
 
