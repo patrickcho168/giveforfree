@@ -84,8 +84,8 @@
 
 /* MASONRY APPROACH #2 */
 .grid-row {
- -moz-column-width: 25em;
- -webkit-column-width: 25em;
+ -moz-column-width: 12em;
+ -webkit-column-width: 12em;
  -moz-column-gap: .5em;
  -webkit-column-gap: .5em;
 
