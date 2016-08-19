@@ -55,15 +55,17 @@ function addRealViews(html, urlAJAX) {
                         html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-primary not-given raised bold-link" itemId="' + value.itemID + '" role="button">YOU HAVE NOT GIVEN THIS ITEM</a></div>';
                     }
                     // Item Snag Counts
-                    html += '<small class="item-snags">' + value.numWants + ' people snagged this.</small>';
+                    if (value.numWants > 1) {
+                        html += '<small class="item-snags">' + value.numWants + ' people snagged this.</small>';
+                    } else {
+                        html += '<small class="item-snags">' + value.numWants + ' person snagged this.</small>';
+
+                    }
                     html += '</div>';
                     html += '</div>';
                     html += '</div>';
                     $('#infinite-scroll-container').append(html);
                 });
-
-                $("#loader").fadeTo(2000, 0.0);
-
                 triggered = 0;
 
             } else {
@@ -74,9 +76,6 @@ function addRealViews(html, urlAJAX) {
         error: function(data) {
             flag = true;
             no_data = false;
-
-            $("#loader").fadeTo(2000, 0.0);
-
             triggered = 0;
             console.log(data);
             alert('Something went wrong, Please contact administrator.');
