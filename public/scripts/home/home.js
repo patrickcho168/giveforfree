@@ -43,7 +43,7 @@ function addRealViews(html, urlAJAX) {
                     // html += '<p class="item-caption">' + value.description + '</p>';
                     // Item Call-to-Action Snag Button
                     if (!loggedIn) {
-                        html += '<div class="col-lg-12 text-center call-button"><a href="/login" class="btn btn-sm btn-primary raised bold-link" role="button">SNAG</a></div>';
+                        html += '<div class="col-lg-12 text-center call-button"><a href="/login" class="btn btn-sm btn-primary raised bold-link" role="button">LOGIN TO SNAG</a></div>';
                     } else if (value.meWant > 0) {
                         html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-sm btn-danger raised unsnag bold-link" itemId="' + value.itemID + '" role="button">UNSNAG</a></div>';
                     } else {

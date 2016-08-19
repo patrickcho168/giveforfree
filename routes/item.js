@@ -191,14 +191,16 @@ module.exports = function(app) {
         next();
     })
 
-    app.get('/api/myWants/:lastItemId/:loadNum/:profileId', ensureLogin.ensureLoggedIn(), function(req, res) {
-        // db.getNextItems(req.params.pageNum, req.user.fbFriendsId, function(result) {
-        //   res.json(result);
-        // });
+    app.get('/api/myWants/:lastItemId/:loadNum/:profileId', function(req, res) {
         var lastSeenItem = parseInt(req.params.lastItemId);
         var numItems = parseInt(req.params.loadNum);
-        var userId = parseInt(req.user.appUserId);
         var profileId = parseInt(req.params.profileId);
+        var userId;
+        if (req.user === undefined) {
+            userId = 0;
+        } else {
+            userId = parseInt(req.user.appUserId);
+        }
         if (lastSeenItem === 0) {
             db.ProfilePageWantQuery(userId, profileId, numItems, function(data) {
                 res.json(data);
@@ -210,11 +212,17 @@ module.exports = function(app) {
         }
     });
 
-    app.get('/api/myItems/:lastItemId/:loadNum/:profileId', ensureLogin.ensureLoggedIn(), function(req, res) {
+    app.get('/api/myItems/:lastItemId/:loadNum/:profileId', function(req, res) {
         var lastSeenItem = parseInt(req.params.lastItemId);
         var numItems = parseInt(req.params.loadNum);
-        var userId = parseInt(req.user.appUserId);
         var profileId = parseInt(req.params.profileId);
+        var userId;
+        if (req.user === undefined) {
+            userId = 0;
+        } else {
+            userId = parseInt(req.user.appUserId);
+        }
+        
         if (lastSeenItem === 0) {
             db.ProfilePageGiveQuery(userId, profileId, numItems, function(data) {
                 res.json(data);
@@ -274,7 +282,6 @@ module.exports = function(app) {
             }
         }
     });
-
 
     // ITEM PAGE
     app.get('/item/:id', ensureLogin.ensureLoggedIn(), function(req, res) {

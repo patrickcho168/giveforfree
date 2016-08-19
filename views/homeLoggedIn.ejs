@@ -25,12 +25,7 @@
 
 	<!-- Other Scripts -->
 	<script>
-		var loggedIn;
-		<% if (!loggedIn) { %>
-			loggedIn = false;
-		<% } else { %>
-			loggedIn = true;
-		<% } %>
+		var loggedIn = <%= loggedIn %>;
 	</script>
 	<script src="scripts/common/common.js"></script>
 	<script src="scripts/home/home.js"></script>

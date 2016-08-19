@@ -21,22 +21,22 @@ module.exports = function(app) {
     // SHOW PROFILE GIVING OUT
     // SHOW PROFILE GIVEN OUT
     app.get('/profile/:id',
-        ensureLogin.ensureLoggedIn(),
         function(req, res) {
-            var otherUserId = parseInt(req.params.id);
-            var mine = otherUserId === req.user.appUserId;
-            db.User.where({
-                userID: otherUserId
-            }).fetch().then(function(user) {
-                db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
+            if (req.user === undefined) {
+                var otherUserId = parseInt(req.params.id);
+                var mine = false;
+                db.User.where({
+                    userID: otherUserId
+                }).fetch().then(function(user) {
                     db.ProfilePageTotalGivenQuery(otherUserId, function(gifted) {
                         db.ProfilePageTotalTakenQuery(otherUserId, function(taken) {
                             res.render('profile', {
+                                loggedIn: false,
                                 myProfile: mine,
                                 user: user.attributes,
-                                id: req.user.appUserId,
-                                friendProperty: req.user.fbFriendsToPropertyMap,
-                                friends: data.models,
+                                id: 0,
+                                friendProperty: {},
+                                friends: [],
                                 totalGifted: gifted[0].numGiven,
                                 totalTaken: taken[0].numTaken,
                                 totalKarma: gifted[0].numGiven * 10
@@ -44,7 +44,31 @@ module.exports = function(app) {
                         });
                     });
                 });
-            });
+            } else {
+                var otherUserId = parseInt(req.params.id);
+                var mine = otherUserId === req.user.appUserId;
+                db.User.where({
+                    userID: otherUserId
+                }).fetch().then(function(user) {
+                    db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
+                        db.ProfilePageTotalGivenQuery(otherUserId, function(gifted) {
+                            db.ProfilePageTotalTakenQuery(otherUserId, function(taken) {
+                                res.render('profile', {
+                                    loggedIn: true,
+                                    myProfile: mine,
+                                    user: user.attributes,
+                                    id: req.user.appUserId,
+                                    friendProperty: req.user.fbFriendsToPropertyMap,
+                                    friends: data.models,
+                                    totalGifted: gifted[0].numGiven,
+                                    totalTaken: taken[0].numTaken,
+                                    totalKarma: gifted[0].numGiven * 10
+                                });
+                            });
+                        });
+                    });
+                });
+            }
         });
 
     // GET FRIENDS
