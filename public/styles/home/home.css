@@ -78,6 +78,8 @@
 /**, *:before, *:after {
     box-sizing: border-box !important;
 }
+*/
+
 .grid-row {
     -moz-column-width: 18em;
     -webkit-column-width: 18em;
@@ -92,7 +94,7 @@
 .thumbnail {
     position: relative;
     display: block;
-}*/
+}
 
 
 /* MASONRY APPROACH #2 */
