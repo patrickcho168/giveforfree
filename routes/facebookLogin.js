@@ -126,7 +126,8 @@ module.exports = function(app) {
 
     app.get('/login/facebook',
         passport.authenticate('facebook', {
-            scope: ['user_friends', 'publish_actions']
+            scope: ['user_friends'] // USE THIS TO GET USERS FIRST
+            // scope: ['user_friends', 'publish_actions']
         }));
 
     app.get('/login/facebook/return',

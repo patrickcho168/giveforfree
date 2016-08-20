@@ -166,7 +166,8 @@ module.exports = function(app) {
                     // Save item to database
                     newItem.save().then(function(newSavedItem) {
 
-                        if (req.body.postToFacebook) {
+                        // if (req.body.postToFacebook) { // REMOVE THIS FIRST TO GET USERS TESTING
+                        if (false) {
 
                             // Create facebook post
                             var userFbId = req.user.id;
