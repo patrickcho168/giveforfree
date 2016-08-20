@@ -171,7 +171,7 @@ $(document).ready(function() {
         if (!$(this).parent().hasClass('active') && $(this).parent().attr('id') !== $(this).parent().find(".active").attr('id')) {
 
             // Clear section
-            var node = document.getElementById('infinite-scroll-container');
+            var node = document.getElementById('infinite-scroll-row');
 
             while (node.hasChildNodes()) {
                 node.removeChild(node.lastChild);
@@ -205,7 +205,7 @@ $(document).ready(function() {
 
                     html += "</div>";
 
-                    $('#infinite-scroll-container').append(html);
+                    $('#infinite-scroll-row').append(html);
 
                     break;
 
