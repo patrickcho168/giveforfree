@@ -72,7 +72,8 @@
                 </button>
                 <a class="navbar-brand" href="/">
                     <img src="../images/common/logo-long.png" width="108px" height="36px" style="margin-top: -10px;" />
-                </a>            </div>
+                </a>
+            </div>
 
             <!-- Menu -->
             <div class="collapse navbar-collapse" id="nav-menu">
@@ -82,11 +83,11 @@
                         <li id="nav-login"><a href="/login">Login</a></li>
                         <li id="nav-about"><a href="/login#about">About</a></li>
                         <li id="nav-contact"><a href="/login#contact">Contact Us</a></li>
-                    <% } else { %>
-                        <li id="nav-feed"><a href="/">Feed</a></li>
-                        <li id="nav-profile" class="active"><a href="/profile/<%= id %>">Profile</a></li>
-                        <li id="nav-logout"><a href="/logout">Logout</a></li>
-                    <% } %>
+                        <% } else { %>
+                            <li id="nav-feed"><a href="/">Feed</a></li>
+                            <li id="nav-profile" class="active"><a href="/profile/<%= id %>">Profile</a></li>
+                            <li id="nav-logout"><a href="/logout">Logout</a></li>
+                            <% } %>
                 </ul>
             </div>
 
@@ -149,8 +150,8 @@
                         <li class="tab-friends" id="tab-friends"><a id="friends-link">My Friends</a></li>
                         <% if (loggedIn) { %>
                             <li class="tab-self" id="tab-self"><a id="self-link" href="/profile/<%= id %>">Back to My Profile</a></li>
-                        <% } %>
-                        <li class="tab-create" id="tab-create"><a id="create-link" href="/upload">Create A Gift!</a></li>
+                            <% } %>
+                                <li class="tab-create" id="tab-create"><a id="create-link" href="/upload">Create A Gift!</a></li>
                     </ul>
                 </nav>
             </div>
@@ -158,8 +159,9 @@
         </div>
 
         <!-- Scroll Container -->
-        <div class="infinite-scroll-container col-xs-10 col-xs-offset-1 grid" id="infinite-scroll-container"></div>
-        <div class="row" id="infinite-scroll-row">
+        <div class="infinite-scroll-container col-xs-10 col-xs-offset-1 grid" id="infinite-scroll-container">
+            <div class="row" id="infinite-scroll-row">
+            </div>
         </div>
     </div>
 
