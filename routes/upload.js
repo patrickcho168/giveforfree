@@ -32,9 +32,9 @@ var uploading = multer({
         }
     },
 
-    // Files must be smaller than 100kb
+    // Files must be smaller than 5mb
     limits: {
-        fileSize: 100 * 1000
+        fileSize: 5 * 1000 * 1000
     },
 
     // Save to Amazon S3 bucket
