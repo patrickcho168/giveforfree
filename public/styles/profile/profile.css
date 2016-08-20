@@ -102,7 +102,7 @@
 
 /* Masonry Approach #1 */
 
-.grid-row {
+.row {
     -moz-column-width: 18em;
     -webkit-column-width: 18em;
     -moz-column-gap: 1em;
@@ -110,7 +110,8 @@
 }
 .grid-item {
     display: inline-block;
-    padding: .25rem;
+    margin:  0.25rem;
+    padding:  1rem;
     width: 100%;
 }
 .thumbnail {

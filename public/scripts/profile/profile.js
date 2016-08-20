@@ -25,7 +25,7 @@ function addRealViews(html, urlAJAX) {
                 /*** Factory for views ***/
 
                 $.each(data, function(key, value) {
-                    html = '<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 grid-item item grid-item">';
+                    html = '<div class="item grid-item">';
                     // Main Item Photo
                     html += '<div class="thumbnail">';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
