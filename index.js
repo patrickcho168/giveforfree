@@ -29,7 +29,9 @@ app.use(require('body-parser').urlencoded({ extended: true })); // For parsing f
 app.use(expressValidator());
 var sessionMiddleware = session({
     store: new RedisStore({ host: 'localhost', port: 6379, client: client, ttl : 60*60*24}),
-    secret: config.secretKey
+    secret: config.secretKey,
+    resave: false, // don't save session if unmodified
+    saveUninitialized: false // don't create session until something stored
 });
 app.use(sessionMiddleware);
 app.use(function (req, res, next) {
