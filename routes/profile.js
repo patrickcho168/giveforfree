@@ -22,6 +22,8 @@ module.exports = function(app) {
     // SHOW PROFILE GIVEN OUT
     app.get('/profile/:id',
         function(req, res) {
+            console.log("PROFILE PAGE");
+            console.log(req.user);
             if (req.user === undefined) {
                 var otherUserId = parseInt(req.params.id);
                 var mine = false;
