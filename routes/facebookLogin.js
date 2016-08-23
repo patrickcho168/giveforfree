@@ -140,7 +140,8 @@ module.exports = function(app) {
 
     app.get('/logout', function(req, res) {
         req.logout();
-        req.session = null;
+        req.session.destroy();
+        // req.session = null;
         res.redirect('/login');
     })
 }
