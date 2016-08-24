@@ -98,6 +98,31 @@
 
     <div class="main-display-area">
 
+        <!-- Thanks Page -->
+        <div>
+            <table style="width:100%">
+                <tr>
+                    <th>Name</th>
+                    <th>Facebook ID</th>
+                    <th>Message</th>
+                    <th>Time</th>
+                </tr>
+                <% for (var i=0; i<thank.length; i++) { %>
+                    <tr>
+                        <td><%= thank[i].relations.thankedBy.attributes.name %></td>
+                        <td><%= thank[i].relations.thankedBy.attributes.fbID %></td>
+                        <td><%= thank[i].attributes.message %></td>
+                        <td><%= thank[i].attributes.timeCreated %></td>
+                    </tr>
+                <% } %>
+            </table>
+            <form action="/api/thank/profile/<%= user.userID %>" method="post">
+                Message:<br>
+                <input type="text" name="message"><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
         <div class="container profile-area" align="center">
 
             <img align="center" src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large" class="img-circle img-thumbnail profile-photo" vertical-align="center">

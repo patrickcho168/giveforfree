@@ -26,6 +26,12 @@ var Item = bookshelf.Model.extend({
   },
   wantedBy: function() {
   	return this.hasMany(Want, 'itemID');
+  },
+  thankedAbout: function() {
+    return this.hasMany(Thank, 'itemID');
+  },
+  commentedAbout: function() {
+    return this.hasMany(Comment, 'itemID');
   }
 });
 
@@ -40,6 +46,15 @@ var User = bookshelf.Model.extend({
   },
   takes: function() {
   	return this.hasMany(Item, 'takerID');
+  },
+  comments: function() {
+    return this.hasMany(Comment, 'commenterID');
+  },
+  thanks: function() {
+    return this.hasMany(Thank, 'thankerID');
+  },
+  receivedThanks: function() {
+    return this.hasMany(Thank, 'receiverID');
   }
 });
 
@@ -50,6 +65,29 @@ var Want = bookshelf.Model.extend({
   },
   wants: function() {
   	return this.belongsTo(Item, 'itemID');
+  }
+});
+
+var Comment = bookshelf.Model.extend({
+  tableName: 'comment',
+  commentedBy: function() {
+    return this.belongsTo(User, 'commenterID');
+  },
+  about: function() {
+    return this.belongsTo(Item, 'itemID');
+  }
+});
+
+var Thank = bookshelf.Model.extend({
+  tableName: 'thank',
+  thankedBy: function() {
+    return this.belongsTo(User, 'thankerID');
+  },
+  receivedBy: function() {
+    return this.belongsTo(User, 'receiverID');
+  },
+  about: function() {
+    return this.belongsTo(Item, 'itemID');
   }
 });
 
@@ -250,6 +288,8 @@ var db = {}
 db.Item = Item;
 db.User = User;
 db.Want = Want;
+db.Comment = Comment;
+db.Thank = Thank;
 db.HomePageItemQuery = HomePageItemQuery;
 db.HomePageItemQueryBeforeId = HomePageItemQueryBeforeId;
 db.ProfilePageGiveQuery = ProfilePageGiveQuery;

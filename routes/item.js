@@ -5,6 +5,7 @@ var ensureLogin = require('connect-ensure-login');
 var moment = require('moment');
 var facebook = require('../controllers/facebook');
 var config = require('../config');
+var moment = require("moment");
 
 // Included to support <IE9
 function inArray(needle, haystack) {
@@ -18,6 +19,44 @@ function inArray(needle, haystack) {
 }
 
 module.exports = function(app) {
+
+    app.post('/api/comment/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
+        // CHECK MESSAGE NOT IMPLEMENTED
+        var userId = parseInt(req.user.appUserId);
+        var itemId = parseInt(req.params.itemId);
+        var newComment = new db.Comment({
+            commenterID: userId,
+            message: req.body.message,
+            itemID: itemId,
+            timeCreated: moment().format("YYYY-MM-DD HH:mm:ss")
+        });
+        newComment.save().then(function(comment) {
+            res.redirect('/item/' + itemId);
+        })
+    })
+
+    app.post('/api/deletecomment/:itemId/:commentId', ensureLogin.ensureLoggedIn(), function(req, res) {
+        var userId = parseInt(req.user.appUserId);
+        var commentId = parseInt(req.params.commentId);
+        var itemId = parseInt(req.params.itemId);
+        db.Comment.where({
+            commentID: commentId,
+            itemID: itemId
+        }).fetch().then(function(data) {
+            // If comment exists
+            if (data!=null) {
+                // Ensure comment belongs to user currently logged in
+                if (data.attributes && data.attributes.commenterID === userId) {
+                    data.where({
+                        commentID: commentId,
+                        commenterID: userId,
+                        itemID: itemId
+                    }).destroy();
+                }
+            }
+        })
+        res.redirect('/item/' + itemId);
+    })
 
     // This is for giving to random person
     app.get('/api/give/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
@@ -308,9 +347,27 @@ module.exports = function(app) {
             var expiredMin = moment().diff(date, 'minutes');
             var processedDate = date.locale('en-gb').format("LLL");
             db.ProfilePageTotalGivenQuery(data[0].giverID, function(gifted) {
-                var mine = userId === data[0].giverID;
-                if (mine && data[0].takerID === null && data[0].numWants > 0) {
-                    db.ItemPageManualQuery(itemId, function(data2) {
+                db.Comment.where({
+                    itemID: itemId
+                }).orderBy('timeCreated', 'ASC').fetchAll({withRelated: ['commentedBy']}).then(function(commentData) {
+                    var mine = userId === data[0].giverID;
+                    if (mine && data[0].takerID === null && data[0].numWants > 0) {
+                        db.ItemPageManualQuery(itemId, function(data2) {
+                            res.render('item', {
+                                id: userId,
+                                item: data[0],
+                                mine: mine,
+                                appId: config.fbClientID,
+                                domain: config.domain,
+                                date: processedDate,
+                                expired: expiredMin > 0,
+                                karma: gifted[0].numGiven * 10,
+                                manual: data2,
+                                loggedIn: loggedIn,
+                                comment: commentData.models
+                            });
+                        });
+                    } else {
                         res.render('item', {
                             id: userId,
                             item: data[0],
@@ -320,23 +377,11 @@ module.exports = function(app) {
                             date: processedDate,
                             expired: expiredMin > 0,
                             karma: gifted[0].numGiven * 10,
-                            manual: data2,
-                            loggedIn: loggedIn
+                            loggedIn: loggedIn,
+                            comment: commentData.models
                         });
-                    });
-                } else {
-                    res.render('item', {
-                        id: userId,
-                        item: data[0],
-                        mine: mine,
-                        appId: config.fbClientID,
-                        domain: config.domain,
-                        date: processedDate,
-                        expired: expiredMin > 0,
-                        karma: gifted[0].numGiven * 10,
-                        loggedIn: loggedIn
-                    });
-                }
+                    }
+                });
             });
         })
     });
