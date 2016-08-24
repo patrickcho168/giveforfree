@@ -20,9 +20,24 @@
     <!-- Other Scripts -->
     <script src="../scripts/common/common.js"></script>
     <script src="../scripts/upload/upload.js"></script>
+    <script src="../assets/autosize/js/autosize.js"></script>
 
     <!-- Bootstrap CSS (Override) -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Pure CSS (Override) -->
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="    https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <!-- Material Date Picker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script src="../assets/materialDatePicker/js/bootstrap-material-datetimepicker.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.min.css">
+    <link rel="stylesheet" href="../assets/materialDatePicker/css/bootstrap-material-datetimepicker.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <!-- CSS Styles -->
     <link rel="stylesheet" href="../styles/common/common.css">
@@ -70,79 +85,9 @@
         </div>
     </nav>
 
-    <div class="container main-container">
+    <div class="container main-container col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
         <h1>Create A Gift</h1>
         <br/>
-
-        <!-- <form action="/upload" enctype="multipart/form-data" method="post">
-            <% if (locals.error_messages) {
-                error_messages.forEach(function(message) { %>
-                <div class="alert alert-warning"><strong>Error: </strong>
-                    <%= message %>
-                </div>
-                <% });
-            } %>
-
-                    <div class="form-group has-warning">
-                        <label>Title</label>
-                        <input type="text" class="form-control" name="title" placeholder="Enter the name of your object" required>
-
-                    </div>
-                    <div class="form-group has-warning">
-                        <label>Description</label>
-                        <input class="form-control" type="text" name="description" placeholder="Enter some description of your object" required>
-
-                    </div>
-                    <div class="form-group has-warning">
-                        <label>Select an image to upload (less than 100kb):</label>
-                        <input id="input-image-1" name="input-image" type="file" class="file-loading" accept="image/*" required>
-
-                        <div id="kv-success-modal" class="modal fade">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">Yippee!</h4>
-                                    </div>
-                                    <div id="kv-success-box" class="modal-body">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <script>
-                            $("#input-image-1").fileinput({
-                                uploadUrl: "/upload",
-                                allowedFileExtensions: ["jpg", "png", "gif"],
-                                maxImageWidth: 200,
-                                maxFileCount: 1,
-                                resizeImage: true
-                            }).on('filepreupload', function() {
-                                $('#kv-success-box').html('');
-                            }).on('fileuploaded', function(event, data) {
-                                $('#kv-success-box').append(data.response.link);
-                                $('#kv-success-modal').modal('show');
-                            });
-                        </script>
-                    </div>
-                    <div class="form-group">
-                        <label>Number of Days</label>
-                        <select class="form-control" name="no_of_days">
-                            <option value="7">7</option>
-                            <option value="14">14</option>
-                        </select>
-                    </div>
-
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" name="postToFacebook" value="1">
-                    Post to Facebook?
-                </label>
-            </div>
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
-        </form> -->
-
 
         <form action="/upload" enctype="multipart/form-data" method="post">
             <% if (locals.error_messages) {
@@ -152,56 +97,79 @@
                 </div>
                 <% });
             } %>
-                    <div class="form-group has-warning">
-                        <label>Title</label>
-                        <input type="text" class="form-control" name="title" placeholder="Enter the name of your object" maxlength="50" required>
-
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <input class="pure-input-1-2 input-txt" type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" />
                     </div>
-                    <div class="form-group has-warning">
-                        <label>Description</label>
-                        <input class="form-control" type="text" name="description" placeholder="Enter some description of your object" maxlength="200" required>
-
-                    </div>
-
-                    <div class="form-group has-warning">
-
-                        <label>Select an image to upload (less than 5mb):</label>
-
-                        <!-- <input class="form-control-file" type="file" name="avatar" required> -->
-
-                        <!-- image-preview-filename input [CUT FROM HERE]-->
-                        <div class="input-group image-preview">
-                            <input class="form-control image-preview-filename" type="text" name="input-file-preview" required>
-                            <!-- don't give a name === doesn't send on POST/GET -->
-                            <span class="input-group-btn">
-                                <!-- image-preview-clear button -->
-                                <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                            <span class="image-preview-input-title">Clear</span>
-
-                            </button>
-                            <!-- image-preview-input -->
-                            <div class="btn btn-default image-preview-input">
-                                <span class="glyphicon glyphicon-folder-open"></span>
-                                <span class="image-preview-input-title">Browse</span>
-                                <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" />
-                                <!-- rename it -->
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <fieldset class="pure-group has-warning">
+                            <!-- <label>Title</label> -->
+                            <input type="text" class="pure-input-1-2 input-txt" name="title" placeholder="Title" maxlength="50" required>
+                            <textarea class="pure-input-1-2 input-txt" type="text" name="description" placeholder="Description" maxlength="200" required></textarea>
+                            <input type="text" class="pure-input-1-2 input-txt" id="date" name="date" placeholder="Expires on" maxlength="50" required>
+                            <input onfocus="document.getElementById('myDropdown').style.display='block';" onblur="checkValue()" class="btn-block pure-input-1-2 input-txt" id="category" name="category" onkeyup="filterFunction()" placeholder="Category" required>
+                            <div id="myDropdown" class="dropdown-content">
+                                <a onclick="changeValue('clothes')">clothes</a>
+                                <a onclick="changeValue('accessories')">accessories</a>
+                                <a onclick="changeValue('furniture & home')">furniture & home</a>
+                                <a onclick="changeValue('parenting')">parenting</a>
+                                <a onclick="changeValue('health')">health</a>
+                                <a onclick="changeValue('beauty')">beauty</a>
+                                <a onclick="changeValue('kitchen appliances')">kitchen appliances</a>
+                                <a onclick="changeValue('gardening')">gardening</a>
+                                <a onclick="changeValue('property')">property</a>
+                                <a onclick="changeValue('design & craft')">design & craft</a>
+                                <a onclick="changeValue('electronics')">electronics</a>
+                                <a onclick="changeValue('sports')">sports</a>
+                                <a onclick="changeValue('photography')">photography</a>
+                                <a onclick="changeValue('antiques')">antiques</a>
+                                <a onclick="changeValue('toys')">toys</a>
+                                <a onclick="changeValue('games')">games</a>
+                                <a onclick="changeValue('music')">music</a>
+                                <a onclick="changeValue('tickets & vouchers')">tickets & vouchers</a>
+                                <a onclick="changeValue('auto accessories')">auto accessories</a>
+                                <a onclick="changeValue('books')">books</a>
+                                <a onclick="changeValue('stationeries')">stationeries</a>
+                                <a onclick="changeValue('textbooks')">textbooks</a>
+                                <a onclick="changeValue('notes')">notes</a>
+                                <a onclick="changeValue('pets')">pets</a>
+                                <a onclick="changeValue('other')">other</a>
                             </div>
-                            </span>
+                            <!-- <input class="form-control image-preview-filename input-txt" type="text" name="input-file-preview" required> -->
+
+                            <!-- <select class="pure-input-1-2 input-txt" type="text" id="category" name="category" placeholder="Category" required> -->
+
+                        </fieldset>
+                        <br>
+                        <div class="options">
+                            <ul class="list-unstyled col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1 col-xs-10 col-xs-offset-2">
+                                <li>
+                                    <input type="checkbox" name="meet" id="meet" />
+                                    <label for="meet">Meetup</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="free" id="free" />
+                                    <label for="free">Free Postage</label>
+                                </li>
+                            </ul>
+
+                            <ul class="list-unstyled col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1 col-xs-10 col-xs-offset-2">
+                                <li>
+                                    <input type="checkbox" name="paid" id="paid" />
+                                    <label for="paid">Paid Postage</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" name="other" id="other" />
+                                    <label for="other">Other Options</label>
+                                </li>
+                            </ul>
+
                         </div>
-                        <!-- /input-group image-preview [TO HERE]-->
+                        <div class="options col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1 col-xs-10 col-xs-offset-2">
 
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-lg btn-success btn-block raised bold-link">Create Gift!</button>
                     </div>
-
-                    <div class="form-group">
-                        <label>Number of Days</label>
-                        <select class="form-control" name="no_of_days">
-                            <option value="7">7</option>
-                            <option value="14">14</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-lg btn-success btn-block raised bold-link">Create Gift!</button>
         </form>
     </div>
 
