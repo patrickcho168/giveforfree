@@ -10,6 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="">
 	<meta name="author" content="">
+	<link rel="manifest" href="/manifest.json">
 
 	<title>Give For Free - Meeting the needs of others</title>
 
@@ -18,24 +19,26 @@
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	<!-- Codyhouse Navigation FAB Support -->
-	<script src="assets/codyhouse/js/main.js"></script>
-	<script src="assets/codyhouse/js/modernizr.js"></script>
-	<link rel="stylesheet" href="assets/codyhouse/css/reset.css">
-	<link rel="stylesheet" href="assets/codyhouse/css/style.css">
+	<script src="/assets/codyhouse/js/main.js"></script>
+	<script src="/assets/codyhouse/js/modernizr.js"></script>
+	<link rel="stylesheet" href="/assets/codyhouse/css/reset.css">
+	<link rel="stylesheet" href="/assets/codyhouse/css/style.css">
 
 	<!-- Other Scripts -->
 	<script>
 		var loggedIn = <%= loggedIn %>;
 	</script>
-	<script src="scripts/common/common.js"></script>
-	<script src="scripts/home/home.js"></script>
+	<script src="/scripts/common/common.js"></script>
+	<script src="/scripts/home/home.js"></script>
+	<script src="/scripts/common/notification.js?v=1"></script>
+	<script src="/servworker.js?v=2"></script>
 
 	<!-- Bootstrap CSS (override) -->
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 	<!-- CSS Styles -->
-	<link rel="stylesheet" href="styles/common/common.css">
-	<link rel="stylesheet" href="styles/home/home.css">
+	<link rel="stylesheet" href="/styles/common/common.css">
+	<link rel="stylesheet" href="/styles/home/home.css">
 
 	<!-- Animation -->
 	<link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
