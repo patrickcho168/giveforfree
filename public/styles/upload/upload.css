@@ -194,5 +194,9 @@ input[type="checkbox"]:checked+ label:after {
     opacity: 1;
 }
 
+.options-list {
+    margin-top: -10px;
+}
+
 
 /* Checkbox (Round) */
