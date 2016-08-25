@@ -116,7 +116,6 @@ module.exports = function(app) {
                     db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
                         db.ProfilePageTotalGivenQuery(otherUserId, function(gifted) {
                             db.ProfilePageTotalTakenQuery(otherUserId, function(taken) {
-<<<<<<< HEAD
                                 db.Thank.where({
                                     receiverID: otherUserId
                                 }).orderBy('timeCreated', 'ASC').fetchAll({withRelated: ['thankedBy']}).then(function(thankData) {
@@ -132,17 +131,6 @@ module.exports = function(app) {
                                         totalKarma: gifted[0].numGiven * 10,
                                         thank: thankData.models
                                     });
-=======
-                                res.render('profile', {
-                                    loggedIn: true,
-                                    myProfile: mine,
-                                    user: user.attributes,
-                                    id: req.user.appUserId,
-                                    friendProperty: req.user.fbFriendsToPropertyMap,
-                                    friends: data.models,
-                                    totalGifted: gifted[0].numGiven,
-                                    totalTaken: taken[0].numTaken
->>>>>>> production
                                 });
                             });
                         });
