@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
+    <meta name="description "content="">
     <meta name="author" content="">
 
     <title>Give For Free - Meeting the needs of others</title>
@@ -21,6 +21,9 @@
     <script src="../scripts/common/common.js"></script>
     <script src="../scripts/upload/upload.js"></script>
     <script src="../assets/autosize/js/autosize.js"></script>
+
+    <!-- Cropper -->
+    <script src="../scripts/upload/croppie.js"></script>
 
     <!-- Bootstrap CSS (Override) -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -42,6 +45,7 @@
     <!-- CSS Styles -->
     <link rel="stylesheet" href="../styles/common/common.css">
     <link rel="stylesheet" href="../styles/upload/upload.css">
+    <link rel="stylesheet" href="../styles/upload/croppie.css">
 
     <!-- Animations -->
     <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
@@ -92,7 +96,7 @@
         <h1>Create A Gift</h1>
         <br/>
 
-        <form action="/upload" enctype="multipart/form-data" method="post">
+        <form action="/upload" enctype="multipart/form-data" method="post" id="new-gift-form">
             <% if (locals.error_messages) {
                 error_messages.forEach(function(message) { %>
                 <div class="alert alert-warning"><strong>Error: </strong>
@@ -101,7 +105,29 @@
                 <% });
             } %>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <input class="pure-input-1-2 input-txt" type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" />
+
+                        <!-- <input class="pure-input-1-2 input-txt" type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" /> -->
+
+                        <div class="input-group image-preview">
+                            <input class="form-control image-preview-filename" type="text" name="input-file-preview" required>
+                            <!-- don't give a name === doesn't send on POST/GET -->
+                            <span class="input-group-btn">
+                                <!-- image-preview-clear button -->
+                                <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                            <span class="image-preview-input-title">Clear</span>
+
+                            </button>
+                            <div class="btn btn-default image-preview-input">
+                                <span class="glyphicon glyphicon-folder-open"></span>
+                                <span>Browse</span>
+                                <input type="file" onchange="previewFile()" accept="image/png, image/jpeg, image/gif" name="input-file-cropped" />
+                                <!-- rename it -->
+                            </div>
+                        </div>
+
+                        <div id="image"></div>
+                        
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <fieldset class="pure-group has-warning">

@@ -6,6 +6,7 @@ var mime = require("mime");
 var multers3 = require("multer-s3");
 var moment = require("moment");
 var aws = require("aws-sdk");
+var lwip = require("lwip");
 var config = require('../config');
 var db = require('../models/db');
 var ensureLogin = require('connect-ensure-login');
@@ -35,22 +36,8 @@ var uploading = multer({
     // Files must be smaller than 5mb
     limits: {
         fileSize: 5 * 1000 * 1000
-    },
-
-    // Save to Amazon S3 bucket
-    storage: multers3({
-        s3: s3,
-        dirname: '/',
-        bucket: 'giveforfree',
-        acl: 'private',
-        key: function(req, file, cb) {
-            crypto.pseudoRandomBytes(16, function(err, raw) {
-                cb(null, raw.toString('hex') + Date.now() + '.' +
-                    mime.extension(file.mimetype));
-            });
-        }
-    })
-}).single('input-file-preview');
+    }
+}).single('input-file-cropped');
 
 // function createFbItem(imgUrl, title, desc, itemId) {
 //   var object = {
@@ -142,6 +129,11 @@ module.exports = function(app) {
 
                 req.sanitizeBody('title');
                 req.sanitizeBody('description');
+                req.sanitizeBody('x');
+                req.sanitizeBody('y');
+                req.sanitizeBody('height');
+                req.sanitizeBody('width');
+                req.sanitizeBody('rotate');
 
                 var errors = req.validationErrors();
 
@@ -153,6 +145,23 @@ module.exports = function(app) {
                     res.redirect(301, '/upload');
 
                 } else {
+                    // Image processing
+                    var fileBuffer = req.file.buffer
+                    var re = /(?:\.([^.]+))?$/;
+                    var fileExtension = re.exec(req.file.originalname)[1]
+                    console.log(fileExtension)
+                    
+                    lwip.open(fileBuffer, fileExtension, function(err, image) {
+                        if (err) return console.log(err);
+                        image.batch()
+                            .blur(10) 
+                            .lighten(0.2) 
+                            .writeFile('upload/lwip.jpg', function(err) {
+                                if (err) return console.log(err);
+                                res.send('done');
+                            });
+                    });
+
                     // Create item based on form
                     var newItem = new db.Item({
                         giverID: req.user.appUserId,
@@ -160,7 +169,7 @@ module.exports = function(app) {
                         timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
                         title: req.body.title,
                         description: req.body.description,
-                        imageLocation: req.file.key
+                        imageLocation: "NEED THE LOCATION"
                     });
 
                     // Save item to database

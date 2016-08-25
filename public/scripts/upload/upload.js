@@ -1,73 +1,58 @@
-$(document).on('click', '#close-preview', function() {
-    $('.image-preview').popover('hide');
-    // Hover befor close the preview
-    $('.image-preview').hover(
-        function() {
-            $('.image-preview').popover('show');
-        },
-        function() {
-            $('.image-preview').popover('hide');
-        }
-    );
-});
+function previewFile() {
+    var cropbox = document.querySelector('#image');
+    var file = document.querySelector('input[type=file]').files[0];
+    var reader = new FileReader();
 
-$(function() {
-    // Create the close button
-    var closebtn = $('<button/>', {
-        type: "button",
-        text: 'x',
-        id: 'close-preview',
-        style: 'font-size: initial;',
-    });
-    closebtn.attr("class", "close pull-right");
-    // Set the popover default content
-    $('.image-preview').popover({
-        trigger: 'manual',
-        html: true,
-        title: "<strong>Preview</strong>" + $(closebtn)[0].outerHTML,
-        content: "There's no image",
-        placement: 'top'
-    });
-    // Clear event
-    $('.image-preview-clear').click(function() {
-        $('.image-preview').attr("data-content", "").popover('hide');
-        $('.image-preview-filename').val("");
-        $('.image-preview-clear').hide();
-        $('.image-preview-input input:file').val("");
-        $(".image-preview-input-title").text("Browse");
-    });
-    // Create the preview image
-    $(".image-preview-input input:file").change(function() {
-        var img = $('<img/>', {
-            id: 'dynamic',
-            width: 250,
-            height: 200
+    // $uploadCrop = $('#image').croppie({
+    //   viewport: {
+    //     width: 100,
+    //     height: 100,
+    //     type: 'circle'
+    //   },
+    //   boundary: {
+    //     width: 300,
+    //     height: 300
+    //   },
+    //   enableExif: true
+    // });
+
+    reader.addEventListener("load", function() {
+        // Add something to the input text field
+        $(".image-preview-filename").val("pic.img");
+
+        var $uploadCrop;
+        $uploadCrop = $('#image').croppie({
+            viewport: {
+                width: 200,
+                height: 200,
+            },
+            boundary: {
+                width: 300,
+                height: 300
+            },
+            enableExif: true
         });
-        // var file = filename;
-        var reader = new FileReader();
-        // Set preview image into the popover data-content
-        reader.onload = function(e) {
-            $(".image-preview-input-title").text("Change");
-            $(".image-preview-clear").text("Clear");
-            $(".image-preview-clear").show();
-            $(".image-preview-filename").val("input-file-preview");
-            img.attr('src', e.target.result);
-            $(".image-preview").attr("data-content", $(img)[0].outerHTML).popover("show");
-        }
-        var file = document.querySelector('input[type=file]').files[0];
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-    });
 
-    $('#date').bootstrapMaterialDatePicker({
-        weekStart: 0,
-        time: false
-    });
+        $uploadCrop.croppie('bind', {
+            url: reader.result
+        }).then(function() {
+            console.log('jQuery bind complete');
+        });
 
-    $('textarea').autosize();
+    }, false);
+
+    if (file) {
+        reader.readAsDataURL(file);
+    }
 
 });
+
+$('#date').bootstrapMaterialDatePicker({
+    weekStart: 0,
+    time: false
+});
+
+$('textarea').autosize();
 
 // $("myDropdown").onblur(function() {
 //     document.getElementById('myDropdown').style.display = 'none';
