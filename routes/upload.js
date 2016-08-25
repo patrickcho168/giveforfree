@@ -6,6 +6,7 @@ var mime = require("mime");
 var multers3 = require("multer-s3");
 var moment = require("moment");
 var aws = require("aws-sdk");
+var lwip = require("lwip");
 var config = require('../config');
 var db = require('../models/db');
 var ensureLogin = require('connect-ensure-login');
@@ -50,7 +51,7 @@ var uploading = multer({
             });
         }
     })
-}).single('input-file-preview');
+}).single('input-file-cropped');
 
 // function createFbItem(imgUrl, title, desc, itemId) {
 //   var object = {
@@ -113,6 +114,7 @@ module.exports = function(app) {
 
             } else {
                 // Simple form validation
+                console.log(req.body)
                 req.checkBody({
                     'title': {
                         notEmpty: true,
@@ -142,6 +144,11 @@ module.exports = function(app) {
 
                 req.sanitizeBody('title');
                 req.sanitizeBody('description');
+                req.sanitizeBody('x');
+                req.sanitizeBody('y');
+                req.sanitizeBody('height');
+                req.sanitizeBody('width');
+                req.sanitizeBody('rotate');
 
                 var errors = req.validationErrors();
 

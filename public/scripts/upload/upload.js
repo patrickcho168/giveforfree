@@ -1,62 +1,31 @@
-$(document).on('click', '#close-preview', function() {
-    $('.image-preview').popover('hide');
-    // Hover befor close the preview
-    $('.image-preview').hover(
-        function() {
-            $('.image-preview').popover('show');
-        },
-        function() {
-            $('.image-preview').popover('hide');
-        }
-    );
-});
+function previewFile() {
+  var cropbox = document.querySelector('#image');
+  var file    = document.querySelector('input[type=file]').files[0];
+  var reader  = new FileReader();
 
-$(function() {
-    // Create the close button
-    var closebtn = $('<button/>', {
-        type: "button",
-        text: 'x',
-        id: 'close-preview',
-        style: 'font-size: initial;',
+  reader.addEventListener("load", function () {
+    cropbox.src = reader.result;
+
+    $("#image").cropper({
+      aspectRatio: 1 / 1,
+      crop: function(e) {
+        // Output the result data for cropping image.
+
+        $("input[name='x']").val(e.x);
+        $("input[name='y']").val(e.y);
+        $("input[name='height']").val(e.height);
+        $("input[name='width']").val(e.width);
+        $("input[name='rotate']").val(e.rotate);
+        $("input[name='scaleX']").val(e.scaleX);
+        $("input[name='scaleY']").val(e.scaleY);
+      }
     });
-    closebtn.attr("class", "close pull-right");
-    // Set the popover default content
-    $('.image-preview').popover({
-        trigger: 'manual',
-        html: true,
-        title: "<strong>Preview</strong>" + $(closebtn)[0].outerHTML,
-        content: "There's no image",
-        placement: 'top'
-    });
-    // Clear event
-    $('.image-preview-clear').click(function() {
-        $('.image-preview').attr("data-content", "").popover('hide');
-        $('.image-preview-filename').val("");
-        $('.image-preview-clear').hide();
-        $('.image-preview-input input:file').val("");
-        $(".image-preview-input-title").text("Browse");
-    });
-    // Create the preview image
-    $(".image-preview-input input:file").change(function() {
-        var img = $('<img/>', {
-            id: 'dynamic',
-            width: 250,
-            height: 200
-        });
-        // var file = filename;
-        var reader = new FileReader();
-        // Set preview image into the popover data-content
-        reader.onload = function(e) {
-            $(".image-preview-input-title").text("Change");
-            $(".image-preview-clear").text("Clear");
-            $(".image-preview-clear").show();
-            $(".image-preview-filename").val("input-file-preview");
-            img.attr('src', e.target.result);
-            $(".image-preview").attr("data-content", $(img)[0].outerHTML).popover("show");
-        }
-        var file = document.querySelector('input[type=file]').files[0];
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-    });
-});
+
+    $(".image-preview-filename").val("pic.img");
+    
+  }, false);
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+}
