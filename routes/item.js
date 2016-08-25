@@ -319,7 +319,6 @@ module.exports = function(app) {
                             domain: config.domain,
                             date: processedDate,
                             expired: expiredMin > 0,
-                            karma: gifted[0].numGiven * 10,
                             manual: data2,
                             loggedIn: loggedIn
                         });
@@ -333,7 +332,6 @@ module.exports = function(app) {
                         domain: config.domain,
                         date: processedDate,
                         expired: expiredMin > 0,
-                        karma: gifted[0].numGiven * 10,
                         loggedIn: loggedIn
                     });
                 }

@@ -40,8 +40,7 @@ module.exports = function(app) {
                                 friendProperty: {},
                                 friends: [],
                                 totalGifted: gifted[0].numGiven,
-                                totalTaken: taken[0].numTaken,
-                                totalKarma: gifted[0].numGiven * 10
+                                totalTaken: taken[0].numTaken
                             });
                         });
                     });
@@ -63,8 +62,7 @@ module.exports = function(app) {
                                     friendProperty: req.user.fbFriendsToPropertyMap,
                                     friends: data.models,
                                     totalGifted: gifted[0].numGiven,
-                                    totalTaken: taken[0].numTaken,
-                                    totalKarma: gifted[0].numGiven * 10
+                                    totalTaken: taken[0].numTaken
                                 });
                             });
                         });
