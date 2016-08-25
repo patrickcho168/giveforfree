@@ -261,7 +261,7 @@ module.exports = function(app) {
         } else {
             userId = parseInt(req.user.appUserId);
         }
-        
+
         if (lastSeenItem === 0) {
             db.ProfilePageGiveQuery(userId, profileId, numItems, function(data) {
                 res.json(data);
@@ -376,12 +376,22 @@ module.exports = function(app) {
                             domain: config.domain,
                             date: processedDate,
                             expired: expiredMin > 0,
-                            karma: gifted[0].numGiven * 10,
-                            loggedIn: loggedIn,
-                            comment: commentData.models
+                            manual: data2,
+                            loggedIn: loggedIn
                         });
-                    }
-                });
+                    });
+                } else {
+                    res.render('item', {
+                        id: userId,
+                        item: data[0],
+                        mine: mine,
+                        appId: config.fbClientID,
+                        domain: config.domain,
+                        date: processedDate,
+                        expired: expiredMin > 0,
+                        loggedIn: loggedIn
+                    });
+                }
             });
         })
     });
