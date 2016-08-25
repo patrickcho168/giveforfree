@@ -45,7 +45,7 @@ function previewFile() {
         reader.readAsDataURL(file);
     }
 
-});
+}
 
 $('#date').bootstrapMaterialDatePicker({
     weekStart: 0,
