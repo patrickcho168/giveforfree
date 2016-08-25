@@ -3,29 +3,44 @@ function previewFile() {
   var file    = document.querySelector('input[type=file]').files[0];
   var reader  = new FileReader();
 
+  // $uploadCrop = $('#image').croppie({
+  //   viewport: {
+  //     width: 100,
+  //     height: 100,
+  //     type: 'circle'
+  //   },
+  //   boundary: {
+  //     width: 300,
+  //     height: 300
+  //   },
+  //   enableExif: true
+  // });
+
   reader.addEventListener("load", function () {
-    cropbox.src = reader.result;
+    // Add something to the input text field
+    $(".image-preview-filename").val("pic.img");
 
-    $("#image").cropper({
-      aspectRatio: 1 / 1,
-      crop: function(e) {
-        // Output the result data for cropping image.
-
-        $("input[name='x']").val(e.x);
-        $("input[name='y']").val(e.y);
-        $("input[name='height']").val(e.height);
-        $("input[name='width']").val(e.width);
-        $("input[name='rotate']").val(e.rotate);
-        $("input[name='scaleX']").val(e.scaleX);
-        $("input[name='scaleY']").val(e.scaleY);
-      }
+    var $uploadCrop;
+    $uploadCrop = $('#image').croppie({
+      viewport: {
+        width: 200,
+        height: 200,
+      },
+      boundary: {
+        width: 300,
+        height: 300
+      },
+      enableExif: true
     });
 
-    $(".image-preview-filename").val("pic.img");
-    
+    $uploadCrop.croppie('bind', {
+      url: reader.result
+    }).then(function(){
+      console.log('jQuery bind complete');
+    });
   }, false);
 
   if (file) {
     reader.readAsDataURL(file);
-  }
+ }
 }
