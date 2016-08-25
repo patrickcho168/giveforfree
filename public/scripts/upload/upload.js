@@ -1,3 +1,12 @@
+$(function() {
+    $('#date').bootstrapMaterialDatePicker({
+        weekStart: 0,
+        time: false
+    });
+
+    $('textarea').autosize();
+});
+
 function previewFile() {
     var cropbox = document.querySelector('#image');
     var file = document.querySelector('input[type=file]').files[0];
@@ -46,13 +55,6 @@ function previewFile() {
     }
 
 }
-
-$('#date').bootstrapMaterialDatePicker({
-    weekStart: 0,
-    time: false
-});
-
-$('textarea').autosize();
 
 // $("myDropdown").onblur(function() {
 //     document.getElementById('myDropdown').style.display = 'none';
