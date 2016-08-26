@@ -1,12 +1,9 @@
 "use strict"
 
-var multer = require("multer");
 var crypto = require("crypto");
 var mime = require("mime");
-var multers3 = require("multer-s3");
 var moment = require("moment");
 var aws = require("aws-sdk");
-var lwip = require("lwip");
 var config = require('../config');
 var db = require('../models/db');
 var ensureLogin = require('connect-ensure-login');
@@ -19,42 +16,7 @@ aws.config.update({
     region: 'ap-southeast-1',
 })
 
-var s3 = new aws.S3();
-
-var uploading = multer({
-
-    // Only accept image files
-    fileFilter: function(req, file, cb) {
-        // Checks the file extension
-        if (file.mimetype.indexOf("image") == -1) {
-            cb(new Error("This is not an image file."), false);
-        } else {
-            cb(null, true)
-        }
-    },
-
-    // Files must be smaller than 5mb
-    limits: {
-        fileSize: 5 * 1000 * 1000
-    }
-}).single('input-file-cropped');
-
-// function createFbItem(imgUrl, title, desc, itemId) {
-//   var object = {
-//     'og:url': 'http://ec2-54-255-178-61.ap-southeast-1.compute.amazonaws.com/item/' + itemId,
-//     'og:title': title,
-//     'og:type': 'product.item',
-//     'og:image': 'https://d24uwljj8haz6q.cloudfront.net/' + imgUrl,
-//     'og:description': desc,
-//     'fb:app_id': config.fbClientID,
-//     'product:retailer_item_id': itemId,
-//     'product:price:amount': '0',
-//     'product:price:currency': 'SGD',
-//     'product:availability': 'in stock',
-//     'product:condition': 'used'
-//   };
-//   return querystring.stringify(object, '%22%2C%22', '%22%3A%22');
-// }
+var s3 = new aws.S3({ params: {Bucket: 'giveforfree'} });
 
 function createFbPost(title, itemId, imgUrl) {
     var object = {
@@ -82,123 +44,108 @@ module.exports = function(app) {
         var otherUserId = parseInt(req.params.id);
         var mine = otherUserId === req.user.appUserId;
 
-        uploading(req, res, function(err) {
-            // Image upload errors
-            if (err) {
-                console.log(err.message);
-                req.flash('error_messages', err.message);
-                res.redirect('/upload');
+        if (!(req.user.appUserId)) {
+            next(new Error("User does not have appUserId"));
 
-                // No image uploaded
-            } else if (!(req.file)) {
-                req.flash('error_messages', 'Please upload an image.');
-                res.redirect('/upload');
+        } else {
+            req.body.croppedImage = req.body.croppedImage.replace(/^data:image\/\w+;base64,/, "");
 
-                // Check appUserId exists
-            } else if (!(req.user.appUserId)) {
-                next(new Error("User does not have appUserId"));
+            // Simple form validation
+            req.checkBody({
+                'title': {
+                    notEmpty: true,
+                    isLength: {
+                        options: [{
+                            min: 1,
+                            max: 50
+                        }],
+                        errorMessage: 'Title must be less than 50 characters' // Error message for the validator, takes precedent over parameter message
+                    },
+
+                    errorMessage: 'Please fill in a valid title.'
+                },
+                'description': {
+                    notEmpty: true,
+                    isLength: {
+                        options: [{
+                            min: 1,
+                            max: 200
+                        }],
+                        errorMessage: 'Description must be less than 200 characters' // Error message for the validator, takes precedent over parameter message
+                    },
+
+                    errorMessage: 'Please fill in a valid description.'
+                },
+                'croppedImage': {
+                    isBase64: true,
+                    notEmpty: true,
+                    errorMessage: 'Please upload and confirm an image.'
+                }
+            });
+
+            req.sanitizeBody('title');
+            req.sanitizeBody('description');
+            req.sanitizeBody('croppedImage');
+
+            var errors = req.validationErrors();
+
+            if (errors) {
+                errors.forEach(function(error) {
+                    req.flash('error_messages', error.msg);
+                });
+                res.redirect(301, '/upload');
 
             } else {
-                // Simple form validation
-                req.checkBody({
-                    'title': {
-                        notEmpty: true,
-                        isLength: {
-                            options: [{
-                                min: 1,
-                                max: 50
-                            }],
-                            errorMessage: 'Title must be less than 50 characters' // Error message for the validator, takes precedent over parameter message
-                        },
+                // Upload image
+                var buf = new Buffer(req.body.croppedImage,'base64')
+                var fileName = crypto.pseudoRandomBytes(16).toString('hex') + '.png'
+                
+                var data = {
+                    Key:  fileName,
+                    Body: buf,
+                    ContentEncoding: 'base64',
+                    ContentType: 'image/png'
+                };
 
-                        errorMessage: 'Please fill in a valid title.'
-                    },
-                    'description': {
-                        notEmpty: true,
-                        isLength: {
-                            options: [{
-                                min: 1,
-                                max: 200
-                            }],
-                            errorMessage: 'Description must be less than 200 characters' // Error message for the validator, takes precedent over parameter message
-                        },
-
-                        errorMessage: 'Please fill in a valid description.'
+                s3.upload(data, function(err, data) {
+                    if (err) { 
+                        console.log(err);
+                        console.log('Error uploading data: ', data); 
+                    } else {
+                        console.log(data);
+                        console.log('succesfully uploaded the image!');
                     }
                 });
 
-                req.sanitizeBody('title');
-                req.sanitizeBody('description');
-                req.sanitizeBody('x');
-                req.sanitizeBody('y');
-                req.sanitizeBody('height');
-                req.sanitizeBody('width');
-                req.sanitizeBody('rotate');
+                // Create item based on form
+                var newItem = new db.Item({
+                    giverID: req.user.appUserId,
+                    timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+                    timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
+                    title: req.body.title,
+                    description: req.body.description,
+                    imageLocation: fileName
+                });
 
-                var errors = req.validationErrors();
+                // Save item to database
+                newItem.save().then(function(newSavedItem) {
 
+                    if (req.body.postToFacebook) {
 
-                if (errors) {
-                    errors.forEach(function(error) {
-                        req.flash('error_messages', error.msg);
-                    });
-                    res.redirect(301, '/upload');
+                        // Create facebook post
+                        var userFbId = req.user.id;
+                        var newItemTitle = newSavedItem.attributes.title;
+                        var newItemId = newSavedItem.attributes.itemID;
+                        var newItemUrl = newSavedItem.attributes.imageLocation;
+                        var apiCall = '/' + userFbId + '/feed';
+                        facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {});
 
-                } else {
-                    // Image processing
-                    var fileBuffer = req.file.buffer
-                    var re = /(?:\.([^.]+))?$/;
-                    var fileExtension = re.exec(req.file.originalname)[1]
-                    console.log(fileExtension)
-                    
-                    lwip.open(fileBuffer, fileExtension, function(err, image) {
-                        if (err) return console.log(err);
-                        image.batch()
-                            .blur(10) 
-                            .lighten(0.2) 
-                            .writeFile('upload/lwip.jpg', function(err) {
-                                if (err) return console.log(err);
-                                res.send('done');
-                            });
-                    });
+                    }
+                });
 
-                    // Create item based on form
-                    var newItem = new db.Item({
-                        giverID: req.user.appUserId,
-                        timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
-                        timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
-                        title: req.body.title,
-                        description: req.body.description,
-                        imageLocation: "NEED THE LOCATION"
-                    });
+                res.redirect("/");
 
-                    // Save item to database
-                    newItem.save().then(function(newSavedItem) {
-
-                        if (req.body.postToFacebook) {
-
-                            // Create facebook post
-                            var userFbId = req.user.id;
-                            var newItemTitle = newSavedItem.attributes.title;
-                            var newItemId = newSavedItem.attributes.itemID;
-                            var newItemUrl = newSavedItem.attributes.imageLocation;
-                            var apiCall = '/' + userFbId + '/feed';
-                            facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {});
-
-                        }
-                        // console.log(newSavedItem);
-                        // var newItemId = newSavedItem.attributes.itemID;
-                        // var newItemUrl = newSavedItem.attributes.imageLocation;
-                        // var newItemDesc = newSavedItem.attributes.description;
-                        // var newItemTitle = newSavedItem.attributes.title;
-                        // var objString = createFbItem(newItemUrl, newItemTitle, newItemDesc, newItemId);
-                        // console.log('%7B%22' + objString + '%22%7D');
-                    });
-
-                    res.redirect("/");
-
-                }
             }
-        });
+        }
     });
 }

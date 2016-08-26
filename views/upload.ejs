@@ -146,7 +146,7 @@
         </form> -->
 
 
-        <form action="/upload" enctype="multipart/form-data" method="post" id="new-gift-form">
+        <form action="/upload" method="post" id="new-gift-form">
             <% if (locals.error_messages) {
                 error_messages.forEach(function(message) { %>
                 <div class="alert alert-warning"><strong>Error: </strong>
@@ -189,8 +189,15 @@
                                 <!-- rename it -->
                             </div>
                         </div>
-
-                        <div id="image"></div>
+                        <div class="row">
+                            <div class="image-crop text-center col-sm-offset-3 col-sm-6" style="display: none;">
+                                <h2>Crop your image</h2>
+                                <div id="image"></div>
+                                <div>
+                                    <button class="image-confirm btn btn-lg btn-success raised bold-link">Confirm</button>
+                                </div>
+                            </div>
+                        </div>
                         <!-- /input-group image-preview [TO HERE]-->
 
                     </div>
@@ -202,6 +209,7 @@
                             <option value="14">14</option>
                         </select>
                     </div>
+                    <input type="hidden" name="croppedImage" />
 
                     <button type="submit" class="btn btn-lg btn-success btn-block raised bold-link">Create Gift!</button>
         </form>
