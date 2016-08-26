@@ -113,6 +113,7 @@ module.exports = function(app) {
                                     itemID: itemId,
                                     userID: userId
                                 });
+                                newNote.save();
                             }
                         })
                     }
@@ -154,6 +155,7 @@ module.exports = function(app) {
                                     itemID: itemId,
                                     userID: userId
                                 });
+                                newNote.save();
                             }
                         })
                     }

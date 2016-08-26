@@ -314,7 +314,7 @@ var ProfilePageTotalTakenQuery = function(userId, cb) {
 // NotificationType 4: The item that I am currently snagging has been given out (to who?)
 // NotificationType 5: Receive a thanks on my wall
 
-var NotificationQuery = function(userId, cb) {
+var NotificationQuery = function(userId, limitNum, cb) {
   knex
     .from('notification as n')
     .leftJoin('readnotification as rn', function() {
@@ -327,7 +327,7 @@ var NotificationQuery = function(userId, cb) {
       this.on('n.itemID', '=', 'i.itemID')
     })
     .leftJoin('itemWanter as iw', function() {
-      this.on('iw.itemID', '=', 'n.itemID').andOn('iw.wanterID', '=', userId)
+      this.on('iw.itemID', '=', 'n.itemID').andOn('iw.wanterID', '=', userId).andOn('n.timeCreated','>','iw.timeWanted')
     })
     .leftJoin('thank as t', function() {
       this.on('n.thankID', '=', 't.thankID').andOn('t.receiverID', '=', userId).andOn('t.thankerID', '!=', userId)
@@ -335,9 +335,9 @@ var NotificationQuery = function(userId, cb) {
     .leftJoin('comment as c', function() {
       this.on('n.commentID', '=', 'c.commentID').andOn('c.commenterID', '!=', userId)
     })
-    .select(['u.name', 'n.notificationID', 'n.notificationType', 'n.itemID', 'n.userID', 'n.wantID', 'n.commentID', 'n.thankID', 'n.timeCreated', 'n.active', 'rn.readnotificationID', 'i.giverID', 'i.takerID', 'i.title', 'iw.wanterID', 't.receiverID', 'c.commenterID'])
+    .select(['u.name', 'n.notificationID', 'n.notificationType', 'n.itemID', 'n.userID', 'n.wantID', 'n.commentID', 'n.thankID', 'n.timeCreated', 'iw.timeWanted', 'n.active', 'rn.readnotificationID', 'i.giverID', 'i.takerID', 'i.title', 'iw.wanterID', 't.receiverID', 'c.commenterID'])
     .where('n.active', '=', 1) // Active Notification
-    .whereNull('rn.readnotificationID') // Not Read Yet
+    // .whereNull('rn.readnotificationID') // Not Read Yet
     .where('n.timeCreated', '<=', moment().format("YYYY-MM-DD HH:mm:ss")) // Notification has already been created
     .where(function() {
       this.where(function() {
@@ -345,7 +345,7 @@ var NotificationQuery = function(userId, cb) {
       }).orWhere(function() {
         this.where('n.notificationType', '=', 3).andWhere('i.giverID', '=', userId).whereNotNull('c.commenterID') // Notification Type 3
       }).orWhere(function() {
-        this.where('n.notificationType', '=', 3).whereNotNull('iw.wanterID').whereNull('i.takerID').whereNotNull('c.commenterID').where('iw.timeCreated' <= 'n.timeCreated') // Notification Type 3
+        this.where('n.notificationType', '=', 3).whereNotNull('iw.wanterID').whereNull('i.takerID').whereNotNull('c.commenterID') // Notification Type 3
       }).orWhere(function() {
         this.where('n.notificationType', '=', 4).whereNotNull('iw.wanterID') // Notification Type 4
       }).orWhere(function() {
@@ -353,6 +353,7 @@ var NotificationQuery = function(userId, cb) {
       })
     })
     .orderBy('n.timeCreated', 'DESC')
+    .limit(limitNum)
     .then(function(result){
       return cb(result);
     });

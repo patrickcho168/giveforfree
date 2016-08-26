@@ -16,7 +16,8 @@ toExport.getNotifications = function(req, res, next) {
         next();
     } else {
         var userId = parseInt(req.user.appUserId);
-        db.NotificationQuery(userId, function(data) {
+        var limitNum = 10;
+        db.NotificationQuery(userId, limitNum, function(data) {
         	console.log(req.path);
             console.log("Notifications:");
             console.log(data);

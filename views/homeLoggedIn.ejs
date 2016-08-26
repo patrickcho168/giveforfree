@@ -113,7 +113,7 @@
 			<ul>
 				<% for (var i=0; i<notification.length; i++) { %>
 					<% if (notification[i].notificationType === 1) { %>
-						<li><a href="/profile/<%= notification[i].userID %>"><%= notification[i].name %></a> wants your <%= notification[i].title %>.</li>
+						<li><a href="/profile/<%= notification[i].userID %>"><%= notification[i].name %></a> wants your <a href="/item/<%= notification[i].itemID %>"><%= notification[i].title %></a>.</li>
 					<% } else if (notification[i].notificationType === 2) { %>
 						<li><%= notification[i].title %>'s giveaway has expired. Pick your lucky winner now.</li>
 					<% } else if (notification[i].notificationType === 3) { %>
