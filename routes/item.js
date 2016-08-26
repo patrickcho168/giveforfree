@@ -31,6 +31,15 @@ module.exports = function(app) {
             timeCreated: moment().format("YYYY-MM-DD HH:mm:ss")
         });
         newComment.save().then(function(comment) {
+            var newNote = new db.Notification({
+                notificationType: 3,
+                userID: userId,
+                itemID: itemId,
+                commentID: comment.attributes.commentID,
+                timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+                active: 1
+            });
+            newNote.save();
             res.redirect('/item/' + itemId);
         })
     })
@@ -52,6 +61,13 @@ module.exports = function(app) {
                         commenterID: userId,
                         itemID: itemId
                     }).destroy();
+                    db.Notification.where({
+                        commentID: commentId
+                    }).fetch().then(function(oldNote) {
+                        if (oldNote != null) {
+                            oldNote.destroy();
+                        }
+                    })
                 }
             }
         })
@@ -90,6 +106,13 @@ module.exports = function(app) {
                                 }).then(function(noUse) {
                                     res.redirect("/item/" + itemId);
                                 });
+                                var newNote = new db.Notification({
+                                    timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+                                    active: 1,
+                                    notificationType: 4,
+                                    itemID: itemId,
+                                    userID: userId
+                                });
                             }
                         })
                     }
@@ -123,6 +146,13 @@ module.exports = function(app) {
                                     takerID: wanterId
                                 }).then(function(noUse) {
                                     res.redirect("/item/" + itemId);
+                                });
+                                var newNote = new db.Notification({
+                                    timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+                                    active: 1,
+                                    notificationType: 4,
+                                    itemID: itemId,
+                                    userID: userId
                                 });
                             }
                         })
@@ -199,7 +229,34 @@ module.exports = function(app) {
                         });
 
                         // Store in db
-                        newWant.save();
+                        newWant.save().then(function(want) {
+                            // Register a new notification for the want of the item
+                            db.Notification.where({
+                                itemID: itemId,
+                                notificationType: 1,
+                                userID: userId
+                            }).fetch().then(function(oldNote) {
+                                if (oldNote) {
+                                    oldNote.save({
+                                        wantID: want.attributes.wantID,
+                                        timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+                                        active: 1
+                                    }, {
+                                        method: "update"
+                                    });
+                                } else {
+                                    var newNote = new db.Notification({
+                                        wantID: want.attributes.wantID,
+                                        timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+                                        active: 1,
+                                        notificationType: 1,
+                                        itemID: itemId,
+                                        userID: userId
+                                    });
+                                    newNote.save();
+                                }
+                            })  
+                        });
                     }
                 }
             });
@@ -223,7 +280,20 @@ module.exports = function(app) {
                 oldWant.where({
                     itemID: itemId,
                     wanterID: userId
-                }).destroy();
+                }).destroy().then(function() {
+                    // Register a new notification for the want of the item
+                    db.Notification.where({
+                        itemID: itemId,
+                        notificationType: 1,
+                        userID: userId
+                    }).fetch().then(function(oldNote) {
+                        if (oldNote) {
+                            oldNote.save({
+                                active: 0
+                            });
+                        }
+                    })  
+                });
             }
         });
 

@@ -1,6 +1,7 @@
 "use strict"
 
 var express = require("express");
+var passport = require("passport");
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var redis = require("redis");
@@ -8,6 +9,7 @@ var client = redis.createClient();
 var flash = require("connect-flash");
 var expressValidator = require("express-validator");
 var compression = require("compression");
+var notification = require('./routes/notification');
 var fbLogin = require('./routes/facebookLogin');
 var upload = require('./routes/upload');
 var profile = require('./routes/profile');
@@ -72,12 +74,18 @@ app.use(function(req, res, next){
     next();
 });
 
-// Define routes.
-fbLogin(app);
+// Initialize Passport and restore authentication state, if any, from the
+// session
+app.use(passport.initialize());
+app.use(passport.session());
+// Define routes
+app.use(fbLogin.onlyNotLogout(fbLogin.facebookCache));
+app.use(fbLogin.onlyNotLogout(notification.getNotifications))
+fbLogin.route(app);
 upload(app);
 profile(app);
 freeItem(app);
 privacy(app);
 handleErrors(app);
 
-app.listen(80);
+app.listen(config.portNum);

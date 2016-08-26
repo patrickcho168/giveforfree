@@ -1,4 +1,5 @@
 var config = require('../config');
+var moment = require("moment");
 
 // DATABASE
 var knex = require('knex')({
@@ -70,6 +71,7 @@ var Want = bookshelf.Model.extend({
 
 var Comment = bookshelf.Model.extend({
   tableName: 'comment',
+  idAttribute: 'commentID',
   commentedBy: function() {
     return this.belongsTo(User, 'commenterID');
   },
@@ -80,6 +82,7 @@ var Comment = bookshelf.Model.extend({
 
 var Thank = bookshelf.Model.extend({
   tableName: 'thank',
+  idAttribute: 'thankID',
   thankedBy: function() {
     return this.belongsTo(User, 'thankerID');
   },
@@ -88,6 +91,26 @@ var Thank = bookshelf.Model.extend({
   },
   about: function() {
     return this.belongsTo(Item, 'itemID');
+  }
+});
+
+var Notification = bookshelf.Model.extend({
+  tableName: 'notification',
+  idAttribute: 'notificationID',
+  regardingItem: function() {
+    return this.belongsTo(Item, 'itemID');
+  },
+  initiatedBy: function() {
+    return this.belongsTo(User, 'userID');
+  },
+  regardingWant: function() {
+    return this.belongsTo(Want, 'wantID');
+  },
+  regardingComment: function() {
+    return this.belongsTo(Comment, 'commentID');
+  },
+  regardingThanks: function() {
+    return this.belongsTo(Thank, 'thankID');
   }
 });
 
@@ -284,12 +307,64 @@ var ProfilePageTotalTakenQuery = function(userId, cb) {
   });
 }
 
+// NotificationType 1: Someone snag an item that I am currently giving but haven't given out
+// NotificationType 2: My item has just expired and I haven't given out the item
+// NotificationType 3: Someone commented on an item I am giving out OR have given out
+// NotificationType 3: Someone commented on an item that I am currently snagging and hasn't been given out
+// NotificationType 4: The item that I am currently snagging has been given out (to who?)
+// NotificationType 5: Receive a thanks on my wall
+
+var NotificationQuery = function(userId, cb) {
+  knex
+    .from('notification as n')
+    .leftJoin('readnotification as rn', function() {
+      this.on('n.notificationID', '=', 'rn.notificationID').andOn('rn.userID', '=', userId)
+    })
+    .leftJoin('user as u', function() {
+      this.on('u.userID', '=', 'n.userID')
+    })
+    .leftJoin('item as i', function() {
+      this.on('n.itemID', '=', 'i.itemID')
+    })
+    .leftJoin('itemWanter as iw', function() {
+      this.on('iw.itemID', '=', 'n.itemID').andOn('iw.wanterID', '=', userId)
+    })
+    .leftJoin('thank as t', function() {
+      this.on('n.thankID', '=', 't.thankID').andOn('t.receiverID', '=', userId).andOn('t.thankerID', '!=', userId)
+    })
+    .leftJoin('comment as c', function() {
+      this.on('n.commentID', '=', 'c.commentID').andOn('c.commenterID', '!=', userId)
+    })
+    .select(['u.name', 'n.notificationID', 'n.notificationType', 'n.itemID', 'n.userID', 'n.wantID', 'n.commentID', 'n.thankID', 'n.timeCreated', 'n.active', 'rn.readnotificationID', 'i.giverID', 'i.takerID', 'i.title', 'iw.wanterID', 't.receiverID', 'c.commenterID'])
+    .where('n.active', '=', 1) // Active Notification
+    .whereNull('rn.readnotificationID') // Not Read Yet
+    .where('n.timeCreated', '<=', moment().format("YYYY-MM-DD HH:mm:ss")) // Notification has already been created
+    .where(function() {
+      this.where(function() {
+        this.where('n.notificationType', 'in', [1,2]).andWhere('i.giverID', '=', userId).whereNull('i.takerID') // Notification Type 1/2
+      }).orWhere(function() {
+        this.where('n.notificationType', '=', 3).andWhere('i.giverID', '=', userId).whereNotNull('c.commenterID') // Notification Type 3
+      }).orWhere(function() {
+        this.where('n.notificationType', '=', 3).whereNotNull('iw.wanterID').whereNull('i.takerID').whereNotNull('c.commenterID').where('iw.timeCreated' <= 'n.timeCreated') // Notification Type 3
+      }).orWhere(function() {
+        this.where('n.notificationType', '=', 4).whereNotNull('iw.wanterID') // Notification Type 4
+      }).orWhere(function() {
+        this.where('n.notificationType', '=', 5).whereNotNull('t.receiverID') // Notification Type 5
+      })
+    })
+    .orderBy('n.timeCreated', 'DESC')
+    .then(function(result){
+      return cb(result);
+    });
+}
+
 var db = {}
 db.Item = Item;
 db.User = User;
 db.Want = Want;
 db.Comment = Comment;
 db.Thank = Thank;
+db.Notification = Notification;
 db.HomePageItemQuery = HomePageItemQuery;
 db.HomePageItemQueryBeforeId = HomePageItemQueryBeforeId;
 db.ProfilePageGiveQuery = ProfilePageGiveQuery;
@@ -300,5 +375,6 @@ db.ItemPageQuery = ItemPageQuery;
 db.ProfilePageTotalTakenQuery = ProfilePageTotalTakenQuery;
 db.ProfilePageTotalGivenQuery = ProfilePageTotalGivenQuery;
 db.ItemPageManualQuery = ItemPageManualQuery;
+db.NotificationQuery = NotificationQuery;
 
 module.exports = db;
