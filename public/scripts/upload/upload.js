@@ -1,101 +1,6 @@
 $(function() {
-    $('#date').bootstrapMaterialDatePicker({
-        weekStart: 0,
-        time: false
-    });
+    var REGEX_ALPHA_NUMERIC = '([^\w\s])';
 
-    $('textarea').autosize();
-
-    $('.list-group li').click(function(e) {
-        e.preventDefault()
-
-        $that = $(this);
-
-        $that.parent().find('li').removeClass('active');
-        $that.addClass('active');
-    });
-});
-
-function previewFile() {
-    var cropbox = document.querySelector('#image');
-    var file = document.querySelector('input[type=file]').files[0];
-    var reader = new FileReader();
-
-    // $uploadCrop = $('#image').croppie({
-    //   viewport: {
-    //     width: 100,
-    //     height: 100,
-    //     type: 'circle'
-    //   },
-    //   boundary: {
-    //     width: 300,
-    //     height: 300
-    //   },
-    //   enableExif: true
-    // });
-
-    reader.addEventListener("load", function() {
-        // Add something to the input text field
-        $(".image-preview-filename").val("pic.img");
-
-        var $uploadCrop;
-        $uploadCrop = $('#image').croppie({
-            viewport: {
-                width: 200,
-                height: 200,
-            },
-            boundary: {
-                width: 300,
-                height: 300
-            },
-            enableExif: true
-        });
-
-        $uploadCrop.croppie('bind', {
-            url: reader.result
-        }).then(function() {
-            console.log('jQuery bind complete');
-        });
-
-    }, false);
-
-    if (file) {
-        reader.readAsDataURL(file);
-    }
-
-}
-
-// $("myDropdown").onblur(function() {
-//     document.getElementById('myDropdown').style.display = 'none';
-// });
-
-function toggle() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
-
-function filterFunction() {
-    var input, filter, ul, li, a, i;
-    input = document.getElementById("category");
-    filter = input.value.toUpperCase();
-    div = document.getElementById("myDropdown");
-    a = div.getElementsByTagName("a");
-    for (i = 0; i < a.length; i++) {
-        if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-            a[i].style.display = "";
-        } else {
-            a[i].style.display = "none";
-        }
-    }
-}
-
-function changeValue(value) {
-    var input, filter, ul, li, a, i;
-    input = document.getElementById("category");
-    input.value = value;
-}
-
-function checkValue() {
-    var input, filter, ul, li, a, i;
     var categories = [
         "clothes",
         "accessories",
@@ -124,11 +29,86 @@ function checkValue() {
         "other"
     ];
 
-    input = document.getElementById("category");
 
-    var found = $.inArray(input.value, categories);
+    $('#date').bootstrapMaterialDatePicker({
+        weekStart: 0,
+        time: false
+    });
 
-    if (found == -1) {
-        input.value = "other";
+    $('textarea').autosize();
+
+    $('#input-tags').selectize({
+        delimiter: ',',
+        persist: false,
+        create: function(input) {
+            return {
+                value: input,
+                text: input
+            }
+        }
+    });
+
+    $('#select-mode').selectize({
+        create: true,
+        sortField: 'text'
+    });
+
+    $('.description-field').popover({
+        container: 'body',
+        content: 'E.g. Size and measurements, old/new, used/unused, etc.',
+        placement: 'bottom'
+    });
+
+    $("[name='share-checkbox']").bootstrapSwitch();
+
+});
+
+function triggerUpload() {
+    $('#upload-trigger').trigger('click');
+}
+
+function previewFile() {
+    var node = document.getElementById('image');
+    while (node.hasChildNodes()) {
+        node.removeChild(node.lastChild);
     }
+    var cropbox = document.querySelector('#image');
+    var file = document.querySelector('input[type=file]').files[0];
+    var reader = new FileReader();
+
+    $('#image').show();
+
+    reader.addEventListener("load", function() {
+        // Add something to the input text field
+        $(".image-preview-filename").val("pic.img");
+
+        var $uploadCrop;
+
+        $('#image-holder').hide();
+
+
+        $uploadCrop = $('#image').croppie({
+            viewport: {
+                width: 200,
+                height: 200,
+            },
+            boundary: {
+                width: 300,
+                height: 300
+            },
+            enableExif: true
+        });
+
+        $uploadCrop.croppie('bind', {
+            url: reader.result
+        }).then(function() {
+            console.log('jQuery bind complete');
+        });
+
+    }, false);
+
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+
 }
