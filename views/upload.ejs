@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description "content="">
+    <meta name="description " content="">
     <meta name="author" content="">
 
     <title>Give For Free - Meeting the needs of others</title>
@@ -22,36 +22,37 @@
     <script src="../scripts/upload/upload.js"></script>
     <script src="../assets/autosize/js/autosize.js"></script>
 
-    <!-- Cropper -->
-    <script src="../scripts/upload/croppie.js"></script>
-
     <!-- Bootstrap CSS (Override) -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- Pure CSS (Override) -->
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="    https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <!-- Font Awesome (Override) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <!-- Cropper (Override) -->
+    <script src="../scripts/upload/croppie.js"></script>
+    <link rel="stylesheet" href="../styles/upload/croppie.css">
 
     <!-- Material Date Picker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
     <script src="../assets/materialDatePicker/js/bootstrap-material-datetimepicker.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.min.css">
     <link rel="stylesheet" href="../assets/materialDatePicker/css/bootstrap-material-datetimepicker.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
 
     <!-- CSS Styles -->
     <link rel="stylesheet" href="../styles/common/common.css">
     <link rel="stylesheet" href="../styles/upload/upload.css">
-    <link rel="stylesheet" href="../styles/upload/croppie.css">
 
     <!-- Animations -->
     <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
 
     <!-- Font Support -->
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
     <!-- Google Analytics -->
     <script src="/scripts/common/analytics.js"></script>
@@ -66,12 +67,24 @@
 
             <!-- Left Header Icon -->
             <div class="navbar-header">
+
+                <!-- Collapsed Nav -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+
+                <!-- Title -->
+                <text class="navbar-title">
+                    <h5>
+                        <i class="fa fa-gift" aria-hidden="true"> </i>
+                        Create a Gift
+                    </h5>
+                </text>
+
+                <!-- Logo -->
                 <a class="navbar-brand" href="/">
                     <img src="../images/common/logo-long.png" width="108px" height="36px" style="margin-top: -10px;" />
                 </a>
@@ -82,9 +95,21 @@
 
                 <!-- User Actions Menu -->
                 <ul class="nav navbar-nav navbar-right">
-                    <li id="nav-feed"><a href="/">Feed</a></li>
-                    <li id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
-                    <li id="nav-logout"><a href="/logout">Logout</a></li>
+                    <li id="nav-feed">
+                        <a href="/">
+                            <i class="fa fa-rss" aria-hidden="true"></i> Feed
+                        </a>
+                    </li>
+                    <li id="nav-profile">
+                        <a href="/profile/<%= id %>">
+                            <i class="fa fa-user" aria-hidden="true"></i> Profile
+                        </a>
+                    </li>
+                    <li id="nav-logout">
+                        <a href="/logout">
+                            <i class="fa fa-lock" aria-hidden="true"></i> Logout
+                        </a>
+                    </li>
                 </ul>
 
             </div>
@@ -93,8 +118,6 @@
     </nav>
 
     <div class="container main-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <!-- <h1>Create A Gift</h1>
-        <br/> -->
 
         <form action="/upload" enctype="multipart/form-data" method="post" id="new-gift-form">
             <% if (locals.error_messages) {
@@ -106,37 +129,75 @@
             } %>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
-                        <!-- <input class="pure-input-1-2 input-txt" type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" /> -->
+                        <div class="panel panel-default">
+                            <div class="panel-body" style="padding: 5px">
+                                <div class="input-group image-preview">
+                                    <input class="form-control image-preview-filename" type="text" name="input-file-preview" required>
+                                    <!-- don't give a name === doesn't send on POST/GET -->
+                                    <span class="input-group-btn">
+                                      <!-- image-preview-clear button -->
+                                      <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                                          <span class="glyphicon glyphicon-remove"></span>
+                                    <span class="image-preview-input-title">Clear</span>
 
-                        <div class="input-group image-preview">
-                            <input class="form-control image-preview-filename" type="text" name="input-file-preview" required>
-                            <!-- don't give a name === doesn't send on POST/GET -->
-                            <span class="input-group-btn">
-                                <!-- image-preview-clear button -->
-                                <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                            <span class="image-preview-input-title">Clear</span>
+                                    </button>
+                                    <div class="btn btn-default image-preview-input">
+                                        <span class="glyphicon glyphicon-folder-open"></span>
+                                        <span>Browse</span>
+                                        <input type="file" onchange="previewFile()" accept="image/png, image/jpeg, image/gif" name="input-file-cropped" />
+                                        <!-- rename it -->
+                                    </div>
+                                </div>
 
-                            </button>
-                            <div class="btn btn-default image-preview-input">
-                                <span class="glyphicon glyphicon-folder-open"></span>
-                                <span>Browse</span>
-                                <input type="file" onchange="previewFile()" accept="image/png, image/jpeg, image/gif" name="input-file-cropped" />
-                                <!-- rename it -->
+                                <div id="image"></div>
                             </div>
                         </div>
 
-                        <div id="image"></div>
+
 
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <fieldset class="pure-group has-warning">
-                            <!-- <label>Title</label> -->
-                            <input type="text" class="pure-input-1-2 input-txt" name="title" placeholder="Title" maxlength="50" required>
-                            <textarea class="pure-input-1-2 input-txt" type="text" name="description" placeholder="Description" maxlength="200" required></textarea>
-                            <input type="text" class="pure-input-1-2 input-txt" id="date" name="date" placeholder="Expires on" maxlength="50" required>
-                            <input onfocus="document.getElementById('myDropdown').style.display='block';" onblur="checkValue()" class="btn-block pure-input-1-2 input-txt" id="category" name="category" onkeyup="filterFunction()" placeholder="Category" required>
-                            <div id="myDropdown" class="dropdown-content">
+
+                        <div class="panel panel-default">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item">
+                                    <h4 class="list-group-item-heading"><b>What are you giving?</b></h4>
+                                    <p class="list-group-item-text">
+                                        <input type="text" class="input-txt" name="title" placeholder="Item name" maxlength="50" required>
+                                    </p>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <h4 class="list-group-item-heading"><b>Describe the item you are giving!</b></h4>
+                                    <p class="list-group-item-text">
+                                        <input type="text" class="input-txt" name="description" placeholder="Item description" required>
+                                    </p>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <h4 class="list-group-item-heading"><b>Which category does your item belong to?</b></h4>
+                                    <p class="list-group-item-text">
+                                        <input class="input-txt" id="category" name="category" onkeyup="filterFunction()" placeholder="Item category" required>
+                                    </p>
+                                </a>
+
+                                <a href="#" class="list-group-item">
+                                    <h4 class="list-group-item-heading"><b>Which category does your item belong to?</b></h4>
+                                    <p class="list-group-item-text">
+                                        <input type="checkbox" name="meet" id="meet" />
+                                        <label for="meet">Meet-up</label>
+
+                                        <input type="checkbox" name="free" id="free" />
+                                        <label for="free">Free Postage</label>
+
+                                        <input type="checkbox" name="paid" id="paid" />
+                                        <label for="paid">Paid Postage</label>
+
+                                    </p>
+                                </a>
+
+
+                            </div>
+
+                            <!-- <div id="myDropdown" class="dropdown-content">
                                 <a onclick="changeValue('clothes')">clothes</a>
                                 <a onclick="changeValue('accessories')">accessories</a>
                                 <a onclick="changeValue('furniture & home')">furniture & home</a>
@@ -162,12 +223,52 @@
                                 <a onclick="changeValue('notes')">notes</a>
                                 <a onclick="changeValue('pets')">pets</a>
                                 <a onclick="changeValue('other')">other</a>
-                            </div>
+                            </div> -->
+                            <!-- <div class="panel-body" style="padding: 0 0; margin: 0 0;"> -->
+
+
+
+                            <!-- <fieldset class="pure-group has-warning"> -->
+                            <!-- <label>Title</label> -->
+                            <!-- <input type="text" class="input-txt" name="title" placeholder="Title" maxlength="50" required>
+                                    <textarea class="pure-input-1-2 input-txt" type="text" name="description" placeholder="Description" maxlength="200" required></textarea>
+                                    <input type="text" class="input-txt" id="date" name="date" placeholder="Expires on" maxlength="50" required>
+                                    <input onfocus="document.getElementById('myDropdown').style.display='block';" onblur="checkValue()" class="btn-block input-txt" id="category" name="category" onkeyup="filterFunction()" placeholder="Category" required>
+                                    <div id="myDropdown" class="dropdown-content">
+                                        <a onclick="changeValue('clothes')">clothes</a>
+                                        <a onclick="changeValue('accessories')">accessories</a>
+                                        <a onclick="changeValue('furniture & home')">furniture & home</a>
+                                        <a onclick="changeValue('parenting')">parenting</a>
+                                        <a onclick="changeValue('health')">health</a>
+                                        <a onclick="changeValue('beauty')">beauty</a>
+                                        <a onclick="changeValue('kitchen appliances')">kitchen appliances</a>
+                                        <a onclick="changeValue('gardening')">gardening</a>
+                                        <a onclick="changeValue('property')">property</a>
+                                        <a onclick="changeValue('design & craft')">design & craft</a>
+                                        <a onclick="changeValue('electronics')">electronics</a>
+                                        <a onclick="changeValue('sports')">sports</a>
+                                        <a onclick="changeValue('photography')">photography</a>
+                                        <a onclick="changeValue('antiques')">antiques</a>
+                                        <a onclick="changeValue('toys')">toys</a>
+                                        <a onclick="changeValue('games')">games</a>
+                                        <a onclick="changeValue('music')">music</a>
+                                        <a onclick="changeValue('tickets & vouchers')">tickets & vouchers</a>
+                                        <a onclick="changeValue('auto accessories')">auto accessories</a>
+                                        <a onclick="changeValue('books')">books</a>
+                                        <a onclick="changeValue('stationeries')">stationeries</a>
+                                        <a onclick="changeValue('textbooks')">textbooks</a>
+                                        <a onclick="changeValue('notes')">notes</a>
+                                        <a onclick="changeValue('pets')">pets</a>
+                                        <a onclick="changeValue('other')">other</a>
+                                    </div> -->
                             <!-- <input class="form-control image-preview-filename input-txt" type="text" name="input-file-preview" required> -->
 
                             <!-- <select class="pure-input-1-2 input-txt" type="text" id="category" name="category" placeholder="Category" required> -->
 
-                        </fieldset>
+                            <!-- </fieldset> -->
+
+                            <!-- </div> -->
+                        </div>
                         <br>
                         <br>
                         <div class="options">
