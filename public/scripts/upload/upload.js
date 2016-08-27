@@ -29,11 +29,13 @@ $(function() {
         "other"
     ];
 
-
     $('#date').bootstrapMaterialDatePicker({
         weekStart: 0,
         time: false
     });
+
+    $('#date').bootstrapMaterialDatePicker('setMinDate', moment());
+
 
     $('textarea').autosize();
 
@@ -60,7 +62,6 @@ $(function() {
     });
 
     $("[name='share-checkbox']").bootstrapSwitch();
-
 });
 
 function triggerUpload() {

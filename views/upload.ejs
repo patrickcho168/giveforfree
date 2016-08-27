@@ -53,6 +53,9 @@
     <link rel="stylesheet" href="../styles/common/common.css">
     <link rel="stylesheet" href="../styles/upload/upload.css">
 
+    <!-- Bootstrap Notifications -->
+    <link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
+
     <!-- Selectize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/js/standalone/selectize.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/css/selectize.default.min.css">
@@ -89,10 +92,10 @@
 
                 <!-- Title -->
                 <text class="navbar-title">
-                    <h5>
-                        <i class="fa fa-gift" aria-hidden="true"> </i>
-                        Create a Gift
-                    </h5>
+                    <h4 style="margin-top: 5px;"><b>
+                        <!-- <i class="fa fa-gift" aria-hidden="true"> </i> -->
+                        <!-- Create a Gift -->
+                    </b></h4>
                 </text>
 
                 <!-- Logo -->
@@ -106,6 +109,11 @@
 
                 <!-- User Actions Menu -->
                 <ul class="nav navbar-nav navbar-right">
+                    <li id="nav-create">
+                        <a href="/upload">
+                            <i class="fa fa-gift" aria-hidden="true"></i> Give
+                        </a>
+                    </li>
                     <li id="nav-feed">
                         <a href="/">
                             <i class="fa fa-rss" aria-hidden="true"></i> Feed
@@ -116,12 +124,18 @@
                             <i class="fa fa-user" aria-hidden="true"></i> Profile
                         </a>
                     </li>
+                    <li class="dropdown dropdown-notifications">
+                        <a href="#notifications-panel" class="dropdown-toggle">
+                            <i data-count="2" class="fa fa-bell" aria-hidden="true"></i> Notifications
+                        </a>
+                    </li>
                     <li id="nav-logout">
                         <a href="/logout">
                             <i class="fa fa-lock" aria-hidden="true"></i> Logout
                         </a>
                     </li>
                 </ul>
+
 
             </div>
 
@@ -130,7 +144,7 @@
 
     <div class="container main-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-        <form action="/upload" enctype="multipart/form-data" method="post" id="new-gift-form">
+        <form action="/upload" enctype="multipart/form-data" method="post" id="new-gift-form" data-toggle="validator">
             <% if (locals.error_messages) {
                 error_messages.forEach(function(message) { %>
                 <div class="alert alert-warning"><strong>Error: </strong>

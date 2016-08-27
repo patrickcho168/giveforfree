@@ -12,6 +12,7 @@ var db = require('../models/db');
 var ensureLogin = require('connect-ensure-login');
 var querystring = require('querystring');
 var facebook = require('../controllers/facebook');
+var moment = require('moment');
 
 aws.config.update({
     secretAccessKey: config.awsSecretAccessKey,
@@ -74,7 +75,8 @@ module.exports = function(app) {
         res.render("upload", {
             myProfile: mine,
             user: req.user.attributes,
-            id: req.user.appUserId
+            id: req.user.appUserId,
+            moment: moment
         });
     });
 
@@ -150,15 +152,16 @@ module.exports = function(app) {
                     var re = /(?:\.([^.]+))?$/;
                     var fileExtension = re.exec(req.file.originalname)[1]
                     console.log(fileExtension)
-                    
+
                     lwip.open(fileBuffer, fileExtension, function(err, image) {
                         if (err) return console.log(err);
                         image.batch()
-                            .blur(10) 
-                            .lighten(0.2) 
+                            .blur(10)
+                            .lighten(0.2)
                             .writeFile('upload/lwip.jpg', function(err) {
                                 if (err) return console.log(err);
                                 res.send('done');
+                                res.redirect("/upload");
                             });
                     });
 
@@ -173,6 +176,7 @@ module.exports = function(app) {
                     });
 
                     // Save item to database
+                    var newItemID = null;
                     newItem.save().then(function(newSavedItem) {
 
                         // if (req.body.postToFacebook) { // REMOVE THIS FIRST TO GET USERS TESTING
@@ -182,11 +186,12 @@ module.exports = function(app) {
                             var userFbId = req.user.id;
                             var newItemTitle = newSavedItem.attributes.title;
                             var newItemId = newSavedItem.attributes.itemID;
+                            newItemID = newItemId;
                             var newItemUrl = newSavedItem.attributes.imageLocation;
-                            var apiCall = '/' + userFbId + '/feed';
+                            var apiCall = '/' + userFbId + '/item/newItemId';
                             facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {});
-
                         }
+
                         // console.log(newSavedItem);
                         // var newItemId = newSavedItem.attributes.itemID;
                         // var newItemUrl = newSavedItem.attributes.imageLocation;
@@ -196,7 +201,11 @@ module.exports = function(app) {
                         // console.log('%7B%22' + objString + '%22%7D');
                     });
 
-                    res.redirect("/");
+                    if (newItemID == null) {
+                        res.redirect("/");
+                    } else {
+                        res.redirect("/item/" + newItem.attributes.itemID);
+                    }
 
                 }
             }
