@@ -17,6 +17,9 @@ var handleErrors = require('./routes/handleErrors')
 var facebook = require('./controllers/facebook');
 var config = require('./config');
 var db = require('./models/db');
+var moment = require('moment');
+moment().format();
+
 var app = express();
 
 app.use(express.static('public'));
