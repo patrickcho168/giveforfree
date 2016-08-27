@@ -2,7 +2,6 @@
 
 var express = require("express");
 var passport = require("passport");
-var bodyParser = require("body-parser");
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var redis = require("redis");
@@ -10,7 +9,11 @@ var client = redis.createClient();
 var flash = require("connect-flash");
 var expressValidator = require("express-validator");
 var compression = require("compression");
+<<<<<<< HEAD
 var notification = require('./routes/notification');
+=======
+var bodyParser = require('body-parser')
+>>>>>>> image-cropper
 var fbLogin = require('./routes/facebookLogin');
 var upload = require('./routes/upload');
 var profile = require('./routes/profile');

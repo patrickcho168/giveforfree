@@ -4,7 +4,6 @@ var crypto = require("crypto");
 var mime = require("mime");
 var moment = require("moment");
 var aws = require("aws-sdk");
-var bodyParser = require("body-parser");
 var config = require('../config');
 var db = require('../models/db');
 var ensureLogin = require('connect-ensure-login');
@@ -118,6 +117,78 @@ module.exports = function(app) {
                     }
                 });
 
+<<<<<<< HEAD
+                req.sanitizeBody('title');
+                req.sanitizeBody('description');
+                req.sanitizeBody('x');
+                req.sanitizeBody('y');
+                req.sanitizeBody('height');
+                req.sanitizeBody('width');
+                req.sanitizeBody('rotate');
+
+                var errors = req.validationErrors();
+
+
+                if (errors) {
+                    errors.forEach(function(error) {
+                        req.flash('error_messages', error.msg);
+                    });
+                    res.redirect(301, '/upload');
+
+                } else {
+                    // Image processing
+                    var fileBuffer = req.file.buffer
+                    var re = /(?:\.([^.]+))?$/;
+                    var fileExtension = re.exec(req.file.originalname)[1]
+                    console.log(fileExtension)
+                    
+                    lwip.open(fileBuffer, fileExtension, function(err, image) {
+                        if (err) return console.log(err);
+                        image.batch()
+                            .blur(10) 
+                            .lighten(0.2) 
+                            .writeFile('upload/lwip.jpg', function(err) {
+                                if (err) return console.log(err);
+                                res.send('done');
+                            });
+                    });
+
+                    // Create item based on form
+                    var newItem = new db.Item({
+                        giverID: req.user.appUserId,
+                        timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+                        timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
+                        title: req.body.title,
+                        description: req.body.description,
+                        imageLocation: "NEED THE LOCATION"
+                    });
+
+                    // Save item to database
+                    newItem.save().then(function(newSavedItem) {
+
+                        // if (req.body.postToFacebook) { // REMOVE THIS FIRST TO GET USERS TESTING
+                        if (false) {
+
+                            // Create facebook post
+                            var userFbId = req.user.id;
+                            var newItemTitle = newSavedItem.attributes.title;
+                            var newItemId = newSavedItem.attributes.itemID;
+                            var newItemUrl = newSavedItem.attributes.imageLocation;
+                            var apiCall = '/' + userFbId + '/feed';
+                            facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {});
+
+                        }
+                        // console.log(newSavedItem);
+                        // var newItemId = newSavedItem.attributes.itemID;
+                        // var newItemUrl = newSavedItem.attributes.imageLocation;
+                        // var newItemDesc = newSavedItem.attributes.description;
+                        // var newItemTitle = newSavedItem.attributes.title;
+                        // var objString = createFbItem(newItemUrl, newItemTitle, newItemDesc, newItemId);
+                        // console.log('%7B%22' + objString + '%22%7D');
+                    });
+
+                    res.redirect("/");
+=======
                 // Create item based on form
                 var newItem = new db.Item({
                     giverID: req.user.appUserId,
@@ -145,6 +216,7 @@ module.exports = function(app) {
                 });
 
                 res.redirect("/");
+>>>>>>> image-cropper
 
             }
         }

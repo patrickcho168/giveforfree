@@ -96,7 +96,81 @@
         <h1>Create A Gift</h1>
         <br/>
 
+<<<<<<< HEAD
+        <form action="/upload" enctype="multipart/form-data" method="post" id="new-gift-form">
+=======
+        <!-- <form action="/upload" enctype="multipart/form-data" method="post">
+            <% if (locals.error_messages) {
+                error_messages.forEach(function(message) { %>
+                <div class="alert alert-warning"><strong>Error: </strong>
+                    <%= message %>
+                </div>
+                <% });
+            } %>
+
+                    <div class="form-group has-warning">
+                        <label>Title</label>
+                        <input type="text" class="form-control" name="title" placeholder="Enter the name of your object" required>
+
+                    </div>
+                    <div class="form-group has-warning">
+                        <label>Description</label>
+                        <input class="form-control" type="text" name="description" placeholder="Enter some description of your object" required>
+
+                    </div>
+                    <div class="form-group has-warning">
+                        <label>Select an image to upload (less than 100kb):</label>
+                        <input id="input-image-1" name="input-image" type="file" class="file-loading" accept="image/*" required>
+
+                        <div id="kv-success-modal" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Yippee!</h4>
+                                    </div>
+                                    <div id="kv-success-box" class="modal-body">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            $("#input-image-1").fileinput({
+                                uploadUrl: "/upload",
+                                allowedFileExtensions: ["jpg", "png", "gif"],
+                                maxImageWidth: 200,
+                                maxFileCount: 1,
+                                resizeImage: true
+                            }).on('filepreupload', function() {
+                                $('#kv-success-box').html('');
+                            }).on('fileuploaded', function(event, data) {
+                                $('#kv-success-box').append(data.response.link);
+                                $('#kv-success-modal').modal('show');
+                            });
+                        </script>
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Days</label>
+                        <select class="form-control" name="no_of_days">
+                            <option value="7">7</option>
+                            <option value="14">14</option>
+                        </select>
+                    </div>
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="postToFacebook" value="1">
+                    Post to Facebook?
+                </label>
+            </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+        </form> -->
+
+
         <form action="/upload" method="post" id="new-gift-form">
+>>>>>>> image-cropper
             <% if (locals.error_messages) {
                 error_messages.forEach(function(message) { %>
                 <div class="alert alert-warning"><strong>Error: </strong>
@@ -125,16 +199,23 @@
                                 <!-- rename it -->
                             </div>
                         </div>
+<<<<<<< HEAD
+
+                        <div id="image"></div>
+                        
+=======
                         <div class="row">
-                            <div class="image-crop text-center col-sm-12" style="display: none;">
-                                <p><strong>Crop your image</strong></p>
+                            <div class="image-crop text-center col-sm-offset-3 col-sm-6" style="display: none;">
+                                <h2>Crop your image</h2>
                                 <div id="image"></div>
                                 <div>
                                     <button class="image-confirm btn btn-lg btn-success raised bold-link">Confirm</button>
                                 </div>
                             </div>
                         </div>
-                        
+                        <!-- /input-group image-preview [TO HERE]-->
+
+>>>>>>> image-cropper
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <fieldset class="pure-group has-warning">
@@ -205,8 +286,21 @@
                                 </li>
                             </ul>
 
+<<<<<<< HEAD
                         </div>
-                        <input type="hidden" name="croppedImage" />
+                        <div class="options col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1 col-xs-10 col-xs-offset-2">
+=======
+                    <div class="form-group">
+                        <label>Number of Days</label>
+                        <select class="form-control" name="no_of_days">
+                            <option value="7">7</option>
+                            <option value="14">14</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="croppedImage" />
+>>>>>>> image-cropper
+
+                        </div>
                         <br>
                         <br>
                         <button type="submit" class="btn btn-lg btn-success btn-block raised bold-link">Create Gift!</button>
