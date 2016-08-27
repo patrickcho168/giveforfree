@@ -1,5 +1,6 @@
 .croppie-container {
-	padding: 30px;
+	padding: 15px;
+	width: 100%;
 }
 .croppie-container .cr-image {
 	z-index: -1;
@@ -43,14 +44,14 @@
 	text-align: center;
 }
 .croppie-result {
-	position: relative; 
+	position: relative;
 	overflow: hidden;
 }
 .croppie-result img {
 	position: absolute;
 }
 .croppie-container .cr-image,
-.croppie-container .cr-overlay, 
+.croppie-container .cr-overlay,
 .croppie-container .cr-viewport {
   -webkit-transform: translateZ(0);
   -moz-transform: translateZ(0);

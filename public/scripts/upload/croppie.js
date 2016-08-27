@@ -760,7 +760,7 @@
     function _triggerUpdate() {
         var self = this,
             data = self.get(),
-            ev; 
+            ev;
 
         if (!_isVisible.call(self)) {
             return;
@@ -842,7 +842,7 @@
         else {
             self._currentZoom = initialZoom;
         }
-        
+
         transformReset.scale = self._currentZoom;
         cssReset[CSS_TRANSFORM] = transformReset.toString();
         css(img, cssReset);

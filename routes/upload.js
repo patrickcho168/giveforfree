@@ -10,6 +10,7 @@ var db = require('../models/db');
 var ensureLogin = require('connect-ensure-login');
 var querystring = require('querystring');
 var facebook = require('../controllers/facebook');
+var moment = require('moment');
 
 aws.config.update({
     secretAccessKey: config.awsSecretAccessKey,
@@ -37,7 +38,8 @@ module.exports = function(app) {
         res.render("upload", {
             myProfile: mine,
             user: req.user.attributes,
-            id: req.user.appUserId
+            id: req.user.appUserId,
+            moment: moment
         });
     });
 
@@ -100,7 +102,7 @@ module.exports = function(app) {
                 // Upload image
                 var buf = new Buffer(req.body.croppedImage,'base64')
                 var fileName = crypto.pseudoRandomBytes(16).toString('hex') + '.png'
-                
+
                 var data = {
                     Key:  fileName,
                     Body: buf,
@@ -109,42 +111,104 @@ module.exports = function(app) {
                 };
 
                 s3.upload(data, function(err, data) {
-                    if (err) { 
+                    if (err) {
                         console.log(err);
-                        console.log('Error uploading data: ', data); 
+                        console.log('Error uploading data: ', data);
                     } else {
                         console.log(data);
                         console.log('succesfully uploaded the image!');
                     }
                 });
 
-                // Create item based on form
-                var newItem = new db.Item({
-                    giverID: req.user.appUserId,
-                    timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
-                    timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
-                    title: req.body.title,
-                    description: req.body.description,
-                    imageLocation: fileName
-                });
+                req.sanitizeBody('title');
+                req.sanitizeBody('description');
+                req.sanitizeBody('x');
+                req.sanitizeBody('y');
+                req.sanitizeBody('height');
+                req.sanitizeBody('width');
+                req.sanitizeBody('rotate');
 
-                // Save item to database
-                newItem.save().then(function(newSavedItem) {
+                var errors = req.validationErrors();
 
-                    if (req.body.postToFacebook) {
 
-                        // Create facebook post
-                        var userFbId = req.user.id;
-                        var newItemTitle = newSavedItem.attributes.title;
-                        var newItemId = newSavedItem.attributes.itemID;
-                        var newItemUrl = newSavedItem.attributes.imageLocation;
-                        var apiCall = '/' + userFbId + '/feed';
-                        facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {});
+                if (errors) {
+                    errors.forEach(function(error) {
+                        req.flash('error_messages', error.msg);
+                    });
+                    res.redirect(301, '/upload');
 
+                } else {
+                    // Image processing
+                    var fileBuffer = req.file.buffer
+                    var re = /(?:\.([^.]+))?$/;
+                    var fileExtension = re.exec(req.file.originalname)[1]
+                    console.log(fileExtension)
+
+                    lwip.open(fileBuffer, fileExtension, function(err, image) {
+                        if (err) return console.log(err);
+                        image.batch()
+                            .blur(10)
+                            .lighten(0.2)
+                            .writeFile('upload/lwip.jpg', function(err) {
+                                if (err) return console.log(err);
+                                res.send('done');
+                                res.redirect("/upload");
+                            });
+                    });
+
+                    // Create item based on form
+                    var newItem = new db.Item({
+                        giverID: req.user.appUserId,
+                        timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+                        timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
+                        title: req.body.title,
+                        description: req.body.description,
+                        imageLocation: "NEED THE LOCATION"
+                    });
+
+                    // Save item to database
+                    var newItemID = null;
+                    newItem.save().then(function(newSavedItem) {
+
+                        // if (req.body.postToFacebook) { // REMOVE THIS FIRST TO GET USERS TESTING
+                        // if (false) {
+                        //
+                        //     // Create facebook post
+                        //     var userFbId = req.user.id;
+                        //     var newItemTitle = newSavedItem.attributes.title;
+                        //     var newItemId = newSavedItem.attributes.itemID;
+                        //     newItemID = newItemId;
+                        //     var newItemUrl = newSavedItem.attributes.imageLocation;
+                        //     var apiCall = '/' + userFbId + '/item/newItemId';
+                        //     facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {});
+                        // }
+
+                        if (req.body.postToFacebook) {
+
+                            // Create facebook post
+                            var userFbId = req.user.id;
+                            var newItemTitle = newSavedItem.attributes.title;
+                            var newItemId = newSavedItem.attributes.itemID;
+                            var newItemUrl = newSavedItem.attributes.imageLocation;
+                            var apiCall = '/' + userFbId + '/feed';
+                            facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {});
+
+                        }
+
+                        // console.log(newSavedItem);
+                        // var newItemId = newSavedItem.attributes.itemID;
+                        // var newItemUrl = newSavedItem.attributes.imageLocation;
+                        // var newItemDesc = newSavedItem.attributes.description;
+                        // var newItemTitle = newSavedItem.attributes.title;
+                        // var objString = createFbItem(newItemUrl, newItemTitle, newItemDesc, newItemId);
+                        // console.log('%7B%22' + objString + '%22%7D');
+                    });
+
+                    if (newItemID == null) {
+                        res.redirect("/");
+                    } else {
+                        res.redirect("/item/" + newItem.attributes.itemID);
                     }
-                });
-
-                res.redirect("/");
 
             }
         }

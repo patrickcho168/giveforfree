@@ -8,31 +8,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description "content="">
+    <meta name="description " content="">
     <meta name="author" content="">
 
     <title>Give For Free - Meeting the needs of others</title>
 
-    <!-- Bootstrap Support -->
+    <!-- JQuery Support -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <!-- Other Scripts -->
-    <script src="../scripts/common/common.js"></script>
-    <script src="../scripts/upload/upload.js"></script>
-    <script src="../assets/autosize/js/autosize.js"></script>
-
-    <!-- Cropper -->
-    <script src="../scripts/upload/croppie.js"></script>
-
-    <!-- Bootstrap CSS (Override) -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <!-- Pure CSS (Override) -->
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="    https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
     <!-- Material Date Picker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.js"></script>
@@ -42,16 +24,49 @@
     <link rel="stylesheet" href="../assets/materialDatePicker/css/bootstrap-material-datetimepicker.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+    <!-- Bootstrap Support -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Other Scripts -->
+    <script src="../scripts/common/common.js"></script>
+    <script src="../scripts/upload/upload.js"></script>
+    <script src="../assets/autosize/js/autosize.js"></script>
+
+    <!-- Bootstrap CSS (Override) -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Pure CSS (Override) -->
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+    <!-- Font Awesome (Override) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <!-- Cropper (Override) -->
+    <script src="../scripts/upload/croppie.js"></script>
+    <link rel="stylesheet" href="../styles/upload/croppie.css">
+
+    <!-- Selectize -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap2/bootstrap-switch.min.css">
+
     <!-- CSS Styles -->
     <link rel="stylesheet" href="../styles/common/common.css">
     <link rel="stylesheet" href="../styles/upload/upload.css">
-    <link rel="stylesheet" href="../styles/upload/croppie.css">
+
+    <!-- Bootstrap Notifications -->
+    <link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
+
+    <!-- Selectize -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/js/standalone/selectize.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/css/selectize.default.min.css">
+    <link rel="stylesheet" href="../styles/upload/selectize-mod.css">
 
     <!-- Animations -->
     <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
 
     <!-- Font Support -->
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
     <!-- Google Analytics -->
     <script src="/scripts/common/analytics.js"></script>
@@ -66,12 +81,24 @@
 
             <!-- Left Header Icon -->
             <div class="navbar-header">
+
+                <!-- Collapsed Nav -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+
+                <!-- Title -->
+                <text class="navbar-title">
+                    <h4 style="margin-top: 5px;"><b>
+                        <!-- <i class="fa fa-gift" aria-hidden="true"> </i> -->
+                        <!-- Create a Gift -->
+                    </b></h4>
+                </text>
+
+                <!-- Logo -->
                 <a class="navbar-brand" href="/">
                     <img src="../images/common/logo-long.png" width="108px" height="36px" style="margin-top: -10px;" />
                 </a>
@@ -82,21 +109,42 @@
 
                 <!-- User Actions Menu -->
                 <ul class="nav navbar-nav navbar-right">
-                    <li id="nav-feed"><a href="/">Feed</a></li>
-                    <li id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
-                    <li id="nav-logout"><a href="/logout">Logout</a></li>
+                    <li id="nav-create">
+                        <a href="/upload">
+                            <i class="fa fa-gift" aria-hidden="true"></i> Give
+                        </a>
+                    </li>
+                    <li id="nav-feed">
+                        <a href="/">
+                            <i class="fa fa-rss" aria-hidden="true"></i> Feed
+                        </a>
+                    </li>
+                    <li id="nav-profile">
+                        <a href="/profile/<%= id %>">
+                            <i class="fa fa-user" aria-hidden="true"></i> Profile
+                        </a>
+                    </li>
+                    <li class="dropdown dropdown-notifications">
+                        <a href="#notifications-panel" class="dropdown-toggle">
+                            <i data-count="2" class="fa fa-bell" aria-hidden="true"></i> Notifications
+                        </a>
+                    </li>
+                    <li id="nav-logout">
+                        <a href="/logout">
+                            <i class="fa fa-lock" aria-hidden="true"></i> Logout
+                        </a>
+                    </li>
                 </ul>
+
 
             </div>
 
         </div>
     </nav>
 
-    <div class="container main-container col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
-        <h1>Create A Gift</h1>
-        <br/>
+    <div class="container main-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-        <form action="/upload" method="post" id="new-gift-form">
+        <form action="/upload" enctype="multipart/form-data" method="post" id="new-gift-form" data-toggle="validator">
             <% if (locals.error_messages) {
                 error_messages.forEach(function(message) { %>
                 <div class="alert alert-warning"><strong>Error: </strong>
@@ -106,128 +154,142 @@
             } %>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
-                        <!-- <input class="pure-input-1-2 input-txt" type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" /> -->
+                        <div class="panel panel-default">
+                            <div class="panel-body" style="padding: 5px">
+                                <div class="input-group image-preview">
+                                    <!-- <input class="form-control image-preview-filename" type="text" name="input-file-preview" required> -->
+                                    <!-- don't give a name === doesn't send on POST/GET -->
+                                    <!-- <span class="input-group-btn"> -->
+                                    <!-- image-preview-clear button -->
+                                    <!-- <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                                          <span class="glyphicon glyphicon-remove"></span>
+                                    <span class="image-preview-input-title">Clear</span>
 
-                        <div class="input-group image-preview">
-                            <input class="form-control image-preview-filename" type="text" name="input-file-preview" required>
-                            <!-- don't give a name === doesn't send on POST/GET -->
-                            <span class="input-group-btn">
-                                <!-- image-preview-clear button -->
-                                <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                            <span class="image-preview-input-title">Clear</span>
-
-                            </button>
-                            <div class="btn btn-default image-preview-input">
-                                <span class="glyphicon glyphicon-folder-open"></span>
-                                <span>Browse</span>
-                                <input type="file" onchange="previewFile()" accept="image/png, image/jpeg, image/gif" name="input-file-cropped" />
-                                <!-- rename it -->
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="image-crop text-center col-sm-12" style="display: none;">
-                                <p><strong>Crop your image</strong></p>
-                                <div id="image"></div>
-                                <div>
-                                    <button class="image-confirm btn btn-lg btn-success raised bold-link">Confirm</button>
+                                    </button> -->
+                                    <a class="btn btn-default image-preview-input">
+                                        <span class="glyphicon glyphicon-picture"></span>
+                                        <span>Browse</span>
+                                        <input type="file" onchange="previewFile()" accept="image/png, image/jpeg, image/gif" name="input-file-cropped" style="height: 100%;" id="upload-trigger" />
+                                        <!-- rename it -->
+                                    </a>
+                                </div>
+                                <a id="image-holder" onclick="triggerUpload()">
+                                    <div align="center">
+                                        <!-- <a id="image-placeholder"> -->
+                                        <span class="glyphicon glyphicon-upload" style="font-size: 300px;"></span>
+                                        <h3> Click to upload an image </h3>
+                                        <p> Upload and crop an image of the item you're giving... </p>
+                                        <!-- </a> -->
+                                    </div>
+                                </a>
+                                <div id="image" style="display: none;">
                                 </div>
                             </div>
                         </div>
-                        
+
+
+
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <fieldset class="pure-group has-warning">
-                            <!-- <label>Title</label> -->
-                            <input type="text" class="pure-input-1-2 input-txt" name="title" placeholder="Title" maxlength="50" required>
-                            <textarea class="pure-input-1-2 input-txt" type="text" name="description" placeholder="Description" maxlength="200" required></textarea>
-                            <input type="text" class="pure-input-1-2 input-txt" id="date" name="date" placeholder="Expires on" maxlength="50" required>
-                            <input onfocus="document.getElementById('myDropdown').style.display='block';" onblur="checkValue()" class="btn-block pure-input-1-2 input-txt" id="category" name="category" onkeyup="filterFunction()" placeholder="Category" required>
-                            <div id="myDropdown" class="dropdown-content">
-                                <a onclick="changeValue('clothes')">clothes</a>
-                                <a onclick="changeValue('accessories')">accessories</a>
-                                <a onclick="changeValue('furniture & home')">furniture & home</a>
-                                <a onclick="changeValue('parenting')">parenting</a>
-                                <a onclick="changeValue('health')">health</a>
-                                <a onclick="changeValue('beauty')">beauty</a>
-                                <a onclick="changeValue('kitchen appliances')">kitchen appliances</a>
-                                <a onclick="changeValue('gardening')">gardening</a>
-                                <a onclick="changeValue('property')">property</a>
-                                <a onclick="changeValue('design & craft')">design & craft</a>
-                                <a onclick="changeValue('electronics')">electronics</a>
-                                <a onclick="changeValue('sports')">sports</a>
-                                <a onclick="changeValue('photography')">photography</a>
-                                <a onclick="changeValue('antiques')">antiques</a>
-                                <a onclick="changeValue('toys')">toys</a>
-                                <a onclick="changeValue('games')">games</a>
-                                <a onclick="changeValue('music')">music</a>
-                                <a onclick="changeValue('tickets & vouchers')">tickets & vouchers</a>
-                                <a onclick="changeValue('auto accessories')">auto accessories</a>
-                                <a onclick="changeValue('books')">books</a>
-                                <a onclick="changeValue('stationeries')">stationeries</a>
-                                <a onclick="changeValue('textbooks')">textbooks</a>
-                                <a onclick="changeValue('notes')">notes</a>
-                                <a onclick="changeValue('pets')">pets</a>
-                                <a onclick="changeValue('other')">other</a>
+
+                        <div class="panel panel-default">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item">
+                                    <h4 class="list-group-item-heading"><b>What are you giving?</b></h4>
+                                    <p class="list-group-item-text">
+                                        <input type="text" class="input-txt" name="title" placeholder="Item name" maxlength="50" autocomplete="off" required>
+                                    </p>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <h4 class="list-group-item-heading"><b>Describe the item you are giving!</b></h4>
+                                    <p class="list-group-item-text">
+                                        <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description" autocomplete="off" data-trigger="focus" id="description-field" required></textarea>
+                                    </p>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <h4 class="list-group-item-heading"><b>When do you want to end this giveaway?</b></h4>
+                                    <p class="list-group-item-text">
+                                        <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" required>
+                                    </p>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <h4 class="list-group-item-heading"><b>Which category does your item belong to?</b></h4>
+                                    <select id="input-tags" name="categories[]" multiple class="categories" style="width:70%" placeholder="Select item categories...">
+                                        <option value="">Select item categories...</option>
+                                        <option value="clothes">clothes</option>
+                                        <option value="accessories">accessories</option>
+                                        <option value="furniture & home">furniture & home</option>
+                                        <option value="parenting">parenting</option>
+                                        <option value="health">health</option>
+                                        <option value="beauty">beauty</option>
+                                        <option value="kitchen appliances">kitchen appliances</option>
+                                        <option value="gardening">gardening</option>
+                                        <option value="property">property</option>
+                                        <option value="design & craft">design & craft</option>
+                                        <option value="electronics">electronics</option>
+                                        <option value="sports">sports</option>
+                                        <option value="photography">photography</option>
+                                        <option value="antiques">antiques</option>
+                                        <option value="toys">toys</option>
+                                        <option value="games">games</option>
+                                        <option value="music">music</option>
+                                        <option value="tickets & vouchers">tickets & vouchers</option>
+                                        <option value="auto accessories">auto accessories</option>
+                                        <option value="books">books</option>
+                                        <option value="stationeries">stationeries</option>
+                                        <option value="textbooks">textbooks</option>
+                                        <option value="notes">notes</option>
+                                        <option value="pets">pets</option>
+                                        <option value="other">other</option>
+                                    </select>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <h4 class="list-group-item-heading"><b>How would you like the person receiving to collect the item?</b></h4>
+
+                                    <div class="checkbox checkbox-primary row">
+                                        <label class="large-label">
+                                            <input id="meet" type="checkbox" checked> Meet and collect
+                                        </label>
+                                        <label class="large-label">
+                                            <input id="free" type="checkbox" checked> Free postage service
+                                        </label>
+                                        <label class="large-label">
+                                            <input id="paid" type="checkbox" checked> Collector to pay for postage
+                                        </label>
+                                    </div>
+
+                                </a>
+                                <a href="#" class="list-group-item">
+
+                                    <div class="checkbox checkbox-primary row" align="center">
+                                        <h4>
+                                            Share on Facebook:
+                                            <input type="checkbox" name="share-checkbox" checked>
+                                        </h4>
+                                    </div>
+
+                                </a>
                             </div>
-                            <!-- <input class="form-control image-preview-filename input-txt" type="text" name="input-file-preview" required> -->
-
-                            <!-- <select class="pure-input-1-2 input-txt" type="text" id="category" name="category" placeholder="Category" required> -->
-
-                        </fieldset>
-                        <br>
-                        <br>
-                        <div class="options">
-                            <ul class="list-unstyled col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1 col-xs-10 col-xs-offset-2 options-list">
-                                <li>
-                                    <input type="checkbox" name="meet" id="meet" />
-                                    <label for="meet">Meet-up</label>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="free" id="free" />
-                                    <label for="free">Free Postage</label>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="paid" id="paid" />
-                                    <label for="paid">Paid Postage</label>
-                                </li>
-                            </ul>
-
-                            <ul class="list-unstyled col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1 col-xs-10 col-xs-offset-2 options-list">
-
-                                <li>
-                                    <input type="checkbox" name="other" id="other" />
-                                    <label for="other">Other</label>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="share" id="share" />
-                                    <label for="share">Share on Facebook!</label>
-                                </li>
-                            </ul>
-
                         </div>
-                        <input type="hidden" name="croppedImage" />
-                        <br>
-                        <br>
-                        <button type="submit" class="btn btn-lg btn-success btn-block raised bold-link">Create Gift!</button>
+                        <button type="submit" class="btn btn-lg btn-success btn-block bold-link">Create Gift!</button>
                     </div>
         </form>
     </div>
 
     <!-- Footer -->
     <footer>
-        <div class="container">
+        <div class="container footer-container">
             <div class="col-xs-10 col-xs-offset-1 text-center">
                 <hr class="xsall">
                 <ul class="col-xs-12 list-unstyled contact-list">
+                    <!-- <li>
+                        <small><span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 9223 4863</small>
+                    </li> -->
                     <li>
-                        <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 9223 4863
+                        <small><span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">giveforfreefeedback@gmail.com</a></small>
                     </li>
                     <li>
-                        <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">giveforfreefeedback@gmail.com</a>
-                    </li>
-                    <li>
-                        <span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span> : <a href="/privacy">Privacy Clause</a>
+                        <small><span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span> : <a href="/privacy">Privacy Clause</a></small>
                     </li>
                 </ul>
 
