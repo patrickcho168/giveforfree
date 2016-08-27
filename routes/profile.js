@@ -27,7 +27,15 @@ module.exports = function(app) {
             receiverID: profileId,
             timeCreated: moment().format("YYYY-MM-DD HH:mm:ss")
         });
-        newThank.save().then(function(comment) {
+        newThank.save().then(function(thank) {
+            var newNote = new db.Notification({
+                timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+                active: 1,
+                notificationType: 5,
+                userID: userId,
+                thankID: thank.attributes.thankID
+            });
+            newNote.save();
             res.redirect('/profile/' + profileId);
         })
     })
@@ -47,7 +55,16 @@ module.exports = function(app) {
                     itemID: itemId,
                     timeCreated: moment().format("YYYY-MM-DD HH:mm:ss")
                 });
-                newThank.save().then(function(comment) {
+                newThank.save().then(function(thank) {
+                    var newNote = new db.Notification({
+                        timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+                        active: 1,
+                        notificationType: 5,
+                        userID: userId,
+                        itemID: itemId,
+                        thankID: thank.attributes.thankID
+                    });
+                    newNote.save();
                     res.redirect('/item/' + itemId);
                 })
             } else {

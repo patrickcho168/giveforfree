@@ -43,73 +43,22 @@ passport.deserializeUser(function(obj, cb) {
     cb(null, obj);
 });
 
-module.exports = function(app) {
-    // Initialize Passport and restore authentication state, if any, from the
-    // session.
-    app.use(passport.initialize());
-    app.use(passport.session());
-
-    // CACHE THINGS HERE
-    var facebookCache = function(req, res, next) {
-        if (req.user && req.user.fbFriends && req.user.fbFriendsId && req.user.fbFriendsToPropertyMap) {
-            next();
-        } else {
-            if (req.user === undefined) {
-                next();
-            } else {
-                var accessToken = req.user.accessToken;
-                facebook.getFbData(accessToken, '/' + req.user.id + '/friends', '', function(data) {
-                    var jsonData = JSON.parse(data);
-                    var friendsData = jsonData.data;
-                    var friendsQuery = [];
-                    if (friendsData instanceof Array) {
-                        for (var i = 0; i < friendsData.length; i++) {
-                            friendsQuery.push(friendsData[i].id); // all Facebook IDs of friends
-                        }
-                    }
-                    var cacheFriends = []; // List of {userID, name, fbID}
-                    var cacheFriendsAppId = []; // List of userID
-                    var cacheFriendsToPropertiesMapping = {};
-                    db.User.where('fbID', 'in', friendsQuery).fetchAll().then(function(data2) {
-                        for (var i = 0; i < data2.models.length; i++) {
-                            cacheFriends.push(data2.models[i].attributes);
-                            cacheFriendsAppId.push(data2.models[i].attributes.userID);
-                            cacheFriendsToPropertiesMapping[data2.models[i].attributes.userID] = data2.models[i].attributes;
-                        }
-                        // CACHE
-                        req.user.fbFriends = cacheFriends;
-                        req.user.fbFriendsId = cacheFriendsAppId;
-                        req.user.fbFriendsToPropertyMap = cacheFriendsToPropertiesMapping;
-                        next();
-                    });
-                });
-            }
-        }
-    };
-
-    var onlyNotLogout = function(fn) {
-        return function(req, res, next) {
-            if (req.path != '/logout' && req.path != '/login' && req.path != '/login/facebook' && req.path != '/login/facebook/return' && req.path != "/privacy" && ensureLogin.ensureLoggedIn()) {
-                fn(req, res, next);
-            } else {
-                next();
-            }
-        }
-    };
-
-    app.use(onlyNotLogout(facebookCache));
+var toExport = {}
+toExport.route = function(app) {
 
     // HOME PAGE
     app.get('/', function(req, res) {
-        console.log(req.user);
         if (req.user === undefined) {
             res.render('homeLoggedIn', {
+                notification: [],
                 id: null,
                 loggedIn: false
             });
         } else {
             var userId = req.user.appUserId;
+            console.log(req.session.notification);
             res.render('homeLoggedIn', {
+                notification: req.session.notification,
                 id: userId,
                 loggedIn: true
             });
@@ -145,3 +94,53 @@ module.exports = function(app) {
         res.redirect('/login');
     })
 }
+    // CACHE THINGS HERE
+toExport.facebookCache = function(req, res, next) {
+    if (req.user && req.user.fbFriends && req.user.fbFriendsId && req.user.fbFriendsToPropertyMap) {
+        next();
+    } else {
+        if (req.user === undefined) {
+            next();
+        } else {
+            var accessToken = req.user.accessToken;
+            facebook.getFbData(accessToken, '/' + req.user.id + '/friends', '', function(data) {
+                var jsonData = JSON.parse(data);
+                var friendsData = jsonData.data;
+                var friendsQuery = [];
+                if (friendsData instanceof Array) {
+                    for (var i = 0; i < friendsData.length; i++) {
+                        friendsQuery.push(friendsData[i].id); // all Facebook IDs of friends
+                    }
+                }
+                var cacheFriends = []; // List of {userID, name, fbID}
+                var cacheFriendsAppId = []; // List of userID
+                var cacheFriendsToPropertiesMapping = {};
+                db.User.where('fbID', 'in', friendsQuery).fetchAll().then(function(data2) {
+                    for (var i = 0; i < data2.models.length; i++) {
+                        cacheFriends.push(data2.models[i].attributes);
+                        cacheFriendsAppId.push(data2.models[i].attributes.userID);
+                        cacheFriendsToPropertiesMapping[data2.models[i].attributes.userID] = data2.models[i].attributes;
+                    }
+                    // CACHE
+                    req.user.fbFriends = cacheFriends;
+                    req.user.fbFriendsId = cacheFriendsAppId;
+                    req.user.fbFriendsToPropertyMap = cacheFriendsToPropertiesMapping;
+                    next();
+                });
+            });
+        }
+    }
+};
+
+toExport.onlyNotLogout = function(fn) {
+    return function(req, res, next) {
+        if (req.path != '/logout' && req.path != '/login' && req.path != '/login/facebook' && req.path != '/login/facebook/return' && req.path != "/privacy" && ensureLogin.ensureLoggedIn() && req.path.substring(0, 4) != "/api" && req.path != "/favicon.ico") {
+            fn(req, res, next);
+        } else {
+            next();
+        }
+    }
+};
+
+module.exports = toExport;
+
