@@ -89,17 +89,17 @@ function previewFile() {
 
 
         $uploadCrop = $('#image').croppie({
-          viewport: {
-            width: 200,
-            height: 200,
-          },
-          boundary: {
-            width: 300,
-            height: 300
-          },
-          enforceBoundary: false,
-          enableExif: true,
-          showZoomer: false
+            viewport: {
+                width: 200,
+                height: 200,
+            },
+            boundary: {
+                width: 300,
+                height: 300
+            },
+            enforceBoundary: false,
+            enableExif: true,
+            showZoomer: false
         });
 
         // Add something to the input text field
@@ -107,26 +107,24 @@ function previewFile() {
         $("div.image-preview").remove();
         $(".image-crop").attr('style', '');
         $uploadCrop.croppie('bind', {
-          url: reader.result
-        }).then(function(){
-          console.log('jQuery bind complete');
+            url: reader.result
+        }).then(function() {
+            console.log('jQuery bind complete');
         });
 
-      }, false);
+    }, false);
 
-      $(".image-confirm").click(function() {
+    $(".image-confirm").click(function() {
         $uploadCrop.croppie('result', {
-          type: 'canvas',
-          format: 'png',
-          size: 'viewport'
-        }).then(function (resp) {
-          // Replace cropbox with image
-          $(".image-crop").html("<p><strong>Item Pic</strong></p><img src='"+ resp +"' height='300' width='300'/>");
-          $("input[name='croppedImage']").val(resp);
-          $("input[type=file]").remove();
+            type: 'canvas',
+            format: 'png',
+            size: 'viewport'
+        }).then(function(resp) {
+            // Replace cropbox with image
+            $(".image-crop").html("<p><strong>Item Pic</strong></p><img src='" + resp + "' height='300' width='300'/>");
+            $("input[name='croppedImage']").val(resp);
+            $("input[type=file]").remove();
         });
-      });
-      reader.readAsDataURL(file);
-    }
-  }
+    });
+    reader.readAsDataURL(file);
 }
