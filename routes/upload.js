@@ -28,6 +28,34 @@ function createFbPost(title, itemId, imgUrl) {
     return querystring.stringify(object);
 }
 
+function saveItem() {
+    // Create item based on form
+    var newItem = new db.Item({
+        giverID: req.user.appUserId,
+        timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+        timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
+        title: req.body.title,
+        description: req.body.description,
+        imageLocation: fileName
+    });
+
+    // Save item to database
+    newItem.save().then(function(newSavedItem) {
+
+        if (req.body.postToFacebook) {
+
+            // Create facebook post
+            var userFbId = req.user.id;
+            var newItemTitle = newSavedItem.attributes.title;
+            var newItemId = newSavedItem.attributes.itemID;
+            var newItemUrl = newSavedItem.attributes.imageLocation;
+            var apiCall = '/' + userFbId + '/feed';
+            facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {});
+
+        }
+    });
+}
+
 module.exports = function(app) {
     app.get('/upload', ensureLogin.ensureLoggedIn(), function(req, res, next) {
         var otherUserId = parseInt(req.params.id);
@@ -116,32 +144,7 @@ module.exports = function(app) {
                         console.log(data);
                         console.log('succesfully uploaded the image!');
 
-                        // Create item based on form
-                        var newItem = new db.Item({
-                            giverID: req.user.appUserId,
-                            timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
-                            timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
-                            title: req.body.title,
-                            description: req.body.description,
-                            imageLocation: fileName
-                        });
-
-                        console.log("newItem here!!")
-                        // Save item to database
-                        newItem.save().then(function(newSavedItem) {
-
-                            if (req.body.postToFacebook) {
-
-                                // Create facebook post
-                                var userFbId = req.user.id;
-                                var newItemTitle = newSavedItem.attributes.title;
-                                var newItemId = newSavedItem.attributes.itemID;
-                                var newItemUrl = newSavedItem.attributes.imageLocation;
-                                var apiCall = '/' + userFbId + '/feed';
-                                facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {});
-
-                            }
-                        });
+                        saveItem();
                     }
                 });
 

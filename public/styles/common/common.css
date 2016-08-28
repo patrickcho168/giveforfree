@@ -1,15 +1,21 @@
-/* Main */
+/* Main Style */
 
 html, body {
     width: 100%;
     height: 100%;
+    /*background-image: url("https://www.transparenttextures.com/patterns/assault.png");*/
     /*background-color: #E8F1F5;*/
+    background: #E8F1F5;
+    -webkit-overflow-scrolling: touch !important;
+    overflow: auto !important;
+    height: 100% !important;
 }
 body {
-    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 150%;
+    font-family: 'Roboto', sans-serif;
+    font-size: 100%;
 }
-h1 {
+
+/*h1 {
     font-size: 2.75em;
 }
 h2 {
@@ -26,9 +32,10 @@ h5 {
 }
 h6 {
     font-size: 1.50em;
-}
+}*/
+
 p {
-    font-size: 1.35em;
+    /*font-size: 1.35em;*/
     font-weight: lighter;
 }
 a:link {
@@ -43,6 +50,9 @@ a:hover {
 a:active {
     text-decoration: none;
 }
+
+/* Responsive Display */
+
 .wrap {
     word-wrap: break-word;
 }
@@ -197,29 +207,61 @@ img.clipped {
 .bs-callout-info h4 {
     color: #5bc0de;
 }
-// Remove Blue Glow
-.simplebox {
+
+/* Nav-bar */
+
+.navbar-title {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 8px;
+    text-align: center;
+    margin: 0 auto;
+    z-index: -1;
+}
+
+/* Remove Blue Glow */
+
+
+/*.simplebox {
     outline: none;
     border: none !important;
     -webkit-box-shadow: none !important;
     -moz-box-shadow: none !important;
     box-shadow: none !important;
+}*/
+
+textarea:hover, input:hover, textarea:active, input:active, textarea:focus, input:focus, button:focus, button:active, button:hover  {
+    outline: 0px !important;
+    /*-webkit-appearance: none;*/
 }
-textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
-    border-color: rgba(82, 168, 236, 0.8);
-    outline: 0;
-    outline: thin dotted \9;
-    /* IE6-9 */
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(82, 168, 236, .6);
-    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(82, 168, 236, .6);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(82, 168, 236, .6);
+
+.bootstrap-switch:hover, .bootstrap-switch:focus, .bootstrap-switch:active {
+    outline: 0px !important;
+    -webkit-appearance: none;
 }
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  outline: 0 none;
+}
+
 
 /* Footer */
-
-footer {
-    background-color: white;
-}
 .contact-list {
     text-align: center;
 }
