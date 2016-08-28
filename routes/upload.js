@@ -28,7 +28,7 @@ function createFbPost(title, itemId, imgUrl) {
     return querystring.stringify(object);
 }
 
-function saveItem() {
+function saveItem(req, fileName) {
     // Create item based on form
     var newItem = new db.Item({
         giverID: req.user.appUserId,
@@ -144,7 +144,7 @@ module.exports = function(app) {
                         console.log(data);
                         console.log('succesfully uploaded the image!');
 
-                        saveItem();
+                        saveItem(req, fileName);
                     }
                 });
 
