@@ -4,7 +4,6 @@ var crypto = require("crypto");
 var mime = require("mime");
 var moment = require("moment");
 var aws = require("aws-sdk");
-var bodyParser = require("body-parser");
 var config = require('../config');
 var db = require('../models/db');
 var ensureLogin = require('connect-ensure-login');
@@ -102,45 +101,47 @@ module.exports = function(app) {
                 var fileName = crypto.pseudoRandomBytes(16).toString('hex') + '.png'
                 
                 var data = {
-                    Key:  fileName,
+                    Key: fileName,
                     Body: buf,
                     ContentEncoding: 'base64',
                     ContentType: 'image/png'
                 };
 
-                s3.upload(data, function(err, data) {
+                s3.upload(data, function(err, data, next) {
                     if (err) { 
                         console.log(err);
                         console.log('Error uploading data: ', data); 
+                        next();
                     } else {
                         console.log(data);
                         console.log('succesfully uploaded the image!');
-                    }
-                });
 
-                // Create item based on form
-                var newItem = new db.Item({
-                    giverID: req.user.appUserId,
-                    timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
-                    timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
-                    title: req.body.title,
-                    description: req.body.description,
-                    imageLocation: fileName
-                });
+                        // Create item based on form
+                        var newItem = new db.Item({
+                            giverID: req.user.appUserId,
+                            timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+                            timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
+                            title: req.body.title,
+                            description: req.body.description,
+                            imageLocation: fileName
+                        });
 
-                // Save item to database
-                newItem.save().then(function(newSavedItem) {
+                        console.log("newItem here!!")
+                        // Save item to database
+                        newItem.save().then(function(newSavedItem) {
 
-                    if (req.body.postToFacebook) {
+                            if (req.body.postToFacebook) {
 
-                        // Create facebook post
-                        var userFbId = req.user.id;
-                        var newItemTitle = newSavedItem.attributes.title;
-                        var newItemId = newSavedItem.attributes.itemID;
-                        var newItemUrl = newSavedItem.attributes.imageLocation;
-                        var apiCall = '/' + userFbId + '/feed';
-                        facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {});
+                                // Create facebook post
+                                var userFbId = req.user.id;
+                                var newItemTitle = newSavedItem.attributes.title;
+                                var newItemId = newSavedItem.attributes.itemID;
+                                var newItemUrl = newSavedItem.attributes.imageLocation;
+                                var apiCall = '/' + userFbId + '/feed';
+                                facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {});
 
+                            }
+                        });
                     }
                 });
 
