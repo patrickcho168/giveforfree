@@ -26,11 +26,23 @@
     box-shadow: offset 2 2 3 rgba(0, 0, 0, .1);
 }
 .checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
-    display: inline;
-    margin: 0 auto;
+    /*padding-left: 10px;*/
+    display: block;
+    /*margin: 0 auto;*/
+    margin-left: 10px;
     /*margin-top: 4px\9;*/
     position: relative;
 }
+
+.checkbox label {
+    padding-left: 5px;
+    padding-right: 15px;
+}
+
+.checkbox {
+    padding-left: 50px;
+}
+
 .input-txt, .input-tags .selectize-input {
     padding: 10px 0;
 }

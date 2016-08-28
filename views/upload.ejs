@@ -27,6 +27,10 @@
     <!-- Bootstrap Support -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <!-- Checkbox Styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.7/awesome-bootstrap-checkbox.min.css
+    ">
+
     <!-- Other Scripts -->
     <script src="../scripts/common/common.js"></script>
     <script src="../scripts/upload/upload.js"></script>
@@ -55,6 +59,7 @@
 
     <!-- Bootstrap Notifications -->
     <link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
+    <script src="../scripts/common/notify.min.js"></script>
 
     <!-- Selectize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/js/standalone/selectize.min.js"></script>
@@ -76,7 +81,7 @@
 <body>
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
 
             <!-- Left Header Icon -->
@@ -100,7 +105,8 @@
 
                 <!-- Logo -->
                 <a class="navbar-brand" href="/">
-                    <img src="../images/common/logo-long.png" width="108px" height="36px" style="margin-top: -10px;" />
+                    <!-- <img src="../images/common/logo-long.png" width="108px" height="36px" style="margin-top: -10px;" /> -->
+                    Give For Free!
                 </a>
             </div>
 
@@ -142,9 +148,16 @@
         </div>
     </nav>
 
+
     <div class="container main-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-        <form action="/upload" enctype="multipart/form-data" method="post" id="new-gift-form" data-toggle="validator">
+        <div class="panel panel-default title-panel" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin: 15px 15px 20px 15px;" align="center">
+
+                <img class="col-lg-4" src="../images/upload/heart.svg" style="padding: 10px 0; max-width: 100px;">
+                <p class="col-lg-8" style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; font-weight: bold; color: white; "> Contribute a gift today! </p>
+        </div>
+
+        <form action="/upload" method="post" id="new-gift-form" data-toggle="validator">
             <% if (locals.error_messages) {
                 error_messages.forEach(function(message) { %>
                 <div class="alert alert-warning"><strong>Error: </strong>
@@ -176,8 +189,8 @@
 
                                 <div class="row">
                                     <div class="image-crop text-center" style="display: none;">
-                                        <div id="image"></div>
-                                        <div>
+                                        <div id="image" style="padding-bottom: 0; padding-top: 15px;"></div>
+                                        <div style="margin-bottom: 15px; margin-top: -5px;">
                                             <button class="image-confirm btn btn-sm btn-success bold-link">Crop Image</button>
                                         </div>
                                     </div>
@@ -188,7 +201,7 @@
                                         <!-- <a id="image-placeholder"> -->
                                         <span class="glyphicon glyphicon-upload" style="font-size: 300px;"></span>
                                         <h3> Click to upload an image </h3>
-                                        <p> Upload and crop an image of the item you're giving... </p>
+                                        <p> Upload and crop an image of the item ... </p>
                                         <!-- </a> -->
                                     </div>
                                 </a>
@@ -256,62 +269,91 @@
                                 <a href="#" class="list-group-item">
                                     <h4 class="list-group-item-heading"><b>How would you like the person receiving to collect the item?</b></h4>
 
-                                    <div class="checkbox checkbox-primary row">
-                                        <label class="large-label">
-                                            <input id="meet" type="checkbox" checked> Meet and collect
+                                    <div class="checkbox checkbox-primary checkbox-circle row">
+                                        <input type="checkbox" id="meet">
+                                        <label class="large-label" for="meet">
+                                            Meet and collect
+                                        </label>
+
+                                        <input type="checkbox" id="free">
+                                        <label class="large-label" for="free">
+                                            Free postage service </label>
+
+                                        <input type="checkbox" id="paid">
+                                        <label class="large-label" for="paid">
+                                            Collector to pay </label>
+
+                                        <!-- <label class="large-label">
+                                            <input id="meet" type="checkbox"> Meet and collect
+                                        </label> -->
+                                        <!-- <label class="large-label">
+                                            <input id="free" type="checkbox"> Free postage service
                                         </label>
                                         <label class="large-label">
-                                            <input id="free" type="checkbox" checked> Free postage service
-                                        </label>
-                                        <label class="large-label">
-                                            <input id="paid" type="checkbox" checked> Collector to pay for postage
-                                        </label>
+                                            <input id="paid" type="checkbox"> Collector to pay for postage
+                                        </label> -->
                                     </div>
 
                                 </a>
                                 <a href="#" class="list-group-item">
 
-                                    <div class="checkbox checkbox-primary row" align="center">
-                                        <h4>
-                                            Share on Facebook:
-                                            <input type="checkbox" name="share-checkbox" checked>
-                                        </h4>
+                                    <div class="checkbox checkbox-primary checkbox-circle row">
+                                        <input type="checkbox" id="share">
+                                        <label class="large-label" for="share">
+                                            <i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook
+                                        </label>
+
                                     </div>
 
+
+
                                 </a>
+
+                            </div>
+                            <div class="panel-footer" align="center">
+                                <button type="submit" class="btn btn-md btn-success bold-link">Create Gift!</button>
                             </div>
                         </div>
 
                         <input type="hidden" name="croppedImage" />
 
-                        <button type="submit" class="btn btn-lg btn-success btn-block bold-link">Create Gift!</button>
+
                     </div>
         </form>
     </div>
+
 
     <!-- Footer -->
     <footer>
         <div class="container footer-container">
             <div class="col-xs-10 col-xs-offset-1 text-center">
                 <hr class="xsall">
-                <ul class="col-xs-12 list-unstyled contact-list">
-                    <!-- <li>
-                        <small><span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 9223 4863</small>
-                    </li> -->
+                <!-- <ul class="col-xs-12 list-unstyled contact-list">
                     <li>
                         <small><span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">giveforfreefeedback@gmail.com</a></small>
                     </li>
                     <li>
                         <small><span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span> : <a href="/privacy">Privacy Clause</a></small>
                     </li>
-                </ul>
+                </ul> -->
+
+                <div class="col-xs-12 text-center" style="padding-bottom: 10px;">
+                    <small><span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true">  </span>  <a href="mailto:giveforfreefeedback@gmail.com"> giveforfreefeedback[at]gmail[dot]com</a></small>
+                    <br>
+                    <small><span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span>  <a href="/privacy"> Privacy Clause</a></small>
+
+                </div>
 
                 <div class="col-xs-12 text-center">
                     <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
                 </div>
+
+
+
             </div>
         </div>
     </footer>
+
 
 </body>
 

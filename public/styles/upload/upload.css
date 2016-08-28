@@ -11,7 +11,7 @@
 /* Main Container */
 
 .main-container {
-    padding-top: 50px;
+    padding-top: 36px;
 }
 .container {
     margin-top: 20px;
@@ -198,4 +198,10 @@ img {
     outline: none;
     box-shadow: none;
     /*border: 2px;*/
+}
+.checkbox input[type="checkbox"]:focus+ label::before {
+    outline: none;
+}
+.title-panel {
+    background: #EA5455;
 }

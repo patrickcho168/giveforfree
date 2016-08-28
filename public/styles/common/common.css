@@ -5,7 +5,7 @@ html, body {
     height: 100%;
     /*background-image: url("https://www.transparenttextures.com/patterns/assault.png");*/
     /*background-color: #E8F1F5;*/
-    background: #E8F1F5;
+    background: #EEEEEE;
     -webkit-overflow-scrolling: touch !important;
     overflow: auto !important;
     height: 100% !important;
@@ -231,7 +231,7 @@ img.clipped {
     box-shadow: none !important;
 }*/
 
-textarea:hover, input:hover, textarea:active, input:active, textarea:focus, input:focus, button:focus, button:active, button:hover  {
+textarea:hover, input:hover, textarea:active, input:active, textarea:focus, input:focus, button:focus, button:active, button:hover {
     outline: 0px !important;
     /*-webkit-appearance: none;*/
 }
@@ -262,10 +262,12 @@ input[type="color"]:focus,
 
 
 /* Footer */
+
 .contact-list {
     text-align: center;
 }
 .copyright {
     text-align: center;
     padding-bottom: 10px;
+    /*color: #EEEEEE;*/
 }

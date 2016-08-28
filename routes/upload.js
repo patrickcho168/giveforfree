@@ -16,7 +16,11 @@ aws.config.update({
     region: 'ap-southeast-1',
 })
 
-var s3 = new aws.S3({ params: {Bucket: 'giveforfree'} });
+var s3 = new aws.S3({
+    params: {
+        Bucket: 'giveforfree'
+    }
+});
 
 function createFbPost(title, itemId, imgUrl) {
     var object = {
@@ -28,7 +32,7 @@ function createFbPost(title, itemId, imgUrl) {
     return querystring.stringify(object);
 }
 
-function saveItem(req, fileName) {
+function saveItem(req, res, fileName) {
     // Create item based on form
     var newItem = new db.Item({
         giverID: req.user.appUserId,
@@ -42,19 +46,40 @@ function saveItem(req, fileName) {
     // Save item to database
     newItem.save().then(function(newSavedItem) {
 
+        var createdItemID = newSavedItem.attributes.itemID;
+
+        if (createdItemID != null) {
+            console.log(createdItemID);
+            req.flash('success_messages', 'Upload Succeeded! Redirecting to item page ...');
+            setTimeout(redirectSuccess, 1, createdItemID, res);
+            // res.redirect("/item/" + createdItemID);
+        } else {
+            console.log(createdItemID);
+            req.flash('error_messages', 'Upload Failed! Redirecting you to home ... ');
+            setTimeout(redirectFail, 1, res);
+        }
+
         if (req.body.postToFacebook) {
 
             // Create facebook post
             var userFbId = req.user.id;
             var newItemTitle = newSavedItem.attributes.title;
-            var newItemId = newSavedItem.attributes.itemID;
             var newItemUrl = newSavedItem.attributes.imageLocation;
             var apiCall = '/' + userFbId + '/feed';
-            facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, newItemId, newItemUrl), function(data) {});
+            facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, createdItemID, newItemUrl), function(data) {});
 
         }
     });
 }
+
+function redirectSuccess(itemID, response) {
+    response.redirect("/item/" + itemID);
+}
+
+function redirectFail(response) {
+    response.redirect("/");
+}
+
 
 module.exports = function(app) {
     app.get('/upload', ensureLogin.ensureLoggedIn(), function(req, res, next) {
@@ -125,7 +150,7 @@ module.exports = function(app) {
 
             } else {
                 // Upload image
-                var buf = new Buffer(req.body.croppedImage,'base64')
+                var buf = new Buffer(req.body.croppedImage, 'base64')
                 var fileName = crypto.pseudoRandomBytes(16).toString('hex') + '.png'
 
                 var data = {
@@ -142,13 +167,12 @@ module.exports = function(app) {
                         next();
                     } else {
                         console.log(data);
-                        console.log('succesfully uploaded the image!');
+                        console.log('successfully uploaded the image!');
 
-                        saveItem(req, fileName);
+
+                        saveItem(req, res, fileName);
                     }
                 });
-
-                res.redirect("/");
 
             }
         }
