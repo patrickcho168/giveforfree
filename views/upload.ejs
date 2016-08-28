@@ -173,6 +173,16 @@
                                         <!-- rename it -->
                                     </a>
                                 </div>
+
+                                <div class="row">
+                                    <div class="image-crop text-center" style="display: none;">
+                                        <div id="image"></div>
+                                        <div>
+                                            <button class="image-confirm btn btn-sm btn-success bold-link">Crop Image</button>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <a id="image-holder" onclick="triggerUpload()">
                                     <div align="center">
                                         <!-- <a id="image-placeholder"> -->
@@ -271,6 +281,9 @@
                                 </a>
                             </div>
                         </div>
+
+                        <input type="hidden" name="croppedImage" />
+
                         <button type="submit" class="btn btn-lg btn-success btn-block bold-link">Create Gift!</button>
                     </div>
         </form>
