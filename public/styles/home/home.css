@@ -10,7 +10,12 @@
     background: #337ab7;
     align-items: center;
 }
-
+.main-container {
+    padding-top: 36px;
+}
+.container {
+    margin-top: 20px;
+}
 /* Navbar */
 
 .navbar-right {
@@ -95,6 +100,10 @@
 .thumbnail {
     position: relative;
     display: block;
+}
+
+.title-panel {
+    background: #B2E672;
 }
 
 

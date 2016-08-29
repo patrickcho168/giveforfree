@@ -16,11 +16,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <!-- Codyhouse Navigation FAB Support -->
-    <script src="../assets/codyhouse/js/main.js"></script>
-    <script src="../assets/codyhouse/js/modernizr.js"></script>
-    <link rel="stylesheet" href="../assets/codyhouse/css/reset.css">
-    <link rel="stylesheet" href="../assets/codyhouse/css/style.css">
+    <!-- Pure CSS (Override) -->
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+    <!-- Font Awesome (Override) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.min.css">
+    <link rel="stylesheet" href="../assets/materialDatePicker/css/bootstrap-material-datetimepicker.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <!-- Other Scripts -->
     <script src="../scripts/common/common.js"></script>
@@ -48,6 +52,10 @@
     <link rel="stylesheet" href="../styles/common/common.css">
     <link rel="stylesheet" href="../styles/profile/profile.css">
 
+    <!-- Bootstrap Notifications -->
+    <link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
+    <script src="../scripts/common/notify.min.js"></script>
+
     <!-- Animation -->
     <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
 
@@ -61,37 +69,139 @@
 
 <body>
 
+    <div id="loader-wrapper">
+			<div id="loader"></div>
+
+			<div class="loader-section section-left"></div>
+			<div class="loader-section section-right"></div>
+
+		</div>
+
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
 
             <!-- Left Header Icon -->
             <div class="navbar-header">
+
+                <!-- Collapsed Nav -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+
+                <!-- Title -->
+                <text class="navbar-title">
+                    <h4 style="margin-top: 5px;"><b>
+                        <!-- <i class="fa fa-gift" aria-hidden="true"> </i> -->
+                        <!-- Create a Gift -->
+                    </b></h4>
+                </text>
+
+                <!-- Logo -->
                 <a class="navbar-brand" href="/">
-                    <img src="../images/common/logo-long.png" width="108px" height="36px" style="margin-top: -10px;" />
+                    <!-- <img src="../images/common/logo-long.png" width="108px" height="36px" style="margin-top: -10px;" /> -->
+                    Give For Free!
                 </a>
             </div>
 
             <!-- Menu -->
             <div class="collapse navbar-collapse" id="nav-menu">
+
                 <!-- User Actions Menu -->
                 <ul class="nav navbar-nav navbar-right">
-                    <% if (!loggedIn) { %>
-                        <li id="nav-login"><a href="/login">Login</a></li>
-                        <li id="nav-about"><a href="/login#about">About</a></li>
-                        <li id="nav-contact"><a href="/login#contact">Contact Us</a></li>
-                        <% } else { %>
-                            <li id="nav-feed"><a href="/">Feed</a></li>
-                            <li id="nav-profile" class="active"><a href="/profile/<%= id %>">Profile</a></li>
-                            <li id="nav-logout"><a href="/logout">Logout</a></li>
-                            <% } %>
+                    <li id="nav-create">
+                        <a href="/upload">
+                            <i class="fa fa-gift" aria-hidden="true"></i> Give
+                        </a>
+                    </li>
+                    <li id="nav-feed">
+                        <a href="/">
+                            <i class="fa fa-rss" aria-hidden="true"></i> Feed
+                        </a>
+                    </li>
+                    <li id="nav-profile" class="active">
+                        <a href="/profile/<%= id %>">
+                            <i class="fa fa-user" aria-hidden="true"></i> Profile
+                        </a>
+                    </li>
+                    <li class="dropdown dropdown-notifications">
+                        <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <i data-count="2" class="fa fa-bell" aria-hidden="true"></i> Notifications <span class="badge">0</span>
+                        </a>
+                        <ul class="dropdown-menu hidden-xs" aria-labelledby="dropdownMenu1">
+                            <li class="notification">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <div class="media-object">
+                                            <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <strong class="notification-title"><a href="#">Dave Lister</a> commented on <a href="#">DWARF-13 - Maintenance</a></strong>
+                                        <p class="notification-desc">I totally don't wanna do it. Rimmer can do it.</p>
+
+                                        <div class="notification-meta">
+                                            <small class="timestamp">27. 11. 2015, 15:00</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="notification">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <div class="media-object">
+                                            <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+
+                                        <p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+
+                                        <div class="notification-meta">
+                                            <small class="timestamp">27. 10. 2015, 08:00</small>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="notification">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <div class="media-object">
+                                            <!-- <img src="../images/common/empty-loudhaler-placeholder.svg" class="img-circle" alt="Name"> -->
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <strong class="notification-title"><a href="#">James Bond</a> resolved <a href="#">B-007 - Desolve Spectre organization</a></strong>
+
+                                        <div class="notification-meta">
+                                            <small class="timestamp">1. 9. 2015, 08:00</small>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                            <div class="dropdown-footer text-center">
+                                <a href="#">View All</a>
+                            </div>
+                        </ul>
+
+
+                    </li>
+                    <li id="nav-logout">
+                        <a href="/logout">
+                            <i class="fa fa-lock" aria-hidden="true"></i> Logout
+                        </a>
+                    </li>
                 </ul>
+
+
             </div>
 
         </div>
@@ -99,10 +209,89 @@
 
     <!-- Profile Header Jumbotron -->
 
-    <div class="main-display-area">
+    <div class="container main-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+        <div class="panel panel-default title-panel" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin: 15px 15px 20px 15px;" align="center">
+
+            <img src="../images/profile/elf.svg" style="display: block; margin-left: auto; margin-right: auto; padding: 10px 0; width: 100px;">
+            <!-- <img class="col-lg-4" src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large" style="padding: 10px 0; width: 100px; border-radius:50%;"> -->
+            <p style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; padding-top: 15px; font-weight: bold; color: white; ">
+                <%= user.name %>
+            </p>
+            <h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"> Singapore </h4>
+        </div>
+
+        <div class='tabs-x tabs-left tab-bordered'>
+            <ul id="my-tabs" class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#gifts" role="tab" data-toggle="tab"><i class="fa fa-gift" aria-hidden="true"></i> Gifts</a></li>
+                <li><a href="#wants" role="tab" data-toggle="tab"><i class="fa fa-star" aria-hidden="true"></i> Wants</a></li>
+                <li><a href="#thanks" role="tab" data-toggle="tab"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Thanks</a></li>
+                <li><a href="#friends" role="tab" data-toggle="tab"><i class="fa fa-child" aria-hidden="true"></i> Friends</a></li>
+            </ul>
+            <div id="my-tabs-contents" class="tab-content" align="center">
+                <div class="tab-pane fade in active" id="gifts">
+                    <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
+                    <p>
+                        <%= user.name %> has nothing to give for now.
+                            <br> Come back later! </p>
+                </div>
+                <div class="tab-pane fade" id="wants">
+                    <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
+                    <p>
+                        <%= user.name %> has no wants for now.
+                            <br> Chat with
+                            <%= user.name %>! </p>
+                </div>
+                <div class="tab-pane fade" id="thanks">
+                    <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
+                    <p>
+                        <%= user.name %> has yet to receive any thank-you messages.
+                            <br> Send
+                            <%= user.name %> one now! </p>
+                </div>
+                <div class="tab-pane fade" id="friends">
+                    <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
+                    <p>
+                        <%= user.name %> doesn't have any friends using G4F...
+                            <br>Let your friends know about this awesome cause! </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="panel panel-default col-lg-4 col-md-4 col-sm-12 col-xs-12" align="center" style="margin: 15px; padding: 10px;"> -->
+        <!-- <row> -->
+        <!-- <img src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large" class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="border-radius:50%; padding:0px; height: 80px; width: 80px;">
+
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" style="display: flex; justify-content:center; align-content:center; flex-direction:column; padding: 0px;">
+                    <h4><%= user.name %></h4>
+                    <p>Singapore</p>
+                </div> -->
+        <!-- </row> -->
+        <!-- <div class="counters col-xs-9 col-xs-offset-3" align="center">
+                        <div align="center" class="col-xs-4 counter">
+                            <p align="center" class="count">
+                                <%= totalTaken %>
+                            </p>
+                            <p align="center" class="count-label">
+                                Wants
+                            </p>
+                        </div>
+                        <div align="center" class="col-xs-4 counter">
+                            <p align="center" class="count">
+                                <%= totalGifted %>
+                            </p>
+                            <hr class="m-y-2" />
+                            <p align="center" class="count-label">
+                                Gifts
+                            </p>
+                        </div>
+                    </div> -->
+
+
+        <!-- </div> -->
 
         <!-- Thanks Page -->
-        <div>
+        <!-- <div>
             <table style="width:100%">
                 <tr>
                     <th>Name</th>
@@ -112,52 +301,62 @@
                 </tr>
                 <% for (var i=0; i<thank.length; i++) { %>
                     <tr>
-                        <td><%= thank[i].relations.thankedBy.attributes.name %></td>
-                        <td><%= thank[i].relations.thankedBy.attributes.fbID %></td>
-                        <td><%= thank[i].attributes.message %></td>
-                        <td><%= thank[i].attributes.timeCreated %></td>
+                        <td>
+                            <%= thank[i].relations.thankedBy.attributes.name %>
+                        </td>
+                        <td>
+                            <%= thank[i].relations.thankedBy.attributes.fbID %>
+                        </td>
+                        <td>
+                            <%= thank[i].attributes.message %>
+                        </td>
+                        <td>
+                            <%= thank[i].attributes.timeCreated %>
+                        </td>
                     </tr>
-                <% } %>
+                    <% } %>
             </table>
             <form action="/api/thank/profile/<%= user.userID %>" method="post">
-                Message:<br>
-                <input type="text" name="message"><br>
+                Message:
+                <br>
+                <input type="text" name="message">
+                <br>
                 <input type="submit" value="Submit">
             </form>
-        </div>
+        </div> -->
 
-        <div class="container profile-area" align="center">
+        <!-- <div class="panel panel-default container" align="center">
 
             <img align="center" src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large" class="img-circle img-thumbnail profile-photo" vertical-align="center">
 
             <div class="text-holder">
-                <h1 class="display-3 name"><%= user.name %></h1>
-                <p>Singapore</p>
-                <div class="counters col-xs-9 col-xs-offset-3" align="center">
+                <h1 class="display-3 name"><%= user.name %></h1> -->
+        <!-- <p>Singapore</p> -->
+        <!-- <div class="counters col-xs-9 col-xs-offset-3" align="center">
                     <div align="center" class="col-xs-4 counter">
                         <p align="center" class="count">
                             <%= totalTaken %>
                         </p>
                         <p align="center" class="count-label">
-                            Snagged Items
+                            Wants
                         </p>
                     </div>
                     <div align="center" class="col-xs-4 counter">
                         <p align="center" class="count">
                             <%= totalGifted %>
-                        </p>
-                        <!-- <hr class="m-y-2" /> -->
-                        <p align="center" class="count-label">
-                            Contributions
+                        </p> -->
+        <!-- <hr class="m-y-2" /> -->
+        <!-- <p align="center" class="count-label">
+                            Gifts
                         </p>
                     </div>
                 </div>
 
             </div>
-        </div>
+        </div> -->
 
         <!-- CodyHouse Navigation FAB  -->
-        <div class="container" align="center">
+        <!-- <div class="container" align="center">
 
             <div id="cd-nav" class="is-fixed">
                 <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
@@ -175,35 +374,42 @@
                 </nav>
             </div>
 
-        </div>
+        </div> -->
 
         <!-- Scroll Container -->
-        <div class="infinite-scroll-container col-xs-10 col-xs-offset-1 grid" id="infinite-scroll-container">
+        <!-- <div class="infinite-scroll-container col-xs-10 col-xs-offset-1 grid" id="infinite-scroll-container">
             <div class="row" id="infinite-scroll-row">
             </div>
-        </div>
+        </div> -->
     </div>
 
     <!-- Footer -->
     <footer>
-        <div class="container">
+        <div class="container footer-container">
             <div class="col-xs-10 col-xs-offset-1 text-center">
                 <hr class="xsall">
-                <ul class="col-xs-12 list-unstyled contact-list">
+                <!-- <ul class="col-xs-12 list-unstyled contact-list">
                     <li>
-                        <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 9223 4863
+                        <small><span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">giveforfreefeedback@gmail.com</a></small>
                     </li>
                     <li>
-                        <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">giveforfreefeedback@gmail.com</a>
+                        <small><span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span> : <a href="/privacy">Privacy Clause</a></small>
                     </li>
-                    <li>
-                        <span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span> : <a href="/privacy">Privacy Clause</a>
-                    </li>
-                </ul>
+                </ul> -->
+
+                <div class="col-xs-12 text-center" style="padding-bottom: 10px;">
+                    <small><span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true">  </span>  <a href="mailto:giveforfreefeedback@gmail.com"> giveforfreefeedback[at]gmail[dot]com</a></small>
+                    <br>
+                    <small><span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span>  <a href="/privacy"> Privacy Clause</a></small>
+
+                </div>
 
                 <div class="col-xs-12 text-center">
                     <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
                 </div>
+
+
+
             </div>
         </div>
     </footer>

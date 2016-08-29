@@ -34,10 +34,11 @@ function createFbPost(title, itemId, imgUrl) {
 
 function saveItem(req, res, fileName) {
     // Create item based on form
+    console.log('timeExpired', moment(req.body.date).format("YYYY-MM-DD HH:mm:ss"))
     var newItem = new db.Item({
         giverID: req.user.appUserId,
         timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
-        timeExpired: moment().add(req.body.no_of_days, 'days').format("YYYY-MM-DD HH:mm:ss"),
+        timeExpired: moment(req.body.date + moment().format(" HH:mm:ss")).format("YYYY-MM-DD HH:mm:ss"),
         title: req.body.title,
         description: req.body.description,
         imageLocation: fileName
@@ -102,6 +103,7 @@ module.exports = function(app) {
 
         } else {
             req.body.croppedImage = req.body.croppedImage.replace(/^data:image\/\w+;base64,/, "");
+            console.log(req.body.date);
 
             // Simple form validation
             req.checkBody({

@@ -18,11 +18,15 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-	<!-- Codyhouse Navigation FAB Support -->
-	<script src="/assets/codyhouse/js/main.js"></script>
-	<script src="/assets/codyhouse/js/modernizr.js"></script>
-	<link rel="stylesheet" href="/assets/codyhouse/css/reset.css">
-	<link rel="stylesheet" href="/assets/codyhouse/css/style.css">
+	<!-- Pure CSS (Override) -->
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+	<!-- Font Awesome (Override) -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.min.css">
+	<link rel="stylesheet" href="../assets/materialDatePicker/css/bootstrap-material-datetimepicker.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 	<!-- Other Scripts -->
 	<script>
@@ -34,6 +38,10 @@
 	
 	<!-- Bootstrap CSS (override) -->
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<!-- Bootstrap Notifications -->
+	<link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
+	<script src="../scripts/common/notify.min.js"></script>
 
 	<!-- CSS Styles -->
 	<link rel="stylesheet" href="/styles/common/common.css">
@@ -50,21 +58,41 @@
 
 <body>
 
-	<!-- Navigation Bar -->
-	<nav class="navbar navbar-default navbar-fixed-top">
+	<div id="loader-wrapper">
+		<div id="loader"></div>
 
+		<div class="loader-section section-left"></div>
+		<div class="loader-section section-right"></div>
+
+	</div>
+
+	<!-- Navigation Bar -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 
 			<!-- Left Header Icon -->
 			<div class="navbar-header">
+
+				<!-- Collapsed Nav -->
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
+
+				<!-- Title -->
+				<text class="navbar-title">
+					<h4 style="margin-top: 5px;"><b>
+                        <!-- <i class="fa fa-gift" aria-hidden="true"> </i> -->
+                        <!-- Create a Gift -->
+                    </b></h4>
+				</text>
+
+				<!-- Logo -->
 				<a class="navbar-brand" href="/">
-					<img src="../images/common/logo-long.png" width="108px" height="36px" style="margin-top: -10px;" />
+					<!-- <img src="../images/common/logo-long.png" width="108px" height="36px" style="margin-top: -10px;" /> -->
+					Give For Free!
 				</a>
 			</div>
 
@@ -73,25 +101,103 @@
 
 				<!-- User Actions Menu -->
 				<ul class="nav navbar-nav navbar-right">
-                    <% if (!loggedIn) { %>
-                        <li id="nav-login"><a href="/login">Login</a></li>
-                        <li id="nav-about"><a href="/login#about">About</a></li>
-                        <li id="nav-contact"><a href="/login#contact">Contact Us</a></li>
-                    <% } else { %>
-                        <li id="nav-feed" class="active"><a href="/">Feed</a></li>
-                        <li id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
-                        <li id="nav-logout"><a href="/logout">Logout</a></li>
-                    <% } %>
+					<li id="nav-create">
+						<a href="/upload">
+							<i class="fa fa-gift" aria-hidden="true"></i> Give
+						</a>
+					</li>
+					<li id="nav-feed" class="active">
+						<a href="/">
+							<i class="fa fa-rss" aria-hidden="true"></i> Feed
+						</a>
+					</li>
+					<li id="nav-profile">
+						<a href="/profile/<%= id %>">
+							<i class="fa fa-user" aria-hidden="true"></i> Profile
+						</a>
+					</li>
+					<li class="dropdown dropdown-notifications">
+						<a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							<i data-count="2" class="fa fa-bell" aria-hidden="true"></i> Notifications <span class="badge">0</span>
+						</a>
+						<ul class="dropdown-menu hidden-xs" aria-labelledby="dropdownMenu1">
+							<li class="notification">
+								<div class="media">
+									<div class="media-left">
+										<div class="media-object">
+											<!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+										</div>
+									</div>
+									<div class="media-body">
+										<strong class="notification-title"><a href="#">Dave Lister</a> commented on <a href="#">DWARF-13 - Maintenance</a></strong>
+										<p class="notification-desc">I totally don't wanna do it. Rimmer can do it.</p>
+
+										<div class="notification-meta">
+											<small class="timestamp">27. 11. 2015, 15:00</small>
+										</div>
+									</div>
+								</div>
+							</li>
+
+							<li class="notification">
+								<div class="media">
+									<div class="media-left">
+										<div class="media-object">
+											<!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+										</div>
+									</div>
+									<div class="media-body">
+										<strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+
+										<p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+
+										<div class="notification-meta">
+											<small class="timestamp">27. 10. 2015, 08:00</small>
+										</div>
+
+									</div>
+								</div>
+							</li>
+
+							<li class="notification">
+								<div class="media">
+									<div class="media-left">
+										<div class="media-object">
+											<!-- <img src="../images/common/empty-loudhaler-placeholder.svg" class="img-circle" alt="Name"> -->
+										</div>
+									</div>
+									<div class="media-body">
+										<strong class="notification-title"><a href="#">James Bond</a> resolved <a href="#">B-007 - Desolve Spectre organization</a></strong>
+
+										<div class="notification-meta">
+											<small class="timestamp">1. 9. 2015, 08:00</small>
+										</div>
+
+									</div>
+								</div>
+							</li>
+							<div class="dropdown-footer text-center">
+								<a href="#">View All</a>
+							</div>
+						</ul>
+
+
+					</li>
+					<li id="nav-logout">
+						<a href="/logout">
+							<i class="fa fa-lock" aria-hidden="true"></i> Logout
+						</a>
+					</li>
 				</ul>
+
 
 			</div>
 
 		</div>
-
 	</nav>
 
 	<!-- Navigation FAB -->
-	<div class="container" align="center">
+	<!-- <div class="container" align="center">
 
 		<div id="cd-nav" class="is-fixed">
 			<a class="cd-nav-trigger">Menu<span></span></a>
@@ -104,59 +210,97 @@
 
 		</div>
 
+	</div> -->
+
+	<div class="container main-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+		<div class="panel panel-default title-panel" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin: 15px 15px 20px 15px;" align="center">
+
+			<img src="/images/home/globe.svg" style="display: block; margin-left: auto; margin-right: auto;  padding: 10px 0; width: 100px;">
+			<p style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; padding-top: 15px; font-weight: bold; color: white; ">
+				Awesomeness in the Community
+			</p>
+			<h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"> Give our things a second chance! </h4>
+		</div>
 	</div>
 
 	<!-- Scroll Container -->
 	<div class="infinite-scroll-container col-xs-10 col-xs-offset-1 grid" id="infinite-scroll-container">
-		<div>
+		<!-- <div class="infinite-scroll-container col-xs-10 col-xs-offset-1 grid" id="infinite-scroll-container"> -->
+		<!-- <div>
 			<ul>
 				<% for (var i=0; i<notification.length; i++) { %>
 					<% if (notification[i].notificationType === 1) { %>
-						<li><a href="/profile/<%= notification[i].userID %>"><%= notification[i].name %></a> wants your <a href="/item/<%= notification[i].itemID %>"><%= notification[i].title %></a>.</li>
-					<% } else if (notification[i].notificationType === 2) { %>
-						<li><%= notification[i].title %>'s giveaway has expired. Pick your lucky winner now.</li>
-					<% } else if (notification[i].notificationType === 3) { %>
-						<li><a href="/profile/<%= notification[i].userID %>"><%= notification[i].name %></a> left a comment about <%= notification[i].title %>.</li>
-					<% } else if (notification[i].notificationType === 4) { %>
-						<% if (notification[i].takerID === id) { %>
-							<li><%= notification[i].title %> has been given to you! (:</li>
-						<% } else { %>
-							<li><%= notification[i].title %> has been given to someone else! ):</li>
-						<% } %>
-					<% } else if (notification[i].notificationType === 5) { %>
-						<li><%= notification[i].name %> left a new message on your Thank You Wall!</li>
-					<% } %>
-				<% } %>
+						<li>
+							<a href="/profile/<%= notification[i].userID %>">
+								<%= notification[i].name %>
+							</a> wants your
+							<a href="/item/<%= notification[i].itemID %>">
+								<%= notification[i].title %>
+							</a>.</li>
+						<% } else if (notification[i].notificationType === 2) { %>
+							<li>
+								<%= notification[i].title %>'s giveaway has expired. Pick your lucky winner now.</li>
+							<% } else if (notification[i].notificationType === 3) { %>
+								<li>
+									<a href="/profile/<%= notification[i].userID %>">
+										<%= notification[i].name %>
+									</a> left a comment about
+									<%= notification[i].title %>.</li>
+								<% } else if (notification[i].notificationType === 4) { %>
+									<% if (notification[i].takerID === id) { %>
+										<li>
+											<%= notification[i].title %> has been given to you! (:</li>
+										<% } else { %>
+											<li>
+												<%= notification[i].title %> has been given to someone else! ):</li>
+											<% } %>
+												<% } else if (notification[i].notificationType === 5) { %>
+													<li>
+														<%= notification[i].name %> left a new message on your Thank You Wall!</li>
+													<% } %>
+														<% } %>
 			</ul>
-		</div>
+		</div> -->
 
-		<div class="row" id="infinite-scroll-row">
-		</div>
+		<!-- <div class="row" id="infinite-scroll-row"> -->
+		<p align="center">
+			<img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 300px; width: 300px; margin-top: -100px;" /><br>
+			There's nothing in the community...
+			<br> Start contributing now! </p>
+		<!-- </div> -->
 	</div>
 
 	<!-- Footer -->
 	<footer>
-        <div class="container">
-            <div class="col-xs-10 col-xs-offset-1 text-center">
-                <hr class="xsall">
-                <ul class="col-xs-12 list-unstyled contact-list">
+		<div class="container footer-container">
+			<div class="col-xs-10 col-xs-offset-1 text-center">
+				<hr class="xsall">
+				<!-- <ul class="col-xs-12 list-unstyled contact-list">
                     <li>
-                        <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 9223 4863
+                        <small><span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">giveforfreefeedback@gmail.com</a></small>
                     </li>
                     <li>
-                        <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">giveforfreefeedback@gmail.com</a>
+                        <small><span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span> : <a href="/privacy">Privacy Clause</a></small>
                     </li>
-                    <li>
-                        <span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span> : <a href="/privacy">Privacy Clause</a>
-                    </li>
-                </ul>
+                </ul> -->
 
-                <div class="col-xs-12 text-center">
-                    <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
-                </div>
-            </div>
-        </div>
-    </footer>
+				<div class="col-xs-12 text-center" style="padding-bottom: 10px;">
+					<small><span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true">  </span>  <a href="mailto:giveforfreefeedback@gmail.com"> giveforfreefeedback[at]gmail[dot]com</a></small>
+					<br>
+					<small><span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span>  <a href="/privacy"> Privacy Clause</a></small>
+
+				</div>
+
+				<div class="col-xs-12 text-center">
+					<small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
+				</div>
+
+
+
+			</div>
+		</div>
+	</footer>
 
 </body>
 

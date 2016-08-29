@@ -80,6 +80,14 @@
 
 <body>
 
+    <div id="loader-wrapper">
+			<div id="loader"></div>
+
+			<div class="loader-section section-left"></div>
+			<div class="loader-section section-right"></div>
+
+		</div>
+
     <!-- Navigation Bar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
@@ -115,7 +123,7 @@
 
                 <!-- User Actions Menu -->
                 <ul class="nav navbar-nav navbar-right">
-                    <li id="nav-create">
+                    <li id="nav-create" class="active">
                         <a href="/upload">
                             <i class="fa fa-gift" aria-hidden="true"></i> Give
                         </a>
@@ -131,9 +139,71 @@
                         </a>
                     </li>
                     <li class="dropdown dropdown-notifications">
-                        <a href="#notifications-panel" class="dropdown-toggle">
-                            <i data-count="2" class="fa fa-bell" aria-hidden="true"></i> Notifications
+                        <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <i data-count="2" class="fa fa-bell" aria-hidden="true"></i> Notifications <span class="badge">0</span>
                         </a>
+                        <ul class="dropdown-menu hidden-xs" aria-labelledby="dropdownMenu1">
+                            <li class="notification">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <div class="media-object">
+                                            <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <strong class="notification-title"><a href="#">Dave Lister</a> commented on <a href="#">DWARF-13 - Maintenance</a></strong>
+                                        <p class="notification-desc">I totally don't wanna do it. Rimmer can do it.</p>
+
+                                        <div class="notification-meta">
+                                            <small class="timestamp">27. 11. 2015, 15:00</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="notification">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <div class="media-object">
+                                            <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+
+                                        <p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+
+                                        <div class="notification-meta">
+                                            <small class="timestamp">27. 10. 2015, 08:00</small>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="notification">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <div class="media-object">
+                                            <!-- <img src="../images/common/empty-loudhaler-placeholder.svg" class="img-circle" alt="Name"> -->
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <strong class="notification-title"><a href="#">James Bond</a> resolved <a href="#">B-007 - Desolve Spectre organization</a></strong>
+
+                                        <div class="notification-meta">
+                                            <small class="timestamp">1. 9. 2015, 08:00</small>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </li>
+                            <div class="dropdown-footer text-center">
+                                <a href="#">View All</a>
+                            </div>
+                        </ul>
+
+
                     </li>
                     <li id="nav-logout">
                         <a href="/logout">
@@ -153,14 +223,23 @@
 
         <div class="panel panel-default title-panel" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin: 15px 15px 20px 15px;" align="center">
 
-                <img class="col-lg-4" src="../images/upload/heart.svg" style="padding: 10px 0; max-width: 100px;">
-                <p class="col-lg-8" style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; font-weight: bold; color: white; "> Contribute a gift today! </p>
+                <img src="../images/upload/heart.svg" style="display: block; margin-left: auto; margin-right: auto;  padding: 10px 0; max-width: 100px;">
+                <p style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; font-weight: bold; color: white; "> Contribute a Gift </p>
+                <h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"> Start today! </h4>
         </div>
 
         <form action="/upload" method="post" id="new-gift-form" data-toggle="validator">
             <% if (locals.error_messages) {
                 error_messages.forEach(function(message) { %>
                 <div class="alert alert-warning"><strong>Error: </strong>
+                    <%= message %>
+                </div>
+                <% });
+            } %>
+
+            <% if (locals.success_messages) {
+                success_messages.forEach(function(message) { %>
+                <div class="alert alert-success"><strong>Good job: </strong>
                     <%= message %>
                 </div>
                 <% });
@@ -191,7 +270,7 @@
                                     <div class="image-crop text-center" style="display: none;">
                                         <div id="image" style="padding-bottom: 0; padding-top: 15px;"></div>
                                         <div style="margin-bottom: 15px; margin-top: -5px;">
-                                            <button class="image-confirm btn btn-sm btn-success bold-link">Crop Image</button>
+                                            <a class="image-confirm btn btn-sm btn-success bold-link">Crop Image</a>
                                         </div>
                                     </div>
                                 </div>
@@ -199,7 +278,7 @@
                                 <a id="image-holder" onclick="triggerUpload()">
                                     <div align="center">
                                         <!-- <a id="image-placeholder"> -->
-                                        <span class="glyphicon glyphicon-upload" style="font-size: 300px;"></span>
+                                        <span class="glyphicon glyphicon-upload" style="font-size: 200px;"></span>
                                         <h3> Click to upload an image </h3>
                                         <p> Upload and crop an image of the item ... </p>
                                         <!-- </a> -->

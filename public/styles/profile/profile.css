@@ -94,11 +94,11 @@
     text-align: right;
     padding-top: 10px;
 }
-@media (min-width: 1200px) {
+/*@media (min-width: 1200px) {
     .container {
         max-width: 980px;
     }
-}
+}*/
 
 /* Masonry Approach #1 */
 
@@ -117,4 +117,15 @@
 .thumbnail {
     position: relative;
     display: block;
+}
+
+.title-panel {
+    background: #4D606E;
+}
+
+.main-container {
+    padding-top: 36px;
+}
+.container {
+    margin-top: 20px;
 }

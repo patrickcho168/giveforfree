@@ -88,3 +88,19 @@ jQuery(document).ready(function($) {
         $('#carousel-text').html($('#slide-content-' + id).html());
     });
 });
+
+$(function() {
+    var cw = $('.carousel').width();
+
+    $('.display-item').css({
+        'height': cw + 'px'
+    });
+});
+
+$( window ).resize(function() {
+    var cw = $('.carousel').width();
+
+    $('#display-item').css({
+        'height': cw + 'px'
+    });
+});
