@@ -6,6 +6,7 @@ var ensureLogin = require('connect-ensure-login');
 var config = require('../config');
 var db = require('../models/db');
 var facebook = require('../controllers/facebook');
+var note = require('./notification');
 
 passport.use(new Strategy({
         clientID: config.fbClientID,
@@ -56,7 +57,7 @@ toExport.route = function(app) {
             });
         } else {
             var userId = req.user.appUserId;
-            console.log(req.session.notification);
+            note.pushNotification(14);
             res.render('homeLoggedIn', {
                 notification: req.session.notification,
                 id: userId,
