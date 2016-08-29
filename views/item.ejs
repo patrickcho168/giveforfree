@@ -19,6 +19,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <!-- Pure CSS (Override) -->
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+    <!-- Font Awesome (Override) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.min.css">
+    <link rel="stylesheet" href="../assets/materialDatePicker/css/bootstrap-material-datetimepicker.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
     <!-- Countable Support -->
     <script src="../assets/simplyCountable/js/jquery.simplyCountable.js"></script>
 
@@ -36,6 +46,10 @@
     <link rel="stylesheet" href="../styles/common/common.css">
     <link rel="stylesheet" href="../styles/item/item.css">
 
+    <!-- Bootstrap Notifications -->
+    <link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
+    <script src="../scripts/common/notify.min.js"></script>
+
     <!-- Animations -->
     <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
 
@@ -46,37 +60,379 @@
 
 <body>
 
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+
+    </div>
+
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
 
             <!-- Left Header Icon -->
             <div class="navbar-header">
+
+                <!-- Collapsed Nav -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+
+                <!-- Title -->
+                <text class="navbar-title">
+                    <h4 style="margin-top: 5px;"><b>
+                        <!-- <i class="fa fa-gift" aria-hidden="true"> </i> -->
+                        <!-- Create a Gift -->
+                    </b></h4>
+                </text>
+
+                <!-- Logo -->
                 <a class="navbar-brand" href="/">
-                    <img src="../images/common/logo-long.png" width="108px" height="36px" style="margin-top: -10px;" />
-                </a>            </div>
+                    <!-- <img src="../images/common/logo-long.png" width="108px" height="36px" style="margin-top: -10px;" /> -->
+                    Give For Free!
+                </a>
+            </div>
 
             <!-- Menu -->
             <div class="collapse navbar-collapse" id="nav-menu">
 
                 <!-- User Actions Menu -->
                 <ul class="nav navbar-nav navbar-right">
-                    <% if (!loggedIn) { %>
-                        <li id="nav-login"><a href="/login">Login</a></li>
-                        <li id="nav-about"><a href="/login#about">About</a></li>
-                        <li id="nav-contact"><a href="/login#contact">Contact Us</a></li>
-                    <% } else { %>
-                        <li id="nav-feed" class="active"><a href="/">Feed</a></li>
-                        <li id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
-                        <li id="nav-logout"><a href="/logout">Logout</a></li>
-                    <% } %>
+                    <li id="nav-create">
+                        <a href="/upload">
+                            <i class="fa fa-gift" aria-hidden="true"></i> Give
+                        </a>
+                    </li>
+                    <li id="nav-feed">
+                        <a href="/">
+                            <i class="fa fa-rss" aria-hidden="true"></i> Feed
+                        </a>
+                    </li>
+                    <li id="nav-profile">
+                        <a href="/profile/<%= id %>">
+                            <i class="fa fa-user" aria-hidden="true"></i> Profile
+                        </a>
+                    </li>
+                    <li class="dropdown dropdown-notifications">
+                        <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <i data-count="2" class="fa fa-bell" aria-hidden="true"></i> Notifications <span class="badge">0</span>
+                        </a>
+                        <ul class="dropdown-menu hidden-xs" aria-labelledby="dropdownMenu1" style="height:400px; width:300%; overflow:hidden; overflow-y:scroll;">
+                            <div class="panel-heading"><a>Clear All</a></div>
+                            <div style="height:400px; width:300%; overflow:hidden; overflow-y:scroll;">
+                                <li class="notification">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="media-object">
+                                                <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="notification-title"><a href="#">Dave Lister</a> commented on <a href="#">DWARF-13 - Maintenance</a></strong>
+                                            <p class="notification-desc">I totally don't wanna do it. Rimmer can do it.</p>
+
+                                            <div class="notification-meta">
+                                                <small class="timestamp">27. 11. 2015, 15:00</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="notification">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="media-object">
+                                                <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+
+                                            <p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+
+                                            <div class="notification-meta">
+                                                <small class="timestamp">27. 10. 2015, 08:00</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="notification">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="media-object">
+                                                <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+
+                                            <p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+
+                                            <div class="notification-meta">
+                                                <small class="timestamp">27. 10. 2015, 08:00</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="notification">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="media-object">
+                                                <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+
+                                            <p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+
+                                            <div class="notification-meta">
+                                                <small class="timestamp">27. 10. 2015, 08:00</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="notification">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="media-object">
+                                                <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+
+                                            <p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+
+                                            <div class="notification-meta">
+                                                <small class="timestamp">27. 10. 2015, 08:00</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="notification">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="media-object">
+                                                <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+
+                                            <p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+
+                                            <div class="notification-meta">
+                                                <small class="timestamp">27. 10. 2015, 08:00</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="notification">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="media-object">
+                                                <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+
+                                            <p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+
+                                            <div class="notification-meta">
+                                                <small class="timestamp">27. 10. 2015, 08:00</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="notification">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="media-object">
+                                                <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+
+                                            <p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+
+                                            <div class="notification-meta">
+                                                <small class="timestamp">27. 10. 2015, 08:00</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="notification">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="media-object">
+                                                <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+
+                                            <p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+
+                                            <div class="notification-meta">
+                                                <small class="timestamp">27. 10. 2015, 08:00</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="notification">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="media-object">
+                                                <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+
+                                            <p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+
+                                            <div class="notification-meta">
+                                                <small class="timestamp">27. 10. 2015, 08:00</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="notification">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="media-object">
+                                                <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+
+                                            <p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+
+                                            <div class="notification-meta">
+                                                <small class="timestamp">27. 10. 2015, 08:00</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="notification">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="media-object">
+                                                <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+
+                                            <p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+
+                                            <div class="notification-meta">
+                                                <small class="timestamp">27. 10. 2015, 08:00</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="notification">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="media-object">
+                                                <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+
+                                            <p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+
+                                            <div class="notification-meta">
+                                                <small class="timestamp">27. 10. 2015, 08:00</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="notification">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="media-object">
+                                                <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+
+                                            <p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+
+                                            <div class="notification-meta">
+                                                <small class="timestamp">27. 10. 2015, 08:00</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="notification">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div class="media-object">
+                                                <!-- <img src="../images/common/empty-loudhaler-placeholder.svg" class="img-circle" alt="Name"> -->
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <strong class="notification-title"><a href="#">James Bond</a> resolved <a href="#">B-007 - Desolve Spectre organization</a></strong>
+
+                                            <div class="notification-meta">
+                                                <small class="timestamp">1. 9. 2015, 08:00</small>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+                            </div>
+                        </ul>
+
+
+
+                    </li>
+                    <li id="nav-logout">
+                        <a href="/logout">
+                            <i class="fa fa-lock" aria-hidden="true"></i> Logout
+                        </a>
+                    </li>
                 </ul>
+
 
             </div>
 
@@ -84,28 +440,43 @@
     </nav>
 
 
-    <div class="container top">
+    <div class="container main-container col-lg-12">
 
-        <!-- Carousel -->
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 carousel-section">
-            <div id="carousel-example-generic" class="carousel slide img-thumbnail carousel-window" data-ride="carousel" data-interval="false">
+        <row>
+            <div class="panel panel-default title-panel" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin: 15px 15px 20px 15px;" align="center">
 
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                </ol>
+                <img src="../images/item/gift.svg" style="display: block; margin-left: auto; margin-right: auto;padding: 10px 0; width: 100px;">
+                <p style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; padding-top: 15px; font-weight: bold; color: white; ">
+                    <%= item.title %>
+                </p>
+                <h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"> <i class="fa fa-heart" aria-hidden="true" style="color: #EA5455;"></i> <%= item.name %></h4>
+            </div>
+        </row>
 
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner photos" role="listbox">
-                    <div class="item active">
-                        <img src="https://d24uwljj8haz6q.cloudfront.net/<%= item.imageLocation %>" alt="...">
-                        <div class="carousel-caption">
-                            <%= item.title %>
-                        </div>
-                    </div>
-                    <!-- <div class="item">
+        <row>
+            <!-- <div class="col-xs-12 col-sm-3 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-3 col-lg-offset-1"> -->
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="padding: 0 0;">
+                <!-- Carousel -->
+                <row>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 carousel-section">
+                        <div id="carousel-example-generic" class="carousel slide img-thumbnail carousel-window" data-ride="carousel" data-interval="false">
+
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                            </ol>
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner photos" role="listbox">
+                                <div class="item active">
+                                    <img id="display-item" src="https://d24uwljj8haz6q.cloudfront.net/<%= item.imageLocation %>" alt="...">
+                                    <div class="carousel-caption">
+
+                                    </div>
+                                </div>
+                                <!-- <div class="item">
                         <img src="https://d24uwljj8haz6q.cloudfront.net/<%= item.imageLocation %>" alt="...">
                         <div class="carousel-caption">
                             <%= item.title %>
@@ -117,20 +488,20 @@
                             <%= item.title %>
                         </div>
                     </div> -->
-                </div>
+                            </div>
 
-                <!-- Controls -->
-                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
 
-            </div>
-            <div>
+                        </div>
+                        <!-- <div>
                 <table style="width:100%">
                     <tr>
                         <th>Name</th>
@@ -160,110 +531,156 @@
                     <input type="text" name="message"><br>
                     <input type="submit" value="Submit">
                 </form>
-            </div>
-        </div>
+            </div> -->
+                    </div>
+                </row>
+                <row>
+                    <div style="padding: 0 15px;">
+                        <div class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12 profile-panel" style="margin-top: 15px;">
+                            <div class="panel-body" style="padding: 20px 0;">
 
-        <!-- Information Panels -->
-        <div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-1 col-md-5 col-md-offset-1 col-lg-5 col-lg-offset-1 control-section">
-
-            <div class="row">
-                <div class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12 profile-panel">
-                    <div class="panel-body">
-
-                        <div class="row">
-                            <div class="profile-header-container col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <div class="profile-header-img">
-                                    <img class="img-circle" src="http://graph.facebook.com/<%= item.fbID %>/picture?type=large" />
-                                    <!-- badge -->
-                                    <div class="rank-label-container">
-                                        <span class="label label-default rank-label"><%= karma %> karma</span>
+                                <div class="row">
+                                    <div class="profile-header-container col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="profile-header-img">
+                                            <img class="img-circle" src="http://graph.facebook.com/<%= item.fbID %>/picture?type=large" />
+                                            <!-- badge -->
+                                            <div class="rank-label-container">
+                                                <span class="label label-default rank-label"><%= karma %> gifts</span>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="profile-name-container col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <p class="owner-name"> <a href="/profile/<%= item.giverID %>"><b> <%= item.name %> </b></a> </p>
+                                        <small class="owner-location"> Singapore </small>
+                                    </div>
+                                </div>
+
+                                <div class="row button-group">
+                                    <!-- Manage different rights for users -->
+                                    <center>
+                                        <% if (loggedIn && mine && item.takerID === null) { %>
+                                            <a href="/api/delete/<%= item.itemID %>" class="btn btn-danger raised">Delete</a>
+
+                                            <% if (item.numWants > 0) { %>
+                                                <a type="button" class="btn btn-warning raised" href="/api/give/<%= item.itemID %>"> Random Draw</a>
+                                                <a type="button" class="btn btn-success raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Pick <span class="caret"></span>
+                                    </a>
+                                                <ul class="dropdown-menu scrollable-menu dropdown-menu-right" role="menu">
+                                                    <% for (var i=0; i<manual.length; i++) { %>
+                                                        <li>
+                                                            <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">
+                                                                <%= manual[i].name %>
+                                                            </a>
+                                                        </li>
+                                                        <% } %>
+                                                </ul>
+                                                <% } %>
+                                                    <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
+                                                        <a type="button" class="btn btn-primary message-button raised" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Owner</a>
+                                                        <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
+                                                            <a type="button" class="btn btn-primary message-button raised" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.takerFbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Recipient</a>
+                                                            <% } %>
+                                    </center>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </row>
+                <row>
+                    <div style="padding: 0 15px;" align="center">
+                        <div class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 5px;">
+                            <div class="panel-body" style="padding: 15px 0;">
+                                <h4>Accepted Delivery Mode</h4>
+                                <h5>
+                                    <span class="label label-success">Free Postage</span>
+                                    <span class="label label-info">Meet Up</span>
+                                    <span class="label label-warning">Paid Postage</span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
 
-                        <div class="row">
-                            <div class="profile-name-container col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <p class="owner-name"> <a href="/profile/<%= item.giverID %>"><b> <%= item.name %> </b></a> </p>
-                                <small class="owner-location"> Singapore </small>
+                </row>
+            </div>
+
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="padding: 0 0;">
+
+                <row>
+                    <div style="padding: 0 15px;">
+                        <div class="panel panel-default">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item">
+                                    <h4 class="list-group-item-heading">Title</h4>
+                                    <p class="list-group-item-text hide-overflow">
+                                        <%= item.title %>
+                                    </p>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <h4 class="list-group-item-heading">Description</h4>
+                                    <p class="list-group-item-text wrap">
+                                        <%= item.description %>
+                                    </p>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <h4 class="list-group-item-heading">Deadline</h4>
+                                    <p class="list-group-item-text">
+                                        <%= date %>
+                                            <div class="bs-callout bs-callout-warning" style="background-color: #547980; color: white;">
+                                                <% if (item.takerID === null && !expired) { %>
+                                                    <h4>Available</h4>
+                                                    <h5>This giveaway will end in 2 days and 4 hours time.</h5>
+                                                    <% } else if (item.takerID === null) { %>
+                                                        <h4>Expired</h4>
+                                                        <h5>This giveaway has ended.</h5>
+                                                        <% } else { %>
+                                                            <h4>Given Away</h4>
+                                                            <h5>This item has been given away to
+                                                        <a href="/profile/<%= item.takerId %>">
+                                                            <%= item.takerName%>
+                                                        </a>. </h5>
+                                                            <% } %>
+                                            </div>
+                                    </p>
+                                </a>
+                            </div>
+                            <div class="panel-footer">
+                                <row>
+                                    <h5 class="text-muted"> Last updated 1 hour ago
+                                    <% if (loggedIn && mine && !expired && item.takerID == null) { %>
+                                            <button style="display: inline; top-margin: -10px;"class="btn btn-default raised pull-right" data-toggle="modal" data-target="#editModal">Edit</button>
+                                            <% } %>
+                                        </h5>
+
+                                </row>
                             </div>
                         </div>
 
-                        <div class="row button-group">
-                            <!-- Manage different rights for users -->
-                            <center>
-                                <% if (loggedIn && mine && item.takerID === null) { %>
-                                    <a href="/api/delete/<%= item.itemID %>" class="btn btn-danger raised">Delete</a>
-
-                                    <% if (item.numWants > 0) { %>
-                                        <a type="button" class="btn btn-warning raised" href="/api/give/<%= item.itemID %>"> Random Draw</a>
-                                        <a type="button" class="btn btn-success raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Pick <span class="caret"></span>
-                                        </a>
-                                        <ul class="dropdown-menu scrollable-menu dropdown-menu-right" role="menu">
-                                            <% for (var i=0; i<manual.length; i++) { %>
-                                                <li>
-                                                    <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">
-                                                        <%= manual[i].name %>
-                                                    </a>
-                                                </li>
-                                                <% } %>
-                                        </ul>
-                                    <% } %>
-                                <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                                    <a type="button" class="btn btn-primary message-button raised" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Owner</a>
-                                <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                                    <a type="button" class="btn btn-primary message-button raised" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.takerFbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Recipient</a>
-                                <% } %>
-                            </center>
-                        </div>
                     </div>
-                </div>
-
+                </row>
             </div>
 
-            <!-- Item Captions Area -->
-            <div class="row">
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 class="panel-title pull-left"> Item Details
-
-                        </h5>
-                            <% if (loggedIn && mine && !expired && item.takerID == null) { %>
-                                <button class="btn btn-default raised pull-right" data-toggle="modal" data-target="#editModal">Edit</button>
-                            <% } %>
-                            <div class="clearfix"></div>
-                    </div>
-                    <div class="panel-body snag-num">
-                        <p class="hide-overflow"><b><u><%= item.title %></u></b><br/></p>
-                        <p class="wrap"><%= item.description %></p>
-                    </div>
-                </div>
-
-                <div class="bs-callout bs-callout-warning">
-                    <% if (item.takerID === null && !expired) { %>
-                        <h5>Giveaway Deadline</h5> This giveaway will end on <b><%= date %></b>.
-                    <% } else if (item.takerID === null) { %>
-                        <h5>Giveaway Deadline</h5> This giveaway has ended.
-                    <% } else { %>
-                        <h5>Giveaway Deadline</h5> This item has been given away to
-                        <a href="/profile/<%= item.takerId %>">
-                            <%= item.takerName%>
-                        </a>.
-                    <% } %>
-                </div>
-                <% if (!mine) { %>
-                    <% if (!loggedIn && !expired && item.takerID === null) { %>
-                        <a href="/login" class="btn btn-lg btn-primary btn-block raised"><span class="glyphicon glyphicon-gift"></span> <b> LOGIN TO SNAG</b> <span class="badge"><%= item.numWants %></span> </a>
+            <% if (!mine) { %>
+                <% if (!loggedIn && !expired && item.takerID === null) { %>
+                    <a href="/login" class="btn btn-lg btn-primary btn-block raised"><span class="glyphicon glyphicon-gift"></span> <b> LOGIN TO SNAG</b> <span class="badge"><%= item.numWants %></span> </a>
                     <% } else if (item.meWant === 1 && !expired && item.takerID === null) { %>
                         <a class="btn btn-lg btn-danger btn-block unsnag raised" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> UNSNAG</b> <span class="badge"><%= item.numWants %></span> </a>
-                    <% } else if (!expired && item.takerID === null) { %>
-                        <a class="btn btn-lg btn-primary btn-block snag raised" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> SNAG</b> <span class="badge"><%= item.numWants %></span> </a>
-                    <% } %>
-                <% } %>
-            </div>
-        </div>
+                        <% } else if (!expired && item.takerID === null) { %>
+                            <a class="btn btn-lg btn-primary btn-block snag raised" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> SNAG</b> <span class="badge"><%= item.numWants %></span> </a>
+                            <% } %>
+                                <% } %>
+
+    </div>
+
+
+
+
+
+    <!-- </div> -->
+    </row>
     </div>
 
     </div>
@@ -324,24 +741,31 @@
 
     <!-- Footer -->
     <footer>
-        <div class="container">
+        <div class="container footer-container">
             <div class="col-xs-10 col-xs-offset-1 text-center">
                 <hr class="xsall">
-                <ul class="col-xs-12 list-unstyled contact-list">
+                <!-- <ul class="col-xs-12 list-unstyled contact-list">
                     <li>
-                        <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 9223 4863
+                        <small><span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">giveforfreefeedback@gmail.com</a></small>
                     </li>
                     <li>
-                        <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">giveforfreefeedback@gmail.com</a>
+                        <small><span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span> : <a href="/privacy">Privacy Clause</a></small>
                     </li>
-                    <li>
-                        <span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span> : <a href="/privacy">Privacy Clause</a>
-                    </li>
-                </ul>
+                </ul> -->
+
+                <div class="col-xs-12 text-center" style="padding-bottom: 10px;">
+                    <small><span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true">  </span>  <a href="mailto:giveforfreefeedback@gmail.com"> giveforfreefeedback[at]gmail[dot]com</a></small>
+                    <br>
+                    <small><span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span>  <a href="/privacy"> Privacy Clause</a></small>
+
+                </div>
 
                 <div class="col-xs-12 text-center">
                     <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
                 </div>
+
+
+
             </div>
         </div>
     </footer>
