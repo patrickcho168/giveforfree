@@ -42,7 +42,7 @@ function addRealViews(html, url) {
                 $.each(data, function(key, value) {
                     html = '<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 20px;">';
                     // Main Item Photo
-                    html += '<div class="thumbnail" style="padding: 0; border: none;" align="center">';
+                    html += '<a href="/item/' + value.itemID + '" target="_blank"><div class="thumbnail" style="padding: 0; border: none;" align="center">';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
                     html += '<div class="box"><img style="display: block;" class="clipped" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '" onerror="handleBrokenImage(this);"></div>';
                     // Item Title
@@ -61,7 +61,7 @@ function addRealViews(html, url) {
                     }
 
                     html += '</div>';
-                    html += '</div>';
+                    html += '</div></a>';
                     html += '</div>';
 
 
