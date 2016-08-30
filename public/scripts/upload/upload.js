@@ -145,8 +145,8 @@ function previewFile() {
                         height: 200,
                     },
                     boundary: {
-                        width: 300,
-                        height: 300
+                        width: 240,
+                        height: 240,
                     },
                     enforceBoundary: false,
                     enableExif: true,
