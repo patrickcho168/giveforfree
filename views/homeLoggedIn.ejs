@@ -116,73 +116,11 @@
 							<i class="fa fa-user" aria-hidden="true"></i> Profile
 						</a>
 					</li>
-					<li class="dropdown dropdown-notifications">
-						<a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-							<i data-count="2" class="fa fa-bell" aria-hidden="true"></i> Notifications <span class="badge">0</span>
-						</a>
-						<ul class="dropdown-menu hidden-xs" aria-labelledby="dropdownMenu1">
-							<li class="notification">
-								<div class="media">
-									<div class="media-left">
-										<div class="media-object">
-											<!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
-										</div>
-									</div>
-									<div class="media-body">
-										<strong class="notification-title"><a href="#">Dave Lister</a> commented on <a href="#">DWARF-13 - Maintenance</a></strong>
-										<p class="notification-desc">I totally don't wanna do it. Rimmer can do it.</p>
 
-										<div class="notification-meta">
-											<small class="timestamp">27. 11. 2015, 15:00</small>
-										</div>
-									</div>
-								</div>
-							</li>
+					<!-- Notifications -->
+					<%- include('notification'); %>
+					<!-- End Notifications -->
 
-							<li class="notification">
-								<div class="media">
-									<div class="media-left">
-										<div class="media-object">
-											<!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
-										</div>
-									</div>
-									<div class="media-body">
-										<strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
-
-										<p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
-
-										<div class="notification-meta">
-											<small class="timestamp">27. 10. 2015, 08:00</small>
-										</div>
-
-									</div>
-								</div>
-							</li>
-
-							<li class="notification">
-								<div class="media">
-									<div class="media-left">
-										<div class="media-object">
-											<!-- <img src="../images/common/empty-loudhaler-placeholder.svg" class="img-circle" alt="Name"> -->
-										</div>
-									</div>
-									<div class="media-body">
-										<strong class="notification-title"><a href="#">James Bond</a> resolved <a href="#">B-007 - Desolve Spectre organization</a></strong>
-
-										<div class="notification-meta">
-											<small class="timestamp">1. 9. 2015, 08:00</small>
-										</div>
-
-									</div>
-								</div>
-							</li>
-							<div class="dropdown-footer text-center">
-								<a href="#">View All</a>
-							</div>
-						</ul>
-
-
-					</li>
 					<li id="nav-logout">
 						<a href="/logout">
 							<i class="fa fa-lock" aria-hidden="true"></i> Logout
@@ -225,7 +163,7 @@
 	</div>
 
 	<!-- Scroll Container -->
-	<div class="infinite-scroll-container col-xs-10 col-xs-offset-1 grid" id="infinite-scroll-container">
+	<div class="infinite-scroll-container  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1" id="infinite-scroll-container" align="center">
 		<!-- <div class="infinite-scroll-container col-xs-10 col-xs-offset-1 grid" id="infinite-scroll-container"> -->
 		<!-- <div>
 			<ul>
@@ -264,17 +202,21 @@
 		</div> -->
 
 		<!-- <div class="row" id="infinite-scroll-row"> -->
-		<p align="center" id="placeholder-main">
-			<img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px; margin-top: -100px;" /><br>
-			There's nothing in the community...
-			<br> Start contributing now! </p>
+
+			<div id="placeholder-main" class="col-lg-10 col-lg-offset-1">
+				<row><img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px; display: block;"/>
+				</row>
+					<p style="width: 100%;">There is nothing in the community.
+					<br> Start contributing now! </p>
+			</div>
+
 		<!-- </div> -->
 	</div>
 
 	<!-- Footer -->
 	<footer>
 		<div class="container footer-container">
-			<div class="col-xs-10 col-xs-offset-1 text-center">
+			<div class="text-center">
 				<hr class="xsall">
 				<!-- <ul class="col-xs-12 list-unstyled contact-list">
                     <li>

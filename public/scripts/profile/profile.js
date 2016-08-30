@@ -204,6 +204,7 @@ $(document).ready(function() {
             $(this).removeClass("animated bounceIn");
         }
     );
+
 });
 
 $(window).scroll(function() {
@@ -229,4 +230,4 @@ $(window).load(function() {
         var imgClass = (this.width / this.height > 1) ? 'wide' : 'tall';
         $(this).addClass(imgClass);
     })
-})
+});

@@ -436,7 +436,8 @@ module.exports = function(app) {
                                 karma: gifted[0].numGiven * 10,
                                 manual: data2,
                                 loggedIn: loggedIn,
-                                comment: commentData.models
+                                comment: commentData.models,
+                                notification: req.session.notification
                             });
                         });
                     } else {
@@ -450,7 +451,8 @@ module.exports = function(app) {
                             expired: expiredMin > 0,
                             karma: gifted[0].numGiven * 10,
                             loggedIn: loggedIn,
-                            comment: commentData.models
+                            comment: commentData.models,
+                            notification: req.session.notification
                         });
                     }
                 });
