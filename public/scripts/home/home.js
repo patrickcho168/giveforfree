@@ -17,6 +17,8 @@ var urlAJAX = '/api/allItems/' + 0 + '/' + numItems;;
 // AJAX Infinite Scrolling Function
 function addRealViews(html, url) {
 
+    console.log("entered add views logic ... time for AJAX!");
+
     // AJAX to fetch JSON objects from server
     $.ajax({
         url: url,
@@ -26,6 +28,8 @@ function addRealViews(html, url) {
 
         // Success Callback
         success: function(data) {
+
+            console.log("ajax succeeded!");
             flag = true;
 
             if (data.length > 0) {
@@ -68,11 +72,14 @@ function addRealViews(html, url) {
                 triggered = 0;
 
             } else {
+                console.log("no data to load already");
                 // alert('No more data to show');
                 // no_data = true;
             }
         },
+
         error: function(data) {
+            console.log ("error loading");
             canAJAX = true;
             // no_data = false;
             triggered = 0;
@@ -85,16 +92,21 @@ function addRealViews(html, url) {
 // On loaded webpage ...
 $(document).ready(function() {
 
+    console.log("document ready... time for first load");
     addRealViews(html, urlAJAX);
 
 });
 
 $(window).scroll(function() {
+    console.log("i am scrolling ... weeeeee!");
     if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+
         // no_data = true;
         triggered += 1;
+        console.log("booooing");
 
         if (canAJAX && triggered == 1) {
+            console.log("time for ajax!!!");
             canAJAX = false;
             urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
             addRealViews(html, urlAJAX);
