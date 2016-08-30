@@ -36,6 +36,45 @@
     <script>
         var loggedIn = <%= loggedIn %>;
     </script>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '<%= appId %>',
+                xfbml: true,
+                version: 'v2.7'
+            });
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        var toId;
+        <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
+            toId = <%= item.fbID %>;
+        <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
+            toId = <%= item.takerFbID %>;
+        <% } %>
+
+        $( document ).ready(function() {
+            if ( $( "#facebook-message" ).length ) {
+                document.getElementById('facebook-message').onclick = function() {
+                    FB.ui({
+                        method: 'send',
+                        link: '<%= domain %>/item/<%= item.itemID %>',
+                        to: toId
+                    }, function(response){});
+                }
+            }
+        })
+    </script>
     <script src="../scripts/common/common.js"></script>
     <script src="../scripts/item/item.js"></script>
 
@@ -580,10 +619,10 @@
                                                 </ul>
                                                 <% } %>
                                                     <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                                                        <a type="button" class="btn btn-primary message-button raised" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.fbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Owner</a>
-                                                        <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                                                            <a type="button" class="btn btn-primary message-button raised" href="https://www.facebook.com/dialog/send?app_id=<%= appId %>&link=<%= domain %>/item/<%= item.itemID %>&to=<%= item.takerFbID %>&redirect_uri=/item/<%= item.itemID %>" target="_blank">Message Recipient</a>
-                                                            <% } %>
+                                                        <button class="btn btn-primary message-button raised" id="facebook-message">Message Owner</a>
+                                                    <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
+                                                        <button class="btn btn-primary message-button raised" id="facebook-message">Message Recipient</a>
+                                                    <% } %>
                                     </center>
                                 </div>
                             </div>

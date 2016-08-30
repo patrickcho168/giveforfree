@@ -86,6 +86,7 @@ app.use(passport.session());
 app.use(fbLogin.onlyNotLogout(fbLogin.facebookCache));
 app.use(fbLogin.onlyNotLogout(notification.getNotifications))
 fbLogin.route(app);
+notification.route(app);
 upload(app);
 profile(app);
 freeItem(app);
