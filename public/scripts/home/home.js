@@ -1,76 +1,81 @@
-// AJAX Infinite Scroll Accessory Function
+// Views to append into the scroll container
 var html = '';
-var triggered = 0;
-var lastItemId = 0;
-var numItems = 6;
-var no_data = true;
-var flag = false;
-// AJAX Address
-var urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
-console.log(urlAJAX);
 
-function addRealViews(html, urlAJAX) {
+// Boolean to record the number of times the scroll hits the floor
+var triggered = 0;
+
+// Tracker
+var lastItemId = 0;
+
+// Number of items to load every AJAX
+var numItems = 9;
+
+var canAJAX = false;
+
+var urlAJAX = null;
+
+// AJAX Infinite Scrolling Function
+function addRealViews(html, url) {
+
     // AJAX to fetch JSON objects from server
     $.ajax({
-        url: urlAJAX,
+        url: url,
         dataType: "json",
         method: 'get',
         cache: false,
+
+        // Success Callback
         // Success Callback
         success: function(data) {
             flag = true;
 
             if (data.length > 0) {
 
-                $('#placeholder-main').hide();
-
                 // Increment trackers to track load state
                 lastItemId = data[data.length - 1].itemID;
 
+
                 /*** Factory for views ***/
-
                 $.each(data, function(key, value) {
-                    html = '<div class="item grid-item">';
+                    html = '<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 20px;">';
                     // Main Item Photo
-                    html += '<div class="thumbnail">';
-                    html += '<a href="/item/' + value.itemID + '" target="_blank" class=\"item-link\">';
+                    html += '<div class="thumbnail" style="padding: 0; border: none;" align="center">';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
-                    html += '<img style="display: block;" class="clipped" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
+                    html += '<div class="box"><img style="display: block;" class="clipped" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '" onerror="handleBrokenImage(this);"></div>';
                     // Item Title
-                    html += '<div class="caption-area">';
-                    html += '<p class="item-header hide-overflow"><a href="/item/' + value.itemID + '" target="_blank">' + value.title + '</p>';
+                    html += '<div class="caption-area" align="left">';
+                    html += '<br/><h6 class="item-header hide-overflow" style="padding-left: 10px; padding-top: 10px;"><a href="/item/' + value.itemID + '" target="_blank">' + value.title + '</a></h6>';
                     // Item Owner
-                    html += '<p class="item-author hide-overflow"><a href="/profile/' + value.userID + '" target="_blank">' + value.name + '</a></p>';
+                    // html += '<p class="item-author">' + value.ownedBy.name + '</p>';
                     // Item Caption
-                    // html += '<p class="item-caption">' + value.description + '</p>';
-                    // Item Call-to-Action Snag Button
-                    if (!loggedIn) {
-                        html += '<div class="col-lg-12 text-center call-button"><a href="/login" class="btn btn-sm btn-primary raised bold-link" role="button">LOGIN TO SNAG</a></div>';
-                    } else if (value.meWant > 0) {
-                        html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-sm btn-danger raised unsnag bold-link" itemId="' + value.itemID + '" role="button">UNSNAG</a></div>';
-                    } else {
-                        html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-sm btn-primary raised snag bold-link" itemId="' + value.itemID + '" role="button">SNAG</a></div>';
-                    }
+                    html += '<row><p class="item-author hide-overflow"><img class="col-lg-4" src="http://graph.facebook.com/' + value.fbId + '/picture?type=large" style="margin: auto 10px; padding: 0; width: 30px; height: 30px; border-radius:50%;"><a href="/profile/' + value.userID + '" target="_blank">' + value.name + '</a></p></row>';
                     // Item Snag Counts
-                    html += '<small class="item-snags text-muted">' + value.numWants + (value.numWants == 1 ? ' person' : ' people') + ' snagged this.</small>';
-                    html += '</div>';
-                    html += '</a>';
-                    html += '</div>';
-                    html += '</div>';
-                    $('#infinite-scroll-row').append(html);
-                });
+                    if (value.numWants > 1) {
+                        html += '<small class="item-snags pull-right" align="right" style="padding-right: 10px; padding-top: 0; padding-bottom: 10px;">' + value.numWants + ' people want this.</small>';
+                    } else {
+                        html += '<small class="item-snags pull-right" align="right" style="padding-right: 10px; padding-top: 0;padding-bottom: 10px;">' + 'Be the first to check this out!</small>';
 
+                    }
+
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+
+
+                    $('#infinite-scroll-container').append(html);
+                    $('#placeholder-main').hide();
+
+                });
                 triggered = 0;
 
             } else {
                 // alert('No more data to show');
-                no_data = false;
+                // no_data = true;
             }
         },
         error: function(data) {
-            flag = true;
-            no_data = false;
-
+            canAJAX = true;
+            // no_data = false;
             triggered = 0;
             // console.log(data);
             // alert('Something went wrong, Please contact administrator.');
@@ -81,190 +86,32 @@ function addRealViews(html, urlAJAX) {
 // On loaded webpage ...
 $(document).ready(function() {
 
-    'use strict';
-
-    // Masonry Loading
-    // var $container = $('.grid');
-    // $container.masonry({
-    //     itemSelector: '.grid-item',
-    //     columnWidth: 400
-    // });
-
-    // Images Loaded
-    // $container.imagesLoaded.progress(function() {
-    //     $container.masonry({
-    //         itemSelector: '.grid-item',
-    //         columnWidth: 400
-    //     });
-    //
-    // });
-
-    // FAB Navigation Logic
-    $(".cd-main-nav a").on("click", function() {
-
-        // Get the current tab
-        var currentTab = $(this).parent().attr('id');
-
-        // Logic for navigation by tabs
-        switch (currentTab) {
-            case 'tab-create':
-                window.location.href = '/upload';
-                break;
-
-            default:
-                //...
-        }
-
-        // Animation
-        $('.cd-nav-trigger').toggleClass('menu-is-open');
-        $('#cd-nav').find('#cd-main-nav ul').off('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend').toggleClass('is-visible');
-
-    });
-
-    // AJAX Settings
-    $(".nav a").on("click", function() {
-
-        // Selection
-        $(".nav").find(".active").removeClass("active");
-        $(this).parent().addClass("active");
-
-    });
-
-    // Want|Snagging
-    $(document).on("click", ".snag", function() {
-        var itemId = $(this).attr('itemId');
-        // console.log("Item", itemId, "has been snagged");
-
-        // Change text
-        $(this).text("UNSNAG");
-
-        // Change color
-        $(this).removeClass("btn-primary");
-        $(this).addClass("btn-danger");
-
-        // Change type
-        $(this).removeClass("snag");
-        $(this).addClass("unsnag");
-
-        // Increment number of people snagging
-        var snag_count = parseInt($(this).parent().siblings('small').text()) + 1;
-        $(this).parent().siblings('small').text(String(snag_count) + (snag_count === 1 ? ' person' : ' people') + ' snagged this.');
-
-        // Send post request
-
-        // Should check for success
-        $.post("/api/want/" + itemId)
-            .done(function() {
-
-            })
-            .fail(function() {
-
-            })
-            .always(function() {
-
-            });
-    });
-
-    // Unwant|Unsnagging
-    $(document).on("click", ".unsnag", function() {
-        var itemId = $(this).attr('itemId');
-        // console.log("Item", itemId, "has been unsnagged");
-
-        // Change text
-        $(this).text("SNAG");
-
-        // Change color
-        $(this).removeClass("btn-danger");
-        $(this).addClass("btn-primary");
-
-        // Change type
-        $(this).removeClass("unsnag");
-        $(this).addClass("snag");
-
-        // Decrement number of people snagging
-        var snag_count = parseInt($(this).parent().siblings('small').text()) - 1;
-        $(this).parent().siblings('small').text(String(snag_count) + (snag_count === 1 ? ' person' : ' people') + ' snagged this.');
-
-        // Send post request
-        $.post("/api/unwant/" + itemId)
-            .done(function() {
-
-            })
-            .fail(function() {
-
-            })
-            .always(function() {
-
-            });
-    });
+    addRealViews(html, urlAJAX);
 
 });
 
-// Infinite Scroll
-// Test Mode
-var test = false;
-
-// Preload with views
-addRealViews(html, urlAJAX);
-
-// AJAX Server-End URL
-
-
-// Infinite Scroll
 $(window).scroll(function() {
-
-    // Trigger the loading
     if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-        no_data = true;
-
-        // Do not entertain multiple identical AJAX calls
+        // no_data = true;
         triggered += 1;
 
-        // To call AJAX
-        if (flag && no_data && !test && triggered == 1) {
-            flag = false;
-
-            var activeTab = $(".navbar-nav").find(".active");
-            var name = "null";
-
-            var ajaxRequest = null;
-
-            if (activeTab != null) {
-                name = activeTab.attr('id');
-            }
-
-            // Construct AJAX Request based on type
-            // console.log(name);
-            // console.log(lastItemId);
-
-            switch (name) {
-                case 'nav-feed':
-                    urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
-                    ajaxRequest = null;
-                    break;
-
-                case 'nav-discover':
-                    urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
-                    ajaxRequest = null;
-                    break;
-
-                case 'nav-gift':
-                    ajaxRequest = null;
-                    break;
-
-                default:
-                    urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
-                    ajaxRequest = null;
-                    break;
-
-            }
-
-            // AJAX to fetch JSON objects from server
-            // console.log(lastItemId);
-            if (lastItemId >= 1) {
-                // console.log(urlAJAX);
-                addRealViews(html, urlAJAX);
-            }
+        if (canAJAX && triggered == 1) {
+            canAJAX = false;
+            urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
+            addRealViews(html, urlAJAX);
         }
     }
+});
+
+function handleBrokenImage(image) {
+    image.onerror = "";
+    image.src = "/images/home/default-placeholder.png";
+    return true;
+}
+
+$(window).load(function() {
+    $('.thumbnail').find('img').each(function() {
+        var imgClass = (this.width / this.height > 1) ? 'wide' : 'tall';
+        $(this).addClass(imgClass);
+    })
 });

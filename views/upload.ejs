@@ -82,12 +82,12 @@
 <body>
 
     <div id="loader-wrapper">
-			<div id="loader"></div>
+        <div id="loader"></div>
 
-			<div class="loader-section section-left"></div>
-			<div class="loader-section section-right"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
 
-		</div>
+    </div>
 
     <!-- Navigation Bar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -224,9 +224,9 @@
 
         <div class="panel panel-default title-panel" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin: 15px 15px 20px 15px;" align="center">
 
-                <img src="../images/upload/heart.svg" style="display: block; margin-left: auto; margin-right: auto;  padding: 10px 0; max-width: 100px;">
-                <p style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; font-weight: bold; color: white; "> Contribute a Gift </p>
-                <h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"> Start today! </h4>
+            <img src="../images/upload/heart.svg" style="display: block; margin-left: auto; margin-right: auto;  padding: 10px 0; max-width: 100px;">
+            <p style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; font-weight: bold; color: white; "> Contribute a Gift </p>
+            <h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"> Start today! </h4>
         </div>
 
         <form action="/upload" method="post" id="new-gift-form" data-toggle="validator">
@@ -238,167 +238,167 @@
                 <% });
             } %>
 
-            <% if (locals.success_messages) {
+                    <% if (locals.success_messages) {
                 success_messages.forEach(function(message) { %>
-                <div class="alert alert-success"><strong>Good job: </strong>
-                    <%= message %>
-                </div>
-                <% });
+                        <div class="alert alert-success"><strong>Good job: </strong>
+                            <%= message %>
+                        </div>
+                        <% });
             } %>
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
-                        <div class="panel panel-default">
-                            <div class="panel-body" style="padding: 5px">
-                                <div class="input-group image-preview">
-                                    <!-- <input class="form-control image-preview-filename" type="text" name="input-file-preview" required> -->
-                                    <!-- don't give a name === doesn't send on POST/GET -->
-                                    <!-- <span class="input-group-btn"> -->
-                                    <!-- image-preview-clear button -->
-                                    <!-- <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                                <div class="panel panel-default">
+                                    <div class="panel-body" style="padding: 5px">
+                                        <div class="input-group image-preview">
+                                            <!-- <input class="form-control image-preview-filename" type="text" name="input-file-preview" required> -->
+                                            <!-- don't give a name === doesn't send on POST/GET -->
+                                            <!-- <span class="input-group-btn"> -->
+                                            <!-- image-preview-clear button -->
+                                            <!-- <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
                                           <span class="glyphicon glyphicon-remove"></span>
                                     <span class="image-preview-input-title">Clear</span>
 
                                     </button> -->
-                                    <a class="btn btn-default image-preview-input">
-                                        <span class="glyphicon glyphicon-picture"></span>
-                                        <span>Browse</span>
-                                        <input type="file" onchange="previewFile()" accept="image/png, image/jpeg, image/gif" name="input-file-cropped" style="height: 100%;" id="upload-trigger" />
-                                        <!-- rename it -->
-                                    </a>
-                                </div>
+                                            <a class="btn btn-default image-preview-input">
+                                                <span class="glyphicon glyphicon-picture"></span>
+                                                <span>Browse</span>
+                                                <input type="file" onchange="previewFile()" accept="image/png, image/jpeg, image/gif" name="input-file-cropped" style="height: 100%;" id="upload-trigger" />
+                                                <!-- rename it -->
+                                            </a>
+                                        </div>
 
-                                <div class="row">
-                                    <div class="image-crop text-center" style="display: none;">
-                                        <div id="image" style="padding-bottom: 0; padding-top: 15px;"></div>
-                                        <div style="margin-bottom: 15px; margin-top: -5px;">
-                                            <a class="image-confirm btn btn-sm btn-success bold-link">Crop Image</a>
+                                        <div class="row">
+                                            <div class="image-crop text-center" style="display: none;">
+                                                <div id="image" style="padding-bottom: 0; padding-top: 15px;"></div>
+                                                <div style="margin-bottom: 15px; margin-top: -5px;">
+                                                    <a class="image-confirm btn btn-sm btn-success bold-link">Crop Image</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <a id="image-holder" onclick="triggerUpload()">
+                                            <div align="center">
+                                                <!-- <a id="image-placeholder"> -->
+                                                <span class="glyphicon glyphicon-upload" style="font-size: 200px;"></span>
+                                                <h3> Click to upload an image </h3>
+                                                <p> Upload and crop an image of the item ... </p>
+                                                <!-- </a> -->
+                                            </div>
+                                        </a>
+                                        <div id="image" style="display: none;">
                                         </div>
                                     </div>
                                 </div>
 
-                                <a id="image-holder" onclick="triggerUpload()">
-                                    <div align="center">
-                                        <!-- <a id="image-placeholder"> -->
-                                        <span class="glyphicon glyphicon-upload" style="font-size: 200px;"></span>
-                                        <h3> Click to upload an image </h3>
-                                        <p> Upload and crop an image of the item ... </p>
-                                        <!-- </a> -->
-                                    </div>
-                                </a>
-                                <div id="image" style="display: none;">
-                                </div>
+
+
                             </div>
-                        </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
+                                <div class="panel panel-default">
+                                    <div class="list-group">
+                                        <a class="list-group-item">
+                                            <h4 class="list-group-item-heading"><b>What are you giving?</b></h4>
+                                            <p class="list-group-item-text">
+                                                <input type="text" class="input-txt" name="title" placeholder="Item name" maxlength="50" autocomplete="off" required>
+                                            </p>
+                                        </a>
+                                        <a class="list-group-item">
+                                            <h4 class="list-group-item-heading"><b>Describe the item you are giving!</b></h4>
+                                            <p class="list-group-item-text">
+                                                <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description" autocomplete="off" data-trigger="focus" id="description-field" required></textarea>
+                                            </p>
+                                        </a>
+                                        <a class="list-group-item">
+                                            <h4 class="list-group-item-heading"><b>When do you want to end this giveaway?</b></h4>
+                                            <p class="list-group-item-text">
+                                                <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" required>
+                                            </p>
+                                        </a>
+                                        <a class="list-group-item">
+                                            <h4 class="list-group-item-heading"><b>Which category does your item belong to?</b></h4>
+                                            <select id="input-tags" name="categories[]" multiple class="categories has-options" style="width:70%" placeholder="Select categories...">
+                                                <option value="">Select categories...</option>
+                                                <option value="clothes">clothes</option>
+                                                <option value="accessories">accessories</option>
+                                                <option value="furniture & home">furniture & home</option>
+                                                <option value="parenting">parenting</option>
+                                                <option value="health">health</option>
+                                                <option value="beauty">beauty</option>
+                                                <option value="kitchen appliances">kitchen appliances</option>
+                                                <option value="gardening">gardening</option>
+                                                <option value="property">property</option>
+                                                <option value="design & craft">design & craft</option>
+                                                <option value="electronics">electronics</option>
+                                                <option value="sports">sports</option>
+                                                <option value="photography">photography</option>
+                                                <option value="antiques">antiques</option>
+                                                <option value="toys">toys</option>
+                                                <option value="games">games</option>
+                                                <option value="music">music</option>
+                                                <option value="tickets & vouchers">tickets & vouchers</option>
+                                                <option value="auto accessories">auto accessories</option>
+                                                <option value="books">books</option>
+                                                <option value="stationeries">stationeries</option>
+                                                <option value="textbooks">textbooks</option>
+                                                <option value="notes">notes</option>
+                                                <option value="pets">pets</option>
+                                                <option value="other">other</option>
+                                            </select>
+                                        </a>
+                                        <a class="list-group-item">
+                                            <h4 class="list-group-item-heading"><b>How would you like the person receiving to collect the item?</b></h4>
 
+                                            <div class="checkbox checkbox-primary checkbox-circle row">
+                                                <input type="checkbox" id="meet">
+                                                <label class="large-label" for="meet">
+                                                    Meet and collect
+                                                </label>
 
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <input type="checkbox" id="free">
+                                                <label class="large-label" for="free">
+                                                    Postage service </label>
 
-                        <div class="panel panel-default">
-                            <div class="list-group">
-                                <a href="#" class="list-group-item">
-                                    <h4 class="list-group-item-heading"><b>What are you giving?</b></h4>
-                                    <p class="list-group-item-text">
-                                        <input type="text" class="input-txt" name="title" placeholder="Item name" maxlength="50" autocomplete="off" required>
-                                    </p>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <h4 class="list-group-item-heading"><b>Describe the item you are giving!</b></h4>
-                                    <p class="list-group-item-text">
-                                        <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description" autocomplete="off" data-trigger="focus" id="description-field" required></textarea>
-                                    </p>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <h4 class="list-group-item-heading"><b>When do you want to end this giveaway?</b></h4>
-                                    <p class="list-group-item-text">
-                                        <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" required>
-                                    </p>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <h4 class="list-group-item-heading"><b>Which category does your item belong to?</b></h4>
-                                    <select id="input-tags" name="categories[]" multiple class="categories" style="width:70%" placeholder="Select item categories...">
-                                        <option value="">Select item categories...</option>
-                                        <option value="clothes">clothes</option>
-                                        <option value="accessories">accessories</option>
-                                        <option value="furniture & home">furniture & home</option>
-                                        <option value="parenting">parenting</option>
-                                        <option value="health">health</option>
-                                        <option value="beauty">beauty</option>
-                                        <option value="kitchen appliances">kitchen appliances</option>
-                                        <option value="gardening">gardening</option>
-                                        <option value="property">property</option>
-                                        <option value="design & craft">design & craft</option>
-                                        <option value="electronics">electronics</option>
-                                        <option value="sports">sports</option>
-                                        <option value="photography">photography</option>
-                                        <option value="antiques">antiques</option>
-                                        <option value="toys">toys</option>
-                                        <option value="games">games</option>
-                                        <option value="music">music</option>
-                                        <option value="tickets & vouchers">tickets & vouchers</option>
-                                        <option value="auto accessories">auto accessories</option>
-                                        <option value="books">books</option>
-                                        <option value="stationeries">stationeries</option>
-                                        <option value="textbooks">textbooks</option>
-                                        <option value="notes">notes</option>
-                                        <option value="pets">pets</option>
-                                        <option value="other">other</option>
-                                    </select>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <h4 class="list-group-item-heading"><b>How would you like the person receiving to collect the item?</b></h4>
+                                                <!-- <input type="checkbox" id="paid">
+                                                <label class="large-label" for="paid">
+                                                    Collector to pay </label> -->
 
-                                    <div class="checkbox checkbox-primary checkbox-circle row">
-                                        <input type="checkbox" id="meet">
-                                        <label class="large-label" for="meet">
-                                            Meet and collect
-                                        </label>
-
-                                        <input type="checkbox" id="free">
-                                        <label class="large-label" for="free">
-                                            Free postage service </label>
-
-                                        <input type="checkbox" id="paid">
-                                        <label class="large-label" for="paid">
-                                            Collector to pay </label>
-
-                                        <!-- <label class="large-label">
+                                                <!-- <label class="large-label">
                                             <input id="meet" type="checkbox"> Meet and collect
                                         </label> -->
-                                        <!-- <label class="large-label">
+                                                <!-- <label class="large-label">
                                             <input id="free" type="checkbox"> Free postage service
                                         </label>
                                         <label class="large-label">
                                             <input id="paid" type="checkbox"> Collector to pay for postage
                                         </label> -->
+                                            </div>
+
+                                        </a>
+                                        <a class="list-group-item">
+
+                                            <div class="checkbox checkbox-primary checkbox-circle row">
+                                                <input type="checkbox" id="share">
+                                                <label class="large-label" for="share">
+                                                    <i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook
+                                                </label>
+
+                                            </div>
+
+
+
+                                        </a>
+
                                     </div>
-
-                                </a>
-                                <a href="#" class="list-group-item">
-
-                                    <div class="checkbox checkbox-primary checkbox-circle row">
-                                        <input type="checkbox" id="share">
-                                        <label class="large-label" for="share">
-                                            <i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook
-                                        </label>
-
+                                    <div class="panel-footer" align="center">
+                                        <button type="submit" class="btn btn-md btn-success bold-link">Create Gift!</button>
                                     </div>
+                                </div>
 
+                                <input type="hidden" name="croppedImage" />
 
-
-                                </a>
 
                             </div>
-                            <div class="panel-footer" align="center">
-                                <button type="submit" class="btn btn-md btn-success bold-link">Create Gift!</button>
-                            </div>
-                        </div>
-
-                        <input type="hidden" name="croppedImage" />
-
-
-                    </div>
         </form>
     </div>
 
