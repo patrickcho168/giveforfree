@@ -12,7 +12,7 @@ var numItems = 9;
 
 var canAJAX = false;
 
-var urlAJAX = null;
+var urlAJAX = '/api/allItems/' + 0 + '/' + numItems;;
 
 // AJAX Infinite Scrolling Function
 function addRealViews(html, url) {
@@ -24,7 +24,6 @@ function addRealViews(html, url) {
         method: 'get',
         cache: false,
 
-        // Success Callback
         // Success Callback
         success: function(data) {
             flag = true;
