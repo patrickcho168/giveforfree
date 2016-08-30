@@ -104,3 +104,9 @@ $( window ).resize(function() {
         'height': cw + 'px'
     });
 });
+
+function handleBrokenImage(image) {
+    image.onerror = "";
+    image.src = "/images/common/default-placeholder.png";
+    return true;
+}

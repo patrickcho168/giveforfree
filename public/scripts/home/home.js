@@ -116,7 +116,7 @@ $(window).scroll(function() {
 
 function handleBrokenImage(image) {
     image.onerror = "";
-    image.src = "/images/home/default-placeholder.png";
+    image.src = "/images/common/default-placeholder.png";
     return true;
 }
 
