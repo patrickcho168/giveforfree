@@ -5,7 +5,7 @@ module.exports = function(app) {
     	if (req.user === undefined) {
     		res.render("privacy", {loggedIn: false, id: null});
     	} else {
-        	res.render("privacy", {loggedIn: true, id: req.user.appUserId});
+        	res.render("privacy", {loggedIn: true, id: req.user.appUserId, notification: req.session.notification});
     	}
     });
 }
