@@ -51,6 +51,7 @@
     <!-- CSS Styles -->
     <link rel="stylesheet" href="../styles/common/common.css">
     <link rel="stylesheet" href="../styles/profile/profile.css">
+    <!-- <link rel="stylesheet" href="../styles/profile/sass-compiled.css"> -->
 
     <!-- Bootstrap Notifications -->
     <link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
@@ -70,12 +71,12 @@
 <body>
 
     <div id="loader-wrapper">
-			<div id="loader"></div>
+        <div id="loader"></div>
 
-			<div class="loader-section section-left"></div>
-			<div class="loader-section section-right"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
 
-		</div>
+    </div>
 
     <!-- Navigation Bar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -221,39 +222,47 @@
             <h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"> Singapore </h4>
         </div>
 
-        <div class='tabs-x tabs-left tab-bordered'>
-            <ul id="my-tabs" class="nav nav-tabs" role="tablist">
-                <li class="active"><a href="#gifts" role="tab" data-toggle="tab"><i class="fa fa-gift" aria-hidden="true"></i> Gifts</a></li>
-                <li><a href="#wants" role="tab" data-toggle="tab"><i class="fa fa-star" aria-hidden="true"></i> Wants</a></li>
-                <li><a href="#thanks" role="tab" data-toggle="tab"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Thanks</a></li>
-                <li><a href="#friends" role="tab" data-toggle="tab"><i class="fa fa-child" aria-hidden="true"></i> Friends</a></li>
+        <div class='tabs-x tabs-left tab-bordered' id="tabs">
+            <ul id="my-tabs" class="nav nav-tabs my-tabs centered" role="tablist">
+                <li class="active icon-tab"><a href="#gifts" role="tab" data-toggle="tab"><i class="fa fa-gift" aria-hidden="true"></i> <text class="hidden-xs"> Gifts</text></a></li>
+                <li class="icon-tab"><a href="#wants" role="tab" data-toggle="tab"><i class="fa fa-star" aria-hidden="true"></i> <text class="hidden-xs"> Wants</text></a></li>
+                <li class="icon-tab"><a href="#thanks" role="tab" data-toggle="tab"><i class="fa fa-thumbs-up" aria-hidden="true"></i><text class="hidden-xs"> Thanks</text></a></li>
+                <li class="icon-tab"><a href="#friends" role="tab" data-toggle="tab"><i class="fa fa-child" aria-hidden="true"></i> <text class="hidden-xs"> Friends</text></a></li>
             </ul>
             <div id="my-tabs-contents" class="tab-content" align="center">
-                <div class="tab-pane fade in active" id="gifts">
-                    <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
-                    <p>
-                        <%= user.name %> has nothing to give for now.
-                            <br> Come back later! </p>
+                <div class="tab-pane fade in active col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="gifts">
+                    <div id="gifts-placeholder">
+                        <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
+                        <p>
+                            <%= user.name %> has nothing to give for now.
+                                <br> Come back later! </p>
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="wants">
-                    <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
-                    <p>
-                        <%= user.name %> has no wants for now.
-                            <br> Chat with
-                            <%= user.name %>! </p>
+                    <div id="wants-placeholder">
+                        <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
+                        <p>
+                            <%= user.name %> has no wants for now.
+                                <br> Chat with
+                                <%= user.name %>! </p>
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="thanks">
-                    <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
-                    <p>
-                        <%= user.name %> has yet to receive any thank-you messages.
-                            <br> Send
-                            <%= user.name %> one now! </p>
+                    <div id="thanks-placeholder">
+                        <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
+                        <p>
+                            <%= user.name %> has yet to receive any thank-you messages.
+                                <br> Send
+                                <%= user.name %> one now! </p>
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="friends">
-                    <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
-                    <p>
-                        <%= user.name %> doesn't have any friends using G4F...
-                            <br>Let your friends know about this awesome cause! </p>
+                    <div id="friends-placeholder">
+                        <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
+                        <p>
+                            <%= user.name %> doesn't have any friends using G4F...
+                                <br>Let your friends know about this awesome cause! </p>
+                    </div>
                 </div>
             </div>
         </div>
