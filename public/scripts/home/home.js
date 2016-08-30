@@ -22,6 +22,8 @@ function addRealViews(html, urlAJAX) {
 
             if (data.length > 0) {
 
+                $('#placeholder-main').hide();
+
                 // Increment trackers to track load state
                 lastItemId = data[data.length - 1].itemID;
 

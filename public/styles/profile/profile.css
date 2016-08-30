@@ -69,12 +69,13 @@
 /* Thumbnail */
 
 .item-header {
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 .item-author {
-    font-size: 1.1em;
+    font-size: 1.0em;
     font-weight: 50;
-    font-style: italic;
+    color: black;
+    /*font-style: italic;*/
 }
 .item-caption {
     font-size: 1.0em;
@@ -94,11 +95,13 @@
     text-align: right;
     padding-top: 10px;
 }
+
 /*@media (min-width: 1200px) {
     .container {
         max-width: 980px;
     }
 }*/
+
 
 /* Masonry Approach #1 */
 
@@ -110,22 +113,68 @@
 }
 .grid-item {
     display: inline-block;
-    margin:  0.20rem;
-    padding:  1rem;
+    margin: 0.20rem;
+    padding: 1rem;
     width: 100%;
 }
 .thumbnail {
     position: relative;
     display: block;
+    border-radius: 8px;
 }
-
 .title-panel {
     background: #4D606E;
 }
-
 .main-container {
     padding-top: 36px;
 }
 .container {
     margin-top: 20px;
 }
+.nav-tabs.centered> li, .nav-pills.centered> li {
+    float: none;
+    display: inline-block;
+    *display: inline;
+    /* ie7 fix */
+    zoom: 1;
+    /* hasLayout ie7 trigger */
+}
+.nav-tabs.centered, .nav-pills.centered {
+    text-align: center;
+}
+.icon-tab {
+    font-size: calc(30px - 1.5vw);
+}
+.thumbnail:hover {
+    background: #65799B;
+    color: white;
+    -webkit-transition: background 0.5s ease-out;
+    -moz-transition: background 0.5s ease-out;
+    -o-transition: background 0.5s ease-out;
+    transition: background 0.5s ease-out;
+}
+.thumbnail:hover a {
+    color: white;
+}
+.placeholder-image {
+    /*background-repeat: no-repeat;*/
+    /*background-size: contain;*/
+    background-image: url('/images/home/default-placeholder.png');
+}
+
+.thumbnail img.wide {
+    max-width: 100%;
+    max-height: 100%;
+    /*height: auto;*/
+    width: 150%;
+    float: left;
+    float: right;
+}
+.thumbnail img.tall {
+    max-height: 100%;
+    max-width: 100%;
+    /*width: auto;*/
+    height: 150%;
+    float: top;
+    float: bottom;
+}​
