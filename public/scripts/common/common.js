@@ -16,7 +16,7 @@ $(document).ready(function() {
 	    });
 	});
 
-	$("a.clear-notifications").click(function(notification) {
+	$("a.clear-notifications").one("click", function(notification) {
 		console.log("clearing");
 	    var apiUrl = '/api/clear_notifications';
 	    notification.preventDefault();
