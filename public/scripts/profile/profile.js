@@ -21,6 +21,8 @@ var firstWants = true;
 var firstThanks = true;
 var firstFriends = true;
 
+var isFirst = true;
+
 var urlAJAX = null;
 
 // var actualClass = ".cd-main-nav";
@@ -39,6 +41,7 @@ function addRealViews(html) {
 
     switch (currentTab) {
         case "gifts":
+            isFirst = firstGifts;
             if (firstGifts) {
                 urlAJAX = '/api/myItems/' + 0 + '/' + numItems + '/' + appProfileId;
                 firstGifts = false;
@@ -48,6 +51,7 @@ function addRealViews(html) {
             lastItem = lastGiftsId;
             break;
         case "wants":
+            isFirst = firstWants;
             if (firstWants) {
                 urlAJAX = '/api/myWants/' + 0 + '/' + numItems + '/' + appProfileId;
                 firstWants = false;
@@ -57,10 +61,14 @@ function addRealViews(html) {
             lastItem = lastWantsId;
             break;
         case "thanks":
+            isFirst = firstThanks;
+
             urlAJAX = null;
             lastItem = lastThanksId;
             break;
         case "friends":
+            isFirst = firstFriends;
+
             urlAJAX = null;
             lastItem = lastFriendsId;
 
@@ -70,7 +78,7 @@ function addRealViews(html) {
     }
 
 
-    if (urlAJAX != null && lastItem >= 1) {
+    if (urlAJAX != null && (lastItem >= 1 || (isFirst && lastItem == 0))) {
         // AJAX to fetch JSON objects from server
         $.ajax({
             url: urlAJAX,
