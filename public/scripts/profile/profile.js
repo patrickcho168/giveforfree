@@ -33,6 +33,10 @@ function addRealViews(html) {
     var $active = $tab.find('.tab-pane.active');
     var currentTab = $active.attr('id');
 
+    console.log("GIFT: " + firstGifts);
+    console.log("WANTS: " + firstWants);
+
+
     switch (currentTab) {
         case "gifts":
             if (firstGifts) {
@@ -193,6 +197,11 @@ $(document).ready(function() {
     //     triggered = 0;
     //
     // });
+    $('.nav-tabs a').click(function() {
+        triggered = 0;
+        console.log("Switched Tab");
+        addRealViews(html);
+    });
 
     $('.thumbnail').hover(
         function() {
@@ -203,11 +212,6 @@ $(document).ready(function() {
         }
     );
 
-});
-
-$('.nav-tabs a').click(function() {
-    triggered = 0;
-    addRealViews(html);
 });
 
 $(window).scroll(function() {
