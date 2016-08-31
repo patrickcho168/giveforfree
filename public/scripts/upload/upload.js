@@ -177,7 +177,7 @@ function previewFile() {
                     },
                     enforceBoundary: false,
                     enableExif: true,
-                    showZoomer: false
+                    showZoomer: true
                 });
 
                 // Add something to the input text field

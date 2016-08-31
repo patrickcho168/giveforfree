@@ -62,6 +62,9 @@
                 xfbml: true,
                 version: 'v2.7'
             });
+            if (typeof facebookInit == 'function') {
+                facebookInit();
+            }
         };
 
         (function(d, s, id) {
@@ -77,12 +80,12 @@
 
         var toId;
         <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-        toId = <%= item.fbID %>;
+            toId = <%= item.fbID %>;
         <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-        toId = <%= item.takerFbID %>;
+            toId = <%= item.takerFbID %>;
         <% } %>
 
-        $(document).ready(function() {
+        function facebookInit() {
             if ($("#facebook-message").length) {
                 document.getElementById('facebook-message').onclick = function() {
                     FB.ui({
@@ -92,7 +95,20 @@
                     }, function(response) {});
                 }
             }
-        })
+            if ($("#facebook-share").length) {
+                document.getElementById('facebook-share').onclick = function() {
+                    FB.ui({
+                        method: 'share_open_graph',
+                        action_type: '<%= fbNameSpace %>:receive',
+                        action_properties: {
+                            'free_item': '<%= domain %>/item/<%= item.itemID %>'
+                        },
+                        mobile_iframe: true
+                    }, function(response) {});
+                }
+            }
+        }
+
     </script>
 
     <script src="../scripts/common/common.js"></script>
@@ -167,34 +183,50 @@
             <div class="collapse navbar-collapse" id="nav-menu">
 
                 <!-- User Actions Menu -->
-                <ul class="nav navbar-nav navbar-right">
-                    <li id="nav-create">
-                        <a href="/upload">
-                            <i class="fa fa-gift" aria-hidden="true"></i> Give
-                        </a>
-                    </li>
-                    <li id="nav-feed">
-                        <a href="/">
-                            <i class="fa fa-rss" aria-hidden="true"></i> Feed
-                        </a>
-                    </li>
-                    <li id="nav-profile">
-                        <a href="/profile/<%= id %>">
-                            <i class="fa fa-user" aria-hidden="true"></i> Profile
-                        </a>
-                    </li>
-                    <% if (typeof notification != 'undefined') { %>
+                <% if (loggedIn) { %>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li id="nav-create">
+                            <a href="/upload">
+                                <i class="fa fa-gift" aria-hidden="true"></i> Give
+                            </a>
+                        </li>
+                        <li id="nav-feed">
+                            <a href="/">
+                                <i class="fa fa-rss" aria-hidden="true"></i> Feed
+                            </a>
+                        </li>
+                        <li id="nav-profile">
+                            <a href="/profile/<%= id %>">
+                                <i class="fa fa-user" aria-hidden="true"></i> Profile
+                            </a>
+                        </li>
+                        
+                        <% if (typeof notification != 'undefined') { %>
                         <!-- Notifications -->
                         <%- include('notification'); %>
-                            <!-- End Notifications -->
-                            <% } %>
-                                <li id="nav-logout">
-                                    <a href="/logout">
-                                        <i class="fa fa-lock" aria-hidden="true"></i> Logout
-                                    </a>
-                                </li>
-                </ul>
+                        <!-- End Notifications -->
+                        <% } %>
 
+                        <li id="nav-logout">
+                            <a href="/logout">
+                                <i class="fa fa-lock" aria-hidden="true"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                <% } else { %>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li id="nav-feed">
+                            <a href="/">
+                                <i class="fa fa-rss" aria-hidden="true"></i> Feed
+                            </a>
+                        </li>
+                        <li id="nav-logout">
+                            <a href="/login/facebook">
+                                <i class="fa fa-lock" aria-hidden="true"></i> Login
+                            </a>
+                        </li>
+                    </ul>
+                <% } %>
 
             </div>
 
@@ -342,9 +374,10 @@
                                                 </ul>
                                                 <% } %>
                                                     <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                                                        <button class="btn btn-primary message-button" id="facebook-message">Message Owner</a>
+                                                        <button class="btn btn-primary message-button" id="facebook-message">Message Owner</button>
+                                                        <button class="btn btn-primary message-button" id="facebook-share"><i class="fa fa-facebook-official" aria-hidden="true"></i>Share on Facebook</button>
                                                             <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                                                                <button class="btn btn-primary message-button" id="facebook-message">Message Recipient</a>
+                                                                <button class="btn btn-primary message-button" id="facebook-message">Message Recipient</button>
                                                                     <% } %>
                                     </center>
                                 </div>

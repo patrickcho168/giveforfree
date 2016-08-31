@@ -97,8 +97,9 @@ module.exports = function(app) {
     // SHOW PROFILE GIVEN OUT
     app.get('/profile/:id',
         function(req, res) {
+            var otherUserId = parseInt(req.params.id);
+            req.session.lastPageVisit = '/profile/' + otherUserId;
             if (req.user === undefined) {
-                var otherUserId = parseInt(req.params.id);
                 var mine = false;
                 db.User.where({
                     userID: otherUserId
@@ -126,7 +127,6 @@ module.exports = function(app) {
                     });
                 });
             } else {
-                var otherUserId = parseInt(req.params.id);
                 var mine = otherUserId === req.user.appUserId;
                 db.User.where({
                     userID: otherUserId

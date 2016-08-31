@@ -16,12 +16,13 @@ $(document).ready(function() {
 	    });
 	});
 
-	$("a.clear-notifications").click(function(notification) {
+	$("a.clear-notifications").one("click", function(notification) {
 		console.log("clearing");
 	    var apiUrl = '/api/clear_notifications';
 	    notification.preventDefault();
 	    $.ajax({url: apiUrl});
 	    $("span.badge").text(0);
+	    $("div[id='all-notifications']").empty();
 	});
 
 });

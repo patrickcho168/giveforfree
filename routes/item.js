@@ -397,6 +397,7 @@ module.exports = function(app) {
     // ITEM PAGE
     app.get('/item/:id', function(req, res) {
         var itemId = req.params.id;
+        req.session.lastPageVisit = '/item/' + itemId;
         var userId;
         var loggedIn;
         if (req.user === undefined) {
@@ -439,7 +440,8 @@ module.exports = function(app) {
                                 loggedIn: loggedIn,
                                 comment: commentData.models,
                                 notification: req.session.notification,
-                                moment: moment
+                                moment: moment,
+                                fbNameSpace: config.fbNamespace
                             });
                         });
                     } else {
@@ -456,7 +458,8 @@ module.exports = function(app) {
                             loggedIn: loggedIn,
                             comment: commentData.models,
                             notification: req.session.notification,
-                            moment: moment
+                            moment: moment,
+                            fbNameSpace: config.fbNamespace
                         });
                     }
                 });
