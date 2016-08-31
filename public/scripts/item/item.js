@@ -87,6 +87,7 @@ jQuery(document).ready(function($) {
         var id = $('.item.active').data('slide-number');
         $('#carousel-text').html($('#slide-content-' + id).html());
     });
+
 });
 
 $(function() {
@@ -97,6 +98,42 @@ $(function() {
     });
 
     $("textarea").height($("textarea")[0].scrollHeight);
+
+    $('#date').bootstrapMaterialDatePicker({
+        weekStart: 0,
+        time: false
+    });
+
+    $('#date').bootstrapMaterialDatePicker('setMinDate', moment());
+
+
+    $('textarea').autosize();
+
+    $('#input-tags').selectize({
+        delimiter: ',',
+        persist: false,
+        create: function(input) {
+            // var options = ["clothes", "accessories", "furniture & home", "parenting", "health", "beauty", "kitchen appliances", "gardening", "property", "design & craft", "electronics", "sports", "photography", "antiques", "toys", "games", "music", "tickets & vouchers", "auto accessories", "books", "stationeries", "textbooks", "notes", "pets", "other"];
+
+            return {
+                value: "other",
+                text: "other"
+            }
+        }
+    });
+
+    $('#select-mode').selectize({
+        create: true,
+        sortField: 'text'
+    });
+
+    $('.description-field').popover({
+        container: 'body',
+        content: 'E.g. Size and measurements, old/new, used/unused, etc.',
+        placement: 'bottom'
+    });
+
+    $("[name='share-checkbox']").bootstrapSwitch();
 });
 
 $(window).resize(function() {

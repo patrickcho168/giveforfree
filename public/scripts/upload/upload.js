@@ -29,6 +29,8 @@ $(function() {
         "other"
     ];
 
+    $('[data-toggle="popover"]').popover();
+
     $('#date').bootstrapMaterialDatePicker({
         weekStart: 0,
         time: false
@@ -43,9 +45,11 @@ $(function() {
         delimiter: ',',
         persist: false,
         create: function(input) {
+            // var options = ["clothes", "accessories", "furniture & home", "parenting", "health", "beauty", "kitchen appliances", "gardening", "property", "design & craft", "electronics", "sports", "photography", "antiques", "toys", "games", "music", "tickets & vouchers", "auto accessories", "books", "stationeries", "textbooks", "notes", "pets", "other"];
+
             return {
-                value: input,
-                text: input
+                value: "other",
+                text: "other"
             }
         }
     });
@@ -72,13 +76,25 @@ $(function() {
             window.onscroll = oldScroll;
         }, 100);
     });
+
+
 });
+
+// $('#input-tags').selectize({
+//     create: function(input) {
+//         return {
+//             id: 123,
+//             text: "other"
+//         };
+//     }
+// });
 
 function triggerUpload() {
     $('#upload-trigger').trigger('click');
 }
 
 function previewFile() {
+    $('#create-upload').attr("disabled", "disabled");
     var node = document.getElementById('image');
     while (node.hasChildNodes()) {
         node.removeChild(node.lastChild);
@@ -138,6 +154,7 @@ function previewFile() {
     if (file) {
         // Check file size
         if (file.size > 5 * 1024 * 1024) {
+            $('#create-upload').attr("disabled", "disabled");
             $.notify({
                 // options
                 message: 'Your image is too large. Please upload a smaller image.'
@@ -185,6 +202,8 @@ function previewFile() {
                     $(".image-crop").html("<img src='" + resp + "'width='90%' style='padding: 15px; margin-left: 15px; margin-right: 15px; position: relative;'/>");
                     $("input[name='croppedImage']").val(resp);
                     $("input[type=file]").remove();
+                    $('#create-upload').removeAttr("disabled");
+
                 });
             });
             reader.readAsDataURL(file);

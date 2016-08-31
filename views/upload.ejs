@@ -56,7 +56,6 @@
     <script src="../scripts/upload/croppie.js"></script>
     <link rel="stylesheet" href="../styles/upload/croppie.css">
 
-    <!-- Selectize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap2/bootstrap-switch.min.css">
 
@@ -247,13 +246,13 @@
                                         <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>What are you giving?</b></h4>
                                             <p class="list-group-item-text">
-                                                <input type="text" class="input-txt" name="title" placeholder="Item name" maxlength="50" autocomplete="off" required>
+                                                <input type="text" class="input-txt" name="title" placeholder="Item name (max. 50 chars)" maxlength="50" autocomplete="off" required>
                                             </p>
                                         </a>
                                         <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>Describe the item you are giving!</b></h4>
                                             <p class="list-group-item-text">
-                                                <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description" autocomplete="off" data-trigger="focus" id="description-field"></textarea>
+                                                <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description (max. 200 chars)" autocomplete="off" data-trigger="focus" id="description-field" maxlength="200" required></textarea>
                                             </p>
                                         </a>
                                         <a class="list-group-item">
@@ -264,7 +263,9 @@
                                         </a>
                                         <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>Which category does your item belong to?</b></h4>
-                                            <select id="input-tags" name="categories[]" multiple class="categories has-options" style="width:70%" placeholder="Select categories...">
+
+
+                                            <select id="input-tags" name="categories[]" multiple class="categories has-options " style="width:70%" auto-complete: "off" placeholder="Select categories...">
                                                 <option value="">Select categories...</option>
                                                 <option value="clothes">clothes</option>
                                                 <option value="accessories">accessories</option>
@@ -333,7 +334,7 @@
 
                                     </div>
                                     <div class="panel-footer" align="center">
-                                        <button type="submit" class="btn btn-md btn-success bold-link">Create Gift!</button>
+                                        <button disabled="disabled" id="create-upload" type="submit" class="btn btn-md btn-success bold-link">Create Gift!</button>
                                     </div>
                                 </div>
 

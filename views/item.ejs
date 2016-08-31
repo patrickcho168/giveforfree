@@ -33,9 +33,20 @@
     <!-- Font Awesome (Override) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
+    <!-- Material Date Picker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script src="../assets/materialDatePicker/js/bootstrap-material-datetimepicker.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.min.css">
     <link rel="stylesheet" href="../assets/materialDatePicker/css/bootstrap-material-datetimepicker.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Checkbox Styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.7/awesome-bootstrap-checkbox.min.css
+    ">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap2/bootstrap-switch.min.css">
 
     <!-- Countable Support -->
     <script src="../assets/simplyCountable/js/jquery.simplyCountable.js"></script>
@@ -102,6 +113,7 @@
 
     <script src="../scripts/common/common.js"></script>
     <script src="../scripts/item/item.js"></script>
+    <script src="../assets/autosize/js/autosize.js"></script>
 
     <!-- Bootstrap CSS (override) -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -113,6 +125,11 @@
     <!-- Bootstrap Notifications -->
     <link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
     <script src="../scripts/common/notify.min.js"></script>
+
+    <!-- Selectize -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/js/standalone/selectize.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/css/selectize.default.min.css">
+    <link rel="stylesheet" href="../styles/upload/selectize-mod.css">
 
     <!-- Animations -->
     <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
@@ -322,7 +339,7 @@
                                             <img class="img-circle" src="http://graph.facebook.com/<%= item.fbID %>/picture?type=large" />
                                             <!-- badge -->
                                             <div class="rank-label-container">
-                                                <span class="label label-default rank-label"><%= karma %> gifts</span>
+                                                <span class="label label-default rank-label"><%= gifts %> gifts</span>
                                             </div>
                                         </div>
                                     </div>
@@ -410,7 +427,7 @@
                     <div style="padding: 0 15px;">
                         <div class="panel panel-default">
                             <div class="list-group">
-                                <a href="#" class="list-group-item">
+                                <a class="list-group-item">
                                     <h4 class="list-group-item-heading">Title</h4>
                                     <p class="list-group-item-text hide-overflow">
                                         <%= item.title %>
@@ -519,29 +536,31 @@
                                     });
                                 </script> -->
 
-                                <div class="panel panel-default" style="padding: 0 0; margin: 0 auto;">
+                                <div class="panel panel-default">
                                     <div class="list-group">
                                         <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>What are you giving?</b></h4>
                                             <p class="list-group-item-text">
-                                                <input type="text" class="input-txt" name="title" placeholder="Item name" maxlength="50" autocomplete="off" required>
+                                                <input type="text" class="input-txt" name="title" placeholder="Item name (max. 50 chars)" maxlength="50" autocomplete="off" value= "<%=item.title%>" required>
                                             </p>
                                         </a>
                                         <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>Describe the item you are giving!</b></h4>
                                             <p class="list-group-item-text">
-                                                <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description" autocomplete="off" data-trigger="focus" id="description-field"></textarea>
+                                                <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description (max. 200 chars)" autocomplete="off" data-trigger="focus" id="description-field" maxlength="200" required><%=item.description%></textarea>
                                             </p>
                                         </a>
                                         <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>When do you want to end this giveaway?</b></h4>
                                             <p class="list-group-item-text">
-                                                <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" required>
+                                                <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" value= "<%=date%>" required>
                                             </p>
                                         </a>
                                         <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>Which category does your item belong to?</b></h4>
-                                            <select id="input-tags" name="categories[]" multiple class="categories has-options" style="width:70%" placeholder="Select categories...">
+
+
+                                            <select id="input-tags" name="categories[]" multiple class="categories has-options " style="width:70%" auto-complete: "off" placeholder="Select categories...">
                                                 <option value="">Select categories...</option>
                                                 <option value="clothes">clothes</option>
                                                 <option value="accessories">accessories</option>

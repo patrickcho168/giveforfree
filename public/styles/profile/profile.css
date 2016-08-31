@@ -146,7 +146,7 @@
     font-size: calc(30px - 1.5vw);
 }
 .thumbnail:hover {
-    background: #65799B;
+    background: #337ab7;
     color: white;
     -webkit-transition: background 0.5s ease-out;
     -moz-transition: background 0.5s ease-out;
@@ -177,4 +177,4 @@
     float: top;
     float: bottom;
 }
-​ 
+​

@@ -257,7 +257,7 @@ module.exports = function(app) {
                                     });
                                     newNote.save();
                                 }
-                            })  
+                            })
                         });
                     }
                 }
@@ -294,7 +294,7 @@ module.exports = function(app) {
                                 active: 0
                             });
                         }
-                    })  
+                    })
                 });
             }
         });
@@ -333,7 +333,7 @@ module.exports = function(app) {
         } else {
             userId = parseInt(req.user.appUserId);
         }
-        
+
         if (lastSeenItem === 0) {
             db.ProfilePageGiveQuery(userId, profileId, numItems, function(data) {
                 res.json(data);
@@ -435,6 +435,7 @@ module.exports = function(app) {
                                 date: processedDate,
                                 expired: expiredMin > 0,
                                 karma: gifted[0].numGiven * 10,
+                                gifts: gifted[0].numGiven,
                                 manual: data2,
                                 loggedIn: loggedIn,
                                 comment: commentData.models,
@@ -453,6 +454,7 @@ module.exports = function(app) {
                             date: processedDate,
                             expired: expiredMin > 0,
                             karma: gifted[0].numGiven * 10,
+                            gifts: gifted[0].numGiven,
                             loggedIn: loggedIn,
                             comment: commentData.models,
                             notification: req.session.notification,
