@@ -25,10 +25,10 @@ var s3 = new aws.S3({
 
 function createFbPost(title, itemId, imgUrl) {
     var object = {
-        'link': 'http://ec2-54-255-178-61.ap-southeast-1.compute.amazonaws.com/item/' + itemId,
+        'link': config.domain + '/item/' + itemId,
         'message': 'Snag my ' + title + ' for free now!',
         'method': 'POST',
-        'picture': 'https://d24uwljj8haz6q.cloudfront.net/' + imgUrl
+        'picture': config.imageDomain + '/' + imgUrl
     };
     return querystring.stringify(object);
 }
@@ -36,7 +36,7 @@ function createFbPost(title, itemId, imgUrl) {
 function createFbStory(itemId, fbFreeItemId) {
     var object = {
         // 'free_item': 'https://graph.facebook.com/1086175114800378/' + fbFreeItemId,
-        'free_item': 'http://ec2-54-255-178-61.ap-southeast-1.compute.amazonaws.com/item/' + itemId,
+        'free_item': config.domain + '/item/' + itemId,
         'method': 'POST',
         'fb:explicitly_shared': true
     };
@@ -46,18 +46,14 @@ function createFbStory(itemId, fbFreeItemId) {
 
 function createFbFreeItem(title, itemId, imgUrl) {
     var object = {
-        'og:url': 'http://ec2-54-255-178-61.ap-southeast-1.compute.amazonaws.com/item/' + itemId,
+        'og:url': config.domain + '/item/' + itemId,
         'og:title': title,
         'og:type': config.fbNamespace + ':free_item',
-        'og:image': 'https://d24uwljj8haz6q.cloudfront.net/' + imgUrl,
+        'og:image': config.imageDomain + '/' + imgUrl,
         'og:description': '',
         'fb:app_id': config.fbClientID,
     }
     return 'method=POST&object=' + encodeURIComponent(JSON.stringify(object));
-    // var nextObject = {
-    //     'object': querystring.stringify(object)
-    // }
-    // return querystring.stringify(nextObject);
 }
 
 function saveCategories(item, categories) {

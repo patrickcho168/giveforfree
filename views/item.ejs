@@ -149,34 +149,50 @@
             <div class="collapse navbar-collapse" id="nav-menu">
 
                 <!-- User Actions Menu -->
-                <ul class="nav navbar-nav navbar-right">
-                    <li id="nav-create">
-                        <a href="/upload">
-                            <i class="fa fa-gift" aria-hidden="true"></i> Give
-                        </a>
-                    </li>
-                    <li id="nav-feed">
-                        <a href="/">
-                            <i class="fa fa-rss" aria-hidden="true"></i> Feed
-                        </a>
-                    </li>
-                    <li id="nav-profile">
-                        <a href="/profile/<%= id %>">
-                            <i class="fa fa-user" aria-hidden="true"></i> Profile
-                        </a>
-                    </li>
-                    <% if (typeof notification != 'undefined') { %>
-                    <!-- Notifications -->
-                    <%- include('notification'); %>
-                    <!-- End Notifications -->
-                    <% } %>
-                    <li id="nav-logout">
-                        <a href="/logout">
-                            <i class="fa fa-lock" aria-hidden="true"></i> Logout
-                        </a>
-                    </li>
-                </ul>
+                <% if (loggedIn) { %>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li id="nav-create">
+                            <a href="/upload">
+                                <i class="fa fa-gift" aria-hidden="true"></i> Give
+                            </a>
+                        </li>
+                        <li id="nav-feed">
+                            <a href="/">
+                                <i class="fa fa-rss" aria-hidden="true"></i> Feed
+                            </a>
+                        </li>
+                        <li id="nav-profile">
+                            <a href="/profile/<%= id %>">
+                                <i class="fa fa-user" aria-hidden="true"></i> Profile
+                            </a>
+                        </li>
+                        
+                        <% if (typeof notification != 'undefined') { %>
+                        <!-- Notifications -->
+                        <%- include('notification'); %>
+                        <!-- End Notifications -->
+                        <% } %>
 
+                        <li id="nav-logout">
+                            <a href="/logout">
+                                <i class="fa fa-lock" aria-hidden="true"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                <% } else { %>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li id="nav-feed" class="active">
+                            <a href="/">
+                                <i class="fa fa-rss" aria-hidden="true"></i> Feed
+                            </a>
+                        </li>
+                        <li id="nav-logout">
+                            <a href="/login/facebook">
+                                <i class="fa fa-lock" aria-hidden="true"></i> Login
+                            </a>
+                        </li>
+                    </ul>
+                <% } %>
 
             </div>
 
