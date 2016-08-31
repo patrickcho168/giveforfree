@@ -114,23 +114,6 @@ module.exports = function(app) {
                                     userID: userId
                                 });
                                 newNote.save();
-
-                                // Share on Facebook
-                                // if (false) {
-
-                                //     // Create facebook post
-                                //     var itemTitle = data.attributes.title;
-                                //     var itemUrl = data.attributes.imageLocation;
-                                //     var apiCall = '/me/' + config.fbNamespace + ':give';
-                                //     var objectApiCall = '/me/objects/' + config.fbNamespace + ':free_item'
-                                //     facebook.getFbData(req.user.accessToken, objectApiCall, createFbFreeItem(newItemTitle, createdItemID, newItemUrl), function(data) {
-                                //         console.log(data);
-                                //         facebook.getFbData(req.user.accessToken, apiCall, createFbStory(createdItemID, JSON.parse(data).id), function(data2) {
-                                //             console.log(data2);
-                                //         });
-                                //     });
-
-                                // }
                             }
                         })
                     }

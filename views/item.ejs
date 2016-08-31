@@ -66,9 +66,9 @@
 
         var toId;
         <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-        toId = <%= item.fbID %>;
+            toId = <%= item.fbID %>;
         <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-        toId = <%= item.takerFbID %>;
+            toId = <%= item.takerFbID %>;
         <% } %>
 
         $(document).ready(function() {
@@ -81,7 +81,18 @@
                     }, function(response) {});
                 }
             }
+            if (loggedIn && item.takerID === id) { // Need to specify first time
+                FB.ui({
+                    method: 'share_open_graph',
+                    action_type: config.fbNamespace + ':receive',
+                    action_properties: {
+                        'free_item': '<%= domain %>/item/<%= item.itemID %>'
+                    }
+                    mobile_iframe: true
+                }, function(response) {});
+            }
         })
+
     </script>
 
     <script src="../scripts/common/common.js"></script>
