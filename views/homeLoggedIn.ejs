@@ -45,6 +45,7 @@
 
 	<!-- CSS Styles -->
 	<link rel="stylesheet" href="/styles/common/common.css">
+	<link rel="stylesheet" href="/styles/common/bootstrap-edit.css">
 	<link rel="stylesheet" href="/styles/home/home.css">
 
 	<!-- Animation -->
@@ -117,7 +118,7 @@
 								<i class="fa fa-user" aria-hidden="true"></i> Profile
 							</a>
 						</li>
-						
+
 	                    <% if (typeof notification != 'undefined') { %>
 						<!-- Notifications -->
 						<%- include('notification'); %>
@@ -181,7 +182,7 @@
 
 	<!-- Scroll Container -->
 	<div class="infinite-scroll-container  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1" id="infinite-scroll-container" align="center">
-		
+
 			<div id="placeholder-main" class="col-lg-10 col-lg-offset-1">
 				<row><img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px; display: block;"/>
 				</row>
