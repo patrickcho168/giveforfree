@@ -78,7 +78,7 @@ function addRealViews(html) {
     }
 
 
-    if (urlAJAX != null && (lastItem >= 1 || (isFirst && lastItem == 0))) {
+    if ((urlAJAX != null && lastItem >= 1) || (isFirst && urlAJAX != null)) {
         // AJAX to fetch JSON objects from server
         $.ajax({
             url: urlAJAX,
