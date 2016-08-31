@@ -218,14 +218,13 @@ module.exports = function(app) {
                 }
             });
 
-            req.sanitizeBody('title');
-            req.sanitizeBody('description');
-            req.sanitizeBody('croppedImage');
-            req.sanitizeBody('meetupMessage');
-            req.sanitizeBody('postageMessage');
-            req.sanitizeBody('meetup');
-            req.sanitizeBody('postage');
-            req.sanitizeBody('categories');
+            req.sanitizeBody('title').escape();
+            req.sanitizeBody('description').escape();
+            req.sanitizeBody('croppedImage').escape();
+            req.sanitizeBody('collectionMessage').escape();
+            req.sanitizeBody('meetup').escape();
+            req.sanitizeBody('postage').escape();
+            req.sanitizeBody('categories').escape();
 
             var errors = req.validationErrors();
 

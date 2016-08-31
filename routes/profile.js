@@ -157,7 +157,48 @@ module.exports = function(app) {
                     });
                 });
             }
+        }
+    );
+
+    app.get('/api/delete-user', ensureLogin.ensureLoggedIn(), function(req, res, next) {
+        db.User.where({
+            userID: req.user.appUserId
+        }).fetch().then(function(user) {
+            if (user) {
+                user.save({
+                    name: null,
+                    deleted: true
+                }).then(function() {
+                    // Delete all this user's items that have no takerID 
+                    db.Item.where({
+                        giverID: req.user.appUserId,
+                        takerID: null
+                    }).destroy().then(function() {
+                        // Revoke permissions
+                        facebook.getFbData(req.user.accessToken, 
+                            '/' + req.user.id + '/permissions', 
+                            "method=DELETE", 
+                            function(resp){
+                                console.log(resp);
+                            });
+                        res.redirect("/logout");
+                    }).catch(function(err) {
+                        next(err);
+                    });
+                }).catch(function(err) {
+                    next(err);
+                });
+            } else {
+                res.redirect("/logout");
+            }
         });
+    });
+
+    
+
+    
+
+
 
     // GET FRIENDS
     // app.get('/friends',
