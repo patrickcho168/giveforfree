@@ -103,7 +103,7 @@ function addRealViews(html) {
                     $.each(data, function(key, value) {
                         html = '<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 20px;">';
                         // Main Item Photo
-                        html += '<div class="thumbnail" style="padding: 0; border: none;" align="center">';
+                        html += '<a href="/item/' + value.itemID + '" target="_blank"><div class="thumbnail" style="padding: 0; border: none;" align="center">';
                         // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
                         html += '<div class="box"><img style="display: block;" class="clipped" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '" onerror="handleBrokenImage(this);"></div>';
                         // Item Title
@@ -141,7 +141,7 @@ function addRealViews(html) {
                         // }
 
                         html += '</div>';
-                        html += '</div>';
+                        html += '</div></a>';
                         html += '</div>';
 
                         switch (currentTab) {
@@ -204,6 +204,7 @@ $(document).ready(function() {
             $(this).removeClass("animated bounceIn");
         }
     );
+
 });
 
 $(window).scroll(function() {
@@ -220,7 +221,7 @@ $(window).scroll(function() {
 
 function handleBrokenImage(image) {
     image.onerror = "";
-    image.src = "/images/home/default-placeholder.png";
+    image.src = "/images/common/default-placeholder.png";
     return true;
 }
 
@@ -229,4 +230,4 @@ $(window).load(function() {
         var imgClass = (this.width / this.height > 1) ? 'wide' : 'tall';
         $(this).addClass(imgClass);
     })
-})
+});
