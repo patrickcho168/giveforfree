@@ -169,13 +169,7 @@
 
     <div class="container main-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-        <div class="panel panel-default title-panel col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-ms-10 col-ms-offset-1 col-xs-10 col-xs-offset-1" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin-top:20px; margin-bottom:20px;"
-            align="center">
 
-            <img src="../images/upload/heart.svg" style="display: block; margin-left: auto; margin-right: auto;  padding: 10px 0; max-width: 100px;">
-            <p style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; font-weight: bold; color: white; "> Contribute a Gift </p>
-            <h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"> Start today! </h4>
-        </div>
 
         <form action="/upload" method="post" id="new-gift-form" data-toggle="validator">
             <% if (locals.error_messages) {
@@ -192,10 +186,18 @@
                             <%= message %>
                         </div>
                         <% });
+
             } %>
-                            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-ms-10  col-ms-offset-1 col-xs-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-ms-12 col-xs-12">
 
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+                                    <div class="panel panel-default title-panel" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin-bottom:20px; " align="center">
+
+                                        <img src="../images/upload/heart.svg" style="display: block; margin-left: auto; margin-right: auto;  padding: 10px 0; max-width: 100px;">
+                                        <p style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; font-weight: bold; color: white; "> Contribute a Gift </p>
+                                        <h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"> Start today! </h4>
+                                    </div>
 
                                     <div class="panel panel-default">
                                         <div class="panel-body" style="padding: 5px">
@@ -302,12 +304,12 @@
                                                 <h4 class="list-group-item-heading"><b>How would you like the person receiving to collect the item?</b></h4>
 
                                                 <div class="checkbox checkbox-primary checkbox-circle row">
-                                                    <input type="checkbox" name="meetup" id="meetup">
+                                                    <input type="checkbox" name="meetup" id="meetup" class="check-one">
                                                     <label class="large-label" for="meetup">
                                                         Meet and collect
                                                     </label>
 
-                                                    <input type="checkbox" name="postage" id="postage">
+                                                    <input type="checkbox" name="postage" id="postage" class="check-two">
                                                     <label class="large-label" for="postage">
                                                         Postage service
                                                     </label>

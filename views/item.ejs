@@ -237,20 +237,22 @@
 
     <div class="container main-container col-lg-12">
 
-        <row>
-            <div class="panel panel-default title-panel col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-ms-10 col-ms-offset-1 col-xs-10 col-xs-offset-1" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin-top:20px; margin-bottom:20px;" align="center">
 
-                <img src="../images/item/gift.svg" style="display: block; margin-left: auto; margin-right: auto;padding: 10px 0; width: 100px;">
-                <p style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; padding-top: 15px; font-weight: bold; color: white; ">
-                    <%= item.title %>
-                </p>
-                <h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"> <i class="fa fa-heart" aria-hidden="true" style="color: #EA5455;"></i> <%= item.name %></h4>
-            </div>
-        </row>
-
-        <row class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-ms-10 col-ms-offset-1 col-xs-10 col-xs-offset-1">
+        <row class="col-lg-12 col-md-12 col-sm-12 col-ms-12 col-xs-12">
             <!-- <div class="col-xs-12 col-sm-3 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-3 col-lg-offset-1"> -->
             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="padding: 0 0;">
+
+                <row>
+                    <div class="panel panel-default title-panel" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin-left: 15px; margin-right: 15px; margin-bottom:20px;" align="center">
+
+                        <img src="../images/item/gift.svg" style="display: block; margin-left: auto; margin-right: auto;padding: 10px 0; width: 100px;">
+                        <p style="font-size:calc(10px + 1.5vw); mvertical-align: middle; padding:10px 0; padding-top: 15px; font-weight: bold; color: white; ">
+                            <%= item.title %>
+                        </p>
+                        <p style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px; font-size: font-size:calc(10px + 1.0vw);"> <i class="fa fa-heart" aria-hidden="true" style="color: #EA5455;"></i> <%= item.name %></p>
+                    </div>
+                </row>
+
                 <!-- Carousel -->
                 <row>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 carousel-section">
@@ -329,63 +331,7 @@
             </div> -->
                     </div>
                 </row>
-                <row>
-                    <div style="padding: 0 15px;">
-                        <div class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12 profile-panel" style="margin-top: 15px;">
-                            <div class="panel-body" style="padding: 20px 0;">
 
-                                <div class="row">
-                                    <div class="profile-header-container col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div class="profile-header-img">
-                                            <img class="img-circle" src="http://graph.facebook.com/<%= item.fbID %>/picture?type=large" />
-                                            <!-- badge -->
-                                            <div class="rank-label-container">
-                                                <span class="label label-default rank-label"><%= gifts %> gifts</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="profile-name-container col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <p class="owner-name"> <a href="/profile/<%= item.giverID %>"><b> <%= item.name %> </b></a> </p>
-                                        <small class="owner-location"> Singapore </small>
-                                    </div>
-                                </div>
-
-                                <div class="row button-group">
-                                    <!-- Manage different rights for users -->
-                                    <center>
-                                        <% if (loggedIn && mine && item.takerID === null) { %>
-                                            <a href="/api/delete/<%= item.itemID %>" class="btn btn-danger">Delete</a>
-
-                                            <% if (item.numWants > 0) { %>
-                                                <a type="button" class="btn btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw</a>
-                                                <a type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Pick <span class="caret"></span>
-                                    </a>
-                                                <ul class="dropdown-menu scrollable-menu dropdown-menu-right" role="menu">
-                                                    <% for (var i=0; i<manual.length; i++) { %>
-                                                        <li>
-                                                            <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">
-                                                                <%= manual[i].name %>
-                                                            </a>
-                                                        </li>
-                                                        <% } %>
-                                                </ul>
-                                                <% } %>
-                                                    <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                                                        <button class="btn btn-primary message-button" id="facebook-message"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Owner</button>
-                                                        <button class="btn btn-primary message-button" id="facebook-share"><i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook</button>
-                                                            <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                                                                <button class="btn btn-primary message-button" id="facebook-message">Message Recipient</button>
-                                                                    <% } %>
-                                    </center>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </row>
                 <row>
                     <div style="padding: 0 15px;" align="center">
                         <div class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 5px;">
@@ -425,9 +371,73 @@
 
 
 
-            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="padding: 0 0;">
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="padding: 0 0; margin-bottom: 10px;">
 
-                <row>
+                <div>
+                    <row>
+                        <div style="padding: 0 15px;">
+                            <div class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12 profile-panel">
+                                <div class="panel-body" style="padding: 20px 0;">
+
+                                    <div class="row">
+                                        <div class="profile-header-container col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="profile-header-img">
+                                                <img class="img-circle" src="http://graph.facebook.com/<%= item.fbID %>/picture?type=large" />
+                                                <!-- badge -->
+                                                <div class="rank-label-container">
+                                                    <span class="label label-default rank-label"><%= gifts %> gifts</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="profile-name-container col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <p class="owner-name"> <a href="/profile/<%= item.giverID %>"><b> <%= item.name %> </b></a> </p>
+                                            <small class="owner-location"> Singapore </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row button-group">
+                                        <!-- Manage different rights for users -->
+                                        <center>
+                                            <% if (loggedIn && mine && item.takerID === null) { %>
+                                                <a href="/api/delete/<%= item.itemID %>" class="btn btn-danger">Delete</a>
+
+                                                <% if (item.numWants > 0) { %>
+                                                    <a type="button" class="btn btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw</a>
+                                                    <a type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Pick <span class="caret"></span>
+                                        </a>
+                                                    <ul class="dropdown-menu scrollable-menu dropdown-menu-right" role="menu">
+                                                        <% for (var i=0; i<manual.length; i++) { %>
+                                                            <li>
+                                                                <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">
+                                                                    <%= manual[i].name %>
+                                                                </a>
+                                                            </li>
+                                                            <% } %>
+                                                    </ul>
+                                                    <% } %>
+                                                        <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
+                                                            <button class="btn btn-primary message-button" id="facebook-message"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Owner</button>
+                                                            <button class="btn btn-primary message-button" id="facebook-share"><i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook</button>
+                                                                <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
+                                                                    <button class="btn btn-primary message-button" id="facebook-message">Message Recipient</button>
+                                                                        <% } %>
+                                        </center>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </row>
+                </div>
+
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="padding: 0 0; margin-bottom: 10px;">
+
+
+                <div>
                     <div style="padding: 0 15px;">
                         <div class="panel panel-default">
                             <div class="list-group">
@@ -481,7 +491,7 @@
                         </div>
 
                     </div>
-                </row>
+                </div>
 
             </div>
 

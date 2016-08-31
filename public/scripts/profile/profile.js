@@ -59,6 +59,7 @@ function addRealViews(html) {
         case "friends":
             urlAJAX = null;
             lastItem = lastFriendsId;
+
             break;
         default:
             break;
@@ -194,6 +195,7 @@ $(document).ready(function() {
     // });
     $('.nav-tabs a').click(function() {
         triggered = 0;
+        addRealViews(html);
     });
 
     $('.thumbnail').hover(

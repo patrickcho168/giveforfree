@@ -87,12 +87,14 @@ function saveCategories(item, categories) {
         "other"
     ];
 
-    var ids = categories.map(function(cat) {
-        return categoriesPos.indexOf(cat) + 1;
-    })
+    if (categories) {
+        var ids = categories.map(function(cat) {
+            return categoriesPos.indexOf(cat) + 1;
+        })
 
-    console.log(ids);
-    return item.categories().attach(ids);
+        console.log(ids);
+        return item.categories().attach(ids);    
+    }
 }
 
 function saveItem(req, res, fileName) {
@@ -103,8 +105,7 @@ function saveItem(req, res, fileName) {
         timeExpired: moment(req.body.date + " 23:59:59").format("YYYY-MM-DD HH:mm:ss"),
         title: req.body.title,
         description: req.body.description,
-        postageMessage: req.body.postMessage,
-        meetupMessage: req.body.meetupMessage,
+        collectionMessage: req.body.collectionMessage,
         postage: req.body.postage ? 1 : 0,
         meetup: req.body.meetup ? 1 : 0,
         imageLocation: fileName
@@ -183,7 +184,7 @@ module.exports = function(app) {
             next(new Error("User does not have appUserId"));
 
         } else {
-            req.body.croppedImage = req.body.croppedImage.replace(/^data:image\/\w+;base64,/, "");            
+            req.body.croppedImage = req.body.croppedImage.replace(/^data:image\/\w+;base64,/, "");
 
             // Simple form validation
             req.checkBody({
@@ -221,8 +222,7 @@ module.exports = function(app) {
             req.sanitizeBody('title');
             req.sanitizeBody('description');
             req.sanitizeBody('croppedImage');
-            req.sanitizeBody('meetupMessage');
-            req.sanitizeBody('postageMessage');
+            req.sanitizeBody('collectionMessage');
             req.sanitizeBody('meetup');
             req.sanitizeBody('postage');
             req.sanitizeBody('categories');
