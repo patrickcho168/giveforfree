@@ -33,6 +33,9 @@ var Item = bookshelf.Model.extend({
   },
   commentedAbout: function() {
     return this.hasMany(Comment, 'itemID');
+  },
+  categories: function() {
+    return this.belongsToMany(Category, 'categoryitem', 'itemID', 'categoryID');
   }
 });
 
@@ -113,6 +116,14 @@ var Notification = bookshelf.Model.extend({
     return this.belongsTo(Thank, 'thankID');
   }
 });
+
+var Category = bookshelf.Model.extend({
+  tableName: 'category',
+  idAttribute: 'categoryID',
+  items: function() {
+    return this.belongsToMany(Item, 'categoryitem', 'categoryID', 'itemID');
+  }
+})
 
 var HomePageItemQuery = function(userId, numItems, cb) {
   knex

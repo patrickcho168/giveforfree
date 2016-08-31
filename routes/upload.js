@@ -32,15 +32,55 @@ function createFbPost(title, itemId, imgUrl) {
     return querystring.stringify(object);
 }
 
+function saveCategories(item, categories) {
+    var categoriesPos = [
+        "clothes",
+        "accessories",
+        "furniture & home",
+        "parenting",
+        "health",
+        "beauty",
+        "kitchen appliances",
+        "gardening",
+        "property",
+        "design & craft",
+        "electronics",
+        "sports",
+        "photography",
+        "antiques",
+        "toys",
+        "games",
+        "music",
+        "tickets & vouchers",
+        "auto accessories",
+        "books",
+        "stationery",
+        "textbooks",
+        "notes",
+        "pets",
+        "other"
+    ];
+
+    var ids = categories.map(function(cat) {
+        return categoriesPos.indexOf(cat) + 1;
+    })
+
+    console.log(ids);
+    return item.categories().attach(ids);
+}
+
 function saveItem(req, res, fileName) {
     // Create item based on form
-    console.log('timeExpired', moment(req.body.date).format("YYYY-MM-DD HH:mm:ss"))
     var newItem = new db.Item({
         giverID: req.user.appUserId,
         timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
         timeExpired: moment(req.body.date + moment().format(" HH:mm:ss")).format("YYYY-MM-DD HH:mm:ss"),
         title: req.body.title,
         description: req.body.description,
+        postageMessage: req.body.postMessage,
+        meetupMessage: req.body.meetupMessage,
+        postage: req.body.postage,
+        meetup: req.body.meetup,
         imageLocation: fileName
     });
 
@@ -50,6 +90,8 @@ function saveItem(req, res, fileName) {
         var createdItemID = newSavedItem.attributes.itemID;
 
         if (createdItemID != null) {
+            // Save categories
+            saveCategories(newSavedItem, req.body.categories);
             console.log(createdItemID);
             req.flash('success_messages', 'Upload Succeeded! Redirecting to item page ...');
             setTimeout(redirectSuccess, 1, createdItemID, res);
@@ -142,6 +184,11 @@ module.exports = function(app) {
             req.sanitizeBody('title');
             req.sanitizeBody('description');
             req.sanitizeBody('croppedImage');
+            req.sanitizeBody('meetupMessage');
+            req.sanitizeBody('postageMessage');
+            req.sanitizeBody('meetup');
+            req.sanitizeBody('postage');
+            req.sanitizeBody('categories');
 
             var errors = req.validationErrors();
 
