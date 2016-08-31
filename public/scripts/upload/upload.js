@@ -77,6 +77,22 @@ $(function() {
         }, 100);
     });
 
+    // var checkbox1 = $("#check-one");
+    // var checkbox2 = $("#check-two");
+    // var submitButt = $("#create-upload");
+    //
+    // $(document).on('click', 'form button[type=submit]', function(e) {
+    //     var isValid = checkbox1.is(":checked") || checkbox2.is(":checked");
+    //     if (!isValid) {
+    //         e.preventDefault(); //prevent the default action
+    //     }
+    // });
+
+    // $("#create-upload").click(function(e) {
+    //
+    //     return $("#new-gift-form").valid();
+    //
+    // });
 
 });
 
@@ -168,12 +184,12 @@ function previewFile() {
             reader.addEventListener("load", function() {
                 $uploadCrop = $('#image').croppie({
                     viewport: {
-                        width: 200,
-                        height: 200,
+                        width: 180,
+                        height: 180,
                     },
                     boundary: {
-                        width: 240,
-                        height: 240,
+                        width: 200,
+                        height: 200,
                     },
                     enforceBoundary: false,
                     enableExif: true,
@@ -209,4 +225,5 @@ function previewFile() {
             reader.readAsDataURL(file);
         }
     }
+
 }
