@@ -22,6 +22,7 @@ $(document).ready(function() {
 	    notification.preventDefault();
 	    $.ajax({url: apiUrl});
 	    $("span.badge").text(0);
+	    $("div[id='all-notifications']").empty();
 	});
 
 });
