@@ -35,7 +35,7 @@ var Item = bookshelf.Model.extend({
     return this.hasMany(Comment, 'itemID');
   },
   categories: function() {
-    return this.belongsToMany(Category, 'categoryitem', 'itemID', 'categoryID');
+    return this.belongsToMany(Category, 'categoryItem', 'itemID', 'categoryID');
   }
 });
 
@@ -127,7 +127,7 @@ var Category = bookshelf.Model.extend({
   tableName: 'category',
   idAttribute: 'categoryID',
   items: function() {
-    return this.belongsToMany(Item, 'categoryitem', 'categoryID', 'itemID');
+    return this.belongsToMany(Item, 'categoryItem', 'categoryID', 'itemID');
   }
 })
 

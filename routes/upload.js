@@ -37,7 +37,8 @@ function createFbStory(itemId, fbFreeItemId) {
     var object = {
         // 'free_item': 'https://graph.facebook.com/1086175114800378/' + fbFreeItemId,
         'free_item': 'http://ec2-54-255-178-61.ap-southeast-1.compute.amazonaws.com/item/' + itemId,
-        'method': 'POST'
+        'method': 'POST',
+        'fb:explicitly_shared': true
     };
     console.log(querystring.stringify(object));
     return querystring.stringify(object);
@@ -45,17 +46,18 @@ function createFbStory(itemId, fbFreeItemId) {
 
 function createFbFreeItem(title, itemId, imgUrl) {
     var object = {
-        'object': {
-            'og:url': 'http://ec2-54-255-178-61.ap-southeast-1.compute.amazonaws.com/item/' + itemId,
-            'og:title': title,
-            'og:type': config.fbNamespace + ':free_item',
-            'og:image': 'https://d24uwljj8haz6q.cloudfront.net/' + imgUrl,
-            'og:description': '',
-            'fb:app_id': config.fbClientID,
-            'method': 'POST'
-        }
+        'og:url': 'http://ec2-54-255-178-61.ap-southeast-1.compute.amazonaws.com/item/' + itemId,
+        'og:title': title,
+        'og:type': config.fbNamespace + ':free_item',
+        'og:image': 'https://d24uwljj8haz6q.cloudfront.net/' + imgUrl,
+        'og:description': '',
+        'fb:app_id': config.fbClientID,
     }
-    return querystring.stringify(object);
+    return 'method=POST&object=' + encodeURIComponent(JSON.stringify(object));
+    // var nextObject = {
+    //     'object': querystring.stringify(object)
+    // }
+    // return querystring.stringify(nextObject);
 }
 
 function saveCategories(item, categories) {
@@ -140,8 +142,8 @@ function saveItem(req, res, fileName) {
             var apiCall = '/me/' + config.fbNamespace + ':give';
             var objectApiCall = '/me/objects/' + config.fbNamespace + ':free_item'
             facebook.getFbData(req.user.accessToken, objectApiCall, createFbFreeItem(newItemTitle, createdItemID, newItemUrl), function(data) {
-                console.log(JSON.parse(data).data[0].id);
-                facebook.getFbData(req.user.accessToken, apiCall, createFbStory(createdItemID, JSON.parse(data).data[0].id), function(data2) {
+                console.log(data);
+                facebook.getFbData(req.user.accessToken, apiCall, createFbStory(createdItemID, JSON.parse(data).id), function(data2) {
                     console.log(data2);
                 });
             });
