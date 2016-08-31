@@ -32,6 +32,12 @@
     ">
 
     <!-- Other Scripts -->
+    <!-- <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea'
+        });
+    </script> -->
     <script src="../scripts/common/common.js"></script>
     <script src="../scripts/upload/upload.js"></script>
     <script src="../scripts/upload/exif.js"></script>
@@ -139,19 +145,19 @@
                             <i class="fa fa-user" aria-hidden="true"></i> Profile
                         </a>
                     </li>
-                    
+
 
                     <% if (typeof notification != 'undefined') { %>
-                    <!-- Notifications -->
-                    <%- include('notification'); %>
-                    <!-- End Notifications -->
-                    <% } %>
-                    
-                    <li id="nav-logout">
-                        <a href="/logout">
-                            <i class="fa fa-lock" aria-hidden="true"></i> Logout
-                        </a>
-                    </li>
+                        <!-- Notifications -->
+                        <%- include('notification'); %>
+                            <!-- End Notifications -->
+                            <% } %>
+
+                                <li id="nav-logout">
+                                    <a href="/logout">
+                                        <i class="fa fa-lock" aria-hidden="true"></i> Logout
+                                    </a>
+                                </li>
                 </ul>
 
 
@@ -247,7 +253,7 @@
                                         <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>Describe the item you are giving!</b></h4>
                                             <p class="list-group-item-text">
-                                                <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description" autocomplete="off" data-trigger="focus" id="description-field" required></textarea>
+                                                <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description" autocomplete="off" data-trigger="focus" id="description-field"></textarea>
                                             </p>
                                         </a>
                                         <a class="list-group-item">

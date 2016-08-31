@@ -16,10 +16,10 @@
     <meta property="og:description" content="<%= item.description %>" />
     <meta property="og:title" content="<%= item.title %>" />
     <meta property="og:site_name" content="Give For Free" />
-    <meta property="og:image:width" content="450"/>
-    <meta property="og:image:height" content="298"/>
-    
-    
+    <meta property="og:image:width" content="450" />
+    <meta property="og:image:height" content="298" />
+
+
 
     <title>Give For Free - Meeting the needs of others</title>
 
@@ -66,23 +66,24 @@
 
         var toId;
         <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-            toId = <%= item.fbID %>;
+        toId = <%= item.fbID %>;
         <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-            toId = <%= item.takerFbID %>;
+        toId = <%= item.takerFbID %>;
         <% } %>
 
-        $( document ).ready(function() {
-            if ( $( "#facebook-message" ).length ) {
+        $(document).ready(function() {
+            if ($("#facebook-message").length) {
                 document.getElementById('facebook-message').onclick = function() {
                     FB.ui({
                         method: 'send',
                         link: '<%= domain %>/item/<%= item.itemID %>',
                         to: toId
-                    }, function(response){});
+                    }, function(response) {});
                 }
             }
         })
     </script>
+
     <script src="../scripts/common/common.js"></script>
     <script src="../scripts/item/item.js"></script>
 
@@ -166,15 +167,15 @@
                         </a>
                     </li>
                     <% if (typeof notification != 'undefined') { %>
-                    <!-- Notifications -->
-                    <%- include('notification'); %>
-                    <!-- End Notifications -->
-                    <% } %>
-                    <li id="nav-logout">
-                        <a href="/logout">
-                            <i class="fa fa-lock" aria-hidden="true"></i> Logout
-                        </a>
-                    </li>
+                        <!-- Notifications -->
+                        <%- include('notification'); %>
+                            <!-- End Notifications -->
+                            <% } %>
+                                <li id="nav-logout">
+                                    <a href="/logout">
+                                        <i class="fa fa-lock" aria-hidden="true"></i> Logout
+                                    </a>
+                                </li>
                 </ul>
 
 
@@ -306,11 +307,11 @@
                                     <!-- Manage different rights for users -->
                                     <center>
                                         <% if (loggedIn && mine && item.takerID === null) { %>
-                                            <a href="/api/delete/<%= item.itemID %>" class="btn btn-danger raised">Delete</a>
+                                            <a href="/api/delete/<%= item.itemID %>" class="btn btn-danger">Delete</a>
 
                                             <% if (item.numWants > 0) { %>
-                                                <a type="button" class="btn btn-warning raised" href="/api/give/<%= item.itemID %>"> Random Draw</a>
-                                                <a type="button" class="btn btn-success raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <a type="button" class="btn btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw</a>
+                                                <a type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Pick <span class="caret"></span>
                                     </a>
                                                 <ul class="dropdown-menu scrollable-menu dropdown-menu-right" role="menu">
@@ -324,10 +325,10 @@
                                                 </ul>
                                                 <% } %>
                                                     <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                                                        <button class="btn btn-primary message-button raised" id="facebook-message">Message Owner</a>
-                                                    <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                                                        <button class="btn btn-primary message-button raised" id="facebook-message">Message Recipient</a>
-                                                    <% } %>
+                                                        <button class="btn btn-primary message-button" id="facebook-message">Message Owner</a>
+                                                            <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
+                                                                <button class="btn btn-primary message-button" id="facebook-message">Message Recipient</a>
+                                                                    <% } %>
                                     </center>
                                 </div>
                             </div>
@@ -346,10 +347,29 @@
                                 </h5>
                             </div>
                         </div>
+
                     </div>
 
                 </row>
+
+                <row>
+                    <div style="padding: 0 15px;" align="center">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 5px; margin-bottom: 30px; padding-left:0; padding-right: 0;">
+                            <% if (!mine) { %>
+                                <% if (!loggedIn && !expired && item.takerID === null) { %>
+                                    <a href="/login" class="btn btn-lg btn-primary btn-block"><span class="glyphicon glyphicon-gift"></span> <b> LOGIN TO SNAG</b> <span class="badge"><%= item.numWants %></span> </a>
+                                    <% } else if (item.meWant === 1 && !expired && item.takerID === null) { %>
+                                        <a class="btn btn-lg btn-danger btn-block unsnag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> UNSNAG</b> <span class="badge"><%= item.numWants %></span> </a>
+                                        <% } else if (!expired && item.takerID === null) { %>
+                                            <a class="btn btn-lg btn-primary btn-block snag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> SNAG</b> <span class="badge"><%= item.numWants %></span> </a>
+                                            <% } %>
+                                                <% } %>
+                        </div>
+                    </div>
+                </row>
             </div>
+
+
 
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="padding: 0 0;">
 
@@ -363,13 +383,13 @@
                                         <%= item.title %>
                                     </p>
                                 </a>
-                                <a href="#" class="list-group-item">
+                                <a class="list-group-item" style="overflow: auto;">
                                     <h4 class="list-group-item-heading">Description</h4>
-                                    <p class="list-group-item-text wrap">
+                                    <textarea readonly style="width: 100%; height: 100%; resize:none; font-weight: lighter; font-size: 1.3em; overflow: auto; background: transparent; border: none;" class="list-group-item-text wrap description-text">
                                         <%= item.description %>
-                                    </p>
+                                    </textarea>
                                 </a>
-                                <a href="#" class="list-group-item">
+                                <a class="list-group-item">
                                     <h4 class="list-group-item-heading">Deadline</h4>
                                     <p class="list-group-item-text">
                                         <%= date %>
@@ -382,40 +402,37 @@
                                                         <h5>This giveaway has ended.</h5>
                                                         <% } else { %>
                                                             <h4>Given Away</h4>
-                                                            <h5>This item has been given away to
-                                                        <a href="/profile/<%= item.takerId %>">
-                                                            <%= item.takerName%>
-                                                        </a>. </h5>
+                                                            <h5>This item has been given away to <a href="/profile/<%= item.takerId %>"> <%= item.takerName%>.</a></h5>
                                                             <% } %>
                                             </div>
                                     </p>
                                 </a>
                             </div>
-                            <div class="panel-footer">
-                                <row>
-                                    <h5 class="text-muted"> Last updated 1 hour ago
-                                    <% if (loggedIn && mine && !expired && item.takerID == null) { %>
-                                            <button style="display: inline; top-margin: -10px;"class="btn btn-default raised pull-right" data-toggle="modal" data-target="#editModal">Edit</button>
-                                            <% } %>
-                                        </h5>
+                            <div class="panel-footer" style="vertical-align: middle;">
+                                <!-- <row> -->
+                                <div style="vertical-align: middle; position: relative;">
+                                    <row>
+                                        <% if (loggedIn && mine && !expired && item.takerID == null) { %>
+                                            <div class="pull-right" style="vertical-align: middle; position:relative; float:right; margin-top: -10px;">
+                                                <button class="btn btn-default pull-right" style="display: inline-block; align: right; top: 0px; float: right;" data-toggle="modal" data-target="#editModal">Edit</button>
+                                                <% } %>
+                                            </div>
+                                            <div>
+                                                <h5 class="text-muted" style="vertical-align: middle;"> Last updated 1 hour ago</h5>
+                                            </div>
+                                    </row>
+                                </div>
 
-                                </row>
+
+                                <!-- </row> -->
                             </div>
                         </div>
 
                     </div>
                 </row>
+
             </div>
 
-            <% if (!mine) { %>
-                <% if (!loggedIn && !expired && item.takerID === null) { %>
-                    <a href="/login" class="btn btn-lg btn-primary btn-block raised"><span class="glyphicon glyphicon-gift"></span> <b> LOGIN TO SNAG</b> <span class="badge"><%= item.numWants %></span> </a>
-                    <% } else if (item.meWant === 1 && !expired && item.takerID === null) { %>
-                        <a class="btn btn-lg btn-danger btn-block unsnag raised" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> UNSNAG</b> <span class="badge"><%= item.numWants %></span> </a>
-                        <% } else if (!expired && item.takerID === null) { %>
-                            <a class="btn btn-lg btn-primary btn-block snag raised" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> SNAG</b> <span class="badge"><%= item.numWants %></span> </a>
-                            <% } %>
-                                <% } %>
 
     </div>
 
@@ -448,7 +465,7 @@
                             </div>
                             <% });
                         } %>
-                                <div class="form-group has-warning">
+                                <!-- <div class="form-group has-warning">
                                     <label class="col-sm-2 control-label" for="title">Title</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="title" name="title" placeholder="Enter the title here..." required/>
@@ -469,8 +486,102 @@
                                         maxCount: 140,
                                         countDirection: 'down'
                                     });
-                                </script>
+                                </script> -->
 
+                                <div class="panel panel-default">
+                                    <div class="list-group">
+                                        <a class="list-group-item">
+                                            <h4 class="list-group-item-heading"><b>What are you giving?</b></h4>
+                                            <p class="list-group-item-text">
+                                                <input type="text" class="input-txt" name="title" placeholder="Item name" maxlength="50" autocomplete="off" required>
+                                            </p>
+                                        </a>
+                                        <a class="list-group-item">
+                                            <h4 class="list-group-item-heading"><b>Describe the item you are giving!</b></h4>
+                                            <p class="list-group-item-text">
+                                                <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description" autocomplete="off" data-trigger="focus" id="description-field"></textarea>
+                                            </p>
+                                        </a>
+                                        <a class="list-group-item">
+                                            <h4 class="list-group-item-heading"><b>When do you want to end this giveaway?</b></h4>
+                                            <p class="list-group-item-text">
+                                                <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" required>
+                                            </p>
+                                        </a>
+                                        <a class="list-group-item">
+                                            <h4 class="list-group-item-heading"><b>Which category does your item belong to?</b></h4>
+                                            <select id="input-tags" name="categories[]" multiple class="categories has-options" style="width:70%" placeholder="Select categories...">
+                                                <option value="">Select categories...</option>
+                                                <option value="clothes">clothes</option>
+                                                <option value="accessories">accessories</option>
+                                                <option value="furniture & home">furniture & home</option>
+                                                <option value="parenting">parenting</option>
+                                                <option value="health">health</option>
+                                                <option value="beauty">beauty</option>
+                                                <option value="kitchen appliances">kitchen appliances</option>
+                                                <option value="gardening">gardening</option>
+                                                <option value="property">property</option>
+                                                <option value="design & craft">design & craft</option>
+                                                <option value="electronics">electronics</option>
+                                                <option value="sports">sports</option>
+                                                <option value="photography">photography</option>
+                                                <option value="antiques">antiques</option>
+                                                <option value="toys">toys</option>
+                                                <option value="games">games</option>
+                                                <option value="music">music</option>
+                                                <option value="tickets & vouchers">tickets & vouchers</option>
+                                                <option value="auto accessories">auto accessories</option>
+                                                <option value="books">books</option>
+                                                <option value="stationeries">stationeries</option>
+                                                <option value="textbooks">textbooks</option>
+                                                <option value="notes">notes</option>
+                                                <option value="pets">pets</option>
+                                                <option value="other">other</option>
+                                            </select>
+                                        </a>
+                                        <a class="list-group-item">
+                                            <h4 class="list-group-item-heading"><b>How would you like the person receiving to collect the item?</b></h4>
+
+                                            <div class="checkbox checkbox-primary checkbox-circle row">
+                                                <input type="checkbox" id="meet">
+                                                <label class="large-label" for="meet">
+                                                    Meet and collect
+                                                </label>
+
+                                                <input type="checkbox" id="free">
+                                                <label class="large-label" for="free">
+                                                    Postage service </label>
+
+                                                <!-- <input type="checkbox" id="paid">
+                                                <label class="large-label" for="paid">
+                                                    Collector to pay </label> -->
+
+                                                <!-- <label class="large-label">
+                                            <input id="meet" type="checkbox"> Meet and collect
+                                        </label> -->
+                                                <!-- <label class="large-label">
+                                            <input id="free" type="checkbox"> Free postage service
+                                        </label>
+                                        <label class="large-label">
+                                            <input id="paid" type="checkbox"> Collector to pay for postage
+                                        </label> -->
+                                            </div>
+
+                                        </a>
+                                        <a class="list-group-item">
+                                            <div class="checkbox checkbox-primary checkbox-circle row">
+                                                <input type="checkbox" id="share" name="postToFacebook">
+                                                <label class="large-label" for="share">
+                                                    <i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook
+                                                </label>
+                                            </div>
+                                        </a>
+
+                                    </div>
+                                    <div class="panel-footer" align="center">
+                                        <button type="submit" class="btn btn-md btn-success bold-link">Create Gift!</button>
+                                    </div>
+                                </div>
 
 
                     </div>
