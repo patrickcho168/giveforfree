@@ -76,7 +76,11 @@ function addRealViews(html) {
         default:
             break;
     }
-
+    
+    console.log(currentTab);
+    console.log(urlAJAX);
+    console.log(lastItem);
+    console.log(isFirst);
 
     if ((urlAJAX != null && lastItem >= 1) || (isFirst && urlAJAX != null)) {
         // AJAX to fetch JSON objects from server
@@ -96,10 +100,11 @@ function addRealViews(html) {
                     switch (currentTab) {
                         case "gifts":
                             lastGiftsId = data[data.length - 1].itemID;
-                            console.log(lastGiftsId);
+                            console.log("GIFTS: " + lastGiftsId);
                             break;
                         case "wants":
                             lastWantsId = data[data.length - 1].itemID;
+                            console.log("WANTS: " + lastWantsId);
                             break;
                         case "thanks":
                             lastThanksId = data[data.length - 1].itemID;
