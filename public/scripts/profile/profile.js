@@ -193,10 +193,6 @@ $(document).ready(function() {
     //     triggered = 0;
     //
     // });
-    $('.nav-tabs a').click(function() {
-        triggered = 0;
-        addRealViews(html);
-    });
 
     $('.thumbnail').hover(
         function() {
@@ -207,6 +203,11 @@ $(document).ready(function() {
         }
     );
 
+});
+
+$('.nav-tabs a').click(function() {
+    triggered = 0;
+    addRealViews(html);
 });
 
 $(window).scroll(function() {
