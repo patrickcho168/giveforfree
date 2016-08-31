@@ -63,9 +63,12 @@
                     <% } else { %>
                         <li id="nav-feed" class="active"><a href="/">Feed</a></li>
                         <li id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
+
+                    <% if (typeof notification != 'undefined') { %>
                         <!-- Notifications -->
                         <%- include('notification'); %>
                         <!-- End Notifications -->
+                        <% } %>
                         <li id="nav-logout"><a href="/logout">Logout</a></li>
                     <% } %>
                 </ul>

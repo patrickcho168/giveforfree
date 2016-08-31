@@ -140,12 +140,9 @@
                         </a>
                     </li>
                     
-
-                    <% if (typeof notification != 'undefined') { %>
                     <!-- Notifications -->
                     <%- include('notification'); %>
                     <!-- End Notifications -->
-                    <% } %>
                     
                     <li id="nav-logout">
                         <a href="/logout">
@@ -232,6 +229,71 @@
                                 </div>
 
 
+<<<<<<< HEAD
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+                        <div class="panel panel-default">
+                            <div class="list-group">
+                                <a class="list-group-item">
+                                    <h4 class="list-group-item-heading"><b>What are you giving?</b></h4>
+                                    <p class="list-group-item-text">
+                                        <input type="text" class="input-txt" name="title" placeholder="Item name" maxlength="50" autocomplete="off" required>
+                                    </p>
+                                </a>
+                                <a class="list-group-item">
+                                    <h4 class="list-group-item-heading"><b>Describe the item you are giving!</b></h4>
+                                    <p class="list-group-item-text">
+                                        <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description" autocomplete="off" data-trigger="focus" id="description-field" required></textarea>
+                                    </p>
+                                </a>
+                                <a class="list-group-item">
+                                    <h4 class="list-group-item-heading"><b>When do you want to end this giveaway?</b></h4>
+                                    <p class="list-group-item-text">
+                                        <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" required>
+                                    </p>
+                                </a>
+                                <a class="list-group-item">
+                                    <h4 class="list-group-item-heading"><b>Which category does your item belong to?</b></h4>
+                                    <select id="input-tags" name="categories[]" multiple class="categories" style="width:70%" placeholder="Select item categories...">
+                                        <option value="">Select item categories...</option>
+                                        <option value="clothes">clothes</option>
+                                        <option value="accessories">accessories</option>
+                                        <option value="furniture & home">furniture & home</option>
+                                        <option value="parenting">parenting</option>
+                                        <option value="health">health</option>
+                                        <option value="beauty">beauty</option>
+                                        <option value="kitchen appliances">kitchen appliances</option>
+                                        <option value="gardening">gardening</option>
+                                        <option value="property">property</option>
+                                        <option value="design & craft">design & craft</option>
+                                        <option value="electronics">electronics</option>
+                                        <option value="sports">sports</option>
+                                        <option value="photography">photography</option>
+                                        <option value="antiques">antiques</option>
+                                        <option value="toys">toys</option>
+                                        <option value="games">games</option>
+                                        <option value="music">music</option>
+                                        <option value="tickets & vouchers">tickets & vouchers</option>
+                                        <option value="auto accessories">auto accessories</option>
+                                        <option value="books">books</option>
+                                        <option value="stationeries">stationeries</option>
+                                        <option value="textbooks">textbooks</option>
+                                        <option value="notes">notes</option>
+                                        <option value="pets">pets</option>
+                                        <option value="other">other</option>
+                                    </select>
+                                </a>
+                                <a class="list-group-item">
+                                    <h4 class="list-group-item-heading"><b>How would you like the person receiving to collect the item?</b></h4>
+
+                                    <div class="checkbox checkbox-primary checkbox-circle row">
+                                        <input type="checkbox" id="meet">
+                                        <label class="large-label" for="meet">
+                                            Meet and collect
+                                        </label>
+=======
+>>>>>>> 38fd3e32b35317048626123b618e7f2f486dff94
 
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -315,14 +377,24 @@
                                         </label> -->
                                             </div>
 
+<<<<<<< HEAD
+                                </a>
+                                <a class="list-group-item">
+=======
                                         </a>
                                         <a class="list-group-item">
+>>>>>>> 38fd3e32b35317048626123b618e7f2f486dff94
+
                                             <div class="checkbox checkbox-primary checkbox-circle row">
                                                 <input type="checkbox" id="share">
                                                 <label class="large-label" for="share">
                                                     <i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook
                                                 </label>
+
                                             </div>
+
+
+
                                         </a>
 
                                     </div>

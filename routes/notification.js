@@ -3,7 +3,8 @@ var db = require('../models/db');
 var moment = require('moment');
 var ensureLogin = require('connect-ensure-login');
 var request = require('request');
-var config = require('../config')
+var config = require('../config');
+var moment = require('moment');
 
 // NotificationType 1: Someone snag an item that I am currently giving but haven't given out
 // NotificationType 2: My item has just expired and I haven't given out the item
@@ -51,7 +52,6 @@ toExport.route = function(app) {
     });
 
     app.get('/api/getonenotification/:recipientgcm', function(req,res) {
-        console.log("HERE");
         db.User.where({
             gcm: recipientgcm
         }).fetch().then(function(user) {
@@ -60,35 +60,65 @@ toExport.route = function(app) {
             });
         });
     });
+
+    // Read single notification
+    app.get('/api/read_notification/:notifID', function(req, res, next) {
+        db.Notification.where({
+            notificationID: req.params.notifID
+        }).fetch().then(function(notification) {
+            notification.readBy().attach(req.user.appUserId);
+            res.json({ message: 'Notification read' });
+        }).catch(function(err) {
+            next(err);
+        });
+    });
+
+    // Clear all notifications
+    app.get('/api/clear_notifications', function(req, res, next) {
+        db.User.where({
+            userID: req.user.appUserId
+        }).fetch().then(function(user) {
+            var ids = req.session.notification.map(function(notification) {
+                return notification.notificationID;
+            });
+            user.readNotifications().attach(ids);
+            res.json({ message: 'Notifications cleared' });
+        }).catch(function(err) {
+            next(err);
+        });
+    });
 }
 
 toExport.pushNotification = function(userId) {
     db.User.where({
         userID: userId
     }).fetch().then(function(user) {
-        var options = {
-            url: 'https://android.googleapis.com/gcm/send',
-            port: 443,
-            method: 'POST',
-            headers: {
-                "Authorization": "key=" + config.gcmKey,
-                "Content-Type": "application/json"
-            },
-            json: {
-                "to": user.attributes.gcm,
-                // "notification": {
-                //     "body": "LALALA",
-                //     "title": "New Message from Give For Free",
-                //     "icon": "/images/common/logo.svg"
-                // }
+        console.log(user.attributes.gcm);
+        if (user && user.attributes.gcm) {
+            var options = {
+                url: 'https://android.googleapis.com/gcm/send',
+                port: 443,
+                method: 'POST',
+                headers: {
+                    "Authorization": "key=" + config.gcmKey,
+                    "Content-Type": "application/json"
+                },
+                json: {
+                    "to": user.attributes.gcm,
+                    // "notification": {
+                    //     "body": "LALALA",
+                    //     "title": "New Message from Give For Free",
+                    //     "icon": "/images/common/logo.svg"
+                    // }
+                }
+            };
+
+            var callback = function(error, response, body) {
+
             }
-        };
 
-        var callback = function(error, response, body) {
-
+            request(options, callback);
         }
-
-        request(options, callback);
     });
 }
 

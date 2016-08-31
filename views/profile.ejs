@@ -136,9 +136,11 @@
                         </a>
                     </li>
                     
+                    <% if (typeof notification != 'undefined') { %>
                     <!-- Notifications -->
                     <%- include('notification'); %>
                     <!-- End Notifications -->
+                    <% } %>
                     
                     <li id="nav-logout">
                         <a href="/logout">

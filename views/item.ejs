@@ -157,11 +157,11 @@
                             <i class="fa fa-user" aria-hidden="true"></i> Profile
                         </a>
                     </li>
-
+                    <% if (typeof notification != 'undefined') { %>
                     <!-- Notifications -->
                     <%- include('notification'); %>
                     <!-- End Notifications -->
-
+                    <% } %>
                     <li id="nav-logout">
                         <a href="/logout">
                             <i class="fa fa-lock" aria-hidden="true"></i> Logout

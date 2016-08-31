@@ -1,10 +1,11 @@
+
 <li class="dropdown dropdown-notifications">
     <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         <i data-count="2" class="fa fa-bell" aria-hidden="true"></i> Notifications <span class="badge"><%= notification.length %></span>
     </a>
     <ul class="dropdown-menu hidden-xs" aria-labelledby="dropdownMenu1" style="height:400px; width:300%; overflow:hidden; overflow-y:scroll;">
-        <div class="panel-heading"><a>Clear All</a></div>
-        <div style="height:400px; width:300%; overflow:hidden; overflow-y:scroll;">
+        <div class="panel-heading"><a class="clear-notifications">Clear All</a></div>
+        <div style="height:400px; width:110%; overflow:hidden; overflow-y:scroll;">
             <% for (var i=0; i<notification.length; i++) { %>
             <li class="notification">
                 <div class="media">
@@ -14,36 +15,36 @@
                         </div>
                     </div>
                     <% if (notification[i].notificationType === 5) { %>
-                    <a href="/profile/<%= id %>">
+                    <a href="/profile/<%= id %>" class="notification-link" notificationid=<%= notification[i].notificationID %>>
                         <div class="media-body">
-                            <strong class="notification-title">
-                                <%= notification[i].name %> left a new message on your Thank You Wall!
-                            </strong>
+                            <div class="notification-title">
+                                <strong><%= notification[i].name %><strong> left a new message on your <strong>Thank You Wall</strong>!
+                            </div>
                             <div class="notification-meta">
-                                <small class="timestamp"><%= notification[i].timeCreated %></small>
+                                <small class="timestamp"><%= moment(notification[i].timeCreated).format('MMM Do [at] h:mmA') %></small>
                             </div>
                         </div>
                     </a>
                     <% } else { %>
-                    <a href="/item/<%= notification[i].itemID %>">
+                    <a href="/item/<%= notification[i].itemID %>" class="notification-link" notificationID=<%= notification[i].notificationID %>>
                         <div class="media-body">
-                            <strong class="notification-title">
+                            <div class="notification-title" style="color: black">
                                 <% if (notification[i].notificationType === 1) { %>
-                                    <%= notification[i].name %> is interested in getting <%= notification[i].title %>.
+                                    <p><strong><%= notification[i].name %></strong> is interested in getting getting getting getting getting getting getting getting getting <strong><%= notification[i].title %></strong>.</p>
                                 <% } else if (notification[i].notificationType === 2) { %>
-                                    <%= notification[i].title %>'s giveaway has expired. Pick your lucky winner now.
+                                    <strong><%= notification[i].title %>'s</strong> giveaway has expired. Pick your lucky winner now.
                                 <% } else if (notification[i].notificationType === 3) { %>
-                                    <%= notification[i].name %> left a comment about <%= notification[i].title %>.
+                                    <strong><%= notification[i].name %></strong> left a comment about <strong><%= notification[i].title %></strong>.
                                 <% } else if (notification[i].notificationType === 4) { %>
                                     <% if (notification[i].takerID === id) { %>
-                                        <%= notification[i].title %> has been given to you! (:</li>
+                                        <strong><%= notification[i].title %></strong> has been given to you! (:</li>
                                     <% } else { %>
-                                        <%= notification[i].title %> has been given to someone else! ):</li>
+                                        <strong><%= notification[i].title %></strong> has been given to someone else! ):</li>
                                     <% } %>
                                 <% } %>
-                            </strong>
+                            </div>
                             <div class="notification-meta">
-                                <small class="timestamp"><%= notification[i].timeCreated %></small>
+                                <small class="timestamp"><%= moment(notification[i].timeCreated).format('MMM Do [at] h:mmA') %></small>
                             </div>
                         </div>
                     </a>

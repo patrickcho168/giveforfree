@@ -437,7 +437,8 @@ module.exports = function(app) {
                                 manual: data2,
                                 loggedIn: loggedIn,
                                 comment: commentData.models,
-                                notification: req.session.notification
+                                notification: req.session.notification,
+                                moment: moment
                             });
                         });
                     } else {
@@ -452,7 +453,8 @@ module.exports = function(app) {
                             karma: gifted[0].numGiven * 10,
                             loggedIn: loggedIn,
                             comment: commentData.models,
-                            notification: req.session.notification
+                            notification: req.session.notification,
+                            moment: moment
                         });
                     }
                 });

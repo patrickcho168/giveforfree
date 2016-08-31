@@ -116,10 +116,12 @@
 							<i class="fa fa-user" aria-hidden="true"></i> Profile
 						</a>
 					</li>
-
+					
+                    <% if (typeof notification != 'undefined') { %>
 					<!-- Notifications -->
 					<%- include('notification'); %>
 					<!-- End Notifications -->
+					<% } %>
 
 					<li id="nav-logout">
 						<a href="/logout">
@@ -164,45 +166,7 @@
 
 	<!-- Scroll Container -->
 	<div class="infinite-scroll-container  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1" id="infinite-scroll-container" align="center">
-		<!-- <div class="infinite-scroll-container col-xs-10 col-xs-offset-1 grid" id="infinite-scroll-container"> -->
-		<!-- <div>
-			<ul>
-				<% for (var i=0; i<notification.length; i++) { %>
-					<% if (notification[i].notificationType === 1) { %>
-						<li>
-							<a href="/profile/<%= notification[i].userID %>">
-								<%= notification[i].name %>
-							</a> wants your
-							<a href="/item/<%= notification[i].itemID %>">
-								<%= notification[i].title %>
-							</a>.</li>
-						<% } else if (notification[i].notificationType === 2) { %>
-							<li>
-								<%= notification[i].title %>'s giveaway has expired. Pick your lucky winner now.</li>
-							<% } else if (notification[i].notificationType === 3) { %>
-								<li>
-									<a href="/profile/<%= notification[i].userID %>">
-										<%= notification[i].name %>
-									</a> left a comment about
-									<%= notification[i].title %>.</li>
-								<% } else if (notification[i].notificationType === 4) { %>
-									<% if (notification[i].takerID === id) { %>
-										<li>
-											<%= notification[i].title %> has been given to you! (:</li>
-										<% } else { %>
-											<li>
-												<%= notification[i].title %> has been given to someone else! ):</li>
-											<% } %>
-												<% } else if (notification[i].notificationType === 5) { %>
-													<li>
-														<%= notification[i].name %> left a new message on your Thank You Wall!</li>
-													<% } %>
-														<% } %>
-			</ul>
-		</div> -->
-
-		<!-- <div class="row" id="infinite-scroll-row"> -->
-
+		
 			<div id="placeholder-main" class="col-lg-10 col-lg-offset-1">
 				<row><img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px; display: block;"/>
 				</row>
