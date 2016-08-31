@@ -105,8 +105,8 @@ function saveItem(req, res, fileName) {
         description: req.body.description,
         postageMessage: req.body.postMessage,
         meetupMessage: req.body.meetupMessage,
-        postage: req.body.postage,
-        meetup: req.body.meetup,
+        postage: req.body.postage ? 1 : 0,
+        meetup: req.body.meetup ? 1 : 0,
         imageLocation: fileName
     });
 
@@ -183,8 +183,7 @@ module.exports = function(app) {
             next(new Error("User does not have appUserId"));
 
         } else {
-            req.body.croppedImage = req.body.croppedImage.replace(/^data:image\/\w+;base64,/, "");
-            console.log(req.body.date);
+            req.body.croppedImage = req.body.croppedImage.replace(/^data:image\/\w+;base64,/, "");            
 
             // Simple form validation
             req.checkBody({

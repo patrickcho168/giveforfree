@@ -392,9 +392,12 @@
                             <div class="panel-body" style="padding: 15px 0;">
                                 <h4>Accepted Delivery Mode</h4>
                                 <h5>
-                                    <span class="label label-success">Free Postage</span>
+                                    <% if (item.meetup === 1) { %>
                                     <span class="label label-info">Meet Up</span>
-                                    <span class="label label-warning">Paid Postage</span>
+                                    <% } %>
+                                    <% if (item.postage === 1) { %>
+                                    <span class="label label-warning">Postage</span>
+                                    <% } %>
                                 </h5>
                             </div>
                         </div>

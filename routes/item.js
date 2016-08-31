@@ -395,7 +395,7 @@ module.exports = function(app) {
     });
 
     // ITEM PAGE
-    app.get('/item/:id', function(req, res) {
+    app.get('/item/:id', function(req, res, next) {
         var itemId = req.params.id;
         req.session.lastPageVisit = '/item/' + itemId;
         var userId;
@@ -412,20 +412,37 @@ module.exports = function(app) {
         db.ItemPageQuery(userId, itemId, function(data) {
 
             if (!(data.length)) {
-                res.render('404');
-                return;
-            }
-
-            var date = moment(data[0].timeExpired);
-            var expiredMin = moment().diff(date, 'minutes');
-            var processedDate = date.locale('en-gb').format("LLL");
-            db.ProfilePageTotalGivenQuery(data[0].giverID, function(gifted) {
-                db.Comment.where({
-                    itemID: itemId
-                }).orderBy('timeCreated', 'ASC').fetchAll({withRelated: ['commentedBy']}).then(function(commentData) {
-                    var mine = userId === data[0].giverID;
-                    if (mine && data[0].takerID === null && data[0].numWants > 0) {
-                        db.ItemPageManualQuery(itemId, function(data2) {
+                next();
+            } else {
+                var date = moment(data[0].timeExpired);
+                var expiredMin = moment().diff(date, 'minutes');
+                var processedDate = date.locale('en-gb').format("LLL");
+                db.ProfilePageTotalGivenQuery(data[0].giverID, function(gifted) {
+                    db.Comment.where({
+                        itemID: itemId
+                    }).orderBy('timeCreated', 'ASC').fetchAll({withRelated: ['commentedBy']}).then(function(commentData) {
+                        var mine = userId === data[0].giverID;
+                        if (mine && data[0].takerID === null && data[0].numWants > 0) {
+                            db.ItemPageManualQuery(itemId, function(data2) {
+                                res.render('item', {
+                                    id: userId,
+                                    item: data[0],
+                                    mine: mine,
+                                    appId: config.fbClientID,
+                                    domain: config.domain,
+                                    date: processedDate,
+                                    expired: expiredMin > 0,
+                                    karma: gifted[0].numGiven * 10,
+                                gifts: gifted[0].numGiven,
+                                    manual: data2,
+                                    loggedIn: loggedIn,
+                                    comment: commentData.models,
+                                    notification: req.session.notification,
+                                    moment: moment,
+                                    fbNameSpace: config.fbNamespace
+                                });
+                            });
+                        } else {
                             res.render('item', {
                                 id: userId,
                                 item: data[0],
@@ -435,35 +452,17 @@ module.exports = function(app) {
                                 date: processedDate,
                                 expired: expiredMin > 0,
                                 karma: gifted[0].numGiven * 10,
-                                gifts: gifted[0].numGiven,
-                                manual: data2,
+                            gifts: gifted[0].numGiven,
                                 loggedIn: loggedIn,
                                 comment: commentData.models,
                                 notification: req.session.notification,
                                 moment: moment,
                                 fbNameSpace: config.fbNamespace
                             });
-                        });
-                    } else {
-                        res.render('item', {
-                            id: userId,
-                            item: data[0],
-                            mine: mine,
-                            appId: config.fbClientID,
-                            domain: config.domain,
-                            date: processedDate,
-                            expired: expiredMin > 0,
-                            karma: gifted[0].numGiven * 10,
-                            gifts: gifted[0].numGiven,
-                            loggedIn: loggedIn,
-                            comment: commentData.models,
-                            notification: req.session.notification,
-                            moment: moment,
-                            fbNameSpace: config.fbNamespace
-                        });
-                    }
+                        }
+                    });
                 });
-            });
+            }
         })
     });
 }
