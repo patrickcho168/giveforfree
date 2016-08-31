@@ -7,8 +7,8 @@ $(document).on("click", ".snag", function() {
     $(this).children('b').text("UNSNAG");
 
     // Change color
-    $(this).removeClass("btn-primary raised");
-    $(this).addClass("btn-danger raised");
+    $(this).removeClass("btn-primary");
+    $(this).addClass("btn-danger");
 
     // Change type
     $(this).removeClass("snag");
@@ -41,8 +41,8 @@ $(document).on("click", ".unsnag", function() {
     $(this).children('b').text("SNAG");
 
     // Change color
-    $(this).removeClass("btn-danger raised");
-    $(this).addClass("btn-primary raised");
+    $(this).removeClass("btn-danger");
+    $(this).addClass("btn-primary");
 
     // Change type
     $(this).removeClass("unsnag");
@@ -95,9 +95,11 @@ $(function() {
     $('.display-item').css({
         'height': cw + 'px'
     });
+
+    $("textarea").height($("textarea")[0].scrollHeight);
 });
 
-$( window ).resize(function() {
+$(window).resize(function() {
     var cw = $('.carousel').width();
 
     $('#display-item').css({
