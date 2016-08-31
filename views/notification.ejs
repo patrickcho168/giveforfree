@@ -17,7 +17,7 @@
                     <% if (notification[i].notificationType === 5) { %>
                     <a href="/profile/<%= id %>" class="notification-link" notificationid=<%= notification[i].notificationID %>>
                         <div class="media-body">
-                            <div class="notification-title">
+                            <div class="notification-title" style="color: black">
                                 <strong><%= notification[i].name %><strong> left a new message on your <strong>Thank You Wall</strong>!
                             </div>
                             <div class="notification-meta">
@@ -37,9 +37,9 @@
                                     <strong><%= notification[i].name %></strong> left a comment about <strong><%= notification[i].title %></strong>.
                                 <% } else if (notification[i].notificationType === 4) { %>
                                     <% if (notification[i].takerID === id) { %>
-                                        <strong><%= notification[i].title %></strong> has been given to you! (:</li>
+                                        <strong><%= notification[i].title %></strong> has been given to you! (:
                                     <% } else { %>
-                                        <strong><%= notification[i].title %></strong> has been given to someone else! ):</li>
+                                        <strong><%= notification[i].title %></strong> has been given to someone else! ):
                                     <% } %>
                                 <% } %>
                             </div>
