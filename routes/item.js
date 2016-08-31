@@ -439,7 +439,8 @@ module.exports = function(app) {
                                 loggedIn: loggedIn,
                                 comment: commentData.models,
                                 notification: req.session.notification,
-                                moment: moment
+                                moment: moment,
+                                fbNameSpace: config.fbNamespace
                             });
                         });
                     } else {
@@ -455,7 +456,8 @@ module.exports = function(app) {
                             loggedIn: loggedIn,
                             comment: commentData.models,
                             notification: req.session.notification,
-                            moment: moment
+                            moment: moment,
+                            fbNameSpace: config.fbNamespace
                         });
                     }
                 });
