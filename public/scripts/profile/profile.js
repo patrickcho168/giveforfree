@@ -5,10 +5,10 @@ var html = '';
 var triggered = 0;
 
 // Individual trackers for each tab
-var lastGiftsId = 1;
-var lastWantsId = 1;
-var lastThanksId = 1;
-var lastFriendsId = 1;
+var lastGiftsId = 0;
+var lastWantsId = 0;
+var lastThanksId = 0;
+var lastFriendsId = 0;
 var lastItem = 0;
 
 // Number of items to load every AJAX
@@ -44,7 +44,6 @@ function addRealViews(html) {
             isFirst = firstGifts;
             if (firstGifts) {
                 urlAJAX = '/api/myItems/' + 0 + '/' + numItems + '/' + appProfileId;
-                firstGifts = false;
             } else {
                 urlAJAX = '/api/myItems/' + lastGiftsId + '/' + numItems + '/' + appProfileId;
             }
@@ -54,7 +53,6 @@ function addRealViews(html) {
             isFirst = firstWants;
             if (firstWants) {
                 urlAJAX = '/api/myWants/' + 0 + '/' + numItems + '/' + appProfileId;
-                firstWants = false;
             } else {
                 urlAJAX = '/api/myWants/' + lastWantsId + '/' + numItems + '/' + appProfileId;
             }
@@ -62,13 +60,11 @@ function addRealViews(html) {
             break;
         case "thanks":
             isFirst = firstThanks;
-
             urlAJAX = null;
             lastItem = lastThanksId;
             break;
         case "friends":
             isFirst = firstFriends;
-
             urlAJAX = null;
             lastItem = lastFriendsId;
 
@@ -82,7 +78,7 @@ function addRealViews(html) {
     console.log(lastItem);
     console.log(isFirst);
 
-    if ((urlAJAX != null && lastItem >= 1) || (isFirst && urlAJAX != null)) {
+    if (urlAJAX != null && lastItem >= 1 || isFirst) {
         // AJAX to fetch JSON objects from server
         $.ajax({
             url: urlAJAX,
@@ -164,18 +160,25 @@ function addRealViews(html) {
 
                         switch (currentTab) {
                             case "gifts":
+                                firstGifts = false;
                                 $('#gifts').append(html);
                                 $('#gifts-placeholder').hide();
                                 break;
                             case "wants":
+                                firstWants = false;
+
                                 $('#wants').append(html);
                                 $('#wants-placeholder').hide();
                                 break;
                             case "thanks":
+                                firstThanks = false;
+
                                 $('#thanks').append(html);
                                 $('#thanks-placeholder').hide();
                                 break;
                             case "friends":
+                                firstFriends = false;
+
                                 $('#friends').append(html);
                                 $('#friends-placeholder').hide();
                                 break;
@@ -211,8 +214,8 @@ $(document).ready(function() {
     //
     // });
     $('.nav-tabs a').click(function() {
-        $(".nav-tabs").find(".active").removeClass("active");
-        $(this).parent().addClass("active");
+        // $(".nav-tabs").find(".active").removeClass("active");
+        // $(this).parent().addClass("active");
         triggered = 0;
         console.log("Switched Tab");
         addRealViews(html);
