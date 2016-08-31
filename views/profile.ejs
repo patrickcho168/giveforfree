@@ -49,8 +49,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- CSS Styles -->
+    <link rel="stylesheet" href="../styles/common/bootstrap-edit.css">
     <link rel="stylesheet" href="../styles/common/common.css">
     <link rel="stylesheet" href="../styles/profile/profile.css">
+
     <!-- <link rel="stylesheet" href="../styles/profile/sass-compiled.css"> -->
 
     <!-- Bootstrap Notifications -->
@@ -132,41 +134,41 @@
                             </a>
                         </li>
                         <% if (myProfile) { %>
-                        <li id="nav-profile" class="active">
-                        <% } else { %>
-                        <li id="nav-profile">
-                        <% } %>
-                            <a href="/profile/<%= id %>">
-                                <i class="fa fa-user" aria-hidden="true"></i> Profile
-                            </a>
-                        </li>
-                        
-                        <% if (typeof notification != 'undefined') { %>
-                        <!-- Notifications -->
-                        <%- include('notification'); %>
-                        <!-- End Notifications -->
-                        <% } %>
+                            <li id="nav-profile" class="active">
+                                <% } else { %>
+                                    <li id="nav-profile">
+                                        <% } %>
+                                            <a href="/profile/<%= id %>">
+                                                <i class="fa fa-user" aria-hidden="true"></i> Profile
+                                            </a>
+                                    </li>
 
-                        <li id="nav-logout">
-                            <a href="/logout">
-                                <i class="fa fa-lock" aria-hidden="true"></i> Logout
-                            </a>
-                        </li>
+                                    <% if (typeof notification != 'undefined') { %>
+                                        <!-- Notifications -->
+                                        <%- include('notification'); %>
+                                            <!-- End Notifications -->
+                                            <% } %>
+
+                                                <li id="nav-logout">
+                                                    <a href="/logout">
+                                                        <i class="fa fa-lock" aria-hidden="true"></i> Logout
+                                                    </a>
+                                                </li>
                     </ul>
-                <% } else { %>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li id="nav-feed">
-                            <a href="/">
-                                <i class="fa fa-rss" aria-hidden="true"></i> Feed
-                            </a>
-                        </li>
-                        <li id="nav-logout">
-                            <a href="/login/facebook">
-                                <i class="fa fa-lock" aria-hidden="true"></i> Login
-                            </a>
-                        </li>
-                    </ul>
-                <% } %>
+                    <% } else { %>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li id="nav-feed">
+                                <a href="/">
+                                    <i class="fa fa-rss" aria-hidden="true"></i> Feed
+                                </a>
+                            </li>
+                            <li id="nav-logout">
+                                <a href="/login/facebook">
+                                    <i class="fa fa-lock" aria-hidden="true"></i> Login
+                                </a>
+                            </li>
+                        </ul>
+                        <% } %>
 
 
             </div>
@@ -178,17 +180,19 @@
 
     <div class="container main-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-        <div class="panel panel-default title-panel" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin: 15px 15px 20px 15px;" align="center">
+        <row>
+            <div class="panel panel-default title-panel col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-ms-10 col-ms-offset-1 col-xs-10 col-xs-offset-1" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin-top: 20px; margin-bottom: 20px;" align="center">
 
-            <img src="../images/profile/elf.svg" style="display: block; margin-left: auto; margin-right: auto; padding: 10px 0; width: 100px;">
-            <!-- <img class="col-lg-4" src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large" style="padding: 10px 0; width: 100px; border-radius:50%;"> -->
-            <p style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; padding-top: 15px; font-weight: bold; color: white; ">
-                <%= user.name %>
-            </p>
-            <h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"> Singapore </h4>
-        </div>
+                <img src="../images/profile/elf.svg" style="display: block; margin-left: auto; margin-right: auto; padding: 10px 0; width: 100px;">
+                <!-- <img class="col-lg-4" src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large" style="padding: 10px 0; width: 100px; border-radius:50%;"> -->
+                <p style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; padding-top: 15px; font-weight: bold; color: white; ">
+                    <%= user.name %>
+                </p>
+                <h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"> Singapore </h4>
+            </div>
+        </row>
 
-        <div class='tabs-x tabs-left tab-bordered' id="tabs">
+        <div class='tabs-x tabs-left tab-bordered col-lg-12' id="tabs">
             <ul id="my-tabs" class="nav nav-tabs my-tabs centered" role="tablist">
                 <li class="active icon-tab"><a href="#gifts" role="tab" data-toggle="tab"><i class="fa fa-gift" aria-hidden="true"></i> <text class="hidden-xs"> Gifts</text></a></li>
                 <li class="icon-tab"><a href="#wants" role="tab" data-toggle="tab"><i class="fa fa-star" aria-hidden="true"></i> <text class="hidden-xs"> Wants</text></a></li>
@@ -204,7 +208,7 @@
                                 <br> Come back later! </p>
                     </div>
                 </div>
-                <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;"  id="wants">
+                <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="wants">
                     <div id="wants-placeholder">
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
                         <p>
@@ -222,7 +226,7 @@
                                 <%= user.name %> one now! </p>
                     </div>
                 </div>
-                <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;"  id="friends">
+                <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="friends">
                     <div id="friends-placeholder">
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
                         <p>
