@@ -397,6 +397,7 @@ module.exports = function(app) {
     // ITEM PAGE
     app.get('/item/:id', function(req, res) {
         var itemId = req.params.id;
+        req.session.lastPageVisit = '/item/' + itemId;
         var userId;
         var loggedIn;
         if (req.user === undefined) {

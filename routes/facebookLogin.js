@@ -50,6 +50,7 @@ toExport.route = function(app) {
 
     // HOME PAGE
     app.get('/', function(req, res) {
+        req.session.lastPageVisit = '/';
         if (req.user === undefined) {
             res.render('homeLoggedIn', {
                 id: null,
@@ -85,7 +86,11 @@ toExport.route = function(app) {
             failureRedirect: '/login'
         }),
         function(req, res) {
-            res.redirect('/');
+            if (req.session  && req.session.lastPageVisit) {
+                res.redirect(req.session.lastPageVisit);
+            } else {
+                res.redirect('/');
+            }
         });
 
     app.get('/logout', function(req, res) {
