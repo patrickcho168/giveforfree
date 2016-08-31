@@ -33,12 +33,14 @@ function createFbPost(title, itemId, imgUrl) {
     return querystring.stringify(object);
 }
 
-function createFbStory(itemId, fbFreeItemId) {
+function createFbStory(itemId, startTime, endTime, fbFreeItemId) {
     var object = {
         // 'free_item': 'https://graph.facebook.com/1086175114800378/' + fbFreeItemId,
         'free_item': config.domain + '/item/' + itemId,
         'method': 'POST',
-        'fb:explicitly_shared': true
+        'fb:explicitly_shared': true,
+        'start_time': startTime,
+        'end_time': endTime
     };
     console.log(querystring.stringify(object));
     return querystring.stringify(object);
@@ -132,6 +134,8 @@ function saveItem(req, res, fileName) {
             // var userFbId = req.user.id;
             var newItemTitle = newSavedItem.attributes.title;
             var newItemUrl = newSavedItem.attributes.imageLocation;
+            var newItemTimeCreated = newSavedItem.attributes.timeCreated;
+            var newItemTimeExpired = newSavedItem.attributes.timeExpired;
             // var apiCall = '/' + userFbId + '/feed';
             // facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, createdItemID, newItemUrl), function(data) {});
             console.log("FACEBOOK STORY CREATION");
@@ -139,7 +143,7 @@ function saveItem(req, res, fileName) {
             var objectApiCall = '/me/objects/' + config.fbNamespace + ':free_item'
             facebook.getFbData(req.user.accessToken, objectApiCall, createFbFreeItem(newItemTitle, createdItemID, newItemUrl), function(data) {
                 console.log(data);
-                facebook.getFbData(req.user.accessToken, apiCall, createFbStory(createdItemID, JSON.parse(data).id), function(data2) {
+                facebook.getFbData(req.user.accessToken, apiCall, createFbStory(createdItemID, newItemTimeCreated, newItemTimeExpired, JSON.parse(data).id), function(data2) {
                     console.log(data2);
                 });
             });
