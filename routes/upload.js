@@ -37,7 +37,8 @@ function createFbStory(itemId, fbFreeItemId) {
     var object = {
         // 'free_item': 'https://graph.facebook.com/1086175114800378/' + fbFreeItemId,
         'free_item': 'http://ec2-54-255-178-61.ap-southeast-1.compute.amazonaws.com/item/' + itemId,
-        'method': 'POST'
+        'method': 'POST',
+        'fb:explicitly_shared': true
     };
     console.log(querystring.stringify(object));
     return querystring.stringify(object);
