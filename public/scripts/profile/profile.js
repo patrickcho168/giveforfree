@@ -76,7 +76,7 @@ function addRealViews(html) {
         default:
             break;
     }
-    
+
     console.log(currentTab);
     console.log(urlAJAX);
     console.log(lastItem);
@@ -211,6 +211,8 @@ $(document).ready(function() {
     //
     // });
     $('.nav-tabs a').click(function() {
+        $(".nav-tabs").find(".active").removeClass("active");
+        $(this).parent().addClass("active");
         triggered = 0;
         console.log("Switched Tab");
         addRealViews(html);
