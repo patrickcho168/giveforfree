@@ -148,7 +148,8 @@ module.exports = function(app) {
                                         totalTaken: taken[0].numTaken,
                                         totalKarma: gifted[0].numGiven * 10,
                                         thank: thankData.models,
-                                        notification: req.session.notification
+                                        notification: req.session.notification,
+                                        moment: moment
                                     });
                                 });
                             });

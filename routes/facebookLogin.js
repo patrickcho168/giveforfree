@@ -7,6 +7,7 @@ var config = require('../config');
 var db = require('../models/db');
 var facebook = require('../controllers/facebook');
 var note = require('./notification');
+var moment = require('moment');
 
 passport.use(new Strategy({
         clientID: config.fbClientID,
@@ -51,15 +52,14 @@ toExport.route = function(app) {
     app.get('/', function(req, res) {
         if (req.user === undefined) {
             res.render('homeLoggedIn', {
-                notification: [],
                 id: null,
                 loggedIn: false
             });
         } else {
             var userId = req.user.appUserId;
-            note.pushNotification(14);
             res.render('homeLoggedIn', {
                 notification: req.session.notification,
+                moment: moment,
                 id: userId,
                 loggedIn: true
             });

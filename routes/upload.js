@@ -168,7 +168,8 @@ module.exports = function(app) {
             myProfile: mine,
             user: req.user.attributes,
             id: req.user.appUserId,
-            notification: req.session.notification
+            notification: req.session.notification,
+            moment: moment
         });
     });
 

@@ -140,9 +140,12 @@
                         </a>
                     </li>
                     
+
+                    <% if (typeof notification != 'undefined') { %>
                     <!-- Notifications -->
                     <%- include('notification'); %>
                     <!-- End Notifications -->
+                    <% } %>
                     
                     <li id="nav-logout">
                         <a href="/logout">
@@ -235,25 +238,25 @@
 
                                 <div class="panel panel-default">
                                     <div class="list-group">
-                                <a href="#" class="list-group-item">
+                                        <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>What are you giving?</b></h4>
                                             <p class="list-group-item-text">
                                                 <input type="text" class="input-txt" name="title" placeholder="Item name" maxlength="50" autocomplete="off" required>
                                             </p>
                                         </a>
-                                <a class="list-group-item">
+                                        <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>Describe the item you are giving!</b></h4>
                                             <p class="list-group-item-text">
                                                 <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description" autocomplete="off" data-trigger="focus" id="description-field" required></textarea>
                                             </p>
                                         </a>
-                                <a class="list-group-item">
+                                        <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>When do you want to end this giveaway?</b></h4>
                                             <p class="list-group-item-text">
                                                 <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" required>
                                             </p>
                                         </a>
-                                <a class="list-group-item">
+                                        <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>Which category does your item belong to?</b></h4>
                                             <select id="input-tags" name="categories[]" multiple class="categories has-options" style="width:70%" placeholder="Select categories...">
                                                 <option value="">Select categories...</option>
@@ -284,7 +287,7 @@
                                                 <option value="other">other</option>
                                             </select>
                                         </a>
-                                <a class="list-group-item">
+                                        <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>How would you like the person receiving to collect the item?</b></h4>
 
                                             <div class="checkbox checkbox-primary checkbox-circle row">
@@ -313,18 +316,13 @@
                                             </div>
 
                                         </a>
-                                <a class="list-group-item">
-
+                                        <a class="list-group-item">
                                             <div class="checkbox checkbox-primary checkbox-circle row">
                                                 <input type="checkbox" id="share" name="postToFacebook">
                                                 <label class="large-label" for="share">
                                                     <i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook
                                                 </label>
-
                                             </div>
-
-
-
                                         </a>
 
                                     </div>

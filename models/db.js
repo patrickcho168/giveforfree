@@ -59,6 +59,9 @@ var User = bookshelf.Model.extend({
   },
   receivedThanks: function() {
     return this.hasMany(Thank, 'receiverID');
+  },
+  readNotifications: function() {
+    return this.belongsToMany(Notification, 'readnotification', 'userID', 'notificationID')
   }
 });
 
@@ -114,6 +117,9 @@ var Notification = bookshelf.Model.extend({
   },
   regardingThanks: function() {
     return this.belongsTo(Thank, 'thankID');
+  },
+  readBy: function() {
+    return this.belongsToMany(User, 'readnotification', 'notificationID', 'userID');
   }
 });
 
@@ -348,7 +354,7 @@ var NotificationQuery = function(userId, limitNum, cb) {
     })
     .select(['u.name', 'n.notificationID', 'n.notificationType', 'n.itemID', 'n.userID', 'n.wantID', 'n.commentID', 'n.thankID', 'n.timeCreated', 'iw.timeWanted', 'n.active', 'rn.readnotificationID', 'i.giverID', 'i.takerID', 'i.title', 'iw.wanterID', 't.receiverID', 'c.commenterID'])
     .where('n.active', '=', 1) // Active Notification
-    // .whereNull('rn.readnotificationID') // Not Read Yet
+    .whereNull('rn.readnotificationID') // Not Read Yet
     .where('n.timeCreated', '<=', moment().format("YYYY-MM-DD HH:mm:ss")) // Notification has already been created
     .where(function() {
       this.where(function() {
