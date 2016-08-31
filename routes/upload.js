@@ -9,6 +9,7 @@ var db = require('../models/db');
 var ensureLogin = require('connect-ensure-login');
 var querystring = require('querystring');
 var facebook = require('../controllers/facebook');
+var config = require('../config');
 
 aws.config.update({
     secretAccessKey: config.awsSecretAccessKey,
@@ -29,6 +30,31 @@ function createFbPost(title, itemId, imgUrl) {
         'method': 'POST',
         'picture': 'https://d24uwljj8haz6q.cloudfront.net/' + imgUrl
     };
+    return querystring.stringify(object);
+}
+
+function createFbStory(itemId, fbFreeItemId) {
+    var object = {
+        // 'free_item': 'https://graph.facebook.com/1086175114800378/' + fbFreeItemId,
+        'free_item': 'http://ec2-54-255-178-61.ap-southeast-1.compute.amazonaws.com/item/' + itemId,
+        'method': 'POST'
+    };
+    console.log(querystring.stringify(object));
+    return querystring.stringify(object);
+}
+
+function createFbFreeItem(title, itemId, imgUrl) {
+    var object = {
+        'object': {
+            'og:url': 'http://ec2-54-255-178-61.ap-southeast-1.compute.amazonaws.com/item/' + itemId,
+            'og:title': title,
+            'og:type': config.fbNamespace + ':free_item',
+            'og:image': 'https://d24uwljj8haz6q.cloudfront.net/' + imgUrl,
+            'og:description': '',
+            'fb:app_id': config.fbClientID,
+            'method': 'POST'
+        }
+    }
     return querystring.stringify(object);
 }
 
@@ -102,14 +128,23 @@ function saveItem(req, res, fileName) {
             setTimeout(redirectFail, 1, res);
         }
 
-        if (req.body.postToFacebook) {
+        if (createdItemID != null && req.body.postToFacebook) {
 
             // Create facebook post
-            var userFbId = req.user.id;
+            // var userFbId = req.user.id;
             var newItemTitle = newSavedItem.attributes.title;
             var newItemUrl = newSavedItem.attributes.imageLocation;
-            var apiCall = '/' + userFbId + '/feed';
-            facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, createdItemID, newItemUrl), function(data) {});
+            // var apiCall = '/' + userFbId + '/feed';
+            // facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, createdItemID, newItemUrl), function(data) {});
+            console.log("FACEBOOK STORY CREATION");
+            var apiCall = '/me/' + config.fbNamespace + ':give';
+            var objectApiCall = '/me/objects/' + config.fbNamespace + ':free_item'
+            facebook.getFbData(req.user.accessToken, objectApiCall, createFbFreeItem(newItemTitle, createdItemID, newItemUrl), function(data) {
+                console.log(JSON.parse(data).data[0].id);
+                facebook.getFbData(req.user.accessToken, apiCall, createFbStory(createdItemID, JSON.parse(data).data[0].id), function(data2) {
+                    console.log(data2);
+                });
+            });
 
         }
     });
