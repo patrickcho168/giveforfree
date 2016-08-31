@@ -81,7 +81,7 @@
                     }, function(response) {});
                 }
             }
-            if (loggedIn && item.takerID === id) { // Need to specify first time
+            <% if (loggedIn && item.takerID === id) { %> // Need to specify first time
                 FB.ui({
                     method: 'share_open_graph',
                     action_type: config.fbNamespace + ':receive',
@@ -90,7 +90,7 @@
                     }
                     mobile_iframe: true
                 }, function(response) {});
-            }
+            <% } %>
         })
 
     </script>
