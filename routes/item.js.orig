@@ -433,7 +433,6 @@ module.exports = function(app) {
                                     date: processedDate,
                                     expired: expiredMin > 0,
                                     karma: gifted[0].numGiven * 10,
-                                    gifts: gifted[0].numGiven,
                                     manual: data2,
                                     loggedIn: loggedIn,
                                     comment: commentData.models,
@@ -452,15 +451,41 @@ module.exports = function(app) {
                                 date: processedDate,
                                 expired: expiredMin > 0,
                                 karma: gifted[0].numGiven * 10,
+<<<<<<< HEAD
+=======
                                 gifts: gifted[0].numGiven,
+                                manual: data2,
+>>>>>>> 1dd09cc102131f18d6dd83503a82257e5392142c
                                 loggedIn: loggedIn,
                                 comment: commentData.models,
                                 notification: req.session.notification,
                                 moment: moment,
                                 fbNameSpace: config.fbNamespace
                             });
+<<<<<<< HEAD
                         }
                     });
+=======
+                        });
+                    } else {
+                        res.render('item', {
+                            id: userId,
+                            item: data[0],
+                            mine: mine,
+                            appId: config.fbClientID,
+                            domain: config.domain,
+                            date: processedDate,
+                            expired: expiredMin > 0,
+                            karma: gifted[0].numGiven * 10,
+                            gifts: gifted[0].numGiven,
+                            loggedIn: loggedIn,
+                            comment: commentData.models,
+                            notification: req.session.notification,
+                            moment: moment,
+                            fbNameSpace: config.fbNamespace
+                        });
+                    }
+>>>>>>> 1dd09cc102131f18d6dd83503a82257e5392142c
                 });
             }
         })
