@@ -421,7 +421,9 @@
                                                     <% } %>
                                                         <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
                                                             <button class="btn btn-primary message-button" id="facebook-message"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Owner</button>
+                                                            <% if (item.takerID === id) { %>
                                                             <button class="btn btn-primary message-button" id="facebook-share"><i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook</button>
+                                                            <% } %>
                                                                 <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
                                                                     <button class="btn btn-primary message-button" id="facebook-message">Message Recipient</button>
                                                                         <% } %>
@@ -455,6 +457,8 @@
                                     <h4 class="list-group-item-heading">Deadline</h4>
                                     <p class="list-group-item-text">
                                         <%= date %>
+                                    </p>
+                                </a>
                                             <div class="bs-callout bs-callout-warning" style="background-color: #547980; color: white;">
                                                 <% if (item.takerID === null && !expired) { %>
                                                     <h4>Available</h4>
@@ -464,11 +468,10 @@
                                                         <h5>This giveaway has ended.</h5>
                                                         <% } else { %>
                                                             <h4>Given Away</h4>
-                                                            <h5>This item has been given away to <a href="/profile/<%= item.takerId %>"> <%= item.takerName%>.</a></h5>
+                                                            <h5>This item has been given away to <a href="/profile/<%= item.takerId %>" style="color: blue;"><%= item.takerName%></a>.</h5>
                                                             <% } %>
                                             </div>
-                                    </p>
-                                </a>
+
                             </div>
                             <div class="panel-footer" style="vertical-align: middle;">
                                 <!-- <row> -->
