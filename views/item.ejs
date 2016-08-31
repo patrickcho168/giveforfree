@@ -84,16 +84,18 @@
                     }, function(response) {});
                 }
             }
-            <% if (loggedIn && item.takerID === id) { %> // Need to specify first time
-                FB.ui({
-                    method: 'share_open_graph',
-                    action_type: '<%= fbNameSpace %>:receive',
-                    action_properties: {
-                        'free_item': '<%= domain %>/item/<%= item.itemID %>'
-                    },
-                    mobile_iframe: true
-                }, function(response) {});
-            <% } %>
+            if ($("#facebook-share").length) {
+                document.getElementById('facebook-share').onclick = function() {
+                    FB.ui({
+                        method: 'share_open_graph',
+                        action_type: '<%= fbNameSpace %>:receive',
+                        action_properties: {
+                            'free_item': '<%= domain %>/item/<%= item.itemID %>'
+                        },
+                        mobile_iframe: true
+                    }, function(response) {});
+                }
+            }
         }
 
     </script>
@@ -355,9 +357,10 @@
                                                 </ul>
                                                 <% } %>
                                                     <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                                                        <button class="btn btn-primary message-button" id="facebook-message">Message Owner</a>
+                                                        <button class="btn btn-primary message-button" id="facebook-message">Message Owner</button>
+                                                        <button class="btn btn-primary message-button" id="facebook-share">Share on Facebook</button>
                                                             <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                                                                <button class="btn btn-primary message-button" id="facebook-message">Message Recipient</a>
+                                                                <button class="btn btn-primary message-button" id="facebook-message">Message Recipient</button>
                                                                     <% } %>
                                     </center>
                                 </div>
