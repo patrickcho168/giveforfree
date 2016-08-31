@@ -98,7 +98,7 @@ function saveItem(req, res, fileName) {
     var newItem = new db.Item({
         giverID: req.user.appUserId,
         timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
-        timeExpired: moment(req.body.date + moment().format(" HH:mm:ss")).format("YYYY-MM-DD HH:mm:ss"),
+        timeExpired: moment(req.body.date + " 23:59:59").format("YYYY-MM-DD HH:mm:ss"),
         title: req.body.title,
         description: req.body.description,
         postageMessage: req.body.postMessage,
