@@ -358,7 +358,7 @@
                                                 <% } %>
                                                     <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
                                                         <button class="btn btn-primary message-button" id="facebook-message">Message Owner</button>
-                                                        <button class="btn btn-primary message-button" id="facebook-share">Share on Facebook</button>
+                                                        <button class="btn btn-primary message-button" id="facebook-share"><i class="fa fa-facebook-official" aria-hidden="true"></i>Share on Facebook</button>
                                                             <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
                                                                 <button class="btn btn-primary message-button" id="facebook-message">Message Recipient</button>
                                                                     <% } %>
