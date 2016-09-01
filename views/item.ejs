@@ -414,7 +414,7 @@
                                                     </div>
 
                                                     <div class="row">
-                                                        <div class="profile-name-container col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="profile-name-container col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 10px;">
                                                             <p class="owner-name"> <a href="/profile/<%= item.giverID %>"><b> <%= item.name %> </b></a> </p>
                                                             <small class="owner-location"> Singapore </small>
                                                         </div>
@@ -490,7 +490,7 @@
                                                             <h5>This giveaway has ended.</h5>
                                                             <% } else { %>
                                                                 <h4>Given Away</h4>
-                                                                <h5>This item has been given away to <a href="/profile/<%= item.takerId %>"><%= item.takerName%></a>.</h5>
+                                                                <h5>This item has been given away to <a style="color: white;" href="/profile/<%= item.takerId %>"><%= item.takerName%></a>.</h5>
                                                                 <% } %>
                                                 </div>
 
