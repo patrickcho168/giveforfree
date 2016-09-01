@@ -237,7 +237,7 @@
     </nav>
 
 
-    <div class="container main-container col-lg-12">
+    <div class="container main-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <% if (locals.error_messages) {
             error_messages.forEach(function(message) { %>
             <div class="alert alert-warning"><strong>Uh-oh! </strong>
@@ -275,8 +275,8 @@
                                 </row>
 
                                 <row>
-                                    <div style="padding: 0 0;" align="center">
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left:0; padding-right: 0;">
+                                    <div style="padding: 0 15px;" align="center">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left:0; padding-right: 0; margin-bottom: 20px;">
                                             <% if (!mine) { %>
                                                 <% if (!loggedIn && !expired && item.takerID === null) { %>
                                                     <a href="/login" class="btn btn-lg btn-primary btn-block"><span class="glyphicon glyphicon-gift"></span> <b> LOGIN TO WANT!</b> <span class="badge"><%= item.numWants %></span> </a>
