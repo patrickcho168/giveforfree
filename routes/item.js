@@ -6,6 +6,7 @@ var moment = require('moment');
 var facebook = require('../controllers/facebook');
 var config = require('../config');
 var moment = require("moment");
+var xss = require('xss');
 
 // Included to support <IE9
 function inArray(needle, haystack) {
@@ -175,8 +176,12 @@ module.exports = function(app) {
             // If this item exists
             if (item) {
                 item.save({
-                    title: req.body.title,
-                    description: req.body.description
+                    title: xss(req.body.title),
+                    description: xss(req.body.description),
+                    timeExpired: moment(req.body.date + " 23:59:59").format("YYYY-MM-DD HH:mm:ss"),
+                    collectionMessage: xss(req.body.collectionMessage),
+                    postage: req.body.postage ? 1 : 0,
+                    meetup: req.body.meetup ? 1 : 0
                 }).then(function() {
                     res.redirect("/item/" + itemId);
                 });
