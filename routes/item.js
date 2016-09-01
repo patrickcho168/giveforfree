@@ -169,6 +169,7 @@ module.exports = function(app) {
         });
     })
 
+
     // Delete an item
     app.get('/api/delete/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
         var itemId = parseInt(req.params.itemId);

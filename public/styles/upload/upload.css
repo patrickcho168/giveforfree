@@ -164,28 +164,28 @@ img {
     margin-bottom: 22px;
 }
 .dtp-btn-cancel {
-    background: #bf4343;
+    background: #d9534f;
     box-shadow: none;
     margin: 0px 5px;
     color: white;
     font-weight: bold;
 }
 .dtp-btn-cancel:hover {
-    background: #bf4300;
+    background: #d43f3a;
     box-shadow: none;
     margin: 0px 5px;
     color: white;
     font-weight: bold;
 }
 .dtp-btn-ok {
-    background: #008c52;
+    background: #5cb85c;
     box-shadow: none;
     margin: 0px auto;
     color: white;
     font-weight: bold;
 }
 .dtp-btn-ok:hover {
-    background: #008c00;
+    background: #4cae4c;
     box-shadow: none;
     margin: 0px auto;
     color: white;
