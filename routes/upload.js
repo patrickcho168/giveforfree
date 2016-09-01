@@ -124,8 +124,9 @@ function saveItem(req, res, fileName) {
 
         if (createdItemID != null) {
             // Save categories
-            // req.body.categories.replace("&amp;", "&").split(',');
-            saveCategories(newSavedItem, req.body.categories.replace("&amp;", "&").split(','));
+            if (req.body.categories) {
+                saveCategories(newSavedItem, req.body.categories.replace("&amp;", "&").split(','));
+            }
             console.log(createdItemID);
             req.flash('success_messages', 'Woohoo! Your item is now live!!!');
             setTimeout(redirectSuccess, 1, createdItemID, res);
@@ -229,11 +230,10 @@ module.exports = function(app) {
 
             req.sanitizeBody('title').escape();
             req.sanitizeBody('description').escape();
-            req.sanitizeBody('croppedImage').escape();
             req.sanitizeBody('collectionMessage').escape();
             req.sanitizeBody('meetup').escape();
             req.sanitizeBody('postage').escape();
-            req.sanitizeBody('categories');
+            req.sanitizeBody('categories').escape();
 
             var errors = req.validationErrors();
 
@@ -245,8 +245,8 @@ module.exports = function(app) {
 
             } else {
                 // Upload image
-                var buf = new Buffer(req.body.croppedImage, 'base64')
-                var fileName = crypto.pseudoRandomBytes(16).toString('hex') + '.png'
+                var buf = new Buffer(req.body.croppedImage, 'base64');
+                var fileName = crypto.pseudoRandomBytes(16).toString('hex') + '.png';
 
                 var data = {
                     Key: fileName,
@@ -263,7 +263,6 @@ module.exports = function(app) {
                     } else {
                         console.log(data);
                         console.log('successfully uploaded the image!');
-
 
                         saveItem(req, res, fileName);
                     }
