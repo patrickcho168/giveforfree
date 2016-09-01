@@ -62,7 +62,7 @@ toExport.route = function(app) {
     // });
 
     // Read single notification
-    app.get('/api/read_notification/:notifID', function(req, res, next) {
+    app.post('/api/read_notification/:notifID', function(req, res, next) {
         db.Notification.where({
             notificationID: req.params.notifID
         }).fetch().then(function(notification) {
@@ -74,7 +74,7 @@ toExport.route = function(app) {
     });
 
     // Clear all notifications
-    app.get('/api/clear_notifications', function(req, res, next) {
+    app.post('/api/clear_notifications', function(req, res, next) {
         db.User.where({
             userID: req.user.appUserId
         }).fetch().then(function(user) {
