@@ -40,7 +40,7 @@ function addRealViews(html, url) {
 
                 /*** Factory for views ***/
                 $.each(data, function(key, value) {
-                    html = '<div class="item col-lg-3 col-md-3 col-sm-4 col-ms-6 col-xs-12" style="margin-bottom: 20px;">';
+                    html = '<div class="item col-lg-3 col-md-3 col-sm-4 col-ms-6 col-xs-12" style="margin-bottom: 20px; padding-left: 0px; padding-right: 0px;">';
                     // Main Item Photo
                     html += '<a href="/item/' + value.itemID + '" target="_blank"><div class="thumbnail" style="padding: 0; border: none;" align="center">';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';

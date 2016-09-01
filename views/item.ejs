@@ -279,9 +279,9 @@
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left:0; padding-right: 0;">
                                             <% if (!mine) { %>
                                                 <% if (!loggedIn && !expired && item.takerID === null) { %>
-                                                    <a href="/login" class="btn btn-lg btn-primary btn-block"><span class="glyphicon glyphicon-gift"></span> <b> LOGIN TO GET!</b> <span class="badge"><%= item.numWants %></span> </a>
+                                                    <a href="/login" class="btn btn-lg btn-primary btn-block"><span class="glyphicon glyphicon-gift"></span> <b> LOGIN TO WANT!</b> <span class="badge"><%= item.numWants %></span> </a>
                                                     <% } else if (item.meWant === 1 && !expired && item.takerID === null) { %>
-                                                        <a class="btn btn-lg btn-danger btn-block unsnag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> UNWANT!</b> <span class="badge"><%= item.numWants %></span> </a>
+                                                        <a class="btn btn-lg btn-danger btn-block unsnag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span>  <b> UNWANT!</b> <span class="badge"><%= item.numWants %></span> </a>
                                                         <% } else if (!expired && item.takerID === null) { %>
                                                             <a class="btn btn-lg btn-primary btn-block snag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> WANT!</b> <span class="badge"><%= item.numWants %></span> </a>
                                                             <% } %>
