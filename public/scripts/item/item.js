@@ -4,7 +4,7 @@ $(document).on("click", ".snag", function() {
     console.log("Item", itemId, "has been snagged");
 
     // Change text
-    $(this).children('b').text("UNSNAG");
+    $(this).children('b').text("UNWANT!");
 
     // Change color
     $(this).removeClass("btn-primary");
@@ -38,7 +38,7 @@ $(document).on("click", ".unsnag", function() {
     console.log("Item", itemId, "has been unsnagged");
 
     // Change text
-    $(this).children('b').text("SNAG");
+    $(this).children('b').text("WANT!");
 
     // Change color
     $(this).removeClass("btn-danger");

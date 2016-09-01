@@ -7,6 +7,8 @@ var facebook = require('../controllers/facebook');
 var config = require('../config');
 var moment = require("moment");
 var xss = require('xss');
+var bodyParser = require("body-parser");
+var csrf = require('csurf');
 
 // Included to support <IE9
 function inArray(needle, haystack) {
@@ -173,6 +175,7 @@ module.exports = function(app) {
             itemID: itemId,
             giverID: userId
         }).fetch().then(function(item) {
+
             // If this item exists
             if (item) {
                 item.save({
@@ -183,9 +186,11 @@ module.exports = function(app) {
                     postage: req.body.postage ? 1 : 0,
                     meetup: req.body.meetup ? 1 : 0
                 }).then(function() {
+                    req.flash('success_messages', 'Your item details are updated!');
                     res.redirect("/item/" + itemId);
                 });
             } else {
+                req.flash('error_messages', 'Drats we had some problems uploading your item! Please try again!');
                 res.redirect("/item/" + itemId);
             }
         });
