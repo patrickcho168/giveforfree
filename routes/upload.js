@@ -124,7 +124,6 @@ function saveItem(req, res, fileName) {
 
         if (createdItemID != null) {
             // Save categories
-            // req.body.categories.replace("&amp;", "&").split(',');
             saveCategories(newSavedItem, req.body.categories.replace("&amp;", "&").split(','));
             console.log(createdItemID);
             req.flash('success_messages', 'Upload Succeeded! (:');
@@ -232,7 +231,7 @@ module.exports = function(app) {
             req.sanitizeBody('collectionMessage').escape();
             req.sanitizeBody('meetup').escape();
             req.sanitizeBody('postage').escape();
-            req.sanitizeBody('categories');
+            req.sanitizeBody('categories').escape();
 
             var errors = req.validationErrors();
 
