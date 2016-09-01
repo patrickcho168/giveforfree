@@ -172,15 +172,18 @@ module.exports = function(app) {
             itemID: itemId,
             giverID: userId
         }).fetch().then(function(item) {
+
             // If this item exists
             if (item) {
                 item.save({
                     title: req.body.title,
                     description: req.body.description
                 }).then(function() {
+                    req.flash('success_messages', 'Your item details are updated!');
                     res.redirect("/item/" + itemId);
                 });
             } else {
+                req.flash('error_messages', 'Drats we had some problems uploading your item! Please try again!');
                 res.redirect("/item/" + itemId);
             }
         });

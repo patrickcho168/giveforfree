@@ -99,7 +99,7 @@ function saveCategories(item, categories) {
             return categoriesPos.indexOf(cat) + 1;
         });
 
-        return item.categories().attach(ids);    
+        return item.categories().attach(ids);
     }
 }
 
@@ -127,12 +127,12 @@ function saveItem(req, res, fileName) {
             // req.body.categories.replace("&amp;", "&").split(',');
             saveCategories(newSavedItem, req.body.categories.replace("&amp;", "&").split(','));
             console.log(createdItemID);
-            req.flash('success_messages', 'Upload Succeeded! (:');
+            req.flash('success_messages', 'Woohoo! Your item is now live!!!');
             setTimeout(redirectSuccess, 1, createdItemID, res);
             // res.redirect("/item/" + createdItemID);
         } else {
             console.log(createdItemID);
-            req.flash('error_messages', 'Upload Failed! ):');
+            req.flash('error_messages', 'Drats we encountered some problems uploading your item! Please try again!');
             setTimeout(redirectFail, 1, res);
         }
 
@@ -180,7 +180,7 @@ module.exports = function(app) {
             id: req.user.appUserId,
             notification: req.session.notification,
             moment: moment,
-            csrfToken: req.csrfToken() 
+            csrfToken: req.csrfToken()
         });
     });
 

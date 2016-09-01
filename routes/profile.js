@@ -216,6 +216,7 @@ module.exports = function(app) {
                             function(resp) {
                                 console.log(resp);
                             });
+                        req.flash('success_messages', 'Thanks for using Give For Free! Come back anytime soon okay? We\'ll miss you!');
                         res.redirect("/logout");
                     }).catch(function(err) {
                         next(err);

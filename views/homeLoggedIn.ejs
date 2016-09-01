@@ -174,7 +174,7 @@
 	<div class="container main-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<% if (locals.error_messages) {
             error_messages.forEach(function(message) { %>
-            <div class="alert alert-warning"><strong>Error: </strong>
+            <div class="alert alert-warning"><strong>Uh-oh! </strong>
                 <%= message %>
             </div>
             <% });
@@ -182,7 +182,7 @@
 
         <% if (locals.success_messages) {
             success_messages.forEach(function(message) { %>
-            <div class="alert alert-success"><strong>Good job: </strong>
+            <div class="alert alert-success"><strong>Awesome! </strong>
                 <%= message %>
             </div>
             <% });
