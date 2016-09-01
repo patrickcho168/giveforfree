@@ -424,11 +424,11 @@
                                                         <!-- Manage different rights for users -->
                                                         <center>
                                                             <% if (loggedIn && mine && item.takerID === null) { %>
-                                                                <a data-toggle="modal" data-target="#confirm-delete" data-href="/api/delete/<%= item.itemID %>" class="btn btn-danger">Delete</a>
+                                                                <a data-toggle="modal" data-target="#confirm-delete" data-href="/api/delete/<%= item.itemID %>" class="btn btn-xs btn-danger">Delete</a>
 
                                                                 <% if (item.numWants > 0) { %>
-                                                                    <a type="button" class="btn btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw</a>
-                                                                    <a type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <a type="button" class="btn btn-xs btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw</a>
+                                                                    <a type="button" class="btn btn-xs btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Pick <span class="caret"></span>
                                         </a>
                                                                     <ul class="dropdown-menu scrollable-menu dropdown-menu-right" role="menu">
@@ -442,12 +442,12 @@
                                                                     </ul>
                                                                     <% } %>
                                                                         <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                                                                            <button class="btn btn-primary message-button" id="facebook-message"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Owner</button>
+                                                                            <button class="btn btn-xs btn-primary message-button" id="facebook-message"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Owner</button>
                                                                             <% if (item.takerID === id) { %>
-                                                                                <button class="btn btn-primary message-button" id="facebook-share"><i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook</button>
+                                                                                <button class="btn btn-xs btn-primary message-button" id="facebook-share"><i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook</button>
                                                                                 <% } %>
                                                                                     <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                                                                                        <button class="btn btn-primary message-button" id="facebook-message">Message Recipient</button>
+                                                                                        <button class="btn btn-xs btn-primary message-button" id="facebook-message">Message Recipient</button>
                                                                                         <% } %>
                                                         </center>
                                                     </div>
@@ -501,7 +501,7 @@
                                                     <row>
                                                         <% if (loggedIn && mine && !expired && item.takerID == null) { %>
                                                             <div class="pull-right" style="vertical-align: middle; position:relative; float:right; margin-top: -10px;">
-                                                                <button class="btn btn-default pull-right" style="display: inline-block; align: right; top: 0px; float: right;" data-toggle="modal" data-target="#editModal">Edit</button>
+                                                                <button class="btn btn-xs btn-default pull-right" style="display: inline-block; align: right; top: 0px; float: right;" data-toggle="modal" data-target="#editModal">Edit</button>
                                                                 <% } %>
                                                             </div>
                                                             <div>

@@ -196,3 +196,32 @@ textarea {
 .checkbox input[type="checkbox"]:focus+ label::before {
     outline: none;
 }
+
+.dtp-btn-cancel {
+    background: #d9534f;
+    box-shadow: none;
+    margin: 0px 5px;
+    color: white;
+    font-weight: bold;
+}
+.dtp-btn-cancel:hover {
+    background: #d43f3a;
+    box-shadow: none;
+    margin: 0px 5px;
+    color: white;
+    font-weight: bold;
+}
+.dtp-btn-ok {
+    background: #5cb85c;
+    box-shadow: none;
+    margin: 0px auto;
+    color: white;
+    font-weight: bold;
+}
+.dtp-btn-ok:hover {
+    background: #4cae4c;
+    box-shadow: none;
+    margin: 0px auto;
+    color: white;
+    font-weight: bold;
+}
