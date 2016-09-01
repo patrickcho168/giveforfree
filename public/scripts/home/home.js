@@ -59,11 +59,18 @@ function addRealViews(html, url) {
 
                     html += '<a href="/profile/' + value.userID + '" target="_blank" class="small-avatar col-lg-4" style="background-image: url(http://graph.facebook.com/' + value.fbID + '/picture?type=large);" style="margin: auto 10px; padding: 0; width: 30px; height: 30px; border-radius:50%;"><span style="padding-left: 20px;">' + value.name + '</span></a></p></row>';
                     // Item Snag Counts
-                    if (value.numWants > 1) {
+                    if (value.numWants >= 1) {
                         html += '<small class="item-snags pull-right text-muted" align="right" style="padding-right: 10px; padding-top: 0; padding-bottom: 10px;"><b>' + value.numWants + ' people want this.</b></small>';
                     } else {
                         html += '<small class="item-snags pull-right text-muted" align="right" style="padding-right: 10px; padding-top: 0;padding-bottom: 10px;">' + '<b>Be the first to check this out!</b></small>';
 
+                    }
+                    if (value.meWant) {
+                        html += '<div class="ribbon-wrapper-green">';
+                        html += '<div class="ribbon-green">';
+                        html += 'WANT';
+                        html += '</div>';
+                        html += '</div>';
                     }
 
                     html += '</div>';

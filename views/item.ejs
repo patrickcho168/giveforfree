@@ -30,6 +30,9 @@
     <!-- Pure CSS (Override) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/base-context-min.css">
 
+    <script type="text/javascript" src="../scripts/item/jquery-comments.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../styles/item/jquery-comments.css">
+
     <!-- Font Awesome (Override) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
@@ -406,7 +409,7 @@
                                                             <div class="profile-header-img" align="center">
 
 
-                                                                <div class="avatar" style="background-image: url(http://graph.facebook.com/<%= item.fbID %>/picture?type=large);" style="margin: auto 10px; padding: 0; width: 80px; height: 80px; border-radius:50%;" align="center">
+                                                                <div class="avatar-badge" style="background-image: url(http://graph.facebook.com/<%= item.fbID %>/picture?type=large);" style="margin-left: 0; display: block; padding: 0; width: 80px; height: 80px; border-radius:50%;" align="center">
 
                                                                 </div>
                                                                 <div class="clearfix"></div>
@@ -432,7 +435,7 @@
                                                         <!-- Manage different rights for users -->
                                                         <center>
                                                             <% if (loggedIn && mine && item.takerID === null) { %>
-                                                                <a data-toggle="modal" data-target="#confirm-delete" data-href="/api/delete/<%= item.itemID %>" class="btn btn-xs btn-danger">Delete</a>
+                                                                <a data-toggle="modal" data-target="#confirm-delete" data-href="/api/delete/<%= item.itemID %>" class="btn btn-sm btn-danger">Delete</a>
 
                                                                 <% if (item.numWants > 0) { %>
                                                                     <a type="button" class="btn btn-xs btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw</a>
@@ -481,9 +484,7 @@
                                                 </a>
                                                 <a class="list-group-item" style="overflow: auto;">
                                                     <h4 class="list-group-item-heading">Description</h4>
-                                                    <textarea readonly style="width: 100%; height: 100%; resize:none; font-weight: lighter; font-size: 1.3em; overflow: auto; background: transparent; border: none;" class="list-group-item-text wrap description-text">
-                                                        <%= item.description %>
-                                                    </textarea>
+                                                    <textarea readonly style="width: 100%; height: 100%; resize:none; font-weight: lighter; font-size: 1.3em; overflow: auto; background: transparent; border: none;" class="list-group-item-text wrap description-text"><%= item.description %></textarea>
                                                 </a>
                                                 <a class="list-group-item">
                                                     <h4 class="list-group-item-heading">Deadline</h4>
@@ -526,6 +527,10 @@
                                         </div>
 
                                     </div>
+                                </div>
+
+                                <div id="comments-container" style="margin-left: 15px; margin-right: 15px;">
+
                                 </div>
 
                             </div>
@@ -597,9 +602,7 @@
                                         <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>Describe the item you are giving!</b></h4>
                                             <p class="list-group-item-text">
-                                                <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description (max. 200 chars)" autocomplete="off" data-trigger="focus" id="description-field" maxlength="200" required>
-                                                    <%=item.description%>
-                                                </textarea>
+                                                <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description (max. 200 chars)" autocomplete="off" data-trigger="focus" id="description-field" maxlength="200" required><%=item.description%></textarea>
                                             </p>
                                         </a>
                                         <a class="list-group-item">
