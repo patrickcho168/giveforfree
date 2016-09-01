@@ -40,23 +40,23 @@ function addRealViews(html, url) {
 
                 /*** Factory for views ***/
                 $.each(data, function(key, value) {
-                    html = '<div class="item col-lg-3 col-md-3 col-sm-4 col-ms-6 col-xs-12" style="margin-bottom: 20px; padding-left: 0px; padding-right: 0px;">';
+                    html = '<div class="item col-lg-3 col-md-3 col-sm-4 col-ms-6 col-xs-12" style="margin-bottom: 20px;">';
                     // Main Item Photo
                     html += '<a href="/item/' + value.itemID + '" target="_blank"><div class="thumbnail" style="padding: 0; border: none;" align="center">';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
                     html += '<div class="box"><img style="display: block;" class="clipped" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '" onerror="handleBrokenImage(this);"></div>';
                     // Item Title
                     html += '<div class="caption-area" align="left">';
-                    html += '<br/><h6 class="item-header hide-overflow" style="padding-left: 10px; padding-top: 10px;"><a href="/item/' + value.itemID + '" target="_blank">' + value.title + '</a></h6>';
+                    html += '<br/><h6 class="item-header hide-overflow" style="padding-left: 10px; padding-top: 0px; margin: 5px  auto;"><a href="/item/' + value.itemID + '" target="_blank">' + value.title + '</a></h6>';
                     // Item Owner
                     // html += '<p class="item-author">' + value.ownedBy.name + '</p>';
                     // Item Caption
-                    html += '<row><p class="item-author hide-overflow"><img class="col-lg-4" src="http://graph.facebook.com/' + value.fbID + '/picture?type=large" style="margin: auto 10px; padding: 0; width: 30px; height: 30px; border-radius:50%;"><a href="/profile/' + value.userID + '" target="_blank">' + value.name + '</a></p></row>';
+                    html += '<row><p class="item-author hide-overflow" style="margin: 5px auto;"><img class="col-lg-4" src="http://graph.facebook.com/' + value.fbID + '/picture?type=large" style="margin: auto 10px; padding: 0; width: 30px; height: 30px; border-radius:50%;"><a href="/profile/' + value.userID + '" target="_blank">' + value.name + '</a></p></row>';
                     // Item Snag Counts
                     if (value.numWants > 1) {
                         html += '<small class="item-snags pull-right" align="right" style="padding-right: 10px; padding-top: 0; padding-bottom: 10px;">' + value.numWants + ' people want this.</small>';
                     } else {
-                        html += '<small class="item-snags pull-right" align="right" style="padding-right: 10px; padding-top: 0;padding-bottom: 10px;">' + 'Be the first to check this out!</small>';
+                        html += '<small class="item-snags pull-right" align="right" style="padding-right: 10px; padding-top: 0;padding-bottom: 10px;">' + '<b>Be the first to check this out!</b></small>';
 
                     }
 
