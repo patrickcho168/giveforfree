@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <!-- Metadata and Responsive Viewport -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,9 +29,6 @@
     <!-- Pure CSS (Override) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/base-context-min.css">
 
-    <script type="text/javascript" src="../scripts/item/jquery-comments.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../styles/item/jquery-comments.css">
-
     <!-- Font Awesome (Override) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
@@ -57,8 +53,8 @@
     <!-- Other Scripts -->
     <script>
         var loggedIn = <%= loggedIn %>;
-    </script>
-    <script>
+        var currentItemId = <%= item.itemID %>;
+        var userId = <%= id %>;
         window.fbAsyncInit = function() {
             FB.init({
                 appId: '<%= appId %>',
@@ -116,6 +112,8 @@
     <script src="../scripts/common/common.js"></script>
     <script src="../scripts/item/item.js"></script>
     <script src="../assets/autosize/js/autosize.js"></script>
+    <script type="text/javascript" src="../scripts/item/jquery-comments.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../styles/item/jquery-comments.css">
 
     <!-- Bootstrap CSS (override) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

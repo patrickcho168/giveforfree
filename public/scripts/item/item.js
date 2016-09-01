@@ -89,16 +89,178 @@ jQuery(document).ready(function($) {
     });
 
     $('#comments-container').comments({
+        roundProfilePictures: true,
+        // profilePictureURL: 'http://graph.facebook.com/' + userFbID + '/picture',
         getComments: function(success, error) {
-            var commentsArray = [{
-                id: 1,
-                created: '2015-10-01',
-                content: 'Lorem ipsum dolort sit amet',
-                fullname: 'Simon Powell',
-                upvote_count: 2,
-                user_has_upvoted: false
-            }];
-            success(commentsArray);
+            $.ajax({
+                url: '/item/' + currentItemId + '/comment',
+                dataType: "json",
+                method: 'get',
+                cache: false,
+                // Success Callback
+                success: function(data) {
+                    var commentsArray = [];
+                    for (var i=0; i<data.length; ++i) {
+                        var upvoted = false;
+                        for (var j=0; j<data[i].upvote.length; ++j) {
+                            if (data[i].upvote[j].userID === userId) {
+                                upvoted = true;
+                                break;
+                            }
+                        }
+                        commentsArray.push({
+                            id: data[i].commentID,
+                            created: data[i].timeCreated,
+                            content: data[i].message,
+                            fullname: data[i].commentedBy.name,
+                            // fullname: data[i].commentedBy.name,
+                            upvote_count: data[i].upvote.length,
+                            user_has_upvoted: upvoted,
+                            profile_picture_url: 'http://graph.facebook.com/' + data[i].commentedBy.fbID + '/picture',
+                            parent: data[i].parentComment,
+                            created_by_current_user: data[i].commentedBy.userID === userId
+                        })
+                    }
+                    success(commentsArray);
+                },
+                error: function(error) {
+                    console.log("error loading");
+                }
+            });
+        },
+        postComment: function(commentJSON, success, error) {
+            $.ajax({
+                method: 'post',
+                url: '/api/comment/' + currentItemId,
+                data: commentJSON,
+                success: function(data) {
+                    var upvoted = false;
+                    for (var i=0; i<data.upvote.length; ++i) {
+                        if (data.upvote[i].userID === userId) {
+                            upvoted = true;
+                            break;
+                        }
+                    }
+                    success({
+                        id: data.commentID,
+                        created: data.timeCreated,
+                        content: data.message,
+                        fullname: data.commentedBy.name,
+                        upvote_count: data.upvote.length,
+                        user_has_upvoted: upvoted,
+                        profile_picture_url: 'http://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
+                        parent: data.parentComment,
+                        created_by_current_user: data.commentedBy.userID === userId
+                    });
+                },
+                error: function(error) {
+                    console.log("error posting");
+                }
+            });
+        },
+        putComment: function(commentJSON, success, error) {
+            $.ajax({
+                type: 'post',
+                url: '/api/updatecomment/' + commentJSON.id,
+                data: commentJSON,
+                success: function(data) {
+                    var upvoted = false;
+                    for (var i=0; i<data.upvote.length; ++i) {
+                        if (data.upvote[i].userID === userId) {
+                            upvoted = true;
+                            break;
+                        }
+                    }
+                    success({
+                        id: data.commentID,
+                        created: data.timeCreated,
+                        content: data.message,
+                        fullname: data.commentedBy.name,
+                        upvote_count: data.upvote.length,
+                        user_has_upvoted: upvoted,
+                        profile_picture_url: 'http://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
+                        parent: data.parentComment,
+                        created_by_current_user: data.commentedBy.userID === userId
+                    });
+                },
+                error: function(error) {
+                    console.log("error editing");
+                }
+            });
+        },
+        deleteComment: function(commentJSON, success, error) {
+            $.ajax({
+                type: 'post',
+                url: '/api/deletecomment/' + commentJSON.id,
+                success: function(data) {
+                    success();
+                },
+                error: function(error) {
+                    console.log("error editing");
+                }
+            });
+        },
+        upvoteComment: function(commentJSON, success, error) {
+            var upvotesURL = '/api/comment/upvotes/' + commentJSON.id;
+            var downvotesURL = '/api/comment/downvotes/' + commentJSON.id;
+
+            if(commentJSON.user_has_upvoted) {
+                $.ajax({
+                    type: 'post',
+                    url: upvotesURL,
+                    success: function(data) {
+                        var upvoted = false;
+                        for (var i=0; i<data.upvote.length; ++i) {
+                            if (data.upvote[i].userID === userId) {
+                                upvoted = true;
+                                break;
+                            }
+                        }
+                        success({
+                            id: data.commentID,
+                            created: data.timeCreated,
+                            content: data.message,
+                            fullname: data.commentedBy.name,
+                            upvote_count: data.upvote.length,
+                            user_has_upvoted: upvoted,
+                            profile_picture_url: 'http://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
+                            parent: data.parentComment,
+                            created_by_current_user: data.commentedBy.userID === userId
+                        });
+                    },
+                    error:  function() {
+                        console.log("error upvoting");
+                    }
+                });
+            } else {
+                $.ajax({
+                    type: 'post',
+                    url: downvotesURL,
+                    success: function(data) {
+                        var upvoted = false;
+                        for (var i=0; i<data.upvote.length; ++i) {
+                            if (data.upvote[i].userID === userId) {
+                                upvoted = true;
+                                break;
+                            }
+                        }
+                        success({
+                            id: data.commentID,
+                            created: data.timeCreated,
+                            content: data.message,
+                            fullname: data.commentedBy.name,
+                            upvote_count: data.upvote.length,
+                            user_has_upvoted: upvoted,
+                            profile_picture_url: 'http://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
+                            parent: data.parentComment,
+                            created_by_current_user: data.commentedBy.userID === userId
+                        });
+                    },
+                    error: function() {
+                        console.log("error downvoting");
+                    }
+                });
+            }
         }
     });
 

@@ -23,17 +23,58 @@ function inArray(needle, haystack) {
     return false;
 }
 
+var parseForm = bodyParser.urlencoded({ extended: true, limit: '50mb' });
+
 module.exports = function(app) {
 
-    app.post('/api/comment/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
+    app.get('/item/:id/comment', function(req, res, next) {
+        var itemId = req.params.id;
+        db.Comment.where({
+            itemID: itemId
+        }).orderBy('timeCreated', 'ASC').fetchAll({withRelated: ['commentedBy', 'upvote']}).then(function(commentData) {
+            console.log(commentData);
+            res.json(commentData);
+        });
+    })
+
+    app.post('/api/updatecomment/:commentId', ensureLogin.ensureLoggedIn(), parseForm, function(req,res) {
+        var userId = parseInt(req.user.appUserId);
+        var commentId = parseInt(req.params.commentId);
+        db.Comment.where({
+            commentID: commentId,
+            commenterID: userId
+        }).fetch().then(function(commentData) {
+            if (commentData) {
+                commentData.save({
+                    message: req.body.content
+                }).then(function(comment) {
+                    db.Comment.where({
+                        commentID: comment.attributes.commentID
+                    }).fetch({withRelated: ['commentedBy', 'upvote']}).then(function(newCommentData) {
+                        req.flash('success_messages', 'You have successfully edited a comment!');
+                        res.json(newCommentData);
+                    });
+                })
+            } else {
+                req.flash('error_messages', 'An error was encountered! Please try editing your comment again!');
+            }
+        })
+    })
+
+    app.post('/api/comment/:itemId', ensureLogin.ensureLoggedIn(), parseForm, function(req, res) {
         // CHECK MESSAGE NOT IMPLEMENTED
         var userId = parseInt(req.user.appUserId);
         var itemId = parseInt(req.params.itemId);
+        if (req.body.parent === '') {
+            req.body.parent = null;
+        }
+        console.log(req.body);
         var newComment = new db.Comment({
             commenterID: userId,
-            message: req.body.message,
+            message: req.body.content,
             itemID: itemId,
-            timeCreated: moment().format("YYYY-MM-DD HH:mm:ss")
+            timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+            parentComment: req.body.parent
         });
         newComment.save().then(function(comment) {
             var newNote = new db.Notification({
@@ -45,17 +86,20 @@ module.exports = function(app) {
                 active: 1
             });
             newNote.save();
-            res.redirect('/item/' + itemId);
+            db.Comment.where({
+                commentID: comment.attributes.commentID
+            }).fetch({withRelated: ['commentedBy', 'upvote']}).then(function(commentData) {
+                req.flash('success_messages', 'You have successfully posted a comment!');
+                res.json(commentData);
+            });
         })
     })
 
-    app.post('/api/deletecomment/:itemId/:commentId', ensureLogin.ensureLoggedIn(), function(req, res) {
+    app.post('/api/deletecomment/:commentId', ensureLogin.ensureLoggedIn(), function(req, res) {
         var userId = parseInt(req.user.appUserId);
         var commentId = parseInt(req.params.commentId);
-        var itemId = parseInt(req.params.itemId);
         db.Comment.where({
-            commentID: commentId,
-            itemID: itemId
+            commentID: commentId
         }).fetch().then(function(data) {
             // If comment exists
             if (data!=null) {
@@ -63,20 +107,80 @@ module.exports = function(app) {
                 if (data.attributes && data.attributes.commenterID === userId) {
                     data.where({
                         commentID: commentId,
-                        commenterID: userId,
-                        itemID: itemId
+                        commenterID: userId
                     }).destroy();
                     db.Notification.where({
                         commentID: commentId
                     }).fetch().then(function(oldNote) {
                         if (oldNote != null) {
                             oldNote.destroy();
+                            req.flash('success_messages', 'You have successfully deleted a comment!');
+                            res.json({});
+                        } else {
+                            req.flash('error_messages', 'An error was encountered! Please try deleting your comment again!');
+                            res.json({});
                         }
                     })
                 }
             }
         })
-        res.redirect('/item/' + itemId);
+    })
+
+    app.post('/api/comment/upvotes/:commentId', ensureLogin.ensureLoggedIn(), function(req, res) {
+        console.log("UPVOTE");
+        var userId = parseInt(req.user.appUserId);
+        var commentId = parseInt(req.params.commentId);
+        db.CommentUpvote.where({
+            commentID: commentId,
+            userID: userId
+        }).fetch().then(function(data) {
+            console.log(data);
+            if (!data) {
+                var newCommentUpvote = new db.CommentUpvote({
+                    commentID: commentId,
+                    userID: userId
+                });
+                newCommentUpvote.save().then(function(comment) {
+                    db.Comment.where({
+                        commentID: commentId
+                    }).fetch({withRelated: ['commentedBy', 'upvote']}).then(function(newCommentData) {
+                        res.json(newCommentData);
+                    });
+                })
+            } else {
+                db.Comment.where({
+                    commentID: commentId
+                }).fetch({withRelated: ['commentedBy', 'upvote']}).then(function(newCommentData) {
+                    res.json(newCommentData);
+                });
+            }
+        })
+    })
+
+    app.post('/api/comment/downvotes/:commentId', ensureLogin.ensureLoggedIn(), function(req, res) {
+        console.log("DOWNVOTE");
+        var userId = parseInt(req.user.appUserId);
+        var commentId = parseInt(req.params.commentId);
+        db.CommentUpvote.where({
+            commentID: commentId,
+            userID: userId
+        }).fetch().then(function(data) {
+            if (data) {
+                data.destroy().then(function() {
+                    db.Comment.where({
+                        commentID: commentId
+                    }).fetch({withRelated: ['commentedBy', 'upvote']}).then(function(newCommentData) {
+                        res.json(newCommentData);
+                    });
+                })
+            } else {
+                db.Comment.where({
+                    commentID: commentId
+                }).fetch({withRelated: ['commentedBy', 'upvote']}).then(function(newCommentData) {
+                    res.json(newCommentData);
+                });
+            }
+        })
     })
 
     // This is for giving to random person
@@ -424,7 +528,7 @@ module.exports = function(app) {
                                     notification: req.session.notification,
                                     moment: moment,
                                     fbNameSpace: config.fbNamespace,
-                                    csrfToken: req.csrfToken() 
+                                    csrfToken: req.csrfToken()
                                 });
                             });
                         } else {
@@ -443,7 +547,7 @@ module.exports = function(app) {
                                 notification: req.session.notification,
                                 moment: moment,
                                 fbNameSpace: config.fbNamespace,
-                                csrfToken: req.csrfToken() 
+                                csrfToken: req.csrfToken()
                             });
                         }
                     });

@@ -83,6 +83,9 @@ var Comment = bookshelf.Model.extend({
   },
   about: function() {
     return this.belongsTo(Item, 'itemID');
+  },
+  upvote: function() {
+    return this.hasMany(CommentUpvote, 'commentID');
   }
 });
 
@@ -129,7 +132,18 @@ var Category = bookshelf.Model.extend({
   items: function() {
     return this.belongsToMany(Item, 'categoryItem', 'categoryID', 'itemID');
   }
-})
+});
+
+var CommentUpvote = bookshelf.Model.extend({
+  tableName: 'commentUpvote',
+  idAttribute: 'commentUpvoteID',
+  about: function() {
+    return this.belongsTo(Comment, 'commentID');
+  },
+  by: function() {
+    return this.belongsTo(User, 'userID');
+  }
+});
 
 var HomePageItemQuery = function(userId, numItems, cb) {
   knex
@@ -383,6 +397,7 @@ db.Want = Want;
 db.Comment = Comment;
 db.Thank = Thank;
 db.Notification = Notification;
+db.CommentUpvote = CommentUpvote;
 db.HomePageItemQuery = HomePageItemQuery;
 db.HomePageItemQueryBeforeId = HomePageItemQueryBeforeId;
 db.ProfilePageGiveQuery = ProfilePageGiveQuery;
