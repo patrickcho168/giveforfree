@@ -124,7 +124,9 @@ function saveItem(req, res, fileName) {
 
         if (createdItemID != null) {
             // Save categories
-            saveCategories(newSavedItem, req.body.categories.replace("&amp;", "&").split(','));
+            if (req.body.categories) {
+                saveCategories(newSavedItem, req.body.categories.replace("&amp;", "&").split(','));
+            }
             console.log(createdItemID);
             req.flash('success_messages', 'Upload Succeeded! (:');
             setTimeout(redirectSuccess, 1, createdItemID, res);
