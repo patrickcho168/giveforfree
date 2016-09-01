@@ -451,6 +451,21 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     background-position: center center;
 }
 
+.avatar-badge {
+    width: 80px;
+    height: 80px;
+    -webkit-border-radius: 80px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 80px;
+    -moz-background-clip: padding;
+    border-radius: 80px;
+    background-clip: padding-box;
+    margin: 0px 0 0 0px;
+    /*float: left;*/
+    background-size: cover;
+    background-position: center center;
+}
+
 .small-avatar {
     width: 30px;
     height: 30px;
