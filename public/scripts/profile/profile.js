@@ -184,6 +184,7 @@ function addRealViews(html) {
                             case "gifts":
                                 firstGifts = false;
                                 $('#gifts').append(html);
+                                console.log($('#gifts-placeholder'));
                                 $('#gifts-placeholder').hide();
                                 break;
                             case "wants":
@@ -239,7 +240,7 @@ $(document).ready(function() {
         $(".nav-tabs").find(".active").removeClass("active");
         $(this).parent().addClass("active");
         triggered = 0;
-        
+
         setTimeout(addRealViews, 300, html);
         addRealViews(html);
     });
@@ -252,6 +253,12 @@ $(document).ready(function() {
             $(this).removeClass("animated bounceIn");
         }
     );
+
+
+
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    });
 
 });
 

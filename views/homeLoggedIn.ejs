@@ -59,6 +59,9 @@
 
 <body>
 
+	<div id="fb-root"></div>
+	<script src="/scripts/common/fblike.js"></script>
+
 	<div id="loader-wrapper">
 		<div id="loader"></div>
 
@@ -169,6 +172,22 @@
 	</div> -->
 
 	<div class="container main-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<% if (locals.error_messages) {
+            error_messages.forEach(function(message) { %>
+            <div class="alert alert-warning"><strong>Error: </strong>
+                <%= message %>
+            </div>
+            <% });
+        } %>
+
+        <% if (locals.success_messages) {
+            success_messages.forEach(function(message) { %>
+            <div class="alert alert-success"><strong>Good job: </strong>
+                <%= message %>
+            </div>
+            <% });
+
+        } %>
 
 		<div class="panel panel-default title-panel col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-ms-10 col-ms-offset-1 col-xs-10 col-xs-offset-1" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin-bottom:20px;" align="center">
 
@@ -177,6 +196,7 @@
 				Awesomeness in the Community
 			</p>
 			<h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"> Give our things a second chance! </h4>
+			<div class="fb-like" data-href="http://www.giveforfree.sg" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true" style="bottom:10px;"></div>
 		</div>
 	</div>
 
@@ -208,6 +228,7 @@
                 </ul> -->
 
 				<div class="col-xs-12 text-center" style="padding-bottom: 10px;">
+
 					<small><span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true">  </span>  <a href="mailto:giveforfreefeedback@gmail.com"> giveforfreefeedback[at]gmail[dot]com</a></small>
 					<br>
 					<small><span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span>  <a href="/privacy"> Privacy Clause</a></small>

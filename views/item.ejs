@@ -80,9 +80,9 @@
 
         var toId;
         <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-            toId = <%= item.fbID %>;
+        toId = <%= item.fbID %>;
         <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-            toId = <%= item.takerFbID %>;
+        toId = <%= item.takerFbID %>;
         <% } %>
 
         function facebookInit() {
@@ -108,7 +108,6 @@
                 }
             }
         }
-
     </script>
 
     <script src="../scripts/common/common.js"></script>
@@ -141,6 +140,9 @@
 </head>
 
 <body>
+
+    <div id="fb-root"></div>
+    <script src="/scripts/common/fblike.js"></script>
 
     <div id="loader-wrapper">
         <div id="loader"></div>
@@ -203,31 +205,31 @@
                         </li>
 
                         <% if (typeof notification != 'undefined') { %>
-                        <!-- Notifications -->
-                        <%- include('notification'); %>
-                        <!-- End Notifications -->
-                        <% } %>
+                            <!-- Notifications -->
+                            <%- include('notification'); %>
+                                <!-- End Notifications -->
+                                <% } %>
 
-                        <li id="nav-logout">
-                            <a href="/logout">
-                                <i class="fa fa-lock" aria-hidden="true"></i> Logout
-                            </a>
-                        </li>
+                                    <li id="nav-logout">
+                                        <a href="/logout">
+                                            <i class="fa fa-lock" aria-hidden="true"></i> Logout
+                                        </a>
+                                    </li>
                     </ul>
-                <% } else { %>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li id="nav-feed">
-                            <a href="/">
-                                <i class="fa fa-rss" aria-hidden="true"></i> Feed
-                            </a>
-                        </li>
-                        <li id="nav-logout">
-                            <a href="/login/facebook">
-                                <i class="fa fa-lock" aria-hidden="true"></i> Login
-                            </a>
-                        </li>
-                    </ul>
-                <% } %>
+                    <% } else { %>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li id="nav-feed">
+                                <a href="/">
+                                    <i class="fa fa-rss" aria-hidden="true"></i> Feed
+                                </a>
+                            </li>
+                            <li id="nav-logout">
+                                <a href="/login/facebook">
+                                    <i class="fa fa-lock" aria-hidden="true"></i> Login
+                                </a>
+                            </li>
+                        </ul>
+                        <% } %>
 
             </div>
 
@@ -236,6 +238,22 @@
 
 
     <div class="container main-container col-lg-12">
+        <% if (locals.error_messages) {
+            error_messages.forEach(function(message) { %>
+            <div class="alert alert-warning"><strong>Error: </strong>
+                <%= message %>
+            </div>
+            <% });
+        } %>
+
+        <% if (locals.success_messages) {
+            success_messages.forEach(function(message) { %>
+            <div class="alert alert-success"><strong>Good job: </strong>
+                <%= message %>
+            </div>
+            <% });
+
+        } %>
 
 
         <row class="col-lg-12 col-md-12 col-sm-12 col-ms-12 col-xs-12">
@@ -250,6 +268,7 @@
                             <%= item.title %>
                         </p>
                         <p style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px; font-size: font-size:calc(10px + 1.0vw);"> <i class="fa fa-heart" aria-hidden="true" style="color: #EA5455;"></i> <%= item.name %></p>
+                        <div class="fb-like" data-href="http://www.giveforfree.sg/item/<%= item.itemID %>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true" style="bottom:10px;"></div>
                     </div>
                 </row>
 
@@ -402,7 +421,7 @@
                                         <!-- Manage different rights for users -->
                                         <center>
                                             <% if (loggedIn && mine && item.takerID === null) { %>
-                                                <a href="/api/delete/<%= item.itemID %>" class="btn btn-danger">Delete</a>
+                                                <a data-toggle="modal" data-target="#confirm-delete" data-href="/api/delete/<%= item.itemID %>" class="btn btn-danger">Delete</a>
 
                                                 <% if (item.numWants > 0) { %>
                                                     <a type="button" class="btn btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw</a>
@@ -422,10 +441,10 @@
                                                         <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
                                                             <button class="btn btn-primary message-button" id="facebook-message"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Owner</button>
                                                             <% if (item.takerID === id) { %>
-                                                            <button class="btn btn-primary message-button" id="facebook-share"><i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook</button>
-                                                            <% } %>
-                                                                <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                                                                    <button class="btn btn-primary message-button" id="facebook-message">Message Recipient</button>
+                                                                <button class="btn btn-primary message-button" id="facebook-share"><i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook</button>
+                                                                <% } %>
+                                                                    <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
+                                                                        <button class="btn btn-primary message-button" id="facebook-message">Message Recipient</button>
                                                                         <% } %>
                                         </center>
                                     </div>
@@ -451,7 +470,9 @@
                                 </a>
                                 <a class="list-group-item" style="overflow: auto;">
                                     <h4 class="list-group-item-heading">Description</h4>
-                                    <textarea readonly style="width: 100%; height: 100%; resize:none; font-weight: lighter; font-size: 1.3em; overflow: auto; background: transparent; border: none;" class="list-group-item-text wrap description-text"><%= item.description %></textarea>
+                                    <textarea readonly style="width: 100%; height: 100%; resize:none; font-weight: lighter; font-size: 1.3em; overflow: auto; background: transparent; border: none;" class="list-group-item-text wrap description-text">
+                                        <%= item.description %>
+                                    </textarea>
                                 </a>
                                 <a class="list-group-item">
                                     <h4 class="list-group-item-heading">Deadline</h4>
@@ -459,18 +480,18 @@
                                         <%= date %>
                                     </p>
                                 </a>
-                                            <div class="bs-callout bs-callout-warning" style="background-color: #547980; color: white;">
-                                                <% if (item.takerID === null && !expired) { %>
-                                                    <h4>Available</h4>
-                                                    <h5>This giveaway will end in 2 days and 4 hours time.</h5>
-                                                    <% } else if (item.takerID === null) { %>
-                                                        <h4>Expired</h4>
-                                                        <h5>This giveaway has ended.</h5>
-                                                        <% } else { %>
-                                                            <h4>Given Away</h4>
-                                                            <h5>This item has been given away to <a href="/profile/<%= item.takerId %>" style="color: blue;"><%= item.takerName%></a>.</h5>
-                                                            <% } %>
-                                            </div>
+                                <div class="bs-callout bs-callout-warning" style="background-color: #547980; color: white;">
+                                    <% if (item.takerID === null && !expired) { %>
+                                        <h4>Available</h4>
+                                        <h5>This giveaway will end in 2 days and 4 hours time.</h5>
+                                        <% } else if (item.takerID === null) { %>
+                                            <h4>Expired</h4>
+                                            <h5>This giveaway has ended.</h5>
+                                            <% } else { %>
+                                                <h4>Given Away</h4>
+                                                <h5>This item has been given away to <a href="/profile/<%= item.takerId %>" style="color: blue;"><%= item.takerName%></a>.</h5>
+                                                <% } %>
+                                </div>
 
                             </div>
                             <div class="panel-footer" style="vertical-align: middle;">
@@ -558,19 +579,21 @@
                                         <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>What are you giving?</b></h4>
                                             <p class="list-group-item-text">
-                                                <input type="text" class="input-txt" name="title" placeholder="Item name (max. 50 chars)" maxlength="50" autocomplete="off" value= "<%=item.title%>" required>
+                                                <input type="text" class="input-txt" name="title" placeholder="Item name (max. 50 chars)" maxlength="50" autocomplete="off" value="<%=item.title%>" required>
                                             </p>
                                         </a>
                                         <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>Describe the item you are giving!</b></h4>
                                             <p class="list-group-item-text">
-                                                <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description (max. 200 chars)" autocomplete="off" data-trigger="focus" id="description-field" maxlength="200" required><%=item.description%></textarea>
+                                                <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description (max. 200 chars)" autocomplete="off" data-trigger="focus" id="description-field" maxlength="200" required>
+                                                    <%=item.description%>
+                                                </textarea>
                                             </p>
                                         </a>
                                         <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>When do you want to end this giveaway?</b></h4>
                                             <p class="list-group-item-text">
-                                                <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" value= "<%=date%>" required>
+                                                <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" value="<%=date%>" required>
                                             </p>
                                         </a>
                                         <a class="list-group-item">
@@ -654,6 +677,24 @@
                         <button type="submit" class="btn btn-primary" type="submit">Save changes</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Popup for deleting -->
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>You are deleting this item ... </h3>
+                </div>
+                <div class="modal-body">
+                    <h5> Are you sure you want to delete this item? This action cannot be undone. </h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-ok">Delete</a>
+                </div>
             </div>
         </div>
     </div>

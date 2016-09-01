@@ -76,7 +76,7 @@ module.exports = function(app) {
     })
 
     function parse_signed_request(signed_request, secret) {
-        encoded_data = signed_request.split('.',2);
+        encoded_data = signed_request.split('.', 2);
         // decode the data
         sig = encoded_data[0];
         json = base64url.decode(encoded_data[1]);
@@ -89,7 +89,7 @@ module.exports = function(app) {
         }
 
         // check sig - not relevant to error
-        expected_sig = crypto.createHmac('sha256',secret).update(encoded_data[1]).digest('base64').replace(/\+/g,'-').replace(/\//g,'_').replace('=','');
+        expected_sig = crypto.createHmac('sha256', secret).update(encoded_data[1]).digest('base64').replace(/\+/g, '-').replace(/\//g, '_').replace('=', '');
         if (sig !== expected_sig) {
             console.error('Bad signed JSON Signature!');
             return null;
@@ -139,7 +139,9 @@ module.exports = function(app) {
                         db.ProfilePageTotalTakenQuery(otherUserId, function(taken) {
                             db.Thank.where({
                                 receiverID: otherUserId
-                            }).orderBy('timeCreated', 'ASC').fetchAll({withRelated: ['thankedBy']}).then(function(thankData) {
+                            }).orderBy('timeCreated', 'ASC').fetchAll({
+                                withRelated: ['thankedBy']
+                            }).then(function(thankData) {
                                 res.render('profile', {
                                     loggedIn: false,
                                     myProfile: mine,
@@ -167,7 +169,9 @@ module.exports = function(app) {
                             db.ProfilePageTotalTakenQuery(otherUserId, function(taken) {
                                 db.Thank.where({
                                     receiverID: otherUserId
-                                }).orderBy('timeCreated', 'ASC').fetchAll({withRelated: ['thankedBy']}).then(function(thankData) {
+                                }).orderBy('timeCreated', 'ASC').fetchAll({
+                                    withRelated: ['thankedBy']
+                                }).then(function(thankData) {
                                     res.render('profile', {
                                         loggedIn: true,
                                         myProfile: mine,
@@ -200,16 +204,16 @@ module.exports = function(app) {
                     name: null,
                     deleted: true
                 }).then(function() {
-                    // Delete all this user's items that have no takerID 
+                    // Delete all this user's items that have no takerID
                     db.Item.where({
                         giverID: req.user.appUserId,
                         takerID: null
                     }).destroy().then(function() {
                         // Revoke permissions
-                        facebook.getFbData(req.user.accessToken, 
-                            '/' + req.user.id + '/permissions', 
-                            "method=DELETE", 
-                            function(resp){
+                        facebook.getFbData(req.user.accessToken,
+                            '/' + req.user.id + '/permissions',
+                            "method=DELETE",
+                            function(resp) {
                                 console.log(resp);
                             });
                         res.redirect("/logout");
@@ -224,11 +228,6 @@ module.exports = function(app) {
             }
         });
     });
-
-    
-
-    
-
 
 
     // GET FRIENDS

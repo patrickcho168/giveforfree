@@ -124,14 +124,15 @@ function saveItem(req, res, fileName) {
 
         if (createdItemID != null) {
             // Save categories
-            saveCategories(newSavedItem, req.body.categories);
+            // req.body.categories.replace("&amp;", "&").split(',');
+            saveCategories(newSavedItem, req.body.categories.replace("&amp;", "&").split(','));
             console.log(createdItemID);
-            req.flash('success_messages', 'Upload Succeeded! Redirecting to item page ...');
+            req.flash('success_messages', 'Upload Succeeded! (:');
             setTimeout(redirectSuccess, 1, createdItemID, res);
             // res.redirect("/item/" + createdItemID);
         } else {
             console.log(createdItemID);
-            req.flash('error_messages', 'Upload Failed! Redirecting you to home ... ');
+            req.flash('error_messages', 'Upload Failed! ):');
             setTimeout(redirectFail, 1, res);
         }
 
