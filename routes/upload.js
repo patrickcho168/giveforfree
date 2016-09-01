@@ -242,18 +242,20 @@ module.exports = function(app) {
                 } else {
                     // Update item
                     item.save({
-                        timeExpired: moment(req.body.date + " 23:59:59").format("YYYY-MM-DD HH:mm:ss"),
                         title: xss(req.body.title),
                         description: xss(req.body.description),
+                        timeExpired: moment(req.body.date + " 23:59:59").format("YYYY-MM-DD HH:mm:ss"),
                         collectionMessage: xss(req.body.collectionMessage),
                         postage: req.body.postage ? 1 : 0,
                         meetup: req.body.meetup ? 1 : 0
                     }).then(function() {
+                        req.flash('success_messages', 'Your item details are updated!');
                         res.redirect("/item/" + itemId);
                     });
                 }
 
             } else {
+                req.flash('error_messages', 'Drats we had some problems updating your item! Please try again!');
                 res.redirect("/item/" + itemId);
             }
         });

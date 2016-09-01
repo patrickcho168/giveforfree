@@ -593,7 +593,7 @@
                                         <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>When do you want to end this giveaway?</b></h4>
                                             <p class="list-group-item-text">
-                                                <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" value="<%=date%>" required>
+                                                <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" value="<%= moment(date).format("YYYY-MM-DD") %>" required>
                                             </p>
                                         </a>
                                         <a class="list-group-item">
