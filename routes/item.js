@@ -25,13 +25,13 @@ function inArray(needle, haystack) {
 
 module.exports = function(app) {
 
-    app.post('/api/comment/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
+    app.post('/api/comment/:itemId', ensureLogin.ensureLoggedIn(), csrfProtection, function(req, res) {
         // CHECK MESSAGE NOT IMPLEMENTED
         var userId = parseInt(req.user.appUserId);
         var itemId = parseInt(req.params.itemId);
         var newComment = new db.Comment({
             commenterID: userId,
-            message: req.body.message,
+            message: xss(req.body.message),
             itemID: itemId,
             timeCreated: moment().format("YYYY-MM-DD HH:mm:ss")
         });

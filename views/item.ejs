@@ -356,6 +356,7 @@
                             <td>
                                 <% if (comment[i].attributes.commenterID === id) { %>
                                     <form action="/api/deletecomment/<%= item.itemID %>/<%= comment[i].attributes.commentID %>" method="post">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                                         <button name="delete" value="delete">Delete</button>
                                     </form>
                                 <% } %>
@@ -366,6 +367,7 @@
                 <form action="/api/comment/<%= item.itemID %>" method="post">
                     Message:<br>
                     <input type="text" name="message"><br>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                     <input type="submit" value="Submit">
                 </form>
             </div> -->
