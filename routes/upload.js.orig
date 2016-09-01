@@ -4,19 +4,12 @@ var crypto = require("crypto");
 var mime = require("mime");
 var moment = require("moment");
 var aws = require("aws-sdk");
-var xss = require('xss');
-var bodyParser = require("body-parser");
-var csrf = require('csurf');
 var config = require('../config');
 var db = require('../models/db');
 var ensureLogin = require('connect-ensure-login');
 var querystring = require('querystring');
 var facebook = require('../controllers/facebook');
 var config = require('../config');
-
-// CSRF Token to be used in forms
-var csrfProtection = csrf();
-var parseForm = bodyParser.urlencoded({ extended: true, limit: '50mb' });
 
 aws.config.update({
     secretAccessKey: config.awsSecretAccessKey,
@@ -97,8 +90,9 @@ function saveCategories(item, categories) {
     if (categories) {
         var ids = categories.map(function(cat) {
             return categoriesPos.indexOf(cat) + 1;
-        });
+        })
 
+        console.log(ids);
         return item.categories().attach(ids);    
     }
 }
@@ -109,9 +103,9 @@ function saveItem(req, res, fileName) {
         giverID: req.user.appUserId,
         timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
         timeExpired: moment(req.body.date + " 23:59:59").format("YYYY-MM-DD HH:mm:ss"),
-        title: xss(req.body.title),
-        description: xss(req.body.description),
-        collectionMessage: xss(req.body.collectionMessage),
+        title: req.body.title,
+        description: req.body.description,
+        collectionMessage: req.body.collectionMessage,
         postage: req.body.postage ? 1 : 0,
         meetup: req.body.meetup ? 1 : 0,
         imageLocation: fileName
@@ -124,15 +118,14 @@ function saveItem(req, res, fileName) {
 
         if (createdItemID != null) {
             // Save categories
-            // req.body.categories.replace("&amp;", "&").split(',');
-            saveCategories(newSavedItem, req.body.categories.replace("&amp;", "&").split(','));
+            saveCategories(newSavedItem, req.body.categories);
             console.log(createdItemID);
-            req.flash('success_messages', 'Upload Succeeded! (:');
+            req.flash('success_messages', 'Upload Succeeded! Redirecting to item page ...');
             setTimeout(redirectSuccess, 1, createdItemID, res);
             // res.redirect("/item/" + createdItemID);
         } else {
             console.log(createdItemID);
-            req.flash('error_messages', 'Upload Failed! ):');
+            req.flash('error_messages', 'Upload Failed! Redirecting you to home ... ');
             setTimeout(redirectFail, 1, res);
         }
 
@@ -170,7 +163,7 @@ function redirectFail(response) {
 
 
 module.exports = function(app) {
-    app.get('/upload', ensureLogin.ensureLoggedIn(), csrfProtection, function(req, res, next) {
+    app.get('/upload', ensureLogin.ensureLoggedIn(), function(req, res, next) {
         var otherUserId = parseInt(req.params.id);
         var mine = otherUserId === req.user.appUserId;
 
@@ -179,12 +172,11 @@ module.exports = function(app) {
             user: req.user.attributes,
             id: req.user.appUserId,
             notification: req.session.notification,
-            moment: moment,
-            csrfToken: req.csrfToken() 
+            moment: moment
         });
     });
 
-    app.post('/upload', parseForm, ensureLogin.ensureLoggedIn(), csrfProtection, function(req, res, next) {
+    app.post('/upload', ensureLogin.ensureLoggedIn(), function(req, res, next) {
         var otherUserId = parseInt(req.params.id);
         var mine = otherUserId === req.user.appUserId;
 
@@ -227,13 +219,23 @@ module.exports = function(app) {
                 }
             });
 
+<<<<<<< HEAD
             req.sanitizeBody('title').escape();
             req.sanitizeBody('description').escape();
             req.sanitizeBody('croppedImage').escape();
             req.sanitizeBody('collectionMessage').escape();
             req.sanitizeBody('meetup').escape();
             req.sanitizeBody('postage').escape();
+            req.sanitizeBody('categories').escape();
+=======
+            req.sanitizeBody('title');
+            req.sanitizeBody('description');
+            req.sanitizeBody('croppedImage');
+            req.sanitizeBody('collectionMessage');
+            req.sanitizeBody('meetup');
+            req.sanitizeBody('postage');
             req.sanitizeBody('categories');
+>>>>>>> 54ac61363eb6b607671acc3bdb3f9b52c82f7bc7
 
             var errors = req.validationErrors();
 

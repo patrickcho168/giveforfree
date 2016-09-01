@@ -206,7 +206,7 @@
                 <img src="../images/profile/elf.svg" style="display: block; margin-left: auto; margin-right: auto; padding: 10px 0; width: 100px;">
                 <!-- <img class="col-lg-4" src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large" style="padding: 10px 0; width: 100px; border-radius:50%;"> -->
                 <p style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; padding-top: 15px; font-weight: bold; color: white; ">
-                    <%= user.name %>
+                    <%= user.name %> <% if (myProfile) { %> <a data-toggle="modal" data-target="#confirm-delete" data-href="/api/delete-user" class="btn btn-danger">Delete</a> <% } %>
                 </p>
                 <h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"> Singapore </h4>
                 <div class="fb-like" data-href="http://www.giveforfree.sg/profile/<%= id %>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true" style="bottom:10px;"></div>
@@ -222,23 +222,23 @@
             </ul>
             <div id="my-tabs-contents" class="tab-content" align="center">
                 <div class="tab-pane fade in active col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="gifts">
-                    <div id="gifts-placeholder" hidden>
+                    <div id="gifts-placeholder">
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
                         <p>
                             <%= user.name %> has nothing to give for now.
                                 <br> Come back later! </p>
                     </div>
 
-                    <div id="gifts-loader">
+                    <!-- <div id="gifts-loader">
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
                         <p>
                             <%= user.name %> has nothing to give for now.
                                 <br> Come back later! </p>
-                    </div>
+                    </div> -->
 
                 </div>
                 <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="wants">
-                    <div id="wants-placeholder" hidden>
+                    <div id="wants-placeholder">
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
                         <p>
                             <%= user.name %> has no wants for now.
@@ -246,16 +246,16 @@
                                 <%= user.name %>! </p>
                     </div>
 
-                    <div id="gifts-loader">
+                    <!-- <div id="gifts-loader">
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
                         <p>
                             <%= user.name %> has nothing to give for now.
                                 <br> Come back later! </p>
-                    </div>
+                    </div> -->
 
                 </div>
                 <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="thanks">
-                    <div id="thanks-placeholder" hidden>
+                    <div id="thanks-placeholder">
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
                         <p>
                             <%= user.name %> has yet to receive any thank-you messages.
@@ -263,23 +263,23 @@
                                 <%= user.name %> one now! </p>
                     </div>
 
-                    <div id="gifts-loader">
+                    <!-- <div id="gifts-loader">
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
                         <p>
                             <%= user.name %> has nothing to give for now.
                                 <br> Come back later! </p>
-                    </div>
+                    </div> -->
 
                 </div>
                 <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="friends">
 
 
-                    <div id="gifts-loader">
+                    <!-- <div id="gifts-loader">
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
                         <p>
                             <%= user.name %> has nothing to give for now.
                                 <br> Come back later! </p>
-                    </div>
+                    </div> -->
 
                     <% if (friends.length > 0) { %>
                         <div id="friends-placeholder" style="display:none;"></div>
@@ -305,7 +305,7 @@
 
                                         <div class="col-lg-2">
                                             <div class="media-left">
-                                                <div class="avatar" style="background-image: url(http://graph.facebook.com/<%= friendProperty[friends[i].attributes.userID].fbID %>/picture?type=large);" style="margin: auto 10px; padding: 0; width: 120px; height: 120px; border-radius:50%;"></div>
+                                                <a href="/profile/<%= friends[i].attributes.userID %>" class="avatar" style="background-image: url(http://graph.facebook.com/<%= friendProperty[friends[i].attributes.userID].fbID %>/picture?type=large);" style="margin: auto 10px; padding: 0; width: 120px; height: 120px; border-radius:50%;"></a>
                                             </div>
                                             <a href="/profile/<%= friends[i].attributes.userID %>" style="font-size: 1.5em;">
                                                 <div class="media-body">
@@ -457,6 +457,24 @@
             <div class="row" id="infinite-scroll-row">
             </div>
         </div> -->
+    </div>
+
+    <!-- Modal Popup for deleting -->
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>You are deleting your account ... </h3>
+                </div>
+                <div class="modal-body">
+                    <h5> Are you sure you want to delete your Give For Free account? You will lose your Give! and Want! records. Don't worry we won't delete your Facebook. This action cannot be undone. </h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-ok">Delete</a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->
