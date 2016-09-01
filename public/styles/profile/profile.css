@@ -156,6 +156,10 @@
 .thumbnail:hover a {
     color: white;
 }
+
+.thumbnail:hover .text-muted {
+    color: white;
+}
 .placeholder-image {
     /*background-repeat: no-repeat;*/
     /*background-size: contain;*/
