@@ -160,7 +160,7 @@ module.exports = function(app) {
         }
     );
 
-    app.get('/api/delete-user', ensureLogin.ensureLoggedIn(), function(req, res, next) {
+    app.post('/api/delete-user', ensureLogin.ensureLoggedIn(), function(req, res, next) {
         db.User.where({
             userID: req.user.appUserId
         }).fetch().then(function(user) {

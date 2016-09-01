@@ -172,6 +172,7 @@
 
 
         <form action="/upload" method="post" id="new-gift-form" data-toggle="validator">
+
             <% if (locals.error_messages) {
                 error_messages.forEach(function(message) { %>
                 <div class="alert alert-warning"><strong>Error: </strong>
@@ -346,6 +347,8 @@
                                     </div>
 
                                     <input type="hidden" name="croppedImage" />
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
 
 
                                 </div>

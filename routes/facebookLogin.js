@@ -30,6 +30,14 @@ passport.use(new Strategy({
                     profile.appUserId = user2.attributes.userID;
                     return cb(null, profile);
                 });
+            } else if (user.attributes.deleted) {
+                user.save({
+                    name: profile.displayName,
+                    deleted: false
+                }).then(function(user2) {
+                    profile.appUserId = user2.attributes.userID;
+                    return cb(null, profile);
+                })
             } else {
                 profile.appUserId = user.attributes.userID;
                 return cb(null, profile);

@@ -24,6 +24,7 @@
     "cropper": "^2.3.3",
     "croppie": "^2.3.0",
     "crypto": "0.0.3",
+    "csurf": "^1.9.0",
     "ejs": "~2.5.1",
     "express": "~4.14.0",
     "express-session": "^1.14.0",
@@ -41,6 +42,7 @@
     "passport-facebook": "~2.1.1",
     "querystring": "~0.2.0",
     "redis": "^2.6.2",
-    "request": "~2.74.0"
+    "request": "~2.74.0",
+    "xss": "^0.2.13"
   }
 }
