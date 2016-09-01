@@ -5,10 +5,10 @@ var html = '';
 var triggered = 0;
 
 // Individual trackers for each tab
-var lastGiftsId = 1;
-var lastWantsId = 1;
-var lastThanksId = 1;
-var lastFriendsId = 1;
+var lastGiftsId = 0;
+var lastWantsId = 0;
+var lastThanksId = 0;
+var lastFriendsId = 0;
 var lastItem = 0;
 
 // Number of items to load every AJAX
@@ -21,6 +21,8 @@ var firstWants = true;
 var firstThanks = true;
 var firstFriends = true;
 
+var isFirst = true;
+
 var urlAJAX = null;
 
 // var actualClass = ".cd-main-nav";
@@ -29,34 +31,61 @@ var urlAJAX = null;
 // AJAX Infinite Scrolling Function
 function addRealViews(html) {
 
-    var $tab = $('#my-tabs-contents')
-    var $active = $tab.find('.tab-pane.active');
-    var currentTab = $active.attr('id');
+    // var $tab = $('#my-tabs-contents')
+    // var $active = $tab.find('.tab-pane.active');
+    // var currentTab = $active.attr('id');
+    var currentTab = $(".nav-tabs").find(".active").attr('id');
+
+    console.log("GIFT: " + firstGifts);
+    console.log("WANTS: " + firstWants);
+
 
     switch (currentTab) {
-        case "gifts":
+        case "tab-gifts":
+            $("#my-tabs-contents").find(".active").removeClass("active");
+            $("#my-tabs-contents").find(".active").removeClass("in");
+            $("#gifts").addClass("active");
+            $("#gifts").addClass("in");
+            currentTab = "gifts";
+            isFirst = firstGifts;
             if (firstGifts) {
                 urlAJAX = '/api/myItems/' + 0 + '/' + numItems + '/' + appProfileId;
-                firstGifts = false;
             } else {
                 urlAJAX = '/api/myItems/' + lastGiftsId + '/' + numItems + '/' + appProfileId;
             }
             lastItem = lastGiftsId;
             break;
-        case "wants":
+        case "tab-wants":
+            $("#my-tabs-contents").find(".active").removeClass("active");
+            $("#my-tabs-contents").find(".active").removeClass("in");
+            $("#wants").addClass("active");
+            $("#wants").addClass("in");
+            currentTab = "wants";
+            isFirst = firstWants;
             if (firstWants) {
                 urlAJAX = '/api/myWants/' + 0 + '/' + numItems + '/' + appProfileId;
-                firstWants = false;
             } else {
                 urlAJAX = '/api/myWants/' + lastWantsId + '/' + numItems + '/' + appProfileId;
             }
             lastItem = lastWantsId;
             break;
-        case "thanks":
+        case "tab-thanks":
+            $("#my-tabs-contents").find(".active").removeClass("active");
+            $("#my-tabs-contents").find(".active").removeClass("in");
+            $("#thanks").addClass("active");
+            $("#thanks").addClass("in");
+            currentTab = "thanks";
+            isFirst = firstThanks;
             urlAJAX = null;
             lastItem = lastThanksId;
             break;
-        case "friends":
+        case "tab-friends":
+            $("#my-tabs-contents").find(".active").removeClass("active");
+            $("#my-tabs-contents").find(".active").removeClass("in");
+            $("#friends").addClass("active");
+            $("#friends").addClass("in");
+            currentTab = "friends";
+            isFirst = firstFriends;
             urlAJAX = null;
             lastItem = lastFriendsId;
 
@@ -65,8 +94,12 @@ function addRealViews(html) {
             break;
     }
 
+    console.log(currentTab);
+    console.log(urlAJAX);
+    console.log(lastItem);
+    console.log(isFirst);
 
-    if (urlAJAX != null && lastItem >= 1) {
+    if (urlAJAX != null && lastItem >= 1 || isFirst) {
         // AJAX to fetch JSON objects from server
         $.ajax({
             url: urlAJAX,
@@ -84,10 +117,11 @@ function addRealViews(html) {
                     switch (currentTab) {
                         case "gifts":
                             lastGiftsId = data[data.length - 1].itemID;
-                            console.log(lastGiftsId);
+                            console.log("GIFTS: " + lastGiftsId);
                             break;
                         case "wants":
                             lastWantsId = data[data.length - 1].itemID;
+                            console.log("WANTS: " + lastWantsId);
                             break;
                         case "thanks":
                             lastThanksId = data[data.length - 1].itemID;
@@ -144,21 +178,29 @@ function addRealViews(html) {
                         html += '</div>';
                         html += '</div></a>';
                         html += '</div>';
+                        console.log(currentTab);
 
                         switch (currentTab) {
                             case "gifts":
+                                firstGifts = false;
                                 $('#gifts').append(html);
                                 $('#gifts-placeholder').hide();
                                 break;
                             case "wants":
+                                firstWants = false;
+
                                 $('#wants').append(html);
                                 $('#wants-placeholder').hide();
                                 break;
                             case "thanks":
+                                firstThanks = false;
+
                                 $('#thanks').append(html);
                                 $('#thanks-placeholder').hide();
                                 break;
                             case "friends":
+                                firstFriends = false;
+
                                 $('#friends').append(html);
                                 $('#friends-placeholder').hide();
                                 break;
@@ -194,7 +236,11 @@ $(document).ready(function() {
     //
     // });
     $('.nav-tabs a').click(function() {
+        $(".nav-tabs").find(".active").removeClass("active");
+        $(this).parent().addClass("active");
         triggered = 0;
+        
+        setTimeout(addRealViews, 300, html);
         addRealViews(html);
     });
 
