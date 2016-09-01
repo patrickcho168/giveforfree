@@ -34,32 +34,32 @@ toExport.getNotifications = function(req, res, next) {
 
 toExport.route = function(app) {
     // HOME PAGE
-    app.post('/notification/gcmregistration', ensureLogin.ensureLoggedIn(), function(req, res, next) {
-        // console.log("GCM Registration");
-        var userId = parseInt(req.user.appUserId);
-        db.User.where({
-            userID: userId
-        }).fetch().then(function(user) {
-            if (user) {
-                var endpoint = req.body.endpoint;
-                var regId = endpoint.substring(endpoint.lastIndexOf("/")+1, endpoint.length);
-                user.save({
-                    gcm: regId
-                });
-            }
-        });
-        next();
-    });
+    // app.post('/notification/gcmregistration', ensureLogin.ensureLoggedIn(), function(req, res, next) {
+    //     // console.log("GCM Registration");
+    //     var userId = parseInt(req.user.appUserId);
+    //     db.User.where({
+    //         userID: userId
+    //     }).fetch().then(function(user) {
+    //         if (user) {
+    //             var endpoint = req.body.endpoint;
+    //             var regId = endpoint.substring(endpoint.lastIndexOf("/")+1, endpoint.length);
+    //             user.save({
+    //                 gcm: regId
+    //             });
+    //         }
+    //     });
+    //     next();
+    // });
 
-    app.get('/api/getonenotification/:recipientgcm', function(req,res) {
-        db.User.where({
-            gcm: recipientgcm
-        }).fetch().then(function(user) {
-            db.NotificationQuery(parseInt(user.attributes.userID), 1, function(data) {
-                res.json(data);
-            });
-        });
-    });
+    // app.get('/api/getonenotification/:recipientgcm', function(req,res) {
+    //     db.User.where({
+    //         gcm: recipientgcm
+    //     }).fetch().then(function(user) {
+    //         db.NotificationQuery(parseInt(user.attributes.userID), 1, function(data) {
+    //             res.json(data);
+    //         });
+    //     });
+    // });
 
     // Read single notification
     app.get('/api/read_notification/:notifID', function(req, res, next) {

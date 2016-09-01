@@ -31,7 +31,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 // app.use(require('cookie-parser')());
-app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' })); // For parsing forms
+app.use(bodyParser.json()); // For parsing forms
 app.use(expressValidator());
 var sessionMiddleware = session({
     store: new RedisStore({ host: 'localhost', port: 6379, client: client, ttl : 60*60*24}),
