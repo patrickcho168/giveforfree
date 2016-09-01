@@ -442,12 +442,12 @@
                                                                     </ul>
                                                                     <% } %>
                                                                         <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                                                                            <button class="btn btn-xs btn-primary message-button" id="facebook-message"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Owner</button>
+                                                                            <button class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Owner</button>
                                                                             <% if (item.takerID === id) { %>
-                                                                                <button class="btn btn-xs btn-primary message-button" id="facebook-share"><i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook</button>
+                                                                                <button class="btn btn-xs btn-primary message-button" id="facebook-share" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook</button>
                                                                                 <% } %>
                                                                                     <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                                                                                        <button class="btn btn-xs btn-primary message-button" id="facebook-message">Message Recipient</button>
+                                                                                        <button class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;">Message Recipient</button>
                                                                                         <% } %>
                                                         </center>
                                                     </div>
@@ -481,7 +481,7 @@
                                                         <%= date %>
                                                     </p>
                                                 </a>
-                                                <div class="bs-callout bs-callout-warning" style="background-color: #547980; color: white;">
+                                                <div class="bs-callout bs-callout-warning" style="background-color: #547980; color: white; margin: 10px; 10px;">
                                                     <% if (item.takerID === null && !expired) { %>
                                                         <h4>Available</h4>
                                                         <h5>This giveaway will end in 2 days and 4 hours time.</h5>
@@ -490,7 +490,7 @@
                                                             <h5>This giveaway has ended.</h5>
                                                             <% } else { %>
                                                                 <h4>Given Away</h4>
-                                                                <h5>This item has been given away to <a href="/profile/<%= item.takerId %>" style="color: blue;"><%= item.takerName%></a>.</h5>
+                                                                <h5>This item has been given away to <a href="/profile/<%= item.takerId %>"><%= item.takerName%></a>.</h5>
                                                                 <% } %>
                                                 </div>
 
