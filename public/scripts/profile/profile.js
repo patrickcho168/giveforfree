@@ -239,7 +239,7 @@ $(document).ready(function() {
         $(".nav-tabs").find(".active").removeClass("active");
         $(this).parent().addClass("active");
         triggered = 0;
-        console.log("Switched Tab");
+        setTimeout(addRealViews, 1000, html);
         addRealViews(html);
     });
 
