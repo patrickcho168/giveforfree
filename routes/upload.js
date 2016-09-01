@@ -228,7 +228,6 @@ module.exports = function(app) {
 
             req.sanitizeBody('title').escape();
             req.sanitizeBody('description').escape();
-            req.sanitizeBody('croppedImage').escape();
             req.sanitizeBody('collectionMessage').escape();
             req.sanitizeBody('meetup').escape();
             req.sanitizeBody('postage').escape();
@@ -244,8 +243,8 @@ module.exports = function(app) {
 
             } else {
                 // Upload image
-                var buf = new Buffer(req.body.croppedImage, 'base64')
-                var fileName = crypto.pseudoRandomBytes(16).toString('hex') + '.png'
+                var buf = new Buffer(req.body.croppedImage, 'base64');
+                var fileName = crypto.pseudoRandomBytes(16).toString('hex') + '.png';
 
                 var data = {
                     Key: fileName,
@@ -262,7 +261,6 @@ module.exports = function(app) {
                     } else {
                         console.log(data);
                         console.log('successfully uploaded the image!');
-
 
                         saveItem(req, res, fileName);
                     }
