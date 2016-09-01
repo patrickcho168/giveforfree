@@ -215,7 +215,8 @@ $(document).ready(function() {
     // });
     $('.nav-tabs a').click(function() {
         triggered = 0;
-        setTimeout(addRealViews, 1000, html);
+        
+        setTimeout(addRealViews, 300, html);
         addRealViews(html);
     });
 

@@ -202,32 +202,65 @@
             </ul>
             <div id="my-tabs-contents" class="tab-content" align="center">
                 <div class="tab-pane fade in active col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="gifts">
-                    <div id="gifts-placeholder">
+                    <div id="gifts-placeholder" hidden>
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
                         <p>
                             <%= user.name %> has nothing to give for now.
                                 <br> Come back later! </p>
                     </div>
+
+                    <div id="gifts-loader">
+                        <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
+                        <p>
+                            <%= user.name %> has nothing to give for now.
+                                <br> Come back later! </p>
+                    </div>
+
                 </div>
                 <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="wants">
-                    <div id="wants-placeholder">
+                    <div id="wants-placeholder" hidden>
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
                         <p>
                             <%= user.name %> has no wants for now.
                                 <br> Chat with
                                 <%= user.name %>! </p>
                     </div>
+
+                    <div id="gifts-loader">
+                        <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
+                        <p>
+                            <%= user.name %> has nothing to give for now.
+                                <br> Come back later! </p>
+                    </div>
+
                 </div>
                 <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="thanks">
-                    <div id="thanks-placeholder">
+                    <div id="thanks-placeholder" hidden>
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
                         <p>
                             <%= user.name %> has yet to receive any thank-you messages.
                                 <br> Send
                                 <%= user.name %> one now! </p>
                     </div>
+
+                    <div id="gifts-loader">
+                        <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
+                        <p>
+                            <%= user.name %> has nothing to give for now.
+                                <br> Come back later! </p>
+                    </div>
+
                 </div>
                 <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="friends">
+
+
+                    <div id="gifts-loader">
+                        <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
+                        <p>
+                            <%= user.name %> has nothing to give for now.
+                                <br> Come back later! </p>
+                    </div>
+
                     <% if (friends.length > 0) { %>
                         <div id="friends-placeholder" style="display:none;"></div>
                         <% } else { %>
@@ -273,6 +306,8 @@
 
                                     <% } %>
                                         <% } %>
+
+
                                             <br/>
 
                 </div>
