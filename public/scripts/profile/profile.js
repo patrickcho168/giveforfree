@@ -184,6 +184,7 @@ function addRealViews(html) {
                             case "gifts":
                                 firstGifts = false;
                                 $('#gifts').append(html);
+                                console.log($('#gifts-placeholder'));
                                 $('#gifts-placeholder').hide();
                                 break;
                             case "wants":
