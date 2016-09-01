@@ -46,7 +46,7 @@
 .item-author {
     font-size: 1.0em;
     font-weight: 50;
-    color: black;
+    /*color: black;*/
     /*font-style: italic;*/
 }
 .item-caption {
