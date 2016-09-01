@@ -185,6 +185,80 @@ module.exports = function(app) {
         });
     });
 
+
+    // Update an item
+    app.post('/api/update/:itemId',  parseForm, ensureLogin.ensureLoggedIn(), csrfProtection, function(req, res) {
+        var itemId = parseInt(req.params.itemId);
+        var userId = parseInt(req.user.appUserId);
+        db.Item.where({
+            itemID: itemId,
+            giverID: userId
+        }).fetch().then(function(item) {
+            // If this item exists
+            if (item) {
+                console.log(req.body);
+                // Simple form validation
+                req.checkBody({
+                    'title': {
+                        notEmpty: true,
+                        isLength: {
+                            options: [{
+                                min: 1,
+                                max: 50
+                            }],
+                            errorMessage: 'Title must be less than 50 characters' // Error message for the validator, takes precedent over parameter message
+                        },
+
+                        errorMessage: 'Please fill in a valid title.'
+                    },
+                    'description': {
+                        notEmpty: true,
+                        isLength: {
+                            options: [{
+                                min: 1,
+                                max: 200
+                            }],
+                            errorMessage: 'Description must be less than 200 characters' // Error message for the validator, takes precedent over parameter message
+                        },
+
+                        errorMessage: 'Please fill in a valid description.'
+                    }
+                });
+
+                req.sanitizeBody('title').escape();
+                req.sanitizeBody('description').escape();
+                req.sanitizeBody('meetup').escape();
+                req.sanitizeBody('postage').escape();
+                req.sanitizeBody('categories').escape();
+                req.sanitizeBody('date').escape();
+
+                var errors = req.validationErrors();
+
+                if (errors) {
+                    errors.forEach(function(error) {
+                        req.flash('error_messages', error.msg);
+                    });
+                    res.redirect(301, '/item/'+itemId);
+                } else {
+                    // Update item
+                    item.save({
+                        timeExpired: moment(req.body.date + " 23:59:59").format("YYYY-MM-DD HH:mm:ss"),
+                        title: xss(req.body.title),
+                        description: xss(req.body.description),
+                        collectionMessage: xss(req.body.collectionMessage),
+                        postage: req.body.postage ? 1 : 0,
+                        meetup: req.body.meetup ? 1 : 0
+                    }).then(function() {
+                        res.redirect("/item/" + itemId);
+                    });
+                }
+
+            } else {
+                res.redirect("/item/" + itemId);
+            }
+        });
+    });
+
     app.post('/upload', parseForm, ensureLogin.ensureLoggedIn(), csrfProtection, function(req, res, next) {
         var otherUserId = parseInt(req.params.id);
         var mine = otherUserId === req.user.appUserId;

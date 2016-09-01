@@ -10,6 +10,8 @@ var xss = require('xss');
 var bodyParser = require("body-parser");
 var csrf = require('csurf');
 
+var csrfProtection = csrf();
+
 // Included to support <IE9
 function inArray(needle, haystack) {
     var count = haystack.length;
@@ -166,28 +168,6 @@ module.exports = function(app) {
             }
         });
     })
-
-    // Update an item
-    app.post('/api/update/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
-        var itemId = parseInt(req.params.itemId);
-        var userId = parseInt(req.user.appUserId);
-        db.Item.where({
-            itemID: itemId,
-            giverID: userId
-        }).fetch().then(function(item) {
-            // If this item exists
-            if (item) {
-                item.save({
-                    title: req.body.title,
-                    description: req.body.description
-                }).then(function() {
-                    res.redirect("/item/" + itemId);
-                });
-            } else {
-                res.redirect("/item/" + itemId);
-            }
-        });
-    });
 
     // Delete an item
     app.get('/api/delete/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
@@ -398,7 +378,7 @@ module.exports = function(app) {
     });
 
     // ITEM PAGE
-    app.get('/item/:id', function(req, res, next) {
+    app.get('/item/:id', csrfProtection, function(req, res, next) {
         var itemId = req.params.id;
         req.session.lastPageVisit = '/item/' + itemId;
         var userId;
@@ -442,7 +422,8 @@ module.exports = function(app) {
                                     comment: commentData.models,
                                     notification: req.session.notification,
                                     moment: moment,
-                                    fbNameSpace: config.fbNamespace
+                                    fbNameSpace: config.fbNamespace,
+                                    csrfToken: req.csrfToken() 
                                 });
                             });
                         } else {
@@ -460,7 +441,8 @@ module.exports = function(app) {
                                 comment: commentData.models,
                                 notification: req.session.notification,
                                 moment: moment,
-                                fbNameSpace: config.fbNamespace
+                                fbNameSpace: config.fbNamespace,
+                                csrfToken: req.csrfToken() 
                             });
                         }
                     });
