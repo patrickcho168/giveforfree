@@ -354,6 +354,7 @@
                             <td>
                                 <% if (comment[i].attributes.commenterID === id) { %>
                                     <form action="/api/deletecomment/<%= item.itemID %>/<%= comment[i].attributes.commentID %>" method="post">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                                         <button name="delete" value="delete">Delete</button>
                                     </form>
                                 <% } %>
@@ -364,6 +365,7 @@
                 <form action="/api/comment/<%= item.itemID %>" method="post">
                     Message:<br>
                     <input type="text" name="message"><br>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                     <input type="submit" value="Submit">
                 </form>
             </div> -->
@@ -606,7 +608,7 @@
                                         <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>When do you want to end this giveaway?</b></h4>
                                             <p class="list-group-item-text">
-                                                <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" value="<%=date%>" required>
+                                                <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" value="<%= moment(date).format("YYYY-MM-DD") %>" required>
                                             </p>
                                         </a>
                                         <a class="list-group-item">

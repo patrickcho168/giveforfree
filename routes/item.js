@@ -61,7 +61,7 @@ module.exports = function(app) {
         })
     })
 
-    app.post('/api/comment/:itemId', ensureLogin.ensureLoggedIn(), parseForm, function(req, res) {
+    app.post('/api/comment/:itemId', ensureLogin.ensureLoggedIn(), csrfProtection, function(req, res) {
         // CHECK MESSAGE NOT IMPLEMENTED
         var userId = parseInt(req.user.appUserId);
         var itemId = parseInt(req.params.itemId);
@@ -71,7 +71,7 @@ module.exports = function(app) {
         console.log(req.body);
         var newComment = new db.Comment({
             commenterID: userId,
-            message: req.body.content,
+            message: xss(req.body.content),
             itemID: itemId,
             timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
             parentComment: req.body.parent
