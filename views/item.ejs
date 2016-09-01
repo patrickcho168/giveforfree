@@ -590,6 +590,7 @@
                                         <a class="list-group-item">
                                             <h4 class="list-group-item-heading"><b>What are you giving?</b></h4>
                                             <p class="list-group-item-text">
+                                                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                                                 <input type="text" class="input-txt" name="title" placeholder="Item name (max. 50 chars)" maxlength="50" autocomplete="off" value="<%=item.title%>" required>
                                             </p>
                                         </a>
