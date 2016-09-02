@@ -109,6 +109,8 @@
                 toId = <%= item.takerFbID %>;
                 <% } %>
 
+                console.log(toId);
+
                 FB.ui({
                     method: 'send',
                     link: '<%= domain %>/item/<%= item.itemID %>',
