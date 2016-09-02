@@ -65,7 +65,7 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
-        var toId;
+        var toId = item.fbID;
         <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
         toId = <%= item.fbID %>;
         <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
