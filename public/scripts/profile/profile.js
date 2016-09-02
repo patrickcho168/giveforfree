@@ -208,7 +208,7 @@ function addRealViews(html) {
                         } else if (value.giverID === myAppId && value.takerID !== null) {
                             html += '<div class="ribbon-wrapper-green">';
                             html += '<div class="ribbon-grey">';
-                            html += 'given';
+                            html += 'given away';
                             html += '</div>';
                             html += '</div>';
                         } else if (value.giverID === myAppId && value.takerID === null) {
