@@ -45,7 +45,6 @@ $(function() {
         delimiter: ',',
         persist: false,
         create: function(input) {
-            // var options = ["clothes", "accessories", "furniture & home", "parenting", "health", "beauty", "kitchen appliances", "gardening", "property", "design & craft", "electronics", "sports", "photography", "antiques", "toys", "games", "music", "tickets & vouchers", "auto accessories", "books", "stationeries", "textbooks", "notes", "pets", "other"];
 
             return {
                 value: "other",
@@ -77,33 +76,8 @@ $(function() {
         }, 100);
     });
 
-    // var checkbox1 = $("#check-one");
-    // var checkbox2 = $("#check-two");
-    // var submitButt = $("#create-upload");
-    //
-    // $(document).on('click', 'form button[type=submit]', function(e) {
-    //     var isValid = checkbox1.is(":checked") || checkbox2.is(":checked");
-    //     if (!isValid) {
-    //         e.preventDefault(); //prevent the default action
-    //     }
-    // });
-
-    // $("#create-upload").click(function(e) {
-    //
-    //     return $("#new-gift-form").valid();
-    //
-    // });
-
 });
 
-// $('#input-tags').selectize({
-//     create: function(input) {
-//         return {
-//             id: 123,
-//             text: "other"
-//         };
-//     }
-// });
 
 function triggerUpload() {
     $('#upload-trigger').trigger('click');
@@ -118,54 +92,6 @@ function previewFile() {
     var cropbox = document.querySelector('#image');
     var file = document.querySelector('input[type=file]').files[0];
     var reader = new FileReader();
-
-    // reader.addEventListener("load", function() {
-    //     // Add something to the input text field
-    //     $(".image-preview-filename").val("pic.img");
-    //
-    //     var $uploadCrop;
-    //
-    //
-    //
-    //     $uploadCrop = $('#image').croppie({
-    //         viewport: {
-    //             width: 200,
-    //             height: 200,
-    //         },
-    //         boundary: {
-    //             width: 300,
-    //             height: 300
-    //         },
-    //         enforceBoundary: false,
-    //         enableExif: true,
-    //         showZoomer: false
-    //     });
-    //
-    //     // Add something to the input text field
-    //     $(".image-preview-filename").val("pic.img");
-    //     $("div.image-preview").remove();
-    //     $(".image-crop").attr('style', '');
-    //     $uploadCrop.croppie('bind', {
-    //         url: reader.result
-    //     }).then(function() {
-    //         console.log('jQuery bind complete');
-    //     });
-    //
-    // }, false);
-    //
-    // $(".image-confirm").click(function() {
-    //     $uploadCrop.croppie('result', {
-    //         type: 'canvas',
-    //         format: 'png',
-    //         size: 'viewport'
-    //     }).then(function(resp) {
-    //         // Replace cropbox with image
-    //         $(".image-crop").html("<p><strong>Item Pic</strong></p><img src='" + resp + "' height='300' width='300'/>");
-    //         $("input[name='croppedImage']").val(resp);
-    //         $("input[type=file]").remove();
-    //     });
-    // });
-    // reader.readAsDataURL(file);
 
     if (file) {
         // Check file size
@@ -203,7 +129,7 @@ function previewFile() {
                 $uploadCrop.croppie('bind', {
                     url: reader.result
                 }).then(function() {
-                    console.log('jQuery bind complete');
+                    // console.log('jQuery bind complete');
                 });
 
             }, false);

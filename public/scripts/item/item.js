@@ -1,7 +1,6 @@
 // Want
 $(document).on("click", ".snag", function() {
     var itemId = $(this).attr('itemId');
-    console.log("Item", itemId, "has been snagged");
 
     // Change text
     $(this).children('b').text("UNWANT!");
@@ -35,7 +34,6 @@ $(document).on("click", ".snag", function() {
 // Unwant
 $(document).on("click", ".unsnag", function() {
     var itemId = $(this).attr('itemId');
-    console.log("Item", itemId, "has been unsnagged");
 
     // Change text
     $(this).children('b').text("WANT!");
@@ -307,7 +305,6 @@ $(function() {
         delimiter: ',',
         persist: false,
         create: function(input) {
-            // var options = ["clothes", "accessories", "furniture & home", "parenting", "health", "beauty", "kitchen appliances", "gardening", "property", "design & craft", "electronics", "sports", "photography", "antiques", "toys", "games", "music", "tickets & vouchers", "auto accessories", "books", "stationeries", "textbooks", "notes", "pets", "other"];
 
             return {
                 value: "other",

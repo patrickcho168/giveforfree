@@ -25,20 +25,10 @@ var isFirst = true;
 
 var urlAJAX = null;
 
-// var actualClass = ".cd-main-nav";
-// var friendListView = false;
-
 // AJAX Infinite Scrolling Function
 function addRealViews(html) {
 
-    // var $tab = $('#my-tabs-contents')
-    // var $active = $tab.find('.tab-pane.active');
-    // var currentTab = $active.attr('id');
     var currentTab = $(".nav-tabs").find(".active").attr('id');
-
-    console.log("GIFT: " + firstGifts);
-    console.log("WANTS: " + firstWants);
-
 
     switch (currentTab) {
         case "tab-gifts":
@@ -98,11 +88,6 @@ function addRealViews(html) {
             break;
     }
 
-    console.log(currentTab);
-    console.log(urlAJAX);
-    console.log(lastItem);
-    console.log(isFirst);
-
     if (urlAJAX != null && lastItem >= 1 || isFirst) {
         // AJAX to fetch JSON objects from server
         $.ajax({
@@ -121,11 +106,9 @@ function addRealViews(html) {
                     switch (currentTab) {
                         case "gifts":
                             lastGiftsId = data[data.length - 1].itemID;
-                            console.log("GIFTS: " + lastGiftsId);
                             break;
                         case "wants":
                             lastWantsId = data[data.length - 1].itemID;
-                            console.log("WANTS: " + lastWantsId);
                             break;
                         case "thanks":
                             lastThanksId = data[data.length - 1].itemID;
@@ -159,18 +142,12 @@ function addRealViews(html) {
                         }
                         // Main Item Photo
                         html += '<a href="/item/' + value.itemID + '" target="_blank"><div class="thumbnail" style="padding: 0; border: none;" align="center">';
-                        // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
-                        //
-                        // html += '<a class="avatar box clipped" style="background-image: url(https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + ');" onerror="handleBrokenImage(this);"></a>';
 
                         html += '<div class="box"><img style="display: block;" class="clipped" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '" onerror="handleBrokenImage(this);"></div>';
 
                         // Item Title
                         html += '<div class="caption-area" align="left">';
                         html += '<br/><h6 class="item-header hide-overflow" style="padding-left: 10px; padding-top: 0px; margin: 5px  auto;"><a href="/item/' + value.itemID + '" target="_blank">' + value.title + '</a></h6>';
-                        // Item Owner
-                        // html += '<p class="item-author">' + value.ownedBy.name + '</p>';
-                        // Item Caption
                         html += '<row><p class="item-author hide-overflow" style="margin: 5px auto;">';
 
                         html += '<a href="/profile/' + value.userID + '" target="_blank" class="small-avatar col-lg-4" style="background-image: url(http://graph.facebook.com/' + value.fbID + '/picture?type=large);" style="margin: auto 10px; padding: 0; width: 30px; height: 30px; border-radius:50%;"><span style="padding-left: 20px;">' + value.name + '</span></a></p></row>';
@@ -203,9 +180,13 @@ function addRealViews(html) {
                             html += 'wanted';
                             html += '</div>';
                             html += '</div>';
-                        } else if (value.giverID !== myAppId && value.expired) {
+                        } else if (value.expired) {
                             html += '<div class="ribbon-wrapper-green">';
-                            html += '<div class="ribbon-grey">';
+                            if (value.giverID === myAppId) {
+                                html += '<div class="ribbon-red">';
+                            } else {
+                                html += '<div class="ribbon-grey">';
+                            }
                             html += 'expired';
                             html += '</div>';
                             html += '</div>';
@@ -223,37 +204,14 @@ function addRealViews(html) {
                             html += '</div>';
                         }
 
-
-                        // // html += '<p class="item-caption">' + value.description + '</p>';
-                        // // Item Call-to-Action Snag Button
-                        // if (value.giverID !== myAppId && value.takerID !== null && value.takerID !== myAppId) {
-                        //     html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-default other-given raised bold-link" itemId="' + value.itemID + '" role="button">TAKEN BY OTHERS</a></div>';
-                        // } else if (value.giverID !== myAppId && value.takerID !== null && value.takerID === myAppId) {
-                        //     html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success given-to-you raised bold-link" itemId="' + value.itemID + '" role="button">GIVEN TO YOU</a></div>';
-                        // } else if (loggedIn && value.giverID !== myAppId && value.meWant === 0 && !value.expired) { // NEED TO ADD NOT EXPIRED
-                        //     html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary snag raised bold-link" itemId="' + value.itemID + '" role="button">SNAG</a></div>';
-                        // } else if (loggedIn && value.giverID !== myAppId && value.meWant > 0 && !value.expired) {
-                        //     html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-danger unsnag raised bold-link" itemId="' + value.itemID + '" role="button">UNSNAG</a></div>';
-                        // } else if (value.giverID !== myAppId && value.expired) {
-                        //     html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success wait raised bold-link" itemId="' + value.itemID + '" role="button">EXPIRED</a></div>';
-                        // } else if (value.giverID === myAppId && value.takerID !== null) {
-                        //     html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-success given raised bold-link" itemId="' + value.itemID + '" role="button">GIVEN AWAY BY YOU</a></div>';
-                        // } else if (value.giverID === myAppId && value.takerID === null) {
-                        //     html += '<div class="col-lg-12 text-center call-button"><a href="/item/' + value.itemID + '" class="btn btn-primary not-given raised bold-link" itemId="' + value.itemID + '" role="button">PENDING SNAGGERS</a></div>';
-                        // } else if (!loggedIn) {
-                        //     html += '<div class="col-lg-12 text-center call-button"><a href="/login" class="btn btn-sm btn-primary raised bold-link" role="button">LOGIN TO SNAG</a></div>';
-                        // }
-
                         html += '</div>';
                         html += '</div></a>';
                         html += '</div>';
-                        console.log(currentTab);
 
                         switch (currentTab) {
                             case "gifts":
                                 firstGifts = false;
                                 $('#gifts').append(html);
-                                console.log($('#gifts-placeholder'));
                                 $('#gifts-placeholder').hide();
                                 break;
                             case "wants":
@@ -281,16 +239,12 @@ function addRealViews(html) {
                     triggered = 0;
 
                 } else {
-                    // alert('No more data to show');
-                    // no_data = true;
+
                 }
             },
             error: function(data) {
                 canAJAX = true;
-                // no_data = false;
                 triggered = 0;
-                // console.log(data);
-                // alert('Something went wrong, Please contact administrator.');
             }
         });
     }
@@ -300,14 +254,12 @@ function addRealViews(html) {
 // Main Navigation and Load Logic
 $(document).ready(function() {
     var currentHash = window.location.hash; 
-    console.log(currentHash);
     switch (currentHash) {
         case "#gifts":
             $(".nav-tabs").find(".active").removeClass("active");
             $("#tab-gifts").addClass("active");
             break;
         case "#wants":
-            console.log("WANT HERE");
             $(".nav-tabs").find(".active").removeClass("active");
             $("#tab-wants").addClass("active");
             break;
@@ -325,10 +277,6 @@ $(document).ready(function() {
 
     addRealViews(html);
 
-    // $('.my-tabs').bind('change', function(e) {
-    //     triggered = 0;
-    //
-    // });
     $('.nav-tabs a').click(function() {
         $(".nav-tabs").find(".active").removeClass("active");
         $(this).parent().addClass("active");
