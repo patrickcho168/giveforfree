@@ -82,9 +82,13 @@ function triggerUpload() {
 }
 
 function previewFile() {
-
-    var boxWidth = $("div[id=\"cropperHolder\"").width() * 0.7;
-    var cropperWidth = boxWidth > 180 ? boxWidth : 180;
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        var cropperWidth = 180;
+    } else {
+        var boxWidth = $("div[id=\"cropperHolder\"").width() * 0.7;
+        var cropperWidth = boxWidth > 180 ? boxWidth : 180;
+    }
+    
 
     $('#create-upload').attr("disabled", "disabled");
     var node = document.getElementById('image');
