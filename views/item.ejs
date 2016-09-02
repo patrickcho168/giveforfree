@@ -102,19 +102,11 @@
         function messageUser() {
                 // alert("CLICKED MESSAGE");
                 var toId = null;
-                var test = 1062204735;
 
                 <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                toId = <%= item.fbID %>;
+                toId = <%= item.giverID %>;
                 <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                toId = <%= item.takerFbID %>;
-                <% } %>
-
-                //test
-                <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                toId = test;
-                <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                toId = test;
+                toId = <%= item.takerID %>;
                 <% } %>
 
                 console.log(toId);
