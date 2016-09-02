@@ -307,10 +307,6 @@ $(document).ready(function() {
         });
     });
 
-     window.scrollTo(0,0);
-});
-
-jQuery(document).ready(function($) {
     $.ajaxSetup({
         headers: {'X-CSRF-Token': $('meta[name="_csrf"]').attr('content')}
     });
