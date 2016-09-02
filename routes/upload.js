@@ -231,6 +231,7 @@ module.exports = function(app) {
                 req.sanitizeBody('postage').escape();
                 req.sanitizeBody('categories').escape();
                 req.sanitizeBody('date').escape();
+                console.log('BODY', req.body);
 
                 var errors = req.validationErrors();
 

@@ -17,6 +17,7 @@
     <meta property="og:site_name" content="Give For Free" />
     <meta property="og:image:width" content="450" />
     <meta property="og:image:height" content="298" />
+    <meta name='_csrf' content='<%= csrfToken %>'>
 
     <title>Give For Free - Meeting the needs of others</title>
 
@@ -101,7 +102,7 @@
     <script src="../scripts/item/item.js"></script>
 
     <!-- Push Notifications -->
-    <script src="/scripts/common/notification2.js"></script>
+    <!-- <script src="/scripts/common/notification2.js"></script> -->
 
     <!-- Facebook Like -->
     <script src="/scripts/common/fblike.js"></script>
@@ -142,6 +143,9 @@
     <!-- Font Support -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    <script src="/scripts/common/analytics.js"></script>
 
     <!-- Google Analytics -->
     <script src="/scripts/common/analytics.js"></script>
@@ -386,7 +390,7 @@
                                         <center>
                                             <!-- For ongoing owners -->
                                             <% if (loggedIn && mine && item.takerID === null) { %>
-                                                <a data-toggle="modal" data-target="#confirm-delete" data-href="/api/delete/<%= item.itemID %>" class="btn btn-sm btn-danger">Delete</a>
+                                                <a data-toggle="modal" data-target="#confirm-delete" data-href="/api/delete/<%= item.itemID %>" class="btn btn-xs btn-danger">Delete</a>
                                                 <% if (item.numWants > 0) { %>
                                                     <a type="button" class="btn btn-xs btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw</a>
                                                     <a type="button" class="btn btn-xs btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -517,7 +521,7 @@
                                 <a class="list-group-item">
                                     <h4 class="list-group-item-heading"><b>When do you want to end this giveaway?</b></h4>
                                     <p class="list-group-item-text">
-                                        <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" value="<%= moment(date).format(" YYYY-MM-DD ") %>" required>
+                                        <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" value="<%= moment(date, "D MMMM YYYY HH:mm").format(" YYYY-MM-DD ") %>" required>
                                     </p>
                                 </a>
                                 <a class="list-group-item">
@@ -554,11 +558,11 @@
                                 <a class="list-group-item">
                                     <h4 class="list-group-item-heading"><b>How would you like the person receiving to collect the item?</b></h4>
                                     <div class="checkbox checkbox-primary checkbox-circle row">
-                                        <input type="checkbox" id="meet">
+                                        <input type="checkbox" id="meet" name="meetup" <% if (item.meetup) { %>checked="checked"<% } %>>
                                         <label class="large-label" for="meet">
                                             Meet and collect
                                         </label>
-                                        <input type="checkbox" id="free">
+                                        <input type="checkbox" id="free" name="postage" <% if (item.postage) { %>checked="checked"<% } %>>
                                         <label class="large-label" for="free">
                                             Postage service
                                         </label>
@@ -622,38 +626,3 @@
 </body>
 
 </html>
-
-<!-- FOR REFERENCE: Comment Implementation -->
-
-<!-- <table style="width:100%">
-    <tr>
-        <th>Name</th>
-        <th>Facebook ID</th>
-        <th>Comment</th>
-        <th>Time</th>
-        <th>Delete</th>
-    </tr>
-    <% for (var i=0; i<comment.length; i++) { %>
-        <tr>
-            <td><%= comment[i].relations.commentedBy.attributes.name %></td>
-            <td><%= comment[i].relations.commentedBy.attributes.fbID %></td>
-            <td><%= comment[i].attributes.message %></td>
-            <td><%= comment[i].attributes.timeCreated %></td>
-            <td>
-                <% if (comment[i].attributes.commenterID === id) { %>
-                    <form action="/api/deletecomment/<%= item.itemID %>/<%= comment[i].attributes.commentID %>" method="post">
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                        <button name="delete" value="delete">Delete</button>
-                    </form>
-                <% } %>
-            </td>
-        </tr>
-    <% } %>
-</table>
-<form action="/api/comment/<%= item.itemID %>" method="post">
-    Message:<br>
-    <input type="text" name="message"><br>
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-    <input type="submit" value="Submit">
-</form>
-</div> -->

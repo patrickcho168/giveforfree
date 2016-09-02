@@ -46,6 +46,7 @@ function addRealViews(html) {
             $("#my-tabs-contents").find(".active").removeClass("in");
             $("#gifts").addClass("active");
             $("#gifts").addClass("in");
+            window.location.hash = "gifts";
             currentTab = "gifts";
             isFirst = firstGifts;
             if (firstGifts) {
@@ -60,6 +61,7 @@ function addRealViews(html) {
             $("#my-tabs-contents").find(".active").removeClass("in");
             $("#wants").addClass("active");
             $("#wants").addClass("in");
+            window.location.hash = "wants";
             currentTab = "wants";
             isFirst = firstWants;
             if (firstWants) {
@@ -74,6 +76,7 @@ function addRealViews(html) {
             $("#my-tabs-contents").find(".active").removeClass("in");
             $("#thanks").addClass("active");
             $("#thanks").addClass("in");
+            window.location.hash = "thanks";
             currentTab = "thanks";
             isFirst = firstThanks;
             urlAJAX = null;
@@ -84,6 +87,7 @@ function addRealViews(html) {
             $("#my-tabs-contents").find(".active").removeClass("in");
             $("#friends").addClass("active");
             $("#friends").addClass("in");
+            window.location.hash = "friends";
             currentTab = "friends";
             isFirst = firstFriends;
             urlAJAX = null;
@@ -295,6 +299,30 @@ function addRealViews(html) {
 
 // Main Navigation and Load Logic
 $(document).ready(function() {
+    var currentHash = window.location.hash; 
+    console.log(currentHash);
+    switch (currentHash) {
+        case "#gifts":
+            $(".nav-tabs").find(".active").removeClass("active");
+            $("#tab-gifts").addClass("active");
+            break;
+        case "#wants":
+            console.log("WANT HERE");
+            $(".nav-tabs").find(".active").removeClass("active");
+            $("#tab-wants").addClass("active");
+            break;
+        case "#thanks":
+            $(".nav-tabs").find(".active").removeClass("active");
+            $("#tab-thanks").addClass("active");
+            break;
+        case "#friends":
+            $(".nav-tabs").find(".active").removeClass("active");
+            $("#tab-friends").addClass("active");
+            break;
+        default:
+            break;
+    }
+
     addRealViews(html);
 
     // $('.my-tabs').bind('change', function(e) {
@@ -314,6 +342,203 @@ $(document).ready(function() {
 
     $('#confirm-delete').on('show.bs.modal', function(e) {
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    });
+});
+    
+jQuery(document).ready(function($) {
+    $.ajaxSetup({
+        headers: {'X-CSRF-Token': $('meta[name="_csrf"]').attr('content')}
+    });
+
+    $('#comments-container').comments({
+        readOnly: loggedIn ? false : true,
+        roundProfilePictures: true,
+        // profilePictureURL: 'http://graph.facebook.com/' + userFbID + '/picture',
+        getComments: function(success, error) {
+            $.ajax({
+                url: '/profile/' + appProfileId + '/thank',
+                dataType: "json",
+                method: 'get',
+                cache: false,
+                // Success Callback
+                success: function(data) {
+                    var thanksArray = [];
+                    for (var i=0; i<data.length; ++i) {
+                        var upvoted = false;
+                        for (var j=0; j<data[i].upvote.length; ++j) {
+                            if (data[i].upvote[j].userID === myAppId) {
+                                upvoted = true;
+                                break;
+                            }
+                        }
+                        thanksArray.push({
+                            id: data[i].thankID,
+                            created: data[i].timeCreated,
+                            content: data[i].message,
+                            fullname: data[i].thankedBy.name,
+                            // fullname: data[i].commentedBy.name,
+                            upvote_count: data[i].upvote.length,
+                            user_has_upvoted: upvoted,
+                            profile_picture_url: 'http://graph.facebook.com/' + data[i].thankedBy.fbID + '/picture',
+                            parent: data[i].parentThank,
+                            created_by_current_user: data[i].thankedBy.userID === myAppId
+                        })
+                    }
+                    success(thanksArray);
+                },
+                error: function(error) {
+                    console.log("error loading");
+                }
+            });
+        },
+        postComment: function(commentJSON, success, error) {
+            $.ajax({
+                method: 'post',
+                url: '/api/thank/profile/' + appProfileId,
+                data: commentJSON,
+                dataType: "json",
+                success: function(data) {
+                    var upvoted = false;
+                    for (var i=0; i<data.upvote.length; ++i) {
+                        if (data.upvote[i].userID === myAppId) {
+                            upvoted = true;
+                            break;
+                        }
+                    }
+                    success({
+                        id: data.thankID,
+                        created: data.timeCreated,
+                        content: data.message,
+                        fullname: data.thankedBy.name,
+                        upvote_count: data.upvote.length,
+                        user_has_upvoted: upvoted,
+                        profile_picture_url: 'http://graph.facebook.com/' + data.thankedBy.fbID + '/picture',
+                        parent: data.parentThank,
+                        created_by_current_user: data.thankedBy.userID === myAppId
+                    });
+                },
+                error: function(error) {
+                    console.log("error posting");
+                }
+            });
+        },
+        putComment: function(commentJSON, success, error) {
+            $.ajax({
+                type: 'post',
+                url: '/api/updatethank/profile/' + commentJSON.id,
+                data: commentJSON,
+                dataType: "json",
+                success: function(data) {
+                    var upvoted = false;
+                    for (var i=0; i<data.upvote.length; ++i) {
+                        if (data.upvote[i].userID === myAppId) {
+                            upvoted = true;
+                            break;
+                        }
+                    }
+                    if (data) {
+                        success({
+                            id: data.thankID,
+                            created: data.timeCreated,
+                            content: data.message,
+                            fullname: data.thankedBy.name,
+                            upvote_count: data.upvote.length,
+                            user_has_upvoted: upvoted,
+                            profile_picture_url: 'http://graph.facebook.com/' + data.thankedBy.fbID + '/picture',
+                            parent: data.parentThank,
+                            created_by_current_user: data.thankedBy.userID === myAppId
+                        });
+                    } else {
+                        success({});
+                    }
+                },
+                error: function(error) {
+                    console.log("error editing");
+                }
+            });
+        },
+        deleteComment: function(commentJSON, success, error) {
+            $.ajax({
+                type: 'post',
+                url: '/api/deletethank/profile/' + commentJSON.id,
+                success: function(data) {
+                    success();
+                },
+                error: function(error) {
+                    console.log("error editing");
+                }
+            });
+        },
+        upvoteComment: function(commentJSON, success, error) {
+            var upvotesURL = '/api/thank/profile/upvotes/' + commentJSON.id;
+            var downvotesURL = '/api/thank/profile/downvotes/' + commentJSON.id;
+
+            if(commentJSON.user_has_upvoted) {
+                $.ajax({
+                    type: 'post',
+                    url: upvotesURL,
+                    success: function(data) {
+                        var upvoted = false;
+                        for (var i=0; i<data.upvote.length; ++i) {
+                            if (data.upvote[i].userID === userId) {
+                                upvoted = true;
+                                break;
+                            }
+                        }
+                        if (data) {
+                            success({
+                                id: data.thankID,
+                                created: data.timeCreated,
+                                content: data.message,
+                                fullname: data.thankedBy.name,
+                                upvote_count: data.upvote.length,
+                                user_has_upvoted: upvoted,
+                                profile_picture_url: 'http://graph.facebook.com/' + data.thankedBy.fbID + '/picture',
+                                parent: data.parentThank,
+                                created_by_current_user: data.thankedBy.userID === userId
+                            });
+                        } else {
+                            success({});
+                        }
+                    },
+                    error:  function() {
+                        console.log("error upvoting");
+                    }
+                });
+            } else {
+                $.ajax({
+                    type: 'post',
+                    url: downvotesURL,
+                    success: function(data) {
+                        var upvoted = false;
+                        for (var i=0; i<data.upvote.length; ++i) {
+                            if (data.upvote[i].userID === userId) {
+                                upvoted = true;
+                                break;
+                            }
+                        }
+                        if (data) {
+                            success({
+                                id: data.thankID,
+                                created: data.timeCreated,
+                                content: data.message,
+                                fullname: data.thankedBy.name,
+                                upvote_count: data.upvote.length,
+                                user_has_upvoted: upvoted,
+                                profile_picture_url: 'http://graph.facebook.com/' + data.thankedBy.fbID + '/picture',
+                                parent: data.parentThank,
+                                created_by_current_user: data.thankedBy.userID === userId
+                            });
+                        } else {
+                            success({})
+                        }
+                    },
+                    error: function() {
+                        console.log("error downvoting");
+                    }
+                });
+            }
+        }
     });
 
 });

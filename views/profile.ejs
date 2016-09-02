@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name='_csrf' content='<%= csrfToken %>'>
+
 
     <title>Give For Free - Meeting the needs of others</title>
 
@@ -22,7 +24,13 @@
     <link rel="stylesheet" href="../assets/materialDatePicker/css/bootstrap-material-datetimepicker.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-    <!-- Value Assignment to JS -->
+    <!-- Comments -->
+    <script type="text/javascript" src="../scripts/item/jquery-comments.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../styles/item/jquery-comments.css">
+
+    <!-- Other Scripts -->
+    <script src="../scripts/common/common.js"></script>
+    <script src="../scripts/profile/profile.js"></script>
     <script>
         var loggedIn = <%= loggedIn %>;
         var myFriends = null;
@@ -30,6 +38,8 @@
         var myName = "<%= user.name %>";
         var myAppId = <%= id %>;
         var appProfileId = <%= user.userID %>;
+        console.log(myAppId);
+        console.log(appProfileId);
 
         $(window).load(function() {
             myFriends = <%- JSON.stringify(friends) %>;
@@ -44,7 +54,7 @@
     <script src="../scripts/profile/profile.js"></script>
 
     <!-- Push Notifications -->
-    <script src="/scripts/common/notification2.js"></script>
+    <!-- <script src="/scripts/common/notification2.js"></script> -->
 
     <!-- Facebook Like -->
     <script src="/scripts/common/fblike.js"></script>
@@ -231,6 +241,24 @@
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
                         <p>
                             <%= user.name %> has nothing to give for now.
+                            <br> Come back later! 
+                        </p>
+                    </div>
+                </div>
+                <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="thanks">
+                    <div id="comments-container" style="margin-left: 15px; margin-right: 15px;">
+
+                    </div>
+                </div>
+                                    <!-- <div id="thanks-placeholder">
+                                        <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
+                                        <p>
+                                            <%= user.name %> has yet to receive any thank-you messages.
+                                                <br> Send
+                                                <%= user.name %> one now! </p>
+                                    </div> -->
+
+                                    <!-- <div id="gifts-loader">
                             <br/>
                             Come back later!
                         </p>
@@ -264,11 +292,17 @@
                     <% } else { %>
                         <div id="friends-placeholder">
                             <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
-                            <p>
-                                <%= user.name %> doesn't have any friends using G4F...
-                                <br/>
-                                Let your friends know about this awesome cause!
-                            </p>
+                            <% if (loggedIn) { %>
+                                <p>
+                                    <%= user.name %> doesn't have any friends using G4F...
+                                    <br/>
+                                    Let your friends know about this awesome cause!
+                                </p>
+                            <% } else { %>
+                                <p>
+                                    Log in to find your friends!
+                                </p>
+                            <% } %>
                         </div>
                     <% } %>
 
@@ -335,38 +369,3 @@
 </body>
 
 </html>
-
-<!-- FOR REFERENCE: Thanks Implementation -->
-<!-- <div>
-    <table style="width:100%">
-        <tr>
-            <th>Name</th>
-            <th>Facebook ID</th>
-            <th>Message</th>
-            <th>Time</th>
-        </tr>
-        <% for (var i=0; i<thank.length; i++) { %>
-            <tr>
-                <td>
-                    <%= thank[i].relations.thankedBy.attributes.name %>
-                </td>
-                <td>
-                    <%= thank[i].relations.thankedBy.attributes.fbID %>
-                </td>
-                <td>
-                    <%= thank[i].attributes.message %>
-                </td>
-                <td>
-                    <%= thank[i].attributes.timeCreated %>
-                </td>
-            </tr>
-            <% } %>
-    </table>
-    <form action="/api/thank/profile/<%= user.userID %>" method="post">
-        Message:
-        <br>
-        <input type="text" name="message">
-        <br>
-        <input type="submit" value="Submit">
-    </form>
-</div> -->
