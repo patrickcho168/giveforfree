@@ -430,10 +430,10 @@
                                                 <% if (item.numWants > 0) { %>
                                                     <a type="button" class="btn btn-xs btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw</a>
 
-                                                    <a type="button" class="btn btn-xs btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <a type="button" class="btn btn-xs btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Pick <span class="caret"></span>
-                                                    </button>
-                                                      <ul class="dropdown-menu scrollable-menu">
+                                                    </a>
+                                                      <ul class="dropdown-menu">
                                                         <% for (var i=0; i<manual.length; i++) { %>
                                                             <li>
                                                                 <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">
