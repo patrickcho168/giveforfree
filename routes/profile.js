@@ -232,7 +232,7 @@ module.exports = function(app) {
     }
 
     app.post('/api/delete-user-from-fb', function(req, res) {
-        console.log(req);
+        console.log(req.route.stack);
         var signedRequest = req.params.signed_request;
         console.log(signedRequest);
         var appSecret = config.fbClientSecret;
