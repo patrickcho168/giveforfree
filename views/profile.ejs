@@ -237,10 +237,16 @@
                 <div class="tab-pane fade in active col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="gifts">
                     <div id="gifts-placeholder">
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
+                        <% if (myProfile) { %>
+                        <p>
+                            You have nothing to give for now.
+                            <br> Try <a href="/upload"> uploading </a> one now! 
+                        <% } else { %>
                         <p>
                             <%= user.name %> has nothing to give for now.
                             <br> Come back later! 
                         </p>
+                        <% } %>
                     </div>
                 </div>
                 <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="thanks">
