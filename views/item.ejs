@@ -390,7 +390,7 @@
                                         <center>
                                             <!-- For ongoing owners -->
                                             <% if (loggedIn && mine && item.takerID === null) { %>
-                                                <a data-toggle="modal" data-target="#confirm-delete" data-href="/api/delete/<%= item.itemID %>" class="btn btn-sm btn-danger">Delete</a>
+                                                <a data-toggle="modal" data-target="#confirm-delete" data-href="/api/delete/<%= item.itemID %>" class="btn btn-xs btn-danger">Delete</a>
                                                 <% if (item.numWants > 0) { %>
                                                     <a type="button" class="btn btn-xs btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw</a>
                                                     <a type="button" class="btn btn-xs btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -626,38 +626,3 @@
 </body>
 
 </html>
-
-<!-- FOR REFERENCE: Comment Implementation -->
-
-<!-- <table style="width:100%">
-    <tr>
-        <th>Name</th>
-        <th>Facebook ID</th>
-        <th>Comment</th>
-        <th>Time</th>
-        <th>Delete</th>
-    </tr>
-    <% for (var i=0; i<comment.length; i++) { %>
-        <tr>
-            <td><%= comment[i].relations.commentedBy.attributes.name %></td>
-            <td><%= comment[i].relations.commentedBy.attributes.fbID %></td>
-            <td><%= comment[i].attributes.message %></td>
-            <td><%= comment[i].attributes.timeCreated %></td>
-            <td>
-                <% if (comment[i].attributes.commenterID === id) { %>
-                    <form action="/api/deletecomment/<%= item.itemID %>/<%= comment[i].attributes.commentID %>" method="post">
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                        <button name="delete" value="delete">Delete</button>
-                    </form>
-                <% } %>
-            </td>
-        </tr>
-    <% } %>
-</table>
-<form action="/api/comment/<%= item.itemID %>" method="post">
-    Message:<br>
-    <input type="text" name="message"><br>
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-    <input type="submit" value="Submit">
-</form>
-</div> -->

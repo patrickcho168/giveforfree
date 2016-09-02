@@ -27,7 +27,6 @@ function inArray(needle, haystack) {
 module.exports = function(app) {
 
     app.get('/profile/:id/thank', function(req, res, next) {
-        console.log('gettingthanks');
         var profileId = req.params.id;
         db.Thank.where({
             receiverID: profileId
@@ -275,7 +274,6 @@ module.exports = function(app) {
                     userID: otherUserId
                 }).fetch().then(function(user) {
                     db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
-                        console.log("DONE QUERIES ");
                         res.render('profile', {
                             loggedIn: true,
                             myProfile: mine,
