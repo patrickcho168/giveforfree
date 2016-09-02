@@ -33,7 +33,7 @@ function loginLoader() {
     $('body').removeClass('loaded');
 }
 
-function loginLoader() {
+function loginSpecial() {
     $('body').removeClass('loaded');
 	window.location.href="/login/facebook";
 }
