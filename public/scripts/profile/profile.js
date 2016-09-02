@@ -299,6 +299,30 @@ function addRealViews(html) {
 
 // Main Navigation and Load Logic
 $(document).ready(function() {
+    var currentHash = window.location.hash; 
+    console.log(currentHash);
+    switch (currentHash) {
+        case "#gifts":
+            $(".nav-tabs").find(".active").removeClass("active");
+            $("#tab-gifts").addClass("active");
+            break;
+        case "#wants":
+            console.log("WANT HERE");
+            $(".nav-tabs").find(".active").removeClass("active");
+            $("#tab-wants").addClass("active");
+            break;
+        case "#thanks":
+            $(".nav-tabs").find(".active").removeClass("active");
+            $("#tab-thanks").addClass("active");
+            break;
+        case "#friends":
+            $(".nav-tabs").find(".active").removeClass("active");
+            $("#tab-friends").addClass("active");
+            break;
+        default:
+            break;
+    }
+
     addRealViews(html);
 
     // $('.my-tabs').bind('change', function(e) {
@@ -324,6 +348,7 @@ $(document).ready(function() {
 jQuery(document).ready(function($) {
 
     $('#comments-container').comments({
+        readOnly: loggedIn ? false : true,
         roundProfilePictures: true,
         // profilePictureURL: 'http://graph.facebook.com/' + userFbID + '/picture',
         getComments: function(success, error) {

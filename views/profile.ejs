@@ -52,7 +52,7 @@
     <script src="../scripts/profile/profile.js"></script>
 
     <!-- Push Notifications -->
-    <script src="/scripts/common/notification2.js"></script>
+    <!-- <script src="/scripts/common/notification2.js"></script> -->
 
     <!-- Facebook Like -->
     <script src="/scripts/common/fblike.js"></script>
@@ -290,11 +290,17 @@
                     <% } else { %>
                         <div id="friends-placeholder">
                             <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
-                            <p>
-                                <%= user.name %> doesn't have any friends using G4F...
-                                <br/>
-                                Let your friends know about this awesome cause!
-                            </p>
+                            <% if (loggedIn) { %>
+                                <p>
+                                    <%= user.name %> doesn't have any friends using G4F...
+                                    <br/>
+                                    Let your friends know about this awesome cause!
+                                </p>
+                            <% } else { %>
+                                <p>
+                                    Log in to find your friends!
+                                </p>
+                            <% } %>
                         </div>
                     <% } %>
 
