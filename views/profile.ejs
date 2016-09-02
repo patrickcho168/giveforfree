@@ -227,7 +227,9 @@
                     <li class="active icon-tab" id="tab-gifts"><a href="#gifts" role="tab" data-toggle="tab"><i class="fa fa-gift" aria-hidden="true"></i> <text class="hidden-xs"> Gifts</text></a></li>
                     <li class="icon-tab" id="tab-wants"><a href="#wants" role="tab" data-toggle="tab"><i class="fa fa-star" aria-hidden="true"></i> <text class="hidden-xs"> Wants</text></a></li>
                     <li class="icon-tab" id="tab-thanks"><a href="#thanks" role="tab" data-toggle="tab"><i class="fa fa-thumbs-up" aria-hidden="true"></i><text class="hidden-xs"> Thanks</text></a></li>
+                    <% if (myProfile) { %>
                     <li class="icon-tab" id="tab-friends"><a href="#friends" role="tab" data-toggle="tab"><i class="fa fa-child" aria-hidden="true"></i> <text class="hidden-xs"> Friends</text></a></li>
+                    <% } %>
                 </ul>
             </row>
             <div id="my-tabs-contents" class="tab-content" align="center">
