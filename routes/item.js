@@ -522,7 +522,8 @@ module.exports = function(app) {
                                     notification: req.session.notification,
                                     moment: moment,
                                     fbNameSpace: config.fbNamespace,
-                                    csrfToken: req.csrfToken()
+                                    csrfToken: req.csrfToken(),
+                                    expiryDate: date;
                                 });
                             });
                         } else {
