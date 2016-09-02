@@ -72,31 +72,31 @@
         toId = <%= item.takerFbID %>;
         <% } %>
 
-        function facebookInit() {
-            if ($("#facebook-message").length) {
-                document.getElementById('facebook-message').onclick = function() {
-                    // alert("CLICKED MESSAGE");
-                    FB.ui({
-                        method: 'send',
-                        link: '<%= domain %>/item/<%= item.itemID %>',
-                        to: toId
-                    }, function(response) {});
-                }
-            }
-            if ($("#facebook-share").length) {
-                document.getElementById('facebook-share').onclick = function() {
-                    // alert("CLICKED SHARE");
-                    FB.ui({
-                        method: 'share_open_graph',
-                        action_type: '<%= fbNameSpace %>:receive',
-                        action_properties: {
-                            'free_item': '<%= domain %>/item/<%= item.itemID %>'
-                        },
-                        mobile_iframe: true
-                    }, function(response) {});
-                }
-            }
-        }
+        // function facebookInit() {
+        //     if ($("#facebook-message").length) {
+        //         document.getElementById('facebook-message').onclick = function() {
+        //             // alert("CLICKED MESSAGE");
+        //             FB.ui({
+        //                 method: 'send',
+        //                 link: '<%= domain %>/item/<%= item.itemID %>',
+        //                 to: toId
+        //             }, function(response) {});
+        //         }
+        //     }
+        //     if ($("#facebook-share").length) {
+        //         document.getElementById('facebook-share').onclick = function() {
+        //             // alert("CLICKED SHARE");
+        //             FB.ui({
+        //                 method: 'share_open_graph',
+        //                 action_type: '<%= fbNameSpace %>:receive',
+        //                 action_properties: {
+        //                     'free_item': '<%= domain %>/item/<%= item.itemID %>'
+        //                 },
+        //                 mobile_iframe: true
+        //             }, function(response) {});
+        //         }
+        //     }
+        // }
 
         function messageUser() {
                 // alert("CLICKED MESSAGE");
