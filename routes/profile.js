@@ -232,7 +232,8 @@ module.exports = function(app) {
     }
 
     app.post('/api/delete-user-from-fb', function(req, res) {
-        var signedRequest = req.param.signed_request;
+        console.log(req);
+        var signedRequest = req.body.signed_request;
         console.log(signedRequest);
         var appSecret = config.fbClientSecret;
         var data = parse_signed_request(signedRequest, appSecret);
