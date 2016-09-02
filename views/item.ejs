@@ -98,6 +98,14 @@
         //     }
         // }
 
+        $('#facebook-message').unbind('click').bind('click', function (e) {
+            messageUser();
+        });
+
+        $('#facebook-share').unbind('click').bind('click', function (e) {
+            shareItem();
+        });
+
         function messageUser() {
                 // alert("CLICKED MESSAGE");
                 FB.ui({
