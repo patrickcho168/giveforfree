@@ -90,7 +90,6 @@
     overflow-x: hidden;
 }
 .dropdown-menu {
-    display:inline-block;
     left: auto;
 }
 .message-button {
