@@ -46,6 +46,7 @@ function addRealViews(html) {
             $("#my-tabs-contents").find(".active").removeClass("in");
             $("#gifts").addClass("active");
             $("#gifts").addClass("in");
+            window.location.hash = "gifts";
             currentTab = "gifts";
             isFirst = firstGifts;
             if (firstGifts) {
@@ -60,6 +61,7 @@ function addRealViews(html) {
             $("#my-tabs-contents").find(".active").removeClass("in");
             $("#wants").addClass("active");
             $("#wants").addClass("in");
+            window.location.hash = "wants";
             currentTab = "wants";
             isFirst = firstWants;
             if (firstWants) {
@@ -74,6 +76,7 @@ function addRealViews(html) {
             $("#my-tabs-contents").find(".active").removeClass("in");
             $("#thanks").addClass("active");
             $("#thanks").addClass("in");
+            window.location.hash = "thanks";
             currentTab = "thanks";
             isFirst = firstThanks;
             urlAJAX = null;
@@ -84,6 +87,7 @@ function addRealViews(html) {
             $("#my-tabs-contents").find(".active").removeClass("in");
             $("#friends").addClass("active");
             $("#friends").addClass("in");
+            window.location.hash = "friends";
             currentTab = "friends";
             isFirst = firstFriends;
             urlAJAX = null;

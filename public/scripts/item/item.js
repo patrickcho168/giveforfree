@@ -237,7 +237,7 @@ jQuery(document).ready(function($) {
                                 parent: data.parentComment,
                                 created_by_current_user: data.commentedBy.userID === userId
                             });
-                        else {
+                        } else {
                             success({});
                         }
                     },
@@ -269,7 +269,7 @@ jQuery(document).ready(function($) {
                                 parent: data.parentComment,
                                 created_by_current_user: data.commentedBy.userID === userId
                             });
-                        else {
+                        } else {
                             success({});
                         }
                     },
