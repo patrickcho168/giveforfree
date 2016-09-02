@@ -272,11 +272,19 @@
                 <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="wants">
                     <div id="wants-placeholder">
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
+                        <% if (myProfile) { %>
+                        <p>
+                            You have no wants for now.
+                            <br/>
+                            Get something <a href="/"> FREE </a> now!
+                        </p>
+                        <% } else { %>
                         <p>
                             <%= user.name %> has no wants for now.
                             <br/>
                             Chat with <%= user.name %>!
                         </p>
+                        <% } %>
                     </div>
                 </div>
                 <!-- Thanks -->
