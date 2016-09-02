@@ -4,15 +4,15 @@
         <i data-count="2" class="fa fa-bell" aria-hidden="true"></i> Notifications <span class="badge"><%= notification.length %></span>
     </a>
     <ul class="dropdown-menu hidden-xs" aria-labelledby="dropdownMenu1" style="height: -ms-max-content; height: -webkit-max-content; height: -moz-max-content; height: -o-max-content; overflow:hidden; overflow-y:scroll;">
-        <div class="panel-heading"><a href="#" class="clear-notifications">Clear All</a></div>
-        <div style="height: -ms-max-content; height: -webkit-max-content; height: -moz-max-content; height: -o-max-content; width:110%; overflow:hidden; overflow-y:scroll;" id="all-notifications">
+        <% if (notification.length > 0) { %>
+            <div class="panel-heading"><a href="#" class="clear-notifications">Clear All</a></div>
+        <%}%>
+        <div style="height: -ms-max-content; height: -webkit-max-content; height: -moz-max-content; height: -o-max-content; width:100%; overflow:hidden; overflow-y:scroll;" id="all-notifications">
             <% if (notification.length == 0) { %>
-                <div align="center">
-                    <img src="../images/common/message-notif.svg" width="80px" height="80px" align="center" opacity="0.2"/>
-                    <small> No notifications right now! Come back later!</small>
+                <div align="center" style="font-weight: 100; padding-top: 10px; padding-bottom: 10px;">
+                    <img src="../images/common/message-notif.svg" width="80px" height="80px" align="center" style="opacity: 0.2"/>
+                    <br><p style="font-weight: 100; opacity: 0.2;"> No notifications right now! Come back later! </p>
                 </div>
-
-
             <%}%>
             <% for (var i=0; i<notification.length; i++) { %>
             <li class="notification" notificationid=<%= notification[i].notificationID %>>
