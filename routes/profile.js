@@ -121,23 +121,18 @@ module.exports = function(app) {
     })
 
     app.post('/api/thank/profile/upvotes/:thankId', ensureLogin.ensureLoggedIn(), function(req, res) {
-        console.log("UPVOTE");
         var userId = parseInt(req.user.appUserId);
         var thankId = parseInt(req.params.thankId);
-        console.log("USERID: " + userId);
-        console.log("THANKID: " + thankId);
         db.ThankUpvote.where({
             thankID: thankId,
             userID: userId
         }).fetch().then(function(data) {
-            console.log(data);
             if (!data) {
                 var newThankUpvote = new db.ThankUpvote({
                     thankID: thankId,
                     userID: userId
                 });
                 newThankUpvote.save().then(function(thank) {
-                    console.log(thank);
                     db.Thank.where({
                         thankID: thankId
                     }).fetch({withRelated: ['thankedBy', 'upvote']}).then(function(newThankData) {
@@ -155,7 +150,6 @@ module.exports = function(app) {
     })
 
     app.post('/api/thank/profile/downvotes/:thankId', ensureLogin.ensureLoggedIn(), function(req, res) {
-        console.log("DOWNVOTE");
         var userId = parseInt(req.user.appUserId);
         var thankId = parseInt(req.params.thankId);
         db.ThankUpvote.where({
@@ -306,7 +300,7 @@ module.exports = function(app) {
                             '/' + req.user.id + '/permissions',
                             "method=DELETE",
                             function(resp) {
-                                console.log(resp);
+
                             });
                         req.flash('success_messages', 'Thanks for using Give For Free! Come back anytime soon okay? We\'ll miss you!');
                         res.redirect("/logout");

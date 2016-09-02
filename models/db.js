@@ -258,6 +258,8 @@ var ProfilePageWantQuery = function(userId, profileId, numItems, cb) {
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
+    .groupBy('iw.itemID')
+    .groupBy('iwu.itemID')
     .where('w.wanterID', '=', profileId)
     .where(function() {
       this.whereNull('i.takerID').orWhere('i.takerID', '=', userId)
@@ -309,8 +311,6 @@ var ItemPageQuery = function(userId, itemId, cb) {
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
-    .groupBy('iw.itemID')
-    .groupBy('iwu.itemID')
     .where('i.itemID', '=', itemId)
     .orderBy('i.itemID', 'DESC')
     .limit(1)

@@ -44,6 +44,7 @@ function addRealViews(html) {
             } else {
                 urlAJAX = '/api/myItems/' + lastGiftsId + '/' + numItems + '/' + appProfileId;
             }
+            firstGifts = false;
             lastItem = lastGiftsId;
             break;
         case "tab-wants":
@@ -59,6 +60,7 @@ function addRealViews(html) {
             } else {
                 urlAJAX = '/api/myWants/' + lastWantsId + '/' + numItems + '/' + appProfileId;
             }
+            firstWants = false;
             lastItem = lastWantsId;
             break;
         case "tab-thanks":
@@ -70,6 +72,7 @@ function addRealViews(html) {
             currentTab = "thanks";
             isFirst = firstThanks;
             urlAJAX = null;
+            firstThanks = false;
             lastItem = lastThanksId;
             break;
         case "tab-friends":
@@ -81,6 +84,7 @@ function addRealViews(html) {
             currentTab = "friends";
             isFirst = firstFriends;
             urlAJAX = null;
+            firstFriends = false;
             lastItem = lastFriendsId;
 
             break;

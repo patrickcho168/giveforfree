@@ -124,7 +124,6 @@ module.exports = function(app) {
     })
 
     app.post('/api/comment/upvotes/:commentId', ensureLogin.ensureLoggedIn(), function(req, res) {
-        console.log("UPVOTE");
         var userId = parseInt(req.user.appUserId);
         var commentId = parseInt(req.params.commentId);
         db.CommentUpvote.where({
@@ -154,7 +153,6 @@ module.exports = function(app) {
     })
 
     app.post('/api/comment/downvotes/:commentId', ensureLogin.ensureLoggedIn(), function(req, res) {
-        console.log("DOWNVOTE");
         var userId = parseInt(req.user.appUserId);
         var commentId = parseInt(req.params.commentId);
         db.CommentUpvote.where({

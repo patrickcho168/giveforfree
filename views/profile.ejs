@@ -36,8 +36,6 @@
         var myName = "<%= user.name %>";
         var myAppId = <%= id %>;
         var appProfileId = <%= user.userID %>;
-        console.log(myAppId);
-        console.log(appProfileId);
 
         $(window).load(function() {
             myFriends = <%- JSON.stringify(friends) %>;
