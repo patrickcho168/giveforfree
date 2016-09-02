@@ -257,7 +257,8 @@ function addRealViews(html) {
 
 // Main Navigation and Load Logic
 $(document).ready(function() {
-    var currentHash = window.location.hash; 
+
+    var currentHash = window.location.hash;
     switch (currentHash) {
         case "#gifts":
             $(".nav-tabs").find(".active").removeClass("active");
@@ -277,6 +278,7 @@ $(document).ready(function() {
             break;
         default:
             break;
+
     }
 
     addRealViews(html);
@@ -294,7 +296,7 @@ $(document).ready(function() {
 
     $('#confirm-delete').on('show.bs.modal', function(e) {
         $(this).find('.btn-ok').click(function() {
-            console.log('click');   
+            console.log('click');
             $.ajax({
                 type: 'post',
                 url: '/api/delete-user',
@@ -304,8 +306,10 @@ $(document).ready(function() {
             });
         });
     });
+
+     window.scrollTo(0,0);
 });
-    
+
 jQuery(document).ready(function($) {
     $.ajaxSetup({
         headers: {'X-CSRF-Token': $('meta[name="_csrf"]').attr('content')}
