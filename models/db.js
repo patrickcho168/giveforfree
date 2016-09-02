@@ -1,4 +1,5 @@
 var config = require('../config');
+var moment = require("moment");
 
 // DATABASE
 var knex = require('knex')({
@@ -26,6 +27,15 @@ var Item = bookshelf.Model.extend({
   },
   wantedBy: function() {
   	return this.hasMany(Want, 'itemID');
+  },
+  thankedAbout: function() {
+    return this.hasMany(Thank, 'itemID');
+  },
+  commentedAbout: function() {
+    return this.hasMany(Comment, 'itemID');
+  },
+  categories: function() {
+    return this.belongsToMany(Category, 'categoryItem', 'itemID', 'categoryID');
   }
 });
 
@@ -40,6 +50,18 @@ var User = bookshelf.Model.extend({
   },
   takes: function() {
   	return this.hasMany(Item, 'takerID');
+  },
+  comments: function() {
+    return this.hasMany(Comment, 'commenterID');
+  },
+  thanks: function() {
+    return this.hasMany(Thank, 'thankerID');
+  },
+  receivedThanks: function() {
+    return this.hasMany(Thank, 'receiverID');
+  },
+  readNotifications: function() {
+    return this.belongsToMany(Notification, 'readnotification', 'userID', 'notificationID')
   }
 });
 
@@ -53,6 +75,90 @@ var Want = bookshelf.Model.extend({
   }
 });
 
+var Comment = bookshelf.Model.extend({
+  tableName: 'comment',
+  idAttribute: 'commentID',
+  commentedBy: function() {
+    return this.belongsTo(User, 'commenterID');
+  },
+  about: function() {
+    return this.belongsTo(Item, 'itemID');
+  },
+  upvote: function() {
+    return this.hasMany(CommentUpvote, 'commentID');
+  }
+});
+
+var Thank = bookshelf.Model.extend({
+  tableName: 'thank',
+  idAttribute: 'thankID',
+  thankedBy: function() {
+    return this.belongsTo(User, 'thankerID');
+  },
+  receivedBy: function() {
+    return this.belongsTo(User, 'receiverID');
+  },
+  about: function() {
+    return this.belongsTo(Item, 'itemID');
+  },
+  upvote: function() {
+    return this.hasMany(ThankUpvote, 'thankID');
+  }
+});
+
+var Notification = bookshelf.Model.extend({
+  tableName: 'notification',
+  idAttribute: 'notificationID',
+  regardingItem: function() {
+    return this.belongsTo(Item, 'itemID');
+  },
+  initiatedBy: function() {
+    return this.belongsTo(User, 'userID');
+  },
+  regardingWant: function() {
+    return this.belongsTo(Want, 'wantID');
+  },
+  regardingComment: function() {
+    return this.belongsTo(Comment, 'commentID');
+  },
+  regardingThanks: function() {
+    return this.belongsTo(Thank, 'thankID');
+  },
+  readBy: function() {
+    return this.belongsToMany(User, 'readnotification', 'notificationID', 'userID');
+  }
+});
+
+var Category = bookshelf.Model.extend({
+  tableName: 'category',
+  idAttribute: 'categoryID',
+  items: function() {
+    return this.belongsToMany(Item, 'categoryItem', 'categoryID', 'itemID');
+  }
+});
+
+var CommentUpvote = bookshelf.Model.extend({
+  tableName: 'commentUpvote',
+  idAttribute: 'commentUpvoteID',
+  about: function() {
+    return this.belongsTo(Comment, 'commentID');
+  },
+  by: function() {
+    return this.belongsTo(User, 'userID');
+  }
+});
+
+var ThankUpvote = bookshelf.Model.extend({
+  tableName: 'thankUpvote',
+  idAttribute: 'thankUpvoteID',
+  about: function() {
+    return this.belongsTo(Thank, 'thankID');
+  },
+  by: function() {
+    return this.belongsTo(User, 'userID');
+  }
+});
+
 var HomePageItemQuery = function(userId, numItems, cb) {
   knex
     .from('item as i')
@@ -61,7 +167,7 @@ var HomePageItemQuery = function(userId, numItems, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'u.name', 'u.userID'])
+    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'u.name', 'u.userID', 'u.fbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -83,7 +189,7 @@ var HomePageItemQueryBeforeId = function(userId, numItems, beforeId, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'u.name', 'u.userID'])
+    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'u.name', 'u.userID', 'u.fbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -106,7 +212,7 @@ var ProfilePageGiveQuery = function(userId, profileId, numItems, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.timeExpired', knex.raw('i.timeExpired < NOW() as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID'])
+    .select(['i.itemID', 'i.timeExpired', knex.raw('i.timeExpired < NOW() as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID', 'u.fbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -126,7 +232,7 @@ var ProfilePageGiveQueryBeforeId = function(userId, profileId, numItems, beforeI
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.timeExpired', knex.raw('i.timeExpired < NOW() as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID'])
+    .select(['i.itemID', 'i.timeExpired', knex.raw('i.timeExpired < NOW() as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID', 'u.fbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -148,7 +254,7 @@ var ProfilePageWantQuery = function(userId, profileId, numItems, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.timeExpired', knex.raw('i.timeExpired < NOW() as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID'])
+    .select(['i.itemID', 'i.timeExpired', knex.raw('i.timeExpired < NOW() as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID', 'u.fbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -172,7 +278,7 @@ var ProfilePageWantQueryBeforeId = function(userId, profileId, numItems, beforeI
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.timeExpired', knex.raw('i.timeExpired < NOW() as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID'])
+    .select(['i.itemID', 'i.timeExpired', knex.raw('i.timeExpired < NOW() as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID', 'u.fbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -197,7 +303,7 @@ var ItemPageQuery = function(userId, itemId, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.timeExpired', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'u.name', 'u.userID', 'u.fbID', 't.name as takerName', 't.userID as takerId', 't.fbID as takerFbID'])
+    .select(['i.itemID', 'i.timeExpired', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'i.meetup', 'i.postage', 'i.collectionMessage', 'u.name', 'u.userID', 'u.fbID', 't.name as takerName', 't.userID as takerId', 't.fbID as takerFbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -246,10 +352,67 @@ var ProfilePageTotalTakenQuery = function(userId, cb) {
   });
 }
 
+// NotificationType 1: Someone snag an item that I am currently giving but haven't given out
+// NotificationType 2: My item has just expired and I haven't given out the item
+// NotificationType 3: Someone commented on an item I am giving out OR have given out
+// NotificationType 3: Someone commented on an item that I am currently snagging and hasn't been given out
+// NotificationType 4: The item that I am currently snagging has been given out (to who?)
+// NotificationType 5: Receive a thanks on my wall
+
+var NotificationQuery = function(userId, limitNum, cb) {
+  knex
+    .from('notification as n')
+    .leftJoin('readnotification as rn', function() {
+      this.on('n.notificationID', '=', 'rn.notificationID').andOn('rn.userID', '=', userId)
+    })
+    .leftJoin('user as u', function() {
+      this.on('u.userID', '=', 'n.userID')
+    })
+    .leftJoin('item as i', function() {
+      this.on('n.itemID', '=', 'i.itemID')
+    })
+    .leftJoin('itemWanter as iw', function() {
+      this.on('iw.itemID', '=', 'n.itemID').andOn('iw.wanterID', '=', userId).andOn('n.timeCreated','>','iw.timeWanted')
+    })
+    .leftJoin('thank as t', function() {
+      this.on('n.thankID', '=', 't.thankID').andOn('t.receiverID', '=', userId).andOn('t.thankerID', '!=', userId)
+    })
+    .leftJoin('comment as c', function() {
+      this.on('n.commentID', '=', 'c.commentID').andOn('c.commenterID', '!=', userId)
+    })
+    .select(['u.name', 'n.notificationID', 'n.notificationType', 'n.itemID', 'n.userID', 'n.wantID', 'n.commentID', 'n.thankID', 'n.timeCreated', 'iw.timeWanted', 'n.active', 'rn.readnotificationID', 'i.giverID', 'i.takerID', 'i.title', 'iw.wanterID', 't.receiverID', 'c.commenterID'])
+    .where('n.active', '=', 1) // Active Notification
+    .whereNull('rn.readnotificationID') // Not Read Yet
+    .where('n.timeCreated', '<=', moment().format("YYYY-MM-DD HH:mm:ss")) // Notification has already been created
+    .where(function() {
+      this.where(function() {
+        this.where('n.notificationType', 'in', [1,2]).andWhere('i.giverID', '=', userId).whereNull('i.takerID') // Notification Type 1/2
+      }).orWhere(function() {
+        this.where('n.notificationType', '=', 3).andWhere('i.giverID', '=', userId).whereNotNull('c.commenterID') // Notification Type 3
+      }).orWhere(function() {
+        this.where('n.notificationType', '=', 3).whereNotNull('iw.wanterID').whereNull('i.takerID').whereNotNull('c.commenterID') // Notification Type 3
+      }).orWhere(function() {
+        this.where('n.notificationType', '=', 4).whereNotNull('iw.wanterID') // Notification Type 4
+      }).orWhere(function() {
+        this.where('n.notificationType', '=', 5).whereNotNull('t.receiverID') // Notification Type 5
+      })
+    })
+    .orderBy('n.timeCreated', 'DESC')
+    .limit(limitNum)
+    .then(function(result){
+      return cb(result);
+    });
+}
+
 var db = {}
 db.Item = Item;
 db.User = User;
 db.Want = Want;
+db.Comment = Comment;
+db.Thank = Thank;
+db.Notification = Notification;
+db.CommentUpvote = CommentUpvote;
+db.ThankUpvote = ThankUpvote;
 db.HomePageItemQuery = HomePageItemQuery;
 db.HomePageItemQueryBeforeId = HomePageItemQueryBeforeId;
 db.ProfilePageGiveQuery = ProfilePageGiveQuery;
@@ -260,5 +423,6 @@ db.ItemPageQuery = ItemPageQuery;
 db.ProfilePageTotalTakenQuery = ProfilePageTotalTakenQuery;
 db.ProfilePageTotalGivenQuery = ProfilePageTotalGivenQuery;
 db.ItemPageManualQuery = ItemPageManualQuery;
+db.NotificationQuery = NotificationQuery;
 
 module.exports = db;

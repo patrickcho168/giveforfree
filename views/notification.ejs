@@ -1,0 +1,57 @@
+
+<li class="dropdown dropdown-notifications">
+    <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <i data-count="2" class="fa fa-bell" aria-hidden="true"></i> Notifications <span class="badge"><%= notification.length %></span>
+    </a>
+    <ul class="dropdown-menu hidden-xs" aria-labelledby="dropdownMenu1" style="height: -ms-max-content; height: -webkit-max-content; height: -moz-max-content; height: -o-max-content; overflow:hidden; overflow-y:scroll;">
+        <div class="panel-heading"><a href="#" class="clear-notifications">Clear All</a></div>
+        <div style="height: -ms-max-content; height: -webkit-max-content; height: -moz-max-content; height: -o-max-content; width:110%; overflow:hidden; overflow-y:scroll;" id="all-notifications">
+            <% for (var i=0; i<notification.length; i++) { %>
+            <li class="notification" notificationid=<%= notification[i].notificationID %>>
+                <div class="media">
+                    <div class="media-left">
+                        <div class="media-object">
+                            <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                        </div>
+                    </div>
+                    <% if (notification[i].notificationType === 5) { %>
+                    <a href="/profile/<%= id %>" class="notification-link" notificationid=<%= notification[i].notificationID %>>
+                        <div class="media-body">
+                            <div class="notification-title" style="color: black">
+                                <strong><%= notification[i].name %><strong> left a new message on your <strong>Thank You Wall</strong>!
+                            </div>
+                            <div class="notification-meta">
+                                <small class="timestamp"><%= moment(notification[i].timeCreated).format('MMM Do [at] h:mmA') %></small>
+                            </div>
+                        </div>
+                    </a>
+                    <% } else { %>
+                    <a href="/item/<%= notification[i].itemID %>" class="notification-link" notificationID=<%= notification[i].notificationID %>>
+                        <div class="media-body">
+                            <div class="notification-title" style="color: black">
+                                <% if (notification[i].notificationType === 1) { %>
+                                    <p><strong><%= notification[i].name %></strong> is interested in getting <strong><%= notification[i].title %></strong>.</p>
+                                <% } else if (notification[i].notificationType === 2) { %>
+                                    <strong><%= notification[i].title %>'s</strong> giveaway has expired. Pick your lucky winner now.
+                                <% } else if (notification[i].notificationType === 3) { %>
+                                    <strong><%= notification[i].name %></strong> left a comment about <strong><%= notification[i].title %></strong>.
+                                <% } else if (notification[i].notificationType === 4) { %>
+                                    <% if (notification[i].takerID === id) { %>
+                                        <strong><%= notification[i].title %></strong> has been given to you! (:
+                                    <% } else { %>
+                                        <strong><%= notification[i].title %></strong> has been given to someone else! ):
+                                    <% } %>
+                                <% } %>
+                            </div>
+                            <div class="notification-meta">
+                                <small class="timestamp"><%= moment(notification[i].timeCreated).format('MMM Do [at] h:mmA') %></small>
+                            </div>
+                        </div>
+                    </a>
+                    <% } %>
+                </div>
+            </li>
+            <% } %>
+        </div>
+    </ul>
+</li>

@@ -10,7 +10,12 @@
     background: #337ab7;
     align-items: center;
 }
-
+.main-container {
+    padding-top: 36px;
+}
+.container {
+    margin-top: 20px;
+}
 /* Navbar */
 
 .navbar-right {
@@ -29,7 +34,7 @@
 /* Scroll Container */
 
 .infinite-scroll-container {
-    padding-top: 100px;
+    /*padding-top: 100px;*/
 }
 
 /* Thumbnail */
@@ -41,7 +46,8 @@
 .item-author {
     font-size: 1.0em;
     font-weight: 50;
-    font-style: italic;
+    /*color: black;*/
+    /*font-style: italic;*/
 }
 .item-caption {
     font-size: 1.0em;
@@ -95,6 +101,25 @@
 .thumbnail {
     position: relative;
     display: block;
+}
+
+.title-panel {
+    background: #B2E672;
+}
+
+.thumbnail:hover {
+    background: #337ab7;
+    color: white;
+    -webkit-transition: background 0.5s ease-out;
+    -moz-transition: background 0.5s ease-out;
+    -o-transition: background 0.5s ease-out;
+    transition: background 0.5s ease-out;
+}
+.thumbnail:hover .text-muted {
+    color: white;
+}
+.thumbnail:hover a {
+    color: white;
 }
 
 

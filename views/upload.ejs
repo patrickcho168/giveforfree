@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 
 <head>
-
     <!-- Metadata and Responsive Viewport -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,26 +11,70 @@
 
     <title>Give For Free - Meeting the needs of others</title>
 
-    <!-- Bootstrap Support -->
+    <!-- JQuery Support -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <!-- Other Scripts -->
+    <!-- Material Date Picker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script src="../assets/materialDatePicker/js/bootstrap-material-datetimepicker.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.min.css">
+    <link rel="stylesheet" href="../assets/materialDatePicker/css/bootstrap-material-datetimepicker.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Bootstrap Support -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Checkbox Styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.7/awesome-bootstrap-checkbox.min.css
+    ">
+
+    <!-- Native Scripts -->
     <script src="../scripts/common/common.js"></script>
     <script src="../scripts/upload/upload.js"></script>
 
+    <!-- Push Notifications -->
+    <!-- <script src="/scripts/common/notification2.js"></script> -->
+
+    <!-- Image Upload EXIF -->
+    <script src="../scripts/upload/exif.js"></script>
+
+    <!-- Auto-Resize Input Fields -->
+    <script src="../assets/autosize/js/autosize.js"></script>
+
     <!-- Bootstrap CSS (Override) -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Pure CSS (Override) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/base-context-min.css">
+
+    <!-- Font Awesome (Override) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <!-- Cropper (Override) -->
+    <script src="../scripts/upload/croppie.js"></script>
+    <link rel="stylesheet" href="../styles/upload/croppie.css">
 
     <!-- CSS Styles -->
+    <link rel="stylesheet" href="../styles/common/bootstrap-edit.css">
     <link rel="stylesheet" href="../styles/common/common.css">
     <link rel="stylesheet" href="../styles/upload/upload.css">
+
+    <!-- Bootstrap Notifications -->
+    <link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
+    <script src="../scripts/common/notify.min.js"></script>
+
+    <!-- Selectize -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/js/standalone/selectize.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/css/selectize.default.min.css">
+    <link rel="stylesheet" href="../styles/upload/selectize-mod.css">
 
     <!-- Animations -->
     <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
 
     <!-- Font Support -->
-    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
     <!-- Google Analytics -->
     <script src="/scripts/common/analytics.js"></script>
@@ -41,190 +83,236 @@
 
 <body>
 
+    <!-- Page Loader -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
 
             <!-- Left Header Icon -->
             <div class="navbar-header">
+
+                <!-- Collapsed Nav -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+
+                <!-- Logo and Name -->
                 <a class="navbar-brand" href="/">
-                    <img src="../images/common/logo-long.png" width="108px" height="36px" style="margin-top: -10px;" />
+                    <h4 style="margin-top: 0px;">
+                    <img src="../images/common/logo-new.svg" width="30px" height="30px" style="margin-top: -5px;"/>
+                    Give For Free!</h4>
                 </a>
             </div>
 
             <!-- Menu -->
             <div class="collapse navbar-collapse" id="nav-menu">
-
                 <!-- User Actions Menu -->
                 <ul class="nav navbar-nav navbar-right">
-                    <li id="nav-feed"><a href="/">Feed</a></li>
-                    <li id="nav-profile"><a href="/profile/<%= id %>">Profile</a></li>
-                    <li id="nav-logout"><a href="/logout">Logout</a></li>
+                    <li id="nav-create" class="active">
+                        <a href="/upload">
+                            <i class="fa fa-gift" aria-hidden="true"></i> Give
+                        </a>
+                    </li>
+                    <li id="nav-feed">
+                        <a href="/">
+                            <i class="fa fa-rss" aria-hidden="true"></i> Feed
+                        </a>
+                    </li>
+                    <li id="nav-profile">
+                        <a href="/profile/<%= id %>">
+                            <i class="fa fa-user" aria-hidden="true"></i> Profile
+                        </a>
+                    </li>
+
+                    <% if (typeof notification != 'undefined') { %>
+                        <!-- Notifications -->
+                        <%- include('notification'); %>
+                            <!-- End Notifications -->
+                    <% } %>
+
+                    <!-- Logout -->
+                    <li id="nav-logout">
+                        <a href="/logout">
+                            <i class="fa fa-lock" aria-hidden="true"></i> Logout
+                        </a>
+                    </li>
                 </ul>
-
             </div>
-
         </div>
     </nav>
 
-    <div class="container main-container">
-        <h1>Create A Gift</h1>
-        <br/>
+    <!-- Start of Page Content -->
+    <div class="container main-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <!-- Message Flashing -->
+        <!-- Errors -->
+        <% if (locals.error_messages) { %>
+            <% error_messages.forEach(function(message) { %>
+            <div class="alert alert-warning"><strong>Uh-oh! </strong>
+                <%= message %>
+            </div>
+            <% }); %>
+        <% } %>
+        <!-- Success -->
+        <% if (locals.success_messages) { %>
+            <% success_messages.forEach(function(message) { %>
+            <div class="alert alert-success"><strong>Awesome! </strong>
+                <%= message %>
+            </div>
+            <% }); %>
 
-        <!-- <form action="/upload" enctype="multipart/form-data" method="post">
-            <% if (locals.error_messages) {
-                error_messages.forEach(function(message) { %>
-                <div class="alert alert-warning"><strong>Error: </strong>
-                    <%= message %>
-                </div>
-                <% });
-            } %>
+        <% } %>
 
-                    <div class="form-group has-warning">
-                        <label>Title</label>
-                        <input type="text" class="form-control" name="title" placeholder="Enter the name of your object" required>
+        <!-- Start of Form -->
+        <form action="/upload" method="post" id="new-gift-form" data-toggle="validator">
 
+            <div class="col-lg-12 col-md-12 col-sm-12 col-ms-12 col-xs-12">
+
+                <!-- Left Panel Column -->
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <!-- Title Banner -->
+                    <div class="panel panel-default title-panel" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin-bottom:20px; " align="center">
+                        <img src="../images/upload/heart.svg" style="display: block; margin-left: auto; margin-right: auto;  padding: 10px 0; max-width: 100px;">
+                        <p style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; font-weight: bold; color: white; "> Contribute a Gift </p>
+                        <h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"> Start today! </h4>
                     </div>
-                    <div class="form-group has-warning">
-                        <label>Description</label>
-                        <input class="form-control" type="text" name="description" placeholder="Enter some description of your object" required>
-
-                    </div>
-                    <div class="form-group has-warning">
-                        <label>Select an image to upload (less than 100kb):</label>
-                        <input id="input-image-1" name="input-image" type="file" class="file-loading" accept="image/*" required>
-
-                        <div id="kv-success-modal" class="modal fade">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">Yippee!</h4>
-                                    </div>
-                                    <div id="kv-success-box" class="modal-body">
+                    <!-- Image Cropper -->
+                    <div class="panel panel-default">
+                        <div class="panel-body" style="padding: 5px">
+                            <div class="input-group image-preview">
+                                <a class="btn btn-default image-preview-input">
+                                    <span class="glyphicon glyphicon-picture"></span>
+                                    <span>Browse</span>
+                                    <input type="file" onchange="previewFile()" accept="image/png, image/jpeg, image/gif" name="input-file-cropped" style="height: 100%;" id="upload-trigger" />
+                                </a>
+                            </div>
+                            <div class="row">
+                                <div class="image-crop text-center" style="display: none;">
+                                    <div id="image" style="padding-bottom: 0; padding-top: 15px;"></div>
+                                    <div style="margin-bottom: 15px; margin-top: -5px;">
+                                        <a class="image-confirm btn btn-sm btn-success bold-link">Crop Image</a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <script>
-                            $("#input-image-1").fileinput({
-                                uploadUrl: "/upload",
-                                allowedFileExtensions: ["jpg", "png", "gif"],
-                                maxImageWidth: 200,
-                                maxFileCount: 1,
-                                resizeImage: true
-                            }).on('filepreupload', function() {
-                                $('#kv-success-box').html('');
-                            }).on('fileuploaded', function(event, data) {
-                                $('#kv-success-box').append(data.response.link);
-                                $('#kv-success-modal').modal('show');
-                            });
-                        </script>
-                    </div>
-                    <div class="form-group">
-                        <label>Number of Days</label>
-                        <select class="form-control" name="no_of_days">
-                            <option value="7">7</option>
-                            <option value="14">14</option>
-                        </select>
-                    </div>
-
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" name="postToFacebook" value="1">
-                    Post to Facebook?
-                </label>
-            </div>
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
-        </form> -->
-
-
-        <form action="/upload" enctype="multipart/form-data" method="post">
-            <% if (locals.error_messages) {
-                error_messages.forEach(function(message) { %>
-                <div class="alert alert-warning"><strong>Error: </strong>
-                    <%= message %>
-                </div>
-                <% });
-            } %>
-                    <div class="form-group has-warning">
-                        <label>Title</label>
-                        <input type="text" class="form-control" name="title" placeholder="Enter the name of your object" maxlength="50" required>
-
-                    </div>
-                    <div class="form-group has-warning">
-                        <label>Description</label>
-                        <input class="form-control" type="text" name="description" placeholder="Enter some description of your object" maxlength="200" required>
-
-                    </div>
-
-                    <div class="form-group has-warning">
-
-                        <label>Select an image to upload (less than 5mb):</label>
-
-                        <!-- <input class="form-control-file" type="file" name="avatar" required> -->
-
-                        <!-- image-preview-filename input [CUT FROM HERE]-->
-                        <div class="input-group image-preview">
-                            <input class="form-control image-preview-filename" type="text" name="input-file-preview" required>
-                            <!-- don't give a name === doesn't send on POST/GET -->
-                            <span class="input-group-btn">
-                                <!-- image-preview-clear button -->
-                                <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                            <span class="image-preview-input-title">Clear</span>
-
-                            </button>
-                            <!-- image-preview-input -->
-                            <div class="btn btn-default image-preview-input">
-                                <span class="glyphicon glyphicon-folder-open"></span>
-                                <span class="image-preview-input-title">Browse</span>
-                                <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" />
-                                <!-- rename it -->
+                            <a id="image-holder" onclick="triggerUpload()">
+                                <div align="center">
+                                    <span class="glyphicon glyphicon-upload" style="font-size: 200px;"></span>
+                                    <h3> Click to upload an image </h3>
+                                    <p> Upload and crop an image of the item ... </p>
+                                </div>
+                            </a>
+                            <!-- Post Image Preview -->
+                            <div id="image" style="display: none;">
                             </div>
-                            </span>
                         </div>
-                        <!-- /input-group image-preview [TO HERE]-->
-
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label>Number of Days</label>
-                        <select class="form-control" name="no_of_days">
-                            <option value="7">7</option>
-                            <option value="14">14</option>
-                        </select>
+                <!-- Right Panel Column -->
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <!-- Form Input Panel -->
+                    <div class="panel panel-default">
+                        <div class="list-group">
+                            <a class="list-group-item">
+                                <h4 class="list-group-item-heading"><b>What are you giving?</b></h4>
+                                <p class="list-group-item-text">
+                                    <input type="text" class="input-txt" name="title" placeholder="Item name (max. 50 chars)" maxlength="50" autocomplete="off" required>
+                                </p>
+                            </a>
+                            <a class="list-group-item">
+                                <h4 class="list-group-item-heading"><b>Describe the item you are giving!</b></h4>
+                                <p class="list-group-item-text">
+                                    <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description (max. 200 chars)" autocomplete="off" data-trigger="focus" id="description-field" maxlength="200" required></textarea>
+                                </p>
+                            </a>
+                            <a class="list-group-item">
+                                <h4 class="list-group-item-heading"><b>When do you want to end this giveaway?</b></h4>
+                                <p class="list-group-item-text">
+                                    <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" required>
+                                </p>
+                            </a>
+                            <a class="list-group-item">
+                                <h4 class="list-group-item-heading"><b>Which category does your item belong to?</b></h4>
+                                <select id="input-tags" name="categories[]" multiple class="categories has-options " style="width:70%" auto-complete: "off" placeholder="Select categories...">
+                                    <option value="">Select categories...</option>
+                                    <option value="clothes">clothes</option>
+                                    <option value="accessories">accessories</option>
+                                    <option value="furniture & home">furniture & home</option>
+                                    <option value="parenting">parenting</option>
+                                    <option value="health">health</option>
+                                    <option value="beauty">beauty</option>
+                                    <option value="kitchen appliances">kitchen appliances</option>
+                                    <option value="gardening">gardening</option>
+                                    <option value="property">property</option>
+                                    <option value="design & craft">design & craft</option>
+                                    <option value="electronics">electronics</option>
+                                    <option value="sports">sports</option>
+                                    <option value="photography">photography</option>
+                                    <option value="antiques">antiques</option>
+                                    <option value="toys">toys</option>
+                                    <option value="games">games</option>
+                                    <option value="music">music</option>
+                                    <option value="tickets & vouchers">tickets & vouchers</option>
+                                    <option value="auto accessories">auto accessories</option>
+                                    <option value="books">books</option>
+                                    <option value="stationeries">stationeries</option>
+                                    <option value="textbooks">textbooks</option>
+                                    <option value="notes">notes</option>
+                                    <option value="pets">pets</option>
+                                    <option value="other">other</option>
+                                </select>
+                            </a>
+                            <a class="list-group-item">
+                                <h4 class="list-group-item-heading"><b>How would you like the person receiving to collect the item?</b></h4>
+                                <div class="checkbox checkbox-primary checkbox-circle row">
+                                    <input type="checkbox" name="meetup" id="meetup" class="check-one">
+                                    <label class="large-label" for="meetup">
+                                        Meet and collect
+                                    </label>
+                                    <input type="checkbox" name="postage" id="postage" class="check-two">
+                                    <label class="large-label" for="postage">
+                                        Postage service
+                                    </label>
+                                </div>
+                            </a>
+                            <a class="list-group-item">
+                                <div class="checkbox checkbox-primary checkbox-circle row">
+                                    <input type="checkbox" id="share" name="postToFacebook">
+                                    <label class="large-label" for="share">
+                                        <i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook
+                                    </label>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="panel-footer" align="center">
+                            <button disabled="disabled" id="create-upload" type="submit" class="btn btn-md btn-success bold-link">Create Gift!</button>
+                        </div>
                     </div>
-
-                    <button type="submit" class="btn btn-lg btn-success btn-block raised bold-link">Create Gift!</button>
+                    <input type="hidden" name="croppedImage" />
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                </div>
+            </div>
         </form>
     </div>
 
     <!-- Footer -->
     <footer>
-        <div class="container">
+        <div class="container footer-container">
             <div class="col-xs-10 col-xs-offset-1 text-center">
                 <hr class="xsall">
-                <ul class="col-xs-12 list-unstyled contact-list">
-                    <li>
-                        <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 9223 4863
-                    </li>
-                    <li>
-                        <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">giveforfreefeedback@gmail.com</a>
-                    </li>
-                    <li>
-                        <span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span> : <a href="/privacy">Privacy Clause</a>
-                    </li>
-                </ul>
-
+                <div class="col-xs-12 text-center" style="padding-bottom: 10px;">
+                    <small><span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true">  </span>  <a href="mailto:giveforfreefeedback@gmail.com"> giveforfreefeedback[at]gmail[dot]com</a></small>
+                    <br>
+                    <small><span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span>  <a href="/privacy"> Privacy Clause</a></small>
+                </div>
                 <div class="col-xs-12 text-center">
                     <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
                 </div>

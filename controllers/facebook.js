@@ -7,6 +7,7 @@ exports.getFbData = function(accessToken, apiPath, moreParams, callback) {
     } else {
         finalPath = apiPath + '?access_token=' + accessToken + '&' + moreParams;
     }
+    console.log(finalPath);
     var options = {
         host: 'graph.facebook.com',
         port: 443,
