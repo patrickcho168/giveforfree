@@ -66,6 +66,12 @@ $(document).on("click", ".unsnag", function() {
 // Carousel Logic
 jQuery(document).ready(function($) {
 
+    $('#select-winner').selectize({
+    create: true,
+    sortField: 'text'
+    options: manual
+});
+
     $.ajaxSetup({
         headers: {'X-CSRF-Token': $('meta[name="_csrf"]').attr('content')}
     });
