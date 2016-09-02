@@ -35,7 +35,7 @@ module.exports = function(app) {
         });
     })
 
-    app.post('/api/thank/profile/:profileId', ensureLogin.ensureLoggedIn(), parseForm, function(req, res) {
+    app.post('/api/thank/profile/:profileId', ensureLogin.ensureLoggedIn(), parseForm, csrfProtection, function(req, res) {
         var userId = parseInt(req.user.appUserId); // thanker
         var profileId = parseInt(req.params.profileId); // who to thank
         if (req.body.parent === '') {
@@ -65,7 +65,7 @@ module.exports = function(app) {
         })
     })
 
-    app.post('/api/updatethank/profile/:thankId', ensureLogin.ensureLoggedIn(), parseForm, function(req,res) {
+    app.post('/api/updatethank/profile/:thankId', ensureLogin.ensureLoggedIn(), parseForm, csrfProtection, function(req,res) {
         var userId = parseInt(req.user.appUserId);
         var thankId = parseInt(req.params.thankId);
         db.Thank.where({
@@ -89,7 +89,7 @@ module.exports = function(app) {
         })
     })
 
-    app.post('/api/deletethank/profile/:thankId', ensureLogin.ensureLoggedIn(), function(req, res) {
+    app.post('/api/deletethank/profile/:thankId', ensureLogin.ensureLoggedIn(), csrfProtection, function(req, res) {
         var userId = parseInt(req.user.appUserId);
         var thankId = parseInt(req.params.thankId);
         db.Thank.where({
@@ -120,7 +120,7 @@ module.exports = function(app) {
         })
     })
 
-    app.post('/api/thank/profile/upvotes/:thankId', ensureLogin.ensureLoggedIn(), function(req, res) {
+    app.post('/api/thank/profile/upvotes/:thankId', ensureLogin.ensureLoggedIn(), csrfProtection, function(req, res) {
         var userId = parseInt(req.user.appUserId);
         var thankId = parseInt(req.params.thankId);
         db.ThankUpvote.where({
@@ -149,7 +149,7 @@ module.exports = function(app) {
         })
     })
 
-    app.post('/api/thank/profile/downvotes/:thankId', ensureLogin.ensureLoggedIn(), function(req, res) {
+    app.post('/api/thank/profile/downvotes/:thankId', ensureLogin.ensureLoggedIn(), csrfProtection, function(req, res) {
         var userId = parseInt(req.user.appUserId);
         var thankId = parseInt(req.params.thankId);
         db.ThankUpvote.where({
@@ -240,7 +240,8 @@ module.exports = function(app) {
     // SHOW PROFILE WANTS
     // SHOW PROFILE GIVING OUT
     // SHOW PROFILE GIVEN OUT
-    app.get('/profile/:id',
+    app.get('/profile/:id', 
+        csrfProtection,
         function(req, res) {
             var otherUserId = parseInt(req.params.id);
             req.session.lastPageVisit = '/profile/' + otherUserId;
@@ -256,7 +257,8 @@ module.exports = function(app) {
                         id: 0,
                         friendProperty: {},
                         friends: [],
-                        notification: req.session.notification
+                        notification: req.session.notification,
+                        csrfToken: req.csrfToken()
                     });
                 });
             } else {
@@ -273,7 +275,8 @@ module.exports = function(app) {
                             friendProperty: req.user.fbFriendsToPropertyMap,
                             friends: data.models,
                             notification: req.session.notification,
-                            moment: moment
+                            moment: moment,
+                            csrfToken: req.csrfToken()
                         });
                     });
                 });
@@ -281,7 +284,7 @@ module.exports = function(app) {
         }
     );
 
-    app.post('/api/delete-user', ensureLogin.ensureLoggedIn(), function(req, res, next) {
+    app.post('/api/delete-user', ensureLogin.ensureLoggedIn(), csrfProtection, function(req, res, next) {
         db.User.where({
             userID: req.user.appUserId
         }).fetch().then(function(user) {
