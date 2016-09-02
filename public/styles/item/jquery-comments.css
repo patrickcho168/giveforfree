@@ -421,10 +421,12 @@ http://viima.github.io/jquery-comments/*/
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	text-align: left;
 }
 
 .jquery-comments ul.main li.comment .name a {
 	color: inherit;
+	text-align: left;
 }
 
 .jquery-comments ul.main li.comment .name .reply-to {
@@ -432,11 +434,13 @@ http://viima.github.io/jquery-comments/*/
 	font-size: .8em;
 	font-weight: normal;
 	vertical-align: top;
+	text-align: left;
 }
 
 .jquery-comments ul.main li.comment .name .reply-to i {
 	margin-left: .5em;
 	margin-right: .25em;
+	text-align: left;
 }
 
 .jquery-comments ul.main li.comment .wrapper{
@@ -453,10 +457,12 @@ http://viima.github.io/jquery-comments/*/
 .jquery-comments ul.main li.comment .wrapper .content {
 	white-space: pre-line;
 	word-break: break-word;
+	text-align: left;
 }
 
 .jquery-comments ul.main li.comment .wrapper .content a.attachment i {
 	margin-right: 0.5em;
+	text-align: left;
 }
 
 .jquery-comments ul.main li.comment .wrapper .content a.attachment > * {
@@ -466,6 +472,7 @@ http://viima.github.io/jquery-comments/*/
 	height: auto;
 	margin-top: .25em;
 	margin-bottom: .25em;
+	text-align: left;
 }
 
 .jquery-comments ul.main li.comment .wrapper .content time.edited {
@@ -474,21 +481,25 @@ http://viima.github.io/jquery-comments/*/
 	font-size: .9em;
 	font-style: italic;
 	color: #999;
+	text-align: left;
 }
 
 .jquery-comments ul.main li.comment .wrapper .content time.edited:before {
 	content: " - ";
+	text-align: left;
 }
 
 
 /* Actions */
 .jquery-comments.mobile ul.main li.comment .actions {
 	font-size: 1em;
+	float: left;
 }
 
 .jquery-comments ul.main li.comment .actions > * {
 	color: #999;
 	font-weight: bold;
+	float: left;
 }
 
 .jquery-comments ul.main li.comment .actions .action {

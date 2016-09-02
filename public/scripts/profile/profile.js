@@ -313,6 +313,23 @@ $(document).ready(function() {
     $('#confirm-delete').on('show.bs.modal', function(e) {
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
     });
+});
+    
+jQuery(document).ready(function($) {
+    $('#comments-container').comments({
+        profilePictureURL: 'https://app.viima.com/static/media/user_profiles/user-icon.png',
+        getComments: function(success, error) {
+            var commentsArray = [{
+                id: 1,
+                created: '2015-10-01',
+                content: 'Lorem ipsum dolort sit amet',
+                fullname: 'Simon Powell',
+                upvote_count: 2,
+                user_has_upvoted: false
+            }];
+            success(commentsArray);
+        }
+    });
 
 });
 

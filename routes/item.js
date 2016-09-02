@@ -32,7 +32,6 @@ module.exports = function(app) {
         db.Comment.where({
             itemID: itemId
         }).orderBy('timeCreated', 'ASC').fetchAll({withRelated: ['commentedBy', 'upvote']}).then(function(commentData) {
-            console.log(commentData);
             res.json(commentData);
         });
     })
@@ -68,7 +67,6 @@ module.exports = function(app) {
         if (req.body.parent === '') {
             req.body.parent = null;
         }
-        console.log(req.body);
         var newComment = new db.Comment({
             commenterID: userId,
             message: xss(req.body.content),
@@ -134,7 +132,6 @@ module.exports = function(app) {
             commentID: commentId,
             userID: userId
         }).fetch().then(function(data) {
-            console.log(data);
             if (!data) {
                 var newCommentUpvote = new db.CommentUpvote({
                     commentID: commentId,
