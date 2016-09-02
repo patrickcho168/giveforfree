@@ -169,7 +169,7 @@
                             </a>
                         </li>
                         <li id="nav-logout">
-                            <a href="/login/facebook" onclick="loginLoader();">
+                            <a href="javascript:loginSpecial();">
                                 <i class="fa fa-lock" aria-hidden="true"></i> Login
                             </a>
                         </li>
@@ -211,7 +211,7 @@
                     <p style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; padding-top: 15px; font-weight: bold; color: white; ">
                         <%= user.name %>
                         <% if (myProfile) { %>
-                            <a data-toggle="modal" data-target="#confirm-delete" data-href="/api/delete-user" class="btn btn-danger">Delete</a>
+                            <a data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger">Delete</a>
                         <% } %>
                     </p>
                     <h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"> Singapore </h4>
@@ -325,7 +325,7 @@
                         for(var i=0; i<friends.length; i++) {%>
                             <div class="col-lg-2">
                                 <div class="media-left">
-                                    <a href="/profile/<%= friends[i].attributes.userID %>" class="avatar" style="background-image: url(http://graph.facebook.com/<%= friendProperty[friends[i].attributes.userID].fbID %>/picture?type=large);" style="margin: auto 10px; padding: 0; width: 120px; height: 120px; border-radius:50%;"></a>
+                                    <a href="/profile/<%= friends[i].attributes.userID %>" class="avatar" style="background-image: url(https://graph.facebook.com/<%= friendProperty[friends[i].attributes.userID].fbID %>/picture?type=large);" style="margin: auto 10px; padding: 0; width: 120px; height: 120px; border-radius:50%;"></a>
                                 </div>
                                 <a href="/profile/<%= friends[i].attributes.userID %>" style="font-size: 1.5em;">
                                     <div class="media-body">

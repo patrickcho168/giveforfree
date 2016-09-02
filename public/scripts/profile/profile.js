@@ -293,7 +293,16 @@ $(document).ready(function() {
 
 
     $('#confirm-delete').on('show.bs.modal', function(e) {
-        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        $(this).find('.btn-ok').click(function() {
+            console.log('click');   
+            $.ajax({
+                type: 'post',
+                url: '/api/delete-user',
+                success: function(){
+                    document.location = "/logout";
+                }
+            });
+        });
     });
 });
     

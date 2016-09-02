@@ -65,36 +65,72 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
-        var toId;
-        <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-        toId = <%= item.fbID %>;
-        <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-        toId = <%= item.takerFbID %>;
-        <% } %>
+        // function facebookInit() {
+        //     if ($("#facebook-message").length) {
+        //         document.getElementById('facebook-message').onclick = function() {
+        //             // alert("CLICKED MESSAGE");
+        //             FB.ui({
+        //                 method: 'send',
+        //                 link: '<%= domain %>/item/<%= item.itemID %>',
+        //                 to: toId
+        //             }, function(response) {});
+        //         }
+        //     }
+        //     if ($("#facebook-share").length) {
+        //         document.getElementById('facebook-share').onclick = function() {
+        //             // alert("CLICKED SHARE");
+        //             FB.ui({
+        //                 method: 'share_open_graph',
+        //                 action_type: '<%= fbNameSpace %>:receive',
+        //                 action_properties: {
+        //                     'free_item': '<%= domain %>/item/<%= item.itemID %>'
+        //                 },
+        //                 mobile_iframe: true
+        //             }, function(response) {});
+        //         }
+        //     }
+        // }
 
-        function facebookInit() {
-            if ($("#facebook-message").length) {
-                document.getElementById('facebook-message').onclick = function() {
-                    FB.ui({
-                        method: 'send',
-                        link: '<%= domain %>/item/<%= item.itemID %>',
-                        to: toId
-                    }, function(response) {});
-                }
-            }
-            if ($("#facebook-share").length) {
-                document.getElementById('facebook-share').onclick = function() {
-                    FB.ui({
-                        method: 'share_open_graph',
-                        action_type: '<%= fbNameSpace %>:receive',
-                        action_properties: {
-                            'free_item': '<%= domain %>/item/<%= item.itemID %>'
-                        },
-                        mobile_iframe: true
-                    }, function(response) {});
-                }
-            }
+        $('#facebook-message').unbind('click').bind('click', function (e) {
+            messageUser();
+        });
+
+        $('#facebook-share').unbind('click').bind('click', function (e) {
+            shareItem();
+        });
+
+        function messageUser() {
+                // alert("CLICKED MESSAGE");
+                var toId = null;
+
+                <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
+                toId = <%= item.fbID %>;
+                <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
+                toId = <%= item.takerFbID %>;
+                <% } %>
+
+                console.log(toId);
+
+                FB.ui({
+                    method: 'send',
+                    link: '<%= domain %>/item/<%= item.itemID %>',
+                    to: toId
+                }, function(response) {});
+
         }
+
+        function shareItem() {
+            // alert("CLICKED SHARE");
+            FB.ui({
+                method: 'share_open_graph',
+                action_type: '<%= fbNameSpace %>:receive',
+                action_properties: {
+                    'free_item': '<%= domain %>/item/<%= item.itemID %>'
+                },
+                mobile_iframe: true
+            }, function(response) {});
+        }
+
     </script>
 
     <!-- Native Scripts -->
@@ -231,7 +267,7 @@
                             </a>
                         </li>
                         <li id="nav-logout">
-                            <a href="/login/facebook" onclick="loginLoader();">
+                            <a href="javascript:loginSpecial();">
                                 <i class="fa fa-lock" aria-hidden="true"></i> Login
                             </a>
                         </li>
@@ -408,13 +444,13 @@
                                                 <% } %>
                                             <!-- For other users and receiving parties -->
                                             <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                                                <a href="#" onclick="event.preventDefault();" class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Owner</a>
+                                                <a href="javascript:messageUser();" class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Owner</a>
                                                 <% if (item.takerID === id) { %>
-                                                    <a href="#" class="btn btn-xs btn-primary message-button" id="facebook-share" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook</a>
+                                                    <a href="javascript:shareItem();" class="btn btn-xs btn-primary message-button" id="facebook-share" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook</a>
                                                 <% } %>
                                             <!-- For successful owners -->
                                             <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                                                <a href="#" onclick="event.preventDefault();" class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;">Message Recipient</a>
+                                                <a href="javascript:messageUser();" class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;">Message Recipient</a>
                                             <% } %>
                                         </center>
                                     </div>
@@ -450,7 +486,7 @@
                                 <div class="bs-callout bs-callout-warning" style="background-color: #FFFBAF; color: #A8896C; margin: 10px; 10px;">
                                     <% if (item.takerID === null && !expired) { %>
                                         <h4>Available</h4>
-                                        <h5>This giveaway will end in 2 days and 4 hours time.</h5>
+                                        <h5>This giveaway will end <%= moment(expiryDate).fromNow()%>.</h5>
                                     <% } else if (item.takerID === null) { %>
                                         <h4>Expired</h4>
                                         <h5>This giveaway has ended.</h5>

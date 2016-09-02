@@ -32,3 +32,8 @@ $(document).ready(function() {
 function loginLoader() {
     $('body').removeClass('loaded');
 }
+
+function loginSpecial() {
+    $('body').removeClass('loaded');
+	window.location.href="/login/facebook";
+}
