@@ -91,7 +91,7 @@ module.exports = function(app) {
 
     app.post('/api/deletethank/profile/:thankId', ensureLogin.ensureLoggedIn(), function(req, res) {
         var userId = parseInt(req.user.appUserId);
-        var thankId = parseInt(req.params.profileId);
+        var thankId = parseInt(req.params.thankId);
         db.Thank.where({
             thankID: thankId
         }).fetch().then(function(data) {

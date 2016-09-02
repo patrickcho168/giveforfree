@@ -179,6 +179,7 @@ http://viima.github.io/jquery-comments/*/
 	line-height: 1.45em;
 	padding: .25em .8em;
 	padding-right: 2em;
+	text-align:left;
 }
 
 .jquery-comments .textarea-wrapper .textarea * {
