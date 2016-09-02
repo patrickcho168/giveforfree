@@ -94,6 +94,7 @@ jQuery(document).ready(function($) {
 
     $('#comments-container').comments({
         roundProfilePictures: true,
+        readOnly: loggedIn ? false : true,
         // profilePictureURL: 'http://graph.facebook.com/' + userFbID + '/picture',
         getComments: function(success, error) {
             $.ajax({
