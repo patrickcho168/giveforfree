@@ -429,10 +429,11 @@
                                                 <a data-toggle="modal" data-target="#confirm-delete" data-href="/api/delete/<%= item.itemID %>" class="btn btn-xs btn-danger">Delete</a>
                                                 <% if (item.numWants > 0) { %>
                                                     <a type="button" class="btn btn-xs btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw</a>
-                                                    <a type="button" class="btn btn-xs btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                    <a type="button" class="btn btn-xs btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Pick <span class="caret"></span>
-                                                    </a>
-                                                    <!-- <ul class="dropdown-menu scrollable-menu dropdown-menu-right" role="menu">
+                                                    </button>
+                                                      <ul class="dropdown-menu scrollable-menu">
                                                         <% for (var i=0; i<manual.length; i++) { %>
                                                             <li>
                                                                 <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">
@@ -440,8 +441,9 @@
                                                                 </a>
                                                             </li>
                                                         <% } %>
-                                                    </ul> -->
-                                                    <div id="select-winner"></div>
+                                                    </ul>
+
+
                                                 <% } %>
                                             <!-- For other users and receiving parties -->
                                             <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
