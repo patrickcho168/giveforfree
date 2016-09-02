@@ -302,6 +302,8 @@ jQuery(document).ready(function($) {
     $('#comments-container').comments({
         readOnly: loggedIn ? false : true,
         roundProfilePictures: true,
+        noCommentsText: 'No Thank You Messages.',
+        textareaPlaceholderText: isMine ? 'Reply to your Thank You Messages' :'Leave a Thank You Message',
         // profilePictureURL: 'http://graph.facebook.com/' + userFbID + '/picture',
         getComments: function(success, error) {
             $.ajax({
