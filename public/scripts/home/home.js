@@ -68,7 +68,7 @@ function addRealViews(html, url) {
                     if (value.meWant) {
                         html += '<div class="ribbon-wrapper-green">';
                         html += '<div class="ribbon-green">';
-                        html += 'WANT';
+                        html += 'wanted';
                         html += '</div>';
                         html += '</div>';
                     }

@@ -68,6 +68,10 @@ $(document).on("click", ".unsnag", function() {
 // Carousel Logic
 jQuery(document).ready(function($) {
 
+    $.ajaxSetup({
+        headers: {'X-CSRF-Token': $('meta[name="_csrf"]').attr('content')}
+    });
+
     $('.carousel').carousel({
         interval: false
     });
@@ -133,6 +137,7 @@ jQuery(document).ready(function($) {
                 method: 'post',
                 url: '/api/comment/' + currentItemId,
                 data: commentJSON,
+                dataType: "json",
                 success: function(data) {
                     var upvoted = false;
                     for (var i=0; i<data.upvote.length; ++i) {
@@ -308,8 +313,6 @@ $(function() {
         content: 'E.g. Size and measurements, old/new, used/unused, etc.',
         placement: 'bottom'
     });
-
-    $("[name='share-checkbox']").bootstrapSwitch();
 
     $('#confirm-delete').on('show.bs.modal', function(e) {
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));

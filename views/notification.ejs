@@ -3,11 +3,11 @@
     <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         <i data-count="2" class="fa fa-bell" aria-hidden="true"></i> Notifications <span class="badge"><%= notification.length %></span>
     </a>
-    <ul class="dropdown-menu hidden-xs" aria-labelledby="dropdownMenu1" style="height:400px; width:300%; overflow:hidden; overflow-y:scroll;">
+    <ul class="dropdown-menu hidden-xs" aria-labelledby="dropdownMenu1" style="height: -ms-max-content; height: -webkit-max-content; height: -moz-max-content; height: -o-max-content; overflow:hidden; overflow-y:scroll;">
         <div class="panel-heading"><a href="#" class="clear-notifications">Clear All</a></div>
-        <div style="height:400px; width:110%; overflow:hidden; overflow-y:scroll;" id="all-notifications">
+        <div style="height: -ms-max-content; height: -webkit-max-content; height: -moz-max-content; height: -o-max-content; width:110%; overflow:hidden; overflow-y:scroll;" id="all-notifications">
             <% for (var i=0; i<notification.length; i++) { %>
-            <li class="notification">
+            <li class="notification" notificationid=<%= notification[i].notificationID %>>
                 <div class="media">
                     <div class="media-left">
                         <div class="media-object">
@@ -30,7 +30,7 @@
                         <div class="media-body">
                             <div class="notification-title" style="color: black">
                                 <% if (notification[i].notificationType === 1) { %>
-                                    <p><strong><%= notification[i].name %></strong> is interested in getting getting getting getting getting getting getting getting getting <strong><%= notification[i].title %></strong>.</p>
+                                    <p><strong><%= notification[i].name %></strong> is interested in getting <strong><%= notification[i].title %></strong>.</p>
                                 <% } else if (notification[i].notificationType === 2) { %>
                                     <strong><%= notification[i].title %>'s</strong> giveaway has expired. Pick your lucky winner now.
                                 <% } else if (notification[i].notificationType === 3) { %>
