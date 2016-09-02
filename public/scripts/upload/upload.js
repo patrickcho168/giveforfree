@@ -64,8 +64,6 @@ $(function() {
         placement: 'bottom'
     });
 
-    $("[name='share-checkbox']").bootstrapSwitch();
-
     var oldScroll = window.onscroll;
     $(document).on('focus', 'input', function(e) {
         window.onscroll = function() {
@@ -84,6 +82,10 @@ function triggerUpload() {
 }
 
 function previewFile() {
+
+    var boxWidth = $("div[id=\"cropperHolder\"").width() * 0.7;
+    var cropperWidth = boxWidth > 180 ? boxWidth : 180;
+
     $('#create-upload').attr("disabled", "disabled");
     var node = document.getElementById('image');
     while (node.hasChildNodes()) {
@@ -110,12 +112,12 @@ function previewFile() {
             reader.addEventListener("load", function() {
                 $uploadCrop = $('#image').croppie({
                     viewport: {
-                        width: 180,
-                        height: 180,
+                        width: cropperWidth*0.9,
+                        height: cropperWidth*0.9,
                     },
                     boundary: {
-                        width: 200,
-                        height: 200,
+                        width: cropperWidth,
+                        height: cropperWidth,
                     },
                     enforceBoundary: false,
                     enableExif: true,
