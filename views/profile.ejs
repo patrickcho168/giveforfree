@@ -242,11 +242,11 @@
                         <% if (myProfile) { %>
                         <p>
                             You have nothing to give for now.
-                            <br> Try <a href="/upload"> uploading </a> one! 
+                            <br> Try <a href="/upload"> uploading </a> one!
                         <% } else { %>
                         <p>
                             <%= user.name %> has nothing to give for now.
-                            <br> Come back later! 
+                            <br> Come back later!
                         </p>
                         <% } %>
                     </div>
@@ -329,7 +329,7 @@
                                 </div>
                                 <a href="/profile/<%= friends[i].attributes.userID %>" style="font-size: 1.5em;">
                                     <div class="media-body">
-                                        <div class="friend-title" style="margin-top: 10px;">
+                                        <div class="friend-title hide-overflow" style="margin-top: 10px;">
                                             <strong><%= friends[i].attributes.name %><strong>
                                         </div>
                                         <div class="notification-meta">
