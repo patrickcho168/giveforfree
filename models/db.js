@@ -100,6 +100,9 @@ var Thank = bookshelf.Model.extend({
   },
   about: function() {
     return this.belongsTo(Item, 'itemID');
+  },
+  upvote: function() {
+    return this.hasMany(ThankUpvote, 'thankID');
   }
 });
 
@@ -139,6 +142,17 @@ var CommentUpvote = bookshelf.Model.extend({
   idAttribute: 'commentUpvoteID',
   about: function() {
     return this.belongsTo(Comment, 'commentID');
+  },
+  by: function() {
+    return this.belongsTo(User, 'userID');
+  }
+});
+
+var ThankUpvote = bookshelf.Model.extend({
+  tableName: 'thankUpvote',
+  idAttribute: 'thankUpvoteID',
+  about: function() {
+    return this.belongsTo(Thank, 'thankID');
   },
   by: function() {
     return this.belongsTo(User, 'userID');
@@ -398,6 +412,7 @@ db.Comment = Comment;
 db.Thank = Thank;
 db.Notification = Notification;
 db.CommentUpvote = CommentUpvote;
+db.ThankUpvote = ThankUpvote;
 db.HomePageItemQuery = HomePageItemQuery;
 db.HomePageItemQueryBeforeId = HomePageItemQueryBeforeId;
 db.ProfilePageGiveQuery = ProfilePageGiveQuery;

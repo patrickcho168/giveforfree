@@ -176,17 +176,21 @@ jQuery(document).ready(function($) {
                             break;
                         }
                     }
-                    success({
-                        id: data.commentID,
-                        created: data.timeCreated,
-                        content: data.message,
-                        fullname: data.commentedBy.name,
-                        upvote_count: data.upvote.length,
-                        user_has_upvoted: upvoted,
-                        profile_picture_url: 'http://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
-                        parent: data.parentComment,
-                        created_by_current_user: data.commentedBy.userID === userId
-                    });
+                    if (data) {
+                        success({
+                            id: data.commentID,
+                            created: data.timeCreated,
+                            content: data.message,
+                            fullname: data.commentedBy.name,
+                            upvote_count: data.upvote.length,
+                            user_has_upvoted: upvoted,
+                            profile_picture_url: 'http://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
+                            parent: data.parentComment,
+                            created_by_current_user: data.commentedBy.userID === userId
+                        });
+                    } else {
+                        success({});
+                    }
                 },
                 error: function(error) {
                     console.log("error editing");
@@ -221,17 +225,21 @@ jQuery(document).ready(function($) {
                                 break;
                             }
                         }
-                        success({
-                            id: data.commentID,
-                            created: data.timeCreated,
-                            content: data.message,
-                            fullname: data.commentedBy.name,
-                            upvote_count: data.upvote.length,
-                            user_has_upvoted: upvoted,
-                            profile_picture_url: 'http://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
-                            parent: data.parentComment,
-                            created_by_current_user: data.commentedBy.userID === userId
-                        });
+                        if (data) {
+                            success({
+                                id: data.commentID,
+                                created: data.timeCreated,
+                                content: data.message,
+                                fullname: data.commentedBy.name,
+                                upvote_count: data.upvote.length,
+                                user_has_upvoted: upvoted,
+                                profile_picture_url: 'http://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
+                                parent: data.parentComment,
+                                created_by_current_user: data.commentedBy.userID === userId
+                            });
+                        else {
+                            success({});
+                        }
                     },
                     error:  function() {
                         console.log("error upvoting");
@@ -249,17 +257,21 @@ jQuery(document).ready(function($) {
                                 break;
                             }
                         }
-                        success({
-                            id: data.commentID,
-                            created: data.timeCreated,
-                            content: data.message,
-                            fullname: data.commentedBy.name,
-                            upvote_count: data.upvote.length,
-                            user_has_upvoted: upvoted,
-                            profile_picture_url: 'http://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
-                            parent: data.parentComment,
-                            created_by_current_user: data.commentedBy.userID === userId
-                        });
+                        if (data) {
+                            success({
+                                id: data.commentID,
+                                created: data.timeCreated,
+                                content: data.message,
+                                fullname: data.commentedBy.name,
+                                upvote_count: data.upvote.length,
+                                user_has_upvoted: upvoted,
+                                profile_picture_url: 'http://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
+                                parent: data.parentComment,
+                                created_by_current_user: data.commentedBy.userID === userId
+                            });
+                        else {
+                            success({});
+                        }
                     },
                     error: function() {
                         console.log("error downvoting");

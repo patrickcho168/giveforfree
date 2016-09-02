@@ -6,6 +6,12 @@ var ensureLogin = require('connect-ensure-login');
 var moment = require("moment");
 var base64url = require('b64url');
 var crypto = require('crypto');
+var xss = require('xss');
+var bodyParser = require("body-parser");
+var csrf = require('csurf');
+
+var csrfProtection = csrf();
+var parseForm = bodyParser.urlencoded({ extended: true, limit: '50mb' });
 
 // Included to support <IE9
 function inArray(needle, haystack) {
@@ -20,14 +26,28 @@ function inArray(needle, haystack) {
 
 module.exports = function(app) {
 
-    app.post('/api/thank/profile/:profileId', ensureLogin.ensureLoggedIn(), function(req, res) {
+    app.get('/profile/:id/thank', function(req, res, next) {
+        console.log('gettingthanks');
+        var profileId = req.params.id;
+        db.Thank.where({
+            receiverID: profileId
+        }).orderBy('timeCreated', 'ASC').fetchAll({withRelated: ['thankedBy', 'upvote']}).then(function(thankData) {
+            res.json(thankData);
+        });
+    })
+
+    app.post('/api/thank/profile/:profileId', ensureLogin.ensureLoggedIn(), parseForm, function(req, res) {
         var userId = parseInt(req.user.appUserId); // thanker
         var profileId = parseInt(req.params.profileId); // who to thank
+        if (req.body.parent === '') {
+            req.body.parent = null;
+        }
         var newThank = new db.Thank({
             thankerID: userId,
-            message: req.body.message,
+            message: xss(req.body.content),
             receiverID: profileId,
-            timeCreated: moment().format("YYYY-MM-DD HH:mm:ss")
+            timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+            parentThank: req.body.parent
         });
         newThank.save().then(function(thank) {
             var newNote = new db.Notification({
@@ -38,42 +58,162 @@ module.exports = function(app) {
                 thankID: thank.attributes.thankID
             });
             newNote.save();
-            res.redirect('/profile/' + profileId);
+            db.Thank.where({
+                thankID: thank.attributes.thankID
+            }).fetch({withRelated: ['thankedBy', 'upvote']}).then(function(thankData) {
+                res.json(thankData);
+            });
         })
     })
 
-    app.post('/api/thank/item/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
-        var userId = parseInt(req.user.appUserId); // thanker
-        var itemId = parseInt(req.params.itemId); // what you want to thank for
-        db.Item.where({
-            itemID: itemId
-        }).fetch().then(function(itemData) {
-            if (itemData != null && itemData.attributes) {
-                var profileId = itemData.attributes.giverID;
-                var newThank = new db.Thank({
-                    thankerID: userId,
-                    message: req.body.message,
-                    receiverID: profileId,
-                    itemID: itemId,
-                    timeCreated: moment().format("YYYY-MM-DD HH:mm:ss")
-                });
-                newThank.save().then(function(thank) {
-                    var newNote = new db.Notification({
-                        timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
-                        active: 1,
-                        notificationType: 5,
-                        userID: userId,
-                        itemID: itemId,
+    app.post('/api/updatethank/profile/:thankId', ensureLogin.ensureLoggedIn(), parseForm, function(req,res) {
+        var userId = parseInt(req.user.appUserId);
+        var thankId = parseInt(req.params.thankId);
+        db.Thank.where({
+            thankID: thankId,
+            thankerID: userId
+        }).fetch().then(function(thankData) {
+            if (thankData) {
+                thankData.save({
+                    message: xss(req.body.content)
+                }).then(function(thank) {
+                    db.Thank.where({
                         thankID: thank.attributes.thankID
+                    }).fetch({withRelated: ['thankedBy', 'upvote']}).then(function(newThankData) {
+                        req.flash('success_messages', 'You have successfully edited your Thank You Message!');
+                        res.json(newThankData);
                     });
-                    newNote.save();
-                    res.redirect('/item/' + itemId);
                 })
             } else {
-                res.redirect('/item/' + itemId);
+                req.flash('error_messages', 'An error was encountered! Please try editing your Thank You Message again!');
             }
-        });
+        })
     })
+
+    app.post('/api/deletethank/profile/:thankId', ensureLogin.ensureLoggedIn(), function(req, res) {
+        var userId = parseInt(req.user.appUserId);
+        var thankId = parseInt(req.params.profileId);
+        db.Thank.where({
+            thankID: thankId
+        }).fetch().then(function(data) {
+            // If thank exists
+            if (data!=null) {
+                // Ensure comment belongs to user currently logged in
+                if (data.attributes && data.attributes.thankerID === userId) {
+                    data.where({
+                        thankID: thankId,
+                        thankerID: userId
+                    }).destroy();
+                    db.Notification.where({
+                        thankID: thankId
+                    }).fetch().then(function(oldNote) {
+                        if (oldNote != null) {
+                            oldNote.destroy();
+                            req.flash('success_messages', 'You have successfully deleted a Thank You Message!');
+                            res.json({});
+                        } else {
+                            req.flash('error_messages', 'An error was encountered! Please try deleting your Thank You Message again!');
+                            res.json({});
+                        }
+                    })
+                }
+            }
+        })
+    })
+
+    app.post('/api/thank/profile/upvotes/:thankId', ensureLogin.ensureLoggedIn(), function(req, res) {
+        console.log("UPVOTE");
+        var userId = parseInt(req.user.appUserId);
+        var thankId = parseInt(req.params.thankId);
+        console.log("USERID: " + userId);
+        console.log("THANKID: " + thankId);
+        db.ThankUpvote.where({
+            thankID: thankId,
+            userID: userId
+        }).fetch().then(function(data) {
+            console.log(data);
+            if (!data) {
+                var newThankUpvote = new db.ThankUpvote({
+                    thankID: thankId,
+                    userID: userId
+                });
+                newThankUpvote.save().then(function(thank) {
+                    console.log(thank);
+                    db.Thank.where({
+                        thankID: thankId
+                    }).fetch({withRelated: ['thankedBy', 'upvote']}).then(function(newThankData) {
+                        res.json(newThankData);
+                    });
+                })
+            } else {
+                db.Thank.where({
+                    thankID: thankId
+                }).fetch({withRelated: ['thankedBy', 'upvote']}).then(function(newThankData) {
+                    res.json(newThankData);
+                });
+            }
+        })
+    })
+
+    app.post('/api/thank/profile/downvotes/:thankId', ensureLogin.ensureLoggedIn(), function(req, res) {
+        console.log("DOWNVOTE");
+        var userId = parseInt(req.user.appUserId);
+        var thankId = parseInt(req.params.thankId);
+        db.ThankUpvote.where({
+            thankID: thankId,
+            userID: userId
+        }).fetch().then(function(data) {
+            if (data) {
+                data.destroy().then(function() {
+                    db.Thank.where({
+                        thankID: thankId
+                    }).fetch({withRelated: ['thankedBy', 'upvote']}).then(function(newThankData) {
+                        res.json(newThankData);
+                    });
+                })
+            } else {
+                db.Thank.where({
+                    thankID: thankId
+                }).fetch({withRelated: ['thankedBy', 'upvote']}).then(function(newThankData) {
+                    res.json(newThankData);
+                });
+            }
+        })
+    })
+
+    // THANK BY ITEM
+    // app.post('/api/thank/item/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
+    //     var userId = parseInt(req.user.appUserId); // thanker
+    //     var itemId = parseInt(req.params.itemId); // what you want to thank for
+    //     db.Item.where({
+    //         itemID: itemId
+    //     }).fetch().then(function(itemData) {
+    //         if (itemData != null && itemData.attributes) {
+    //             var profileId = itemData.attributes.giverID;
+    //             var newThank = new db.Thank({
+    //                 thankerID: userId,
+    //                 message: req.body.message,
+    //                 receiverID: profileId,
+    //                 itemID: itemId,
+    //                 timeCreated: moment().format("YYYY-MM-DD HH:mm:ss")
+    //             });
+    //             newThank.save().then(function(thank) {
+    //                 var newNote = new db.Notification({
+    //                     timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+    //                     active: 1,
+    //                     notificationType: 5,
+    //                     userID: userId,
+    //                     itemID: itemId,
+    //                     thankID: thank.attributes.thankID
+    //                 });
+    //                 newNote.save();
+    //                 res.redirect('/item/' + itemId);
+    //             })
+    //         } else {
+    //             res.redirect('/item/' + itemId);
+    //         }
+    //     });
+    // })
 
     function parse_signed_request(signed_request, secret) {
         encoded_data = signed_request.split('.', 2);
@@ -104,24 +244,6 @@ module.exports = function(app) {
         var data = parse_signed_request(signedRequest, appSecret);
     })
 
-    // Should we allow deletion of thanks? Or just edits?
-    // app.post('/api/deletethank/:thankId', ensureLogin.ensureLoggedIn(), function(req, res) {
-    //     var userId = parseInt(req.user.appUserId);
-    //     var thankId = parseInt(req.params.thankId);
-    //     db.Thank.where({
-    //         thankID: thankId,
-    //         thankerID: userId // only delete if thank belongs to user
-    //     }).fetch().then(function(data) {
-    //         // If thank exists
-    //         if (data!=null && data.attributes) {
-    //             data.destroy();
-    //             res.redirect('/item/' + itemId);
-    //         } else {
-    //             res.redirect('/');
-    //         }
-    //     })
-    // })
-
     // SHOW PROFILE DETAILS
     // SHOW PROFILE WANTS
     // SHOW PROFILE GIVING OUT
@@ -135,28 +257,14 @@ module.exports = function(app) {
                 db.User.where({
                     userID: otherUserId
                 }).fetch().then(function(user) {
-                    db.ProfilePageTotalGivenQuery(otherUserId, function(gifted) {
-                        db.ProfilePageTotalTakenQuery(otherUserId, function(taken) {
-                            db.Thank.where({
-                                receiverID: otherUserId
-                            }).orderBy('timeCreated', 'ASC').fetchAll({
-                                withRelated: ['thankedBy']
-                            }).then(function(thankData) {
-                                res.render('profile', {
-                                    loggedIn: false,
-                                    myProfile: mine,
-                                    user: user.attributes,
-                                    id: 0,
-                                    friendProperty: {},
-                                    friends: [],
-                                    totalGifted: gifted[0].numGiven,
-                                    totalTaken: taken[0].numTaken,
-                                    totalKarma: gifted[0].numGiven * 10,
-                                    thank: thankData.models,
-                                    notification: req.session.notification
-                                });
-                            });
-                        });
+                    res.render('profile', {
+                        loggedIn: false,
+                        myProfile: mine,
+                        user: user.attributes,
+                        id: 0,
+                        friendProperty: {},
+                        friends: [],
+                        notification: req.session.notification
                     });
                 });
             } else {
@@ -165,29 +273,16 @@ module.exports = function(app) {
                     userID: otherUserId
                 }).fetch().then(function(user) {
                     db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
-                        db.ProfilePageTotalGivenQuery(otherUserId, function(gifted) {
-                            db.ProfilePageTotalTakenQuery(otherUserId, function(taken) {
-                                db.Thank.where({
-                                    receiverID: otherUserId
-                                }).orderBy('timeCreated', 'ASC').fetchAll({
-                                    withRelated: ['thankedBy']
-                                }).then(function(thankData) {
-                                    res.render('profile', {
-                                        loggedIn: true,
-                                        myProfile: mine,
-                                        user: user.attributes,
-                                        id: req.user.appUserId,
-                                        friendProperty: req.user.fbFriendsToPropertyMap,
-                                        friends: data.models,
-                                        totalGifted: gifted[0].numGiven,
-                                        totalTaken: taken[0].numTaken,
-                                        totalKarma: gifted[0].numGiven * 10,
-                                        thank: thankData.models,
-                                        notification: req.session.notification,
-                                        moment: moment
-                                    });
-                                });
-                            });
+                        console.log("DONE QUERIES ");
+                        res.render('profile', {
+                            loggedIn: true,
+                            myProfile: mine,
+                            user: user.attributes,
+                            id: req.user.appUserId,
+                            friendProperty: req.user.fbFriendsToPropertyMap,
+                            friends: data.models,
+                            notification: req.session.notification,
+                            moment: moment
                         });
                     });
                 });

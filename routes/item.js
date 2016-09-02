@@ -45,7 +45,7 @@ module.exports = function(app) {
         }).fetch().then(function(commentData) {
             if (commentData) {
                 commentData.save({
-                    message: req.body.content
+                    message: xss(req.body.content)
                 }).then(function(comment) {
                     db.Comment.where({
                         commentID: comment.attributes.commentID

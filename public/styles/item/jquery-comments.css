@@ -69,14 +69,14 @@ http://viima.github.io/jquery-comments/*/
 
 .jquery-comments .profile-picture {
 	float: left;
-	width: 3.6rem;
-	height: 3.6rem;
+	width: 5.0rem;
+	height: 5.0rem;
 	max-width: 50px;
 	max-height: 50px;
 }
 
 .jquery-comments i.profile-picture {
-	font-size: 3.4em;
+	font-size: 5.0rem;
 	text-align: center;
 }
 
@@ -175,7 +175,7 @@ http://viima.github.io/jquery-comments/*/
 
 	border: 1px solid #CCC;;
 	background: #FFF;
-	font-size: 1em;
+	font-size: 14px;
 	line-height: 1.45em;
 	padding: .25em .8em;
 	padding-right: 2em;
@@ -258,6 +258,7 @@ http://viima.github.io/jquery-comments/*/
 
 .jquery-comments ul.navigation .navigation-wrapper {
 	position: relative;
+	font-size: 14px;
 }
 
 .jquery-comments ul.navigation li {
@@ -570,12 +571,12 @@ http://viima.github.io/jquery-comments/*/
 }
 
 .jquery-comments ul.main li.comment .child-comments .profile-picture {
-	width: 2.4rem;
-	height: 2.4rem;
+	width: 5.0rem;
+	height: 5.0rem;
 }
 
 .jquery-comments ul.main li.comment .child-comments i.profile-picture {
-	font-size: 2.4em;
+	font-size: 5.0rem;
 }
 
 .jquery-comments ul.main li.comment .child-comments li.toggle-all {

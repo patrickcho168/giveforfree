@@ -36,6 +36,8 @@
         var myName = "<%= user.name %>";
         var myAppId = <%= id %>;
         var appProfileId = <%= user.userID %>;
+        console.log(myAppId);
+        console.log(appProfileId);
 
         $(window).load(function() {
             myFriends = <%- JSON.stringify(friends) %>;
@@ -237,15 +239,15 @@
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
                         <p>
                             <%= user.name %> has nothing to give for now.
-<<<<<<< HEAD
-                                <br> Come back later! </p>
-                    </div> -->
+                            <br> Come back later! 
+                        </p>
+                    </div>
+                </div>
+                <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="thanks">
+                    <div id="comments-container" style="margin-left: 15px; margin-right: 15px;">
 
-                                </div>
-                                <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="thanks">
-                                    <div id="comments-container" style="margin-left: 15px; margin-right: 15px;">
-
-                                    </div>
+                    </div>
+                </div>
                                     <!-- <div id="thanks-placeholder">
                                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
                                         <p>
@@ -255,7 +257,6 @@
                                     </div> -->
 
                                     <!-- <div id="gifts-loader">
-=======
                             <br/>
                             Come back later!
                         </p>
@@ -264,7 +265,6 @@
                 <!-- Wants -->
                 <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="wants">
                     <div id="wants-placeholder">
->>>>>>> d485625481afd3883579bf8ec2c40e38456d2ac3
                         <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
                         <p>
                             <%= user.name %> has no wants for now.
@@ -361,38 +361,3 @@
 </body>
 
 </html>
-
-<!-- FOR REFERENCE: Thanks Implementation -->
-<!-- <div>
-    <table style="width:100%">
-        <tr>
-            <th>Name</th>
-            <th>Facebook ID</th>
-            <th>Message</th>
-            <th>Time</th>
-        </tr>
-        <% for (var i=0; i<thank.length; i++) { %>
-            <tr>
-                <td>
-                    <%= thank[i].relations.thankedBy.attributes.name %>
-                </td>
-                <td>
-                    <%= thank[i].relations.thankedBy.attributes.fbID %>
-                </td>
-                <td>
-                    <%= thank[i].attributes.message %>
-                </td>
-                <td>
-                    <%= thank[i].attributes.timeCreated %>
-                </td>
-            </tr>
-            <% } %>
-    </table>
-    <form action="/api/thank/profile/<%= user.userID %>" method="post">
-        Message:
-        <br>
-        <input type="text" name="message">
-        <br>
-        <input type="submit" value="Submit">
-    </form>
-</div> -->
