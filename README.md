@@ -1,8 +1,11 @@
 # Give For Free
 
-**Group 3**<br>
-Application Name: Give For Free<br>
-URL: https://www.giveforfree.sg/<br>
+**Group 3**
+
+Application Name: Give For Free
+
+URL: https://www.giveforfree.sg/
+
 Visit our website [here](https://www.giveforfree.sg/)!
 
 | Name                   | Matric No. | Contribution                                                                                             |
