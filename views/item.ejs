@@ -101,7 +101,8 @@
 
         function messageUser() {
                 // alert("CLICKED MESSAGE");
-                var toId = item.fbID;
+                var toId = null;
+
                 <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
                 toId = <%= item.fbID %>;
                 <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
