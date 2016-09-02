@@ -299,7 +299,7 @@ $(document).ready(function() {
                 type: 'post',
                 url: '/api/delete-user',
                 success: function(){
-                    document.location = "/";
+                    document.location = "/logout";
                 }
             });
         });
