@@ -50,12 +50,12 @@ module.exports = function(app) {
                     db.Comment.where({
                         commentID: comment.attributes.commentID
                     }).fetch({withRelated: ['commentedBy', 'upvote']}).then(function(newCommentData) {
-                        req.flash('success_messages', 'You have successfully edited a comment!');
+                        // req.flash('success_messages', 'You have successfully edited a comment!');
                         res.json(newCommentData);
                     });
                 })
             } else {
-                req.flash('error_messages', 'An error was encountered! Please try editing your comment again!');
+                // req.flash('error_messages', 'An error was encountered! Please try editing your comment again!');
             }
         })
     })
@@ -86,7 +86,7 @@ module.exports = function(app) {
             db.Comment.where({
                 commentID: comment.attributes.commentID
             }).fetch({withRelated: ['commentedBy', 'upvote']}).then(function(commentData) {
-                req.flash('success_messages', 'You have successfully posted a comment!');
+                // req.flash('success_messages', 'You have successfully posted a comment!');
                 res.json(commentData);
             });
         })
@@ -111,10 +111,10 @@ module.exports = function(app) {
                     }).fetch().then(function(oldNote) {
                         if (oldNote != null) {
                             oldNote.destroy();
-                            req.flash('success_messages', 'You have successfully deleted a comment!');
+                            // req.flash('success_messages', 'You have successfully deleted a comment!');
                             res.json({});
                         } else {
-                            req.flash('error_messages', 'An error was encountered! Please try deleting your comment again!');
+                            // req.flash('error_messages', 'An error was encountered! Please try deleting your comment again!');
                             res.json({});
                         }
                     })

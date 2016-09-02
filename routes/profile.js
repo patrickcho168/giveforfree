@@ -79,12 +79,12 @@ module.exports = function(app) {
                     db.Thank.where({
                         thankID: thank.attributes.thankID
                     }).fetch({withRelated: ['thankedBy', 'upvote']}).then(function(newThankData) {
-                        req.flash('success_messages', 'You have successfully edited your Thank You Message!');
+                        // req.flash('success_messages', 'You have successfully edited your Thank You Message!');
                         res.json(newThankData);
                     });
                 })
             } else {
-                req.flash('error_messages', 'An error was encountered! Please try editing your Thank You Message again!');
+                // req.flash('error_messages', 'An error was encountered! Please try editing your Thank You Message again!');
             }
         })
     })
@@ -108,10 +108,10 @@ module.exports = function(app) {
                     }).fetch().then(function(oldNote) {
                         if (oldNote != null) {
                             oldNote.destroy();
-                            req.flash('success_messages', 'You have successfully deleted a Thank You Message!');
+                            // req.flash('success_messages', 'You have successfully deleted a Thank You Message!');
                             res.json({});
                         } else {
-                            req.flash('error_messages', 'An error was encountered! Please try deleting your Thank You Message again!');
+                            // req.flash('error_messages', 'An error was encountered! Please try deleting your Thank You Message again!');
                             res.json({});
                         }
                     })
