@@ -103,9 +103,9 @@
                 var toId = null;
 
                 <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                toId = <%= item.fbID %>;
+                toId = '<%= item.fbID %>';
                 <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                toId = <%= item.takerFbID %>;
+                toId = '<%= item.takerFbID %>';
                 <% } %>
 
                 console.log(toId);

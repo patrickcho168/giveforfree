@@ -492,7 +492,7 @@ module.exports = function(app) {
 
         // Find Item
         db.ItemPageQuery(userId, itemId, function(data) {
-
+            console.log(data);
             if (!(data.length)) {
                 next();
             } else {
