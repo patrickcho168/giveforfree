@@ -36,7 +36,7 @@ module.exports = function(app) {
         });
     })
 
-    app.post('/api/thank/profile/:profileId', ensureLogin.ensureLoggedIn(), parseForm, function(req, res) {
+    app.post('/api/thank/profile/:profileId', ensureLogin.ensureLoggedIn(), parseForm, csrfProtection, function(req, res) {
         var userId = parseInt(req.user.appUserId); // thanker
         var profileId = parseInt(req.params.profileId); // who to thank
         if (req.body.parent === '') {
