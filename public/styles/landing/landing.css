@@ -1,36 +1,3 @@
-/* Main */
-
-html,
-body {
-    width: 100%;
-    height: 100%;
-}
-body {
-    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 150%;
-}
-h1 {
-    font-size: 2.75em;
-}
-h2 {
-    font-size: 2.50em;
-}
-h3 {
-    font-size: 2.25em;
-}
-h4 {
-    font-size: 2.00em;
-}
-h5 {
-    font-size: 1.75em;
-}
-h6 {
-    font-size: 1.50em;
-}
-p {
-    font-size: 1.35em;
-    font-weight: lighter;
-}
 
 /* Login */
 
@@ -66,15 +33,15 @@ p {
 .about-item {
     margin-bottom: 30px;
 }
-span.glyphicon-gift {
+span.glyphicon-leaf {
     padding: 35px 0;
     font-size: 6.0em;
 }
-span.glyphicon-user {
+span.glyphicon-usd {
     padding: 35px 0;
     font-size: 6.0em;
 }
-span.glyphicon-fire {
+span.glyphicon-thumbs-up {
     padding: 35px 0;
     font-size: 6.0em;
 }
@@ -118,16 +85,4 @@ span.glyphicon-cog {
 span.glyphicon-globe {
     padding: 35px 0;
     font-size: 6.0em;
-}
-
-/* Footer */
-
-footer {}
-.contact-list {
-    text-align: left;
-    padding-top: 20px;
-}
-.text-muted {
-    text-align: right;
-    padding-top: 20px;
 }

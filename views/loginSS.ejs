@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
-
     <!-- Metadata and Responsive Viewport -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,64 +9,121 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Give For Free - Meeting the needs of others</title>
+    <title>Give For Free</title>
+
+    <!-- JQuery Support -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <!-- Bootstrap Support -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <!-- Other Scripts -->
+    <!-- Material Elements -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.min.css">
+    <link rel="stylesheet" href="../assets/materialDatePicker/css/bootstrap-material-datetimepicker.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Native Scripts -->
+    <script src="scripts/common/common.js"></script>
     <script src="scripts/landing/landing.js"></script>
 
+    <!-- Push Notifications -->
+    <!-- <script src="/scripts/common/notification2.js"></script> -->
+
+    <!-- Facebook Like -->
+    <script src="/scripts/common/fblike.js"></script>
+
+    <!-- Bootstrap CSS (override) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Pure CSS (Override) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/base-context-min.css">
+
+    <!-- Font Awesome (Override) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
     <!-- CSS Styles -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles/landing/default.css">
+    <link rel="stylesheet" href="styles/common/common.css">
+    <link rel="stylesheet" href="styles/landing/landing.css">
+
+    <!-- Bootstrap Notifications -->
+    <link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
+    <script src="../scripts/common/notify.min.js"></script>
+
+    <!-- Animation -->
     <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
 
     <!-- Font Support -->
-    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    <script src="/scripts/common/analytics.js"></script>
 
 </head>
 
-
 <body>
 
+    <!-- Facebook Like -->
+    <div id="fb-root"></div>
+
+    <!-- Page Loader -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
 
             <!-- Left Header Icon -->
             <div class="navbar-header">
+
+                <!-- Collapsed Nav -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#login">Give For Free</a>
+
+                <!-- Logo and Name -->
+                <a class="navbar-brand" href="/">
+                    <h4 style="margin-top: 0px;">
+                    <img src="../images/common/logo-new.svg" width="30px" height="30px" style="margin-top: -5px;"/>
+                    Give For Free!</h4>
+                </a>
             </div>
 
-            <!-- Right Menu -->
+            <!-- Menu -->
             <div class="collapse navbar-collapse" id="nav-menu">
-                <ul class="nav navbar-nav">
-                </ul>
+
                 <ul class="nav navbar-nav navbar-right">
-                    <li id="nav-login"><a href="#login">Login</a></li>
-                    <li id="nav-about"><a href="#about">About</a></li>
-                    <li id="nav-contact"><a href="#contact">Contact Us</a></li>
+                    <li id="nav-feed">
+                        <a href="/">
+                            <i class="fa fa-rss" aria-hidden="true"></i> Feed
+                        </a>
+                    </li>
+                    <li id="nav-logout">
+                        <a href="/login/facebook" onclick="loginLoader();">
+                            <i class="fa fa-lock" aria-hidden="true"></i> Login
+                        </a>
+                    </li>
                 </ul>
             </div>
-
         </div>
     </nav>
 
     <!-- Section 1: Login -->
     <header id="login" class="login">
         <div class="text-vertical-center">
-            <h1>Free stuff, take only.</h1>
-            <h3>Do you have anything to give away today?</h3>
+            <h1>It's FREE</h1>
+            <h3>Give and Take Pre-loved Goods</h3>
             <br>
-            <a href="/login/facebook" class="btn btn-primary animated slideInUp"><h6>Login using Facebook</h6></a>
+            <a href="/login/facebook" onclick="loginLoader();" class="btn btn-md btn-primary animated infinite pulse">
+                <h4><i class="fa fa-facebook-square" aria-hidden="true"></i> Login using Facebook</h4>
+            </a>
         </div>
     </header>
 
@@ -85,36 +140,36 @@
 
                         <div class="col-md-4 col-sm-6">
                             <div class="about-item">
-                                <span class="glyphicon glyphicon-gift" id="gift-icon" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-leaf" id="gift-icon" aria-hidden="true"></span>
                                 <h6>
-                                    <strong>Gifts in your social circle</strong>
+                                    <strong>Zero Waste</strong>
                                 </h6>
                                 <p>
-                                    One man's junk is another man's treasure! Help people on Facebook by looking for something you want!
+                                    One man's junk is another man's treasure.
                                 </p>
                             </div>
                         </div>
 
                         <div class="col-md-4 col-sm-6">
                             <div class="about-item">
-                                <span class="glyphicon glyphicon-user" id="friends-icon" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-usd" id="friends-icon" aria-hidden="true"></span>
                                 <h6>
-                                    <strong>Make new friends</strong>
+                                    <strong>Shopping For FREE</strong>
                                 </h6>
                                 <p>
-                                    Why not befriend a helpful stranger? By either giving or receiving, you are helping another friend out.
+                                    We are all about the 100% discounts.
                                 </p>
                             </div>
                         </div>
 
                         <div class="col-md-4 col-sm-6">
                             <div class="about-item">
-                                <span class="glyphicon glyphicon-fire" id="karma-icon" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-thumbs-up" id="karma-icon" aria-hidden="true"></span>
                                 <h6>
-                                    <strong>Gain good karma</strong>
+                                    <strong>Engine Of Reciprocity</strong>
                                 </h6>
                                 <p>
-                                    Be recognised for your good deeds! Contribute to the community and clock karma points!
+                                    Give and take makes good friends. <br> - Scottish Proverb
                                 </p>
                             </div>
                         </div>
@@ -124,7 +179,7 @@
 
                 <!-- Features -->
                 <div class="col-lg-10 col-lg-offset-1">
-                    <h2>Features</h2>
+                    <h2>How does it work?</h2>
                     <hr class="small">
 
                     <div class="col-md-12" id="sub-first">
@@ -135,20 +190,20 @@
 
                         <div class="col-sm-4 feature">
                             <img class="feature-icons" id="feat-1" src="images/landing/upload-images.svg">
-                            <h6>Upload Images</h6>
+                            <h6>Snap</h6>
                             <p class="lead">Build an image gallery for your gift</p>
                         </div>
 
                         <div class="col-sm-4 feature">
                             <img class="feature-icons" id="feat-2" src="images/landing/controlled-visibility.svg">
-                            <h6>Controlled Visibility</h6>
-                            <p class="lead">Control who to view and snag your items</p>
+                            <h6>Post</h6>
+                            <p class="lead">Share your gift with all your Facebook friends</p>
                         </div>
 
                         <div class="col-sm-4 feature">
                             <img class="feature-icons " id="feat-3" src="images/landing/pick-lottery.svg">
-                            <h6>Pick or Lottery</h6>
-                            <p class="lead">Pick manually or draw winners randomly</p>
+                            <h6>Give</h6>
+                            <p class="lead">Pick the lucky one to receive your gift</p>
                         </div>
 
                     </div>
@@ -156,25 +211,25 @@
                     <div class="col-md-12" id="sub-second">
 
                         <div class="feature-subtitles">
-                            <h5><strong>Snagging</strong></h5>
+                            <h5><strong>Receiving</strong></h5>
                         </div>
 
                         <div class="col-sm-4 feature">
                             <img class="feature-icons" id="feat-4" src="images/landing/curated-selection.svg">
-                            <h6>Curated Selection</h6>
-                            <p class="lead">Receive a curated gallery of freebies in the community</p>
+                            <h6>Snag</h6>
+                            <p class="lead">Indicate your interest in a FREE gift you've always wanted</p>
                         </div>
 
                         <div class="col-sm-4 feature">
                             <img class="feature-icons" id="feat-5" src="images/landing/smart-recommendations.svg">
-                            <h6>Smart Recommendations</h6>
-                            <p class="lead">Get recommendations for items you are interested in</p>
+                            <h6>Receive</h6>
+                            <p class="lead">It's your lucky day! Go get your FREE gift</p>
                         </div>
 
                         <div class="col-sm-4 feature">
                             <img class="feature-icons" id="feat-6" src="images/landing/integrated-messaging.svg">
-                            <h6>Integrated Messaging</h6>
-                            <p class="lead">Native integration with Messenger to convey your gratitude</p>
+                            <h6>Thank</h6>
+                            <p class="lead">Show your appreciation to the giver</p>
                         </div>
 
                     </div>
@@ -192,23 +247,23 @@
                 <div class="col-lg-10 col-lg-offset-1 text-center">
                     <h2>Our Team</h2>
                     <hr class="small">
-                    <div class="contact-row col-md-12">
+                    <div class="contact-row col-sm-12">
 
-                        <div class="col-md-6 contact-item">
-                            <div class="col-md-4">
+                        <div class="col-sm-6 contact-item">
+                            <div class="col-sm-4">
                                 <span class="glyphicon glyphicon-bullhorn" id="bullhorn-icon" aria-hidden="true"></span>
                             </div>
-                            <div class="col-md-8 teammate-description">
+                            <div class="col-sm-8 teammate-description">
                                 <h5> Ng Xu Jie </h5>
                                 <p> Xu Jie is our team manager, marketeer and front-end developer. </p>
                             </div>
                         </div>
 
-                        <div class="col-md-6 contact-item">
-                            <div class="col-md-4">
+                        <div class="col-sm-6 contact-item">
+                            <div class="col-sm-4">
                                 <span class="glyphicon glyphicon-blackboard" id="blackboard-icon" aria-hidden="true"></span>
                             </div>
-                            <div class="col-md-8 teammate-description">
+                            <div class="col-sm-8 teammate-description">
                                 <h5> Huang Lie Jun </h5>
                                 <p> Lie Jun is our UX/UI designer and front-end developer. </p>
                             </div>
@@ -217,25 +272,25 @@
                     </div>
 
 
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
 
-                        <div class="col-md-6 contact-item">
-                            <div class="col-md-4">
+                        <div class="col-sm-6 contact-item">
+                            <div class="col-sm-4">
                                 <span class="glyphicon glyphicon-cog" id="cog-icon" aria-hidden="true"></span>
                             </div>
-                            <div class="col-md-8 teammate-description">
+                            <div class="col-sm-8 teammate-description">
                                 <h5> Ken Oung Yong Quan </h5>
-                                <p> Ken is our back-end developer, managing ... </p>
+                                <p> Ken is our back-end developer, managing our database and server APIs. </p>
                             </div>
                         </div>
 
-                        <div class="col-md-6 contact-item">
-                            <div class="col-md-4">
+                        <div class="col-sm-6 contact-item">
+                            <div class="col-sm-4">
                                 <span class="glyphicon glyphicon-globe" id="globe-icon" aria-hidden="true"></span>
                             </div>
-                            <div class="col-md-8 teammate-description">
+                            <div class="col-sm-8 teammate-description">
                                 <h5> Patrick Cho </h5>
-                                <p> Patrick is our back-end developer, managing ... </p>
+                                <p> Patrick is our back-end developer, managing our database and server APIs. </p>
                             </div>
                         </div>
 
@@ -249,23 +304,19 @@
 
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 col-lg-offset-1 text-center">
-                    <hr class="small">
-                    <ul class="col-lg-6 list-unstyled contact-list">
-                        <li>
-                            <span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 6123 4567
-                        </li>
-                        <li>
-                            <span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">contact@giveforfree.com</a>
-                        </li>
-                    </ul>
-                    <p class="col-lg-6 text-muted">Copyright &copy; Give For Free 2016 </p>
+        <div class="container footer-container">
+            <div class="col-xs-10 col-xs-offset-1 text-center">
+                <hr class="xsall">
+                <div class="col-xs-12 text-center" style="padding-bottom: 10px;">
+                    <small><span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true">  </span>  <a href="mailto:giveforfreefeedback@gmail.com"> giveforfreefeedback[at]gmail[dot]com</a></small>
+                    <br>
+                    <small><span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span>  <a href="/privacy"> Privacy Clause</a></small>
+                </div>
+                <div class="col-xs-12 text-center">
+                    <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
                 </div>
             </div>
         </div>
-        <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
     </footer>
 
 </body>

@@ -1,170 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
-
 	<!-- Metadata and Responsive Viewport -->
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="">
 	<meta name="author" content="">
+	<link rel="manifest" href="/manifest.json">
 
 	<title>Give For Free - Meeting the needs of others</title>
 
 	<!-- Bootstrap Support -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-	<!-- Other Scripts -->
-	<script src="scripts/home/home.js"></script>
+	<!-- Pure CSS (Override) -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/base-context-min.css">
+
+	<!-- Font Awesome (Override) -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+	<!-- Material Elements -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.min.css">
+	<link rel="stylesheet" href="../assets/materialDatePicker/css/bootstrap-material-datetimepicker.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+	<!-- Value Assignment to JS -->
+	<script>
+		var loggedIn = <%= loggedIn %>;
+	</script>
+
+	<!-- Native Scripts -->
+	<script src="/scripts/common/common.js"></script>
+	<script src="/scripts/home/home.js"></script>
+
+	<!-- Push Notifications -->
+	<!-- <script src="/scripts/common/notification2.js"></script> -->
+
+	<!-- Facebook Like -->
+    <script src="/scripts/common/fblike.js"></script>
+
+	<!-- Bootstrap CSS (override) -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 	<!-- CSS Styles -->
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="styles/home/home.css">
+	<link rel="stylesheet" href="/styles/common/common.css">
+	<link rel="stylesheet" href="/styles/common/bootstrap-edit.css">
+	<link rel="stylesheet" href="/styles/home/home.css">
+	<link rel="stylesheet" href="/styles/common/ribbon.css">
+
+	<!-- Bootstrap Notifications -->
+	<link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
+	<script src="../scripts/common/notify.min.js"></script>
+
+	<!-- Animation -->
 	<link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
 
 	<!-- Font Support -->
-	<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+	<!-- Google Analytics -->
+	<script src="/scripts/common/analytics.js"></script>
 
 </head>
 
 
 <body>
 
-	<!-- AJAX Action Pre-Loader -->
-	<!-- <div class="loader">
-		<div class="loader-inner">
-			<div class="loader-line-wrap">
-				<div class="loader-line"></div>
-			</div>
-			<div class="loader-line-wrap">
-				<div class="loader-line"></div>
-			</div>
-			<div class="loader-line-wrap">
-				<div class="loader-line"></div>
-			</div>
-			<div class="loader-line-wrap">
-				<div class="loader-line"></div>
-			</div>
-			<div class="loader-line-wrap">
-				<div class="loader-line"></div>
-			</div>
-		</div>
-	</div> -->
+	<!-- Facebook Like -->
+    <div id="fb-root"></div>
+	<!-- Page Loader -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
 
-	<!-- <div class="loader" id="loader"></div> -->
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
 
-	<!-- Navigation Bar -->
-	<nav class="navbar navbar-default navbar-fixed-top">
-		<div class="container-fluid">
+            <!-- Left Header Icon -->
+            <div class="navbar-header">
 
-			<!-- Left Header Icon -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="/">Give For Free</a>
-			</div>
+                <!-- Collapsed Nav -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-			<!-- Menu -->
-			<div class="collapse navbar-collapse" id="nav-menu">
+                <!-- Logo and Name -->
+                <a class="navbar-brand" href="/">
+                    <h4 style="margin-top: 0px;">
+                    <img src="../images/common/logo-new.svg" width="30px" height="30px" style="margin-top: -5px;"/>
+                    Give For Free!</h4>
+                </a>
+            </div>
 
-				<!-- Navbar Search -->
-				<form class="navbar-form navbar-left" role="search">
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="#tags, people, items">
-					</div>
-				</form>
+            <!-- Menu -->
+            <div class="collapse navbar-collapse" id="nav-menu">
 
-				<!-- User Actions Menu -->
-				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown" id="nav-user">
-						<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="/profile/<%= user.appUserId %>">Profile</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="/logout">Logout</a></li>
-						</ul>
-					</li>
-					<li class="active" id="nav-feed"><a>Feed</a></li>
-					<li id="nav-discover"><a>Discover</a></li>
-					<li id="nav-gift"><a>Gift</a></li>
-				</ul>
+                <!-- User Actions Menu -->
+                <% if (loggedIn) { %>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li id="nav-create">
+                            <a href="/upload">
+                                <i class="fa fa-gift" aria-hidden="true"></i> Give
+                            </a>
+                        </li>
+                        <li id="nav-feed" class="active">
+                            <a href="/">
+                                <i class="fa fa-rss" aria-hidden="true"></i> Feed
+                            </a>
+                        </li>
+                        <li id="nav-profile">
+                            <a href="/profile/<%= id %>">
+                                <i class="fa fa-user" aria-hidden="true"></i> Profile
+                            </a>
+                        </li>
 
-			</div>
+                        <% if (typeof notification != 'undefined') { %>
+                            <!-- Notifications -->
+                            <%- include('notification'); %>
+                                <!-- End Notifications -->
+                        <% } %>
 
-		</div>
-	</nav>
+                        <!-- Logout -->
+                        <li id="nav-logout">
+                            <a href="/logout">
+                                <i class="fa fa-lock" aria-hidden="true"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                <% } else { %>
+                    <!-- Logged Out Navbar Menu -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <li id="nav-feed">
+                            <a href="/">
+                                <i class="fa fa-rss" aria-hidden="true"></i> Feed
+                            </a>
+                        </li>
+						<li id="nav-logout">
+                            <a href="/login/facebook" onclick="loginLoader();">
+                                <i class="fa fa-lock" aria-hidden="true"></i> Login
+                            </a>
+                        </li>
+                    </ul>
+                <% } %>
+            </div>
+        </div>
+    </nav>
 
-	<a href="/upload" type="button" class="btn btn-danger btn-circle-lg create-gift-button">
-		<span class="glyphicon glyphicon-gift"></span>
-	</a>
+	<!-- Main Content Area -->
+	<div class="container main-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<!-- Message Flashing -->
+        <!-- Errors -->
+        <% if (locals.error_messages) {
+            error_messages.forEach(function(message) { %>
+            <div class="alert alert-warning"><strong>Uh-oh! </strong>
+                <%= message %>
+            </div>
+            <% });
+        } %>
+        <!-- Success -->
+        <% if (locals.success_messages) {
+            success_messages.forEach(function(message) { %>
+            <div class="alert alert-success"><strong>Awesome! </strong>
+                <%= message %>
+            </div>
+            <% });
 
-	<!-- Scroll Container -->
-	<div class="infinite-scroll-container col-lg-10 col-lg-offset-1" id="infinite-scroll-container"></div>
+        } %>
 
-	<!-- Footer -->
-	<footer>
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-10 col-lg-offset-1 text-center">
-					<hr class="small">
-					<ul class="col-lg-6 list-unstyled contact-list">
-						<li>
-							<span class="glyphicon glyphicon-phone-alt" id="phone-alt-icon" aria-hidden="true"></span> : (+65) 6123 4567
-						</li>
-						<li>
-							<span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true"></span> : <a href="mailto:contact@giveforfree.com">contact@giveforfree.com</a>
-						</li>
-					</ul>
-					<p class="col-lg-6 text-muted">Copyright &copy; Give For Free 2016 </p>
+		<!-- Title Banner -->
+		<div style="padding-left: 20px; padding-right: 20px;">
+			<div class="panel panel-default title-panel col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-ms-10 col-ms-offset-1 col-xs-10 col-xs-offset-1" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin-bottom:20px;" align="center">
+				<img src="/images/home/globe.svg" style="display: block; margin-left: auto; margin-right: auto;  padding: 10px 0; width: 100px;">
+				<p style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; padding-top: 15px; font-weight: bold; color: white; ">
+					Awesomeness in the Community
+				</p>
+				<h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;">
+					Give our things a second chance!
+				</h4>
+				<div class="fb-like" data-href="http://www.giveforfree.sg" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true" style="bottom:10px;">
 				</div>
 			</div>
 		</div>
-		<a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
-	</footer>
+
+		<!-- Scroll Container -->
+		<div class="infinite-scroll-container  col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1" id="infinite-scroll-container" align="center">
+			<!-- Placeholder -->
+			<div id="placeholder-main" class="col-lg-10 col-lg-offset-1">
+				<row>
+					<img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px; display: block;"/>
+				</row>
+				<p style="width: 100%;">There is nothing in the community.
+					<br> Start contributing now!
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="col-xs-10 col-xs-offset-1 text-center">
+                <hr class="xsall">
+                <div class="col-xs-12 text-center" style="padding-bottom: 10px;">
+                    <small><span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true">  </span>  <a href="mailto:giveforfreefeedback@gmail.com"> giveforfreefeedback[at]gmail[dot]com</a></small>
+                    <br>
+                    <small><span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span>  <a href="/privacy"> Privacy Clause</a></small>
+                </div>
+                <div class="col-xs-12 text-center">
+                    <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 </body>
 
-
 </html>
-
-<!-- <p>
-	Hello, <%= user.displayName %>. View your <a href="/profile/<%= user.appUserId %>">profile</a>.
-</p>
-
-Items Available From Your Friends:
-<% if (availItems.length > 0) { %>
-<table style="width:100%">
-	<tr>
-		<th>Item Name</th>
-		<th>Item Description</th>
-		<th>Item timeCreated</th>
-		<th>Item timeExpired</th>
-		<th>Item Giver</th>
-		<th>Item Image</th>
-	</tr>
- 	<% for(var i=0; i<availItems.length; i++) { %>
- 		<tr>
- 			<td><a href="/item/<%=availItems[i].attributes.itemID%>"><%= availItems[i].attributes.title         %></a></td>
- 			<td><%= availItems[i].attributes.description   %></td>
- 			<td><%= availItems[i].attributes.timeCreated   %></td>
- 			<td><%= availItems[i].attributes.timeExpired   %></td>
- 			<td><a href="/profile/<%=availItems[i].attributes.giverID%>"><%= friendProperty[availItems[i].attributes.giverID].name%></a></td>
- 			<td><img src="https://d24uwljj8haz6q.cloudfront.net/<%= availItems[i].attributes.imageLocation %>" width="50"></td>
- 		</tr>
-	<% } %>
-</table>
-<% } else { %>
-	<p> No items available for taking currently. Try posting an item! </p>
-<% } %><br/>
-
-Visit your <a href="/friends">friends</a>.<br/>
-<a href="/upload">Upload</a> an Item.<br/>
-<a href="/logout">Logout</a>.
-</p> -->

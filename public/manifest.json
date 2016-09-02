@@ -1,0 +1,11 @@
+{
+  "manifest_version": 1,
+  "version": "1.0.0",
+  "short_name": "Give For Free",
+  "default_locale": "en",
+  "name": "Give For Free",
+  "gcm_sender_id": "17167131939",
+  "start_url": "/login",
+  "display": "standalone",
+  "orientation": "portrait"
+}

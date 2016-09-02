@@ -1,258 +1,141 @@
-// Want or Unwant
-$(function() {
-    $(".itemcall").on("click", function() {
-        console.log("HELLO");
-        var itemId = $(this).attr('name');
-        console.log(itemId);
-    });
-});
+// Views to append into the scroll container
+var html = '';
 
-// Navbar Selection Fix
-$(function() {
-    $(".nav a").on("click", function() {
-        if ( !$(this).parent().hasClass('active') && $(this).parent().attr('id') !== 'nav-user' ) {
-            // TODO:Add logic to determine whether to clear or not
-            // Clear section
-            var node = document.getElementById('infinite-scroll-container');
-            while (node.hasChildNodes()) {
-                node.removeChild(node.lastChild);
-            }
+// Boolean to record the number of times the scroll hits the floor
+var triggered = 0;
 
-            $(".nav").find(".active").removeClass("active");
-            $(this).parent().addClass("active");
+// Tracker
+var lastItemId = 0;
 
-            // addViews(3);
-            var activeTab = $(".nav").find(".active");
-            var name = "null";
-            lastItemId = 0;
+// Number of items to load every AJAX
+var numItems = 9;
 
-            var ajaxRequest = null;
+var canAJAX = false;
 
-            if (activeTab != null) {
-                name = activeTab.attr('id');
-            }
-            console.log(name);
+var urlAJAX = '/api/allItems/' + 0 + '/' + numItems;;
 
-            // Construct AJAX Request based on type
-            switch (name) {
-                case 'nav-feed':
-                    urlAJAX = '/api/friendItems/0/' + numItems;
-                    ajaxRequest = null;
-                    addRealViews(html, urlAJAX);
-                    break;
+// AJAX Infinite Scrolling Function
+function addRealViews(html, url) {
 
-                case 'nav-discover':
-                    urlAJAX = '/api/allItems/0/' + numItems;
-                    ajaxRequest = null;
-                    addRealViews(html, urlAJAX);
-                    break;
+    console.log("entered add views logic ... time for AJAX!");
 
-                case 'nav-gift':
-                    urlAJAX = null;
-                    ajaxRequest = null;
-                    break;
-
-                // default:
-                //     urlAJAX = '/api/friendItems/0/' + numItems;
-                //     ajaxRequest = null;
-            }
-
-            
-        }
-
-    });
-});
-
-// AJAX Call for Infinite Scroll
-// function addViews(amount) {
-//     for (i = 1; i <= amount; ++i) {
-//         html = '<div class="col-sm-6 col-md-4 item">';
-//         // Main Item Photo
-//         html += '<div class="thumbnail">';
-//         html += '<a href="#" class="">';
-//         html += '<img src="' + '/images/home/default-placeholder.png' + '">';
-//         // Item Title
-//         html += '<div class="caption-area">';
-//         html += '<h6 class="item-header">' + 'Thumbnail label' + '</h6>';
-//         // Item Owner
-//         html += '<p class="item-author">' + 'Owner\'s name' + '</p>';
-//         // Item Caption
-//         html += '<p class="item-caption">' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ' + '</p>';
-//         // Item Call-to-Action Snag Button
-//         html += '<div class="col-lg-12 text-center call-button"><a href="#" class="btn btn-primary item-call" role="button">SNAG THIS ITEM</a></div>';
-//         // Item Snag Counts
-//         html += '<p class="item-snags">' + '123' + ' people snagged this.</p>';
-//         html += '</div>';
-//         html += '</a>';
-//         html += '</div>';
-//         html += '</div>';
-//         $('#infinite-scroll-container').append(html);
-//     }
-
-//     triggered = 0;
-
-//     // "loading" done -> revert to normal state
-//     $("#loader").fadeTo(2000, 0.0);
-
-// }
-
-function addRealViews(html, urlAJAX) {
     // AJAX to fetch JSON objects from server
     $.ajax({
-        url: urlAJAX,
+        url: url,
         dataType: "json",
         method: 'get',
+        cache: false,
+
         // Success Callback
         success: function(data) {
+
+            console.log("ajax succeeded!");
             flag = true;
 
             if (data.length > 0) {
 
                 // Increment trackers to track load state
-                // first = parseInt($('#first').val());
-                // limit = parseInt($('#limit').val());
-                // $('#first').val(first + 1);
-                // $('#limit').val(data.pagesFiltered);
-                // totalPages = data.pagesFiltered;
-                lastItemId = data[data.length-1].itemID;
+                lastItemId = data[data.length - 1].itemID;
+
 
                 /*** Factory for views ***/
-
-                // Section headers, if applicable
-                // $('#infinite-scroll-container').append('<li class="year">' + year + '</li>');
-
                 $.each(data, function(key, value) {
-                    html = '<div class="col-sm-6 col-md-4 item">';
+                    html = '<div class="item col-lg-3 col-md-3 col-sm-4 col-ms-6 col-xs-12" style="margin-bottom: 20px;">';
                     // Main Item Photo
-                    html += '<div class="thumbnail">';
+                    html += '<a href="/item/' + value.itemID + '" target="_blank"><div class="thumbnail" style="padding: 0; border: none;" align="center">';
                     // html += '<img src="' + '/images/home/default-placeholder.png' + '">';
-                    html += '<img src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '">';
+                    //
+                    // html += '<a class="avatar box clipped" style="background-image: url(https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + ');" onerror="handleBrokenImage(this);"></a>';
+
+                    html += '<div class="box"><img style="display: block;" class="clipped" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '" onerror="handleBrokenImage(this);"></div>';
+
                     // Item Title
-                    html += '<div class="caption-area">';
-                    html += '<h6 class="item-header">' + value.title + '</h6>';
+                    html += '<div class="caption-area" align="left">';
+                    html += '<br/><h6 class="item-header hide-overflow" style="padding-left: 10px; padding-top: 0px; margin: 5px  auto;"><a href="/item/' + value.itemID + '" target="_blank">' + value.title + '</a></h6>';
                     // Item Owner
-                    html += '<p class="item-author">' + value.ownedBy.name + '</p>';
+                    // html += '<p class="item-author">' + value.ownedBy.name + '</p>';
                     // Item Caption
-                    html += '<p class="item-caption">' + value.description + '</p>';
-                    // Item Call-to-Action Snag Button
-                    html += '<div class="col-lg-12 text-center call-button"><a class="btn btn-primary itemcall" id="itemcall' + value.itemID + '" role="button">SNAG THIS ITEM</a></div>';
+                    html += '<row><p class="item-author hide-overflow" style="margin: 5px auto;">';
+
+                    html += '<a href="/profile/' + value.userID + '" target="_blank" class="small-avatar col-lg-4" style="background-image: url(http://graph.facebook.com/' + value.fbID + '/picture?type=large);" style="margin: auto 10px; padding: 0; width: 30px; height: 30px; border-radius:50%;"><span style="padding-left: 20px;">' + value.name + '</span></a></p></row>';
                     // Item Snag Counts
-                    html += '<p class="item-snags">' + '123' + ' people snagged this.</p>';
+                    if (value.numWants >= 1) {
+                        html += '<small class="item-snags pull-right text-muted" align="right" style="padding-right: 10px; padding-top: 0; padding-bottom: 10px;"><b>' + value.numWants + ' people want this.</b></small>';
+                    } else {
+                        html += '<small class="item-snags pull-right text-muted" align="right" style="padding-right: 10px; padding-top: 0;padding-bottom: 10px;">' + '<b>Be the first to check this out!</b></small>';
+
+                    }
+                    if (value.meWant) {
+                        html += '<div class="ribbon-wrapper-green">';
+                        html += '<div class="ribbon-green">';
+                        html += 'wanted';
+                        html += '</div>';
+                        html += '</div>';
+                    }
+
                     html += '</div>';
+                    html += '</div></a>';
                     html += '</div>';
-                    html += '</div>';
+
+
                     $('#infinite-scroll-container').append(html);
+                    $('#placeholder-main').hide();
+
                 });
-
-                $("#loader").fadeTo(2000, 0.0);
-
                 triggered = 0;
 
             } else {
+                console.log("no data to load already");
                 // alert('No more data to show');
-                no_data = false;
+                // no_data = true;
             }
         },
+
         error: function(data) {
-            flag = true;
-            no_data = false;
-
-            $("#loader").fadeTo(2000, 0.0);
-
+            console.log ("error loading");
+            canAJAX = true;
+            // no_data = false;
             triggered = 0;
-            console.log(data);
-            alert('Something went wrong, Please contact administrator.');
+            // console.log(data);
+            // alert('Something went wrong, Please contact administrator.');
         }
     });
 }
 
-var html = '';
-var triggered = 0;
-var lastItemId = 0;
-var numItems = 6;
-
+// On loaded webpage ...
 $(document).ready(function() {
 
-    // Test Mode
-    var test = false;
-    // $('#first').val(1);
-    // $('#limit').val(1);
-    // addViews(6);
-    // first = $('#first').val();
-    // limit = $('#limit').val();
-    urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
-    console.log(urlAJAX);
+    console.log("document ready... time for first load");
     addRealViews(html, urlAJAX);
 
-    // AJAX Server-End URL
-    // var urlAJAX = 'ajax.php';
-    flag = true;
+});
 
-    $(window).scroll(function() {
+$(window).scroll(function() {
+    console.log("i am scrolling ... weeeeee!");
+    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
 
-        // Trigger the loading early
-        if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-            first = $('#first').val();
-            limit = $('#limit').val();
-            no_data = true;
+        // no_data = true;
+        triggered += 1;
+        console.log("booooing");
 
-            triggered += 1;
-
-            if (flag && no_data && !test && triggered == 1) {
-                flag = false;
-
-                var activeTab = $(".nav").find(".active");
-                var name = "null";
-
-                var ajaxRequest = null;
-
-                if (activeTab != null) {
-                    name = activeTab.attr('id');
-                }
-
-                // Construct AJAX Request based on type
-                console.log(name);
-                console.log(lastItemId);
-                switch (name) {
-                    case 'nav-feed':
-                        urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
-                        ajaxRequest = null;
-                        break;
-
-                    case 'nav-discover':
-                        urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
-                        ajaxRequest = null;
-                        break;
-
-                    case 'nav-gift':
-                        ajaxRequest = null;
-                        break;
-
-                    // default:
-                    //     urlAJAX = '/api/friendItems/' + lastItemId + '/' + numItems;
-                    //     ajaxRequest = null;
-                }
-
-                // Display AJAX Pre-Loader while loading
-                $("#loader").fadeTo(2000, 0.8);
-                // console.log(urlAJAX);
-                // AJAX to fetch JSON objects from server
-                console.log(lastItemId);
-                if (lastItemId >= 1) {
-                    console.log(urlAJAX);
-                    addRealViews(html, urlAJAX);
-                }
-
-                // Simulate Infinite Scroll and Content Population for UI/UX
-            } else if (test && triggered == 1) {
-
-                // Display AJAX Pre-Loader while loading
-                $("#loader").fadeTo(2000, 0.8);
-
-                // Load and Append
-                setTimeout(addViews, 1000, 3);
-            }
+        if (canAJAX && triggered == 1) {
+            console.log("time for ajax!!!");
+            canAJAX = false;
+            urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
+            addRealViews(html, urlAJAX);
         }
-    });
+    }
+});
 
+function handleBrokenImage(image) {
+    image.onerror = "";
+    image.src = "/images/common/default-placeholder.png";
+    return true;
+}
+
+$(window).load(function() {
+    $('.thumbnail').find('img').each(function() {
+        var imgClass = (this.width / this.height > 1) ? 'wide' : 'tall';
+        $(this).addClass(imgClass);
+    })
 });
