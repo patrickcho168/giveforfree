@@ -290,7 +290,7 @@ module.exports = function(app) {
         }).fetch().then(function(user) {
             if (user) {
                 user.save({
-                    name: null,
+                    name: "Deleted User",
                     deleted: true
                 }).then(function() {
                     // Delete all this user's items that have no takerID
@@ -306,7 +306,7 @@ module.exports = function(app) {
 
                             });
                         req.flash('success_messages', 'Thanks for using Give For Free! Come back anytime soon okay? We\'ll miss you!');
-                        res.redirect("/logout");
+                        res.json({'message': 'success'});
                     }).catch(function(err) {
                         next(err);
                     });
