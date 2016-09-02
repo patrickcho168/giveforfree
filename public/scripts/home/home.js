@@ -10,7 +10,7 @@ var lastItemId = 0;
 // Number of items to load every AJAX
 var numItems = 9;
 
-var canAJAX = false;
+var canAJAX = true;
 
 var urlAJAX = '/api/allItems/' + 0 + '/' + numItems;;
 
@@ -73,6 +73,7 @@ function addRealViews(html, url) {
                     $('#placeholder-main').hide();
 
                 });
+                canAJAX = true;
                 triggered = 0;
 
             } else {
@@ -97,10 +98,12 @@ $(document).ready(function() {
 
 $(window).scroll(function() {
     if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+        console.log("GETMORE");
+        console.log(canAJAX);
 
         triggered += 1;
 
-        if (canAJAX && triggered == 1) {
+        if (canAJAX && triggered == 1 && lastItemId > 1) {
             canAJAX = false;
             urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
             addRealViews(html, urlAJAX);
