@@ -346,6 +346,9 @@ $(document).ready(function() {
 });
     
 jQuery(document).ready(function($) {
+    $.ajaxSetup({
+        headers: {'X-CSRF-Token': $('meta[name="_csrf"]').attr('content')}
+    });
 
     $('#comments-container').comments({
         readOnly: loggedIn ? false : true,
