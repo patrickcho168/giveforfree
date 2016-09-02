@@ -408,13 +408,13 @@
                                                 <% } %>
                                             <!-- For other users and receiving parties -->
                                             <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                                                <button class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Owner</button>
+                                                <a class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Owner</a>
                                                 <% if (item.takerID === id) { %>
-                                                    <button class="btn btn-xs btn-primary message-button" id="facebook-share" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook</button>
+                                                    <a class="btn btn-xs btn-primary message-button" id="facebook-share" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook</a>
                                                 <% } %>
                                             <!-- For successful owners -->
                                             <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                                                <button class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;">Message Recipient</button>
+                                                <a class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;">Message Recipient</a>
                                             <% } %>
                                         </center>
                                     </div>
