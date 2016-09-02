@@ -136,7 +136,7 @@ function addRealViews(html) {
 
                     /*** Factory for views ***/
                     $.each(data, function(key, value) {
-                        if (value.giverID !== myAppId && value.takerID !== null && value.takerID !== myAppId) { 
+                        if (value.giverID !== myAppId && value.takerID !== null && value.takerID !== myAppId) {
                             html = '<div class="item col-lg-3 col-md-3 col-sm-4 col-ms-6 col-xs-12" style="margin-bottom: 20px; opacity: 0.6;">';
                         } else if (value.giverID !== myAppId && value.takerID !== null && value.takerID === myAppId) {
                             html = '<div class="item col-lg-3 col-md-3 col-sm-4 col-ms-6 col-xs-12" style="margin-bottom: 20px; opacity: 0.6;">';
@@ -177,16 +177,18 @@ function addRealViews(html) {
                         } else {
                             html += '<small class="item-snags pull-right text-muted" align="right" style="padding-right: 10px; padding-top: 0;padding-bottom: 10px;">' + '<b>Be the first to check this out!</b></small>';
                         }
-                        if (value.giverID !== myAppId && value.takerID !== null && value.takerID !== myAppId) {    
+
+                        // Labels
+                        if (value.giverID !== myAppId && value.takerID !== null && value.takerID !== myAppId) {
                             html += '<div class="ribbon-wrapper-green">';
                             html += '<div class="ribbon-grey">';
-                            html += 'OTHERS';
+                            html += 'others';
                             html += '</div>';
                             html += '</div>';
                         } else if (value.giverID !== myAppId && value.takerID !== null && value.takerID === myAppId) {
                             html += '<div class="ribbon-wrapper-green">';
                             html += '<div class="ribbon-grey">';
-                            html += 'YOURS';
+                            html += 'won';
                             html += '</div>';
                             html += '</div>';
                         } else if (loggedIn && value.giverID !== myAppId && value.meWant === 0 && !value.expired) { // NEED TO ADD NOT EXPIRED
@@ -194,29 +196,29 @@ function addRealViews(html) {
                         } else if (loggedIn && value.giverID !== myAppId && value.meWant > 0 && !value.expired) {
                             html += '<div class="ribbon-wrapper-green">';
                             html += '<div class="ribbon-green">';
-                            html += 'WANT';
+                            html += 'wanted';
                             html += '</div>';
                             html += '</div>';
                         } else if (value.giverID !== myAppId && value.expired) {
                             html += '<div class="ribbon-wrapper-green">';
                             html += '<div class="ribbon-grey">';
-                            html += 'EXPIRED';
+                            html += 'expired';
                             html += '</div>';
                             html += '</div>';
                         } else if (value.giverID === myAppId && value.takerID !== null) {
                             html += '<div class="ribbon-wrapper-green">';
                             html += '<div class="ribbon-grey">';
-                            html += 'GIVEN';
+                            html += 'given';
                             html += '</div>';
                             html += '</div>';
                         } else if (value.giverID === myAppId && value.takerID === null) {
                             html += '<div class="ribbon-wrapper-green">';
                             html += '<div class="ribbon-green">';
-                            html += 'PENDING';
+                            html += 'ongoing';
                             html += '</div>';
                             html += '</div>';
                         }
-                        
+
 
                         // // html += '<p class="item-caption">' + value.description + '</p>';
                         // // Item Call-to-Action Snag Button

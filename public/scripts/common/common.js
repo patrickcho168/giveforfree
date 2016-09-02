@@ -1,17 +1,15 @@
 $(document).ready(function() {
 
-	setTimeout(function(){
-		$('body').addClass('loaded');
-	}, 1);
+	$('body').addClass('loaded');
 
 	$("a.notification-link").click(function(notification) {
-	    var href = this.href;  
+	    var href = this.href;
 	    var apiUrl = '/api/read_notification/' + $(this).attr('notificationid');
-	    notification.preventDefault();  
+	    notification.preventDefault();
 	    $.ajax({
 	        url: apiUrl,
 	        success: function(){
-	            document.location = href;  
+	            document.location = href;
 	        }
 	    });
 	});
@@ -26,3 +24,8 @@ $(document).ready(function() {
 	});
 
 });
+
+
+function loginLoader() {
+    $('body').removeClass('loaded');
+}
