@@ -75,7 +75,7 @@
         function facebookInit() {
             if ($("#facebook-message").length) {
                 document.getElementById('facebook-message').onclick = function() {
-                    alert("CLICKED MESSAGE");
+                    // alert("CLICKED MESSAGE");
                     FB.ui({
                         method: 'send',
                         link: '<%= domain %>/item/<%= item.itemID %>',
@@ -85,7 +85,7 @@
             }
             if ($("#facebook-share").length) {
                 document.getElementById('facebook-share').onclick = function() {
-                    alert("CLICKED SHARE");
+                    // alert("CLICKED SHARE");
                     FB.ui({
                         method: 'share_open_graph',
                         action_type: '<%= fbNameSpace %>:receive',
