@@ -4,6 +4,7 @@ var db = require('../models/db');
 var facebook = require('../controllers/facebook');
 var ensureLogin = require('connect-ensure-login');
 var moment = require("moment");
+var config = require('../config');
 var base64url = require('b64url');
 var crypto = require('crypto');
 var xss = require('xss');
@@ -231,9 +232,12 @@ module.exports = function(app) {
     }
 
     app.post('/api/delete-user-from-fb', function(req, res) {
-        var signedRequest = req.param.signed_request;
+        console.log(req.route.stack);
+        var signedRequest = req.params.signed_request;
+        console.log(signedRequest);
         var appSecret = config.fbClientSecret;
         var data = parse_signed_request(signedRequest, appSecret);
+        console.log(data);
     });
 
     // SHOW PROFILE DETAILS

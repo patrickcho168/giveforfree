@@ -109,6 +109,7 @@
                 <% } %>
 
                 console.log(toId);
+                console.log('<%= domain %>/item/<%= item.itemID %>');
 
                 FB.ui({
                     method: 'send',
@@ -235,7 +236,7 @@
                         </li>
                         <li id="nav-feed">
                             <a href="/">
-                                <i class="fa fa-rss" aria-hidden="true"></i> Feed
+                                <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
                             </a>
                         </li>
                         <li id="nav-profile">
@@ -262,7 +263,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li id="nav-feed">
                             <a href="/">
-                                <i class="fa fa-rss" aria-hidden="true"></i> Feed
+                                <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
                             </a>
                         </li>
                         <li id="nav-logout">
@@ -338,11 +339,11 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 carousel-section">
                         <div id="carousel-example-generic" class="carousel slide img-thumbnail carousel-window" data-ride="carousel" data-interval="false">
                             <!-- Indicators -->
-                            <ol class="carousel-indicators">
+                            <!-- <ol class="carousel-indicators">
                                 <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
                                 <li data-target="#carousel-example-generic" data-slide-to="1"></li>
                                 <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                            </ol>
+                            </ol> -->
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner photos" role="listbox">
                                 <div class="item active">
@@ -352,14 +353,14 @@
                                 </div>
                             </div>
                             <!-- Controls -->
-                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                            <!-- <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
                                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                                 <span class="sr-only">Previous</span>
                             </a>
                             <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
                                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                                 <span class="sr-only">Next</span>
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                 </row>
@@ -398,7 +399,7 @@
                                     <div class="row">
                                         <div class="profile-header-container col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <div class="profile-header-img" align="center">
-                                                <div class="avatar-badge" style="background-image: url(https://graph.facebook.com/<%= item.fbID %>/picture?type=large);" style="margin-left: 0; display: block; padding: 0; width: 80px; height: 80px; border-radius:50%;" align="center"></div>
+                                                <div class="avatar-badge" style="background-image: url(http://graph.facebook.com/<%= item.fbID %>/picture?type=large);" style="margin-left: 0; display: block; padding: 0; width: 80px; height: 80px; border-radius:50%;" align="center"></div>
                                                 <div class="clearfix"></div>
                                                 <div class="rank-label-container">
                                                     <div class="clearfix"></div>
@@ -428,11 +429,10 @@
                                                 <a data-toggle="modal" data-target="#confirm-delete" data-href="/api/delete/<%= item.itemID %>" class="btn btn-xs btn-danger">Delete</a>
                                                 <% if (item.numWants > 0) { %>
                                                     <a type="button" class="btn btn-xs btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw</a>
-
-                                                    <a type="button" class="btn btn-xs btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <a type="button" class="btn btn-xs btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Pick <span class="caret"></span>
-                                                    </button>
-                                                      <ul class="dropdown-menu scrollable-menu">
+                                                    </a>
+                                                    <ul class="dropdown-menu scrollable-menu" style="top:90%; "role="menu">
                                                         <% for (var i=0; i<manual.length; i++) { %>
                                                             <li>
                                                                 <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">
@@ -441,8 +441,6 @@
                                                             </li>
                                                         <% } %>
                                                     </ul>
-
-
                                                 <% } %>
                                             <!-- For other users and receiving parties -->
                                             <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
@@ -488,7 +486,7 @@
                                 <div class="bs-callout bs-callout-warning" style="background-color: #FFFBAF; color: #A8896C; margin: 10px; 10px;">
                                     <% if (item.takerID === null && !expired) { %>
                                         <h4>Available</h4>
-                                        <h5>This giveaway will end in <%= moment(expiryDate).fromNow()%>.</h5>
+                                        <h5>This giveaway will end <%= moment(expiryDate).fromNow()%>.</h5>
                                     <% } else if (item.takerID === null) { %>
                                         <h4>Expired</h4>
                                         <h5>This giveaway has ended.</h5>
