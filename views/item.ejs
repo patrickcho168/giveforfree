@@ -102,11 +102,11 @@
         function messageUser() {
                 // alert("CLICKED MESSAGE");
                 var toId = null;
-
+                
                 <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                toId = <%= item.giverID %>;
+                toId = <%= item.fbID %>;
                 <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                toId = <%= item.takerID %>;
+                toId = <%= item.takerFbID %>;
                 <% } %>
 
                 console.log(toId);
