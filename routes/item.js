@@ -523,7 +523,7 @@ module.exports = function(app) {
                                     moment: moment,
                                     fbNameSpace: config.fbNamespace,
                                     csrfToken: req.csrfToken(),
-                                    expiryDate: date;
+                                    expiryDate: date
                                 });
                             });
                         } else {
