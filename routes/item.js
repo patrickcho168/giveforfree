@@ -32,12 +32,11 @@ module.exports = function(app) {
         db.Comment.where({
             itemID: itemId
         }).orderBy('timeCreated', 'ASC').fetchAll({withRelated: ['commentedBy', 'upvote']}).then(function(commentData) {
-            console.log(commentData);
             res.json(commentData);
         });
     })
 
-    app.post('/api/updatecomment/:commentId', ensureLogin.ensureLoggedIn(), parseForm, function(req,res) {
+    app.post('/api/updatecomment/:commentId', ensureLogin.ensureLoggedIn(), csrfProtection, parseForm, function(req,res) {
         var userId = parseInt(req.user.appUserId);
         var commentId = parseInt(req.params.commentId);
         db.Comment.where({
@@ -61,14 +60,12 @@ module.exports = function(app) {
         })
     })
 
-    app.post('/api/comment/:itemId', ensureLogin.ensureLoggedIn(), csrfProtection, function(req, res) {
-        // CHECK MESSAGE NOT IMPLEMENTED
+    app.post('/api/comment/:itemId', ensureLogin.ensureLoggedIn(), csrfProtection, parseForm, function(req, res) {
         var userId = parseInt(req.user.appUserId);
         var itemId = parseInt(req.params.itemId);
         if (req.body.parent === '') {
             req.body.parent = null;
         }
-        console.log(req.body);
         var newComment = new db.Comment({
             commenterID: userId,
             message: xss(req.body.content),

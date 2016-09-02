@@ -17,6 +17,7 @@
     <meta property="og:site_name" content="Give For Free" />
     <meta property="og:image:width" content="450" />
     <meta property="og:image:height" content="298" />
+    <meta name='_csrf' content='<%= csrfToken %>'>
 
     <title>Give For Free - Meeting the needs of others</title>
 
@@ -517,7 +518,7 @@
                                 <a class="list-group-item">
                                     <h4 class="list-group-item-heading"><b>When do you want to end this giveaway?</b></h4>
                                     <p class="list-group-item-text">
-                                        <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" value="<%= moment(date).format(" YYYY-MM-DD ") %>" required>
+                                        <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" value="<%= moment(date, "D MMMM YYYY HH:mm").format(" YYYY-MM-DD ") %>" required>
                                     </p>
                                 </a>
                                 <a class="list-group-item">

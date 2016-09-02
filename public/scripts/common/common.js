@@ -4,8 +4,10 @@ $(document).ready(function() {
 
 	$("a.notification-link").click(function(notification) {
 	    var href = this.href;
-	    var apiUrl = '/api/read_notification/' + $(this).attr('notificationid');
+	    var id = $(this).attr('notificationid')
+	    var apiUrl = '/api/read_notification/' + id;
 	    notification.preventDefault();
+	    $("li[notificationid=id]").remove();
 	    $.ajax({
 	        url: apiUrl,
 	        success: function(){
