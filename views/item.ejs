@@ -483,7 +483,7 @@
                                 <div class="bs-callout bs-callout-warning" style="background-color: #FFFBAF; color: #A8896C; margin: 10px; 10px;">
                                     <% if (item.takerID === null && !expired) { %>
                                         <h4>Available</h4>
-                                        <h5>This giveaway will end in <%= moment.duration(moment().format().diff(expiryDate)).humanize()%> time.</h5>
+                                        <h5>This giveaway will end in <%= moment(expiryDate).fromNow().</h5>
                                     <% } else if (item.takerID === null) { %>
                                         <h4>Expired</h4>
                                         <h5>This giveaway has ended.</h5>
