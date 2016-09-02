@@ -558,11 +558,11 @@
                                 <a class="list-group-item">
                                     <h4 class="list-group-item-heading"><b>How would you like the person receiving to collect the item?</b></h4>
                                     <div class="checkbox checkbox-primary checkbox-circle row">
-                                        <input type="checkbox" id="meet">
+                                        <input type="checkbox" id="meet" name="meetup" <% if (item.meetup) { %>checked="checked"<% } %>>
                                         <label class="large-label" for="meet">
                                             Meet and collect
                                         </label>
-                                        <input type="checkbox" id="free">
+                                        <input type="checkbox" id="free" name="postage" <% if (item.postage) { %>checked="checked"<% } %>>
                                         <label class="large-label" for="free">
                                             Postage service
                                         </label>
