@@ -80,80 +80,72 @@
     </div>
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-
-            <!-- Left Header Icon -->
-            <div class="navbar-header">
-
-                <!-- Collapsed Nav -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <!-- Logo and Name -->
-                <a class="navbar-brand" href="/">
-                    <h4 style="margin-top: 0px;">
-                    <img src="../images/common/logo-new.svg" width="30px" height="30px" style="margin-top: -5px;"/>
-                    Give For Free!</h4>
-                </a>
-            </div>
-
-            <!-- Menu -->
-            <div class="collapse navbar-collapse" id="nav-menu">
-
-                <!-- User Actions Menu -->
-                <% if (loggedIn) { %>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li id="nav-create">
-                            <a href="/upload">
-                                <i class="fa fa-gift" aria-hidden="true"></i> Give
-                            </a>
-                        </li>
-                        <li id="nav-feed" class="active">
-                            <a href="/">
-                                <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
-                            </a>
-                        </li>
-                        <li id="nav-profile">
-                            <a href="/profile/<%= id %>">
-                                <i class="fa fa-user" aria-hidden="true"></i> Profile
-                            </a>
-                        </li>
-
-                        <% if (typeof notification != 'undefined') { %>
-                            <!-- Notifications -->
-                            <%- include('notification'); %>
-                            <!-- End Notifications -->
-                        <% } %>
-
-                        <!-- Logout -->
-                        <li id="nav-logout">
-                            <a href="/logout">
-                                <i class="fa fa-lock" aria-hidden="true"></i> Logout
-                            </a>
-                        </li>
-                    </ul>
-                <% } else { %>
-                    <!-- Logged Out Navbar Menu -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <li id="nav-feed">
-                            <a href="/">
-                                <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
-                            </a>
-                        </li>
-						<li id="nav-logout">
-                            <a href="javascript:loginSpecial();">
-                                <i class="fa fa-lock" aria-hidden="true"></i> Login
-                            </a>
-                        </li>
-                    </ul>
-                <% } %>
-            </div>
+    <nav class="navbar navbar-fixed-top">
+        <div class="navbar-header">
+			<div class="navbar-main">
+				<div class="navbar-logo-container">
+					<a href="/" class="navbar-logo">
+						<img src="../images/common/gff-logo.svg" alt="" />
+					</a>
+				</div>
+				<div class="nav-box-mid">
+					<form class="navbar-form">
+						<div class="form-group">
+							<div class="input-group">
+								<input type="text" placeholder="Search an item.." class="form-control navbar-search">
+								<span class="input-group-btn">
+									<button type="submit" class="btn btn-sm">
+										<i class="fa fa-search"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</form>
+	            </div>
+				<div class="nav-box-right">
+					<ul class="nav navbar-nav">
+						<% if(loggedIn) { %>
+							<li id="nav-logout">
+								<a href="/logout">Log out</a>
+							</li>
+							<li id="nav-create">
+				                <a href="/upload">
+				                    <i class="fa fa-gift" aria-hidden="true"></i> Give
+				                </a>
+				            </li>
+							<li id="nav-feed">
+				                <a href="/">
+				                    <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
+				                </a>
+				            </li>
+							<li id="nav-profile">
+				                <a href="/profile/<%= id %>">
+									<div class="user-avatar">
+										<img src="../images/common/test-user.png" alt="" />
+										<% if (typeof notification != 'undefined' && notification.length != 0) { %>
+											<span class="badge"><%= notification.length %></span>
+										<% } %>
+										<span> Patrick</span>
+									</div>
+				                </a>
+				            </li>
+						<%  } else { %>
+							<li id="nav-logout">
+								<a href="javascript:loginSpecial();">Log in</a>
+							</li>
+							<li id="nav-feed">
+				                <a href="/">
+				                    <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
+				                </a>
+				            </li>
+						<% } %>
+					</ul>
+				</div>
+			</div>
         </div>
+
+        <!-- Menu -->
+
     </nav>
 
 	<!-- Main Content Area -->

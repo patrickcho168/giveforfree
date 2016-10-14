@@ -14,7 +14,7 @@
     padding-top: 36px;
 }
 .container {
-    margin-top: 20px;
+    margin-top: 60px;
 }
 /* Navbar */
 
@@ -118,25 +118,103 @@
 .thumbnail:hover .text-muted {
     color: white;
 }
+
 .thumbnail:hover a {
     color: white;
 }
 
+/* for modification */
 
-/* MASONRY APPROACH #2 */
-
-
-/*.grid-row {
- -moz-column-width: 25em;
- -webkit-column-width: 25em;
- -moz-column-gap: .5em;
- -webkit-column-gap: .5em;
-
+.navbar {
+    background-color: #fff;
+    padding: 10px 20px 10px 40px;
+    color: #58666e;
+    box-shadow: 0 2px 2px rgba(0,0,0,.05),0 1px 0 rgba(0,0,0,.05);
 }
 
-.grid-item {
- display: inline-block;
- margin:  .5em;
- padding:  0;
- width:98%;
-}*/
+.navbar .navbar-header {
+    width: 100%;
+    text-align: center;
+}
+
+.navbar .navbar-main {
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+}
+
+.navbar .navbar-sub {
+    height: 30px;
+}
+
+.navbar-logo-container img {
+    height: 50px;
+}
+
+.navbar-logo-container {
+    text-align: center;
+}
+
+.nav-box-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.nav-box-right a {
+    color: #111;
+    font-size: 13px;
+}
+
+.nav-box-right #nav-logout a {
+    color: #98a6ad;
+}
+
+.nav-box-right a:focus, .nav-box-right a:hover {
+    background: #fff!important;
+    outline: none!important;
+    color: #58666e!important;
+}
+
+.nav-box-right .badge {
+    position: relative;
+    margin-left: -10px;
+    padding: 2px 5px;
+    top: -10px;
+
+    font-family: 'Roboto', sans-serif;
+    background-color: #f05050;
+    border: 2px solid #fff;
+}
+
+.nav-box-right img {
+    width:25px;
+    border-radius: 50px;
+}
+
+#nav-profile a {
+    padding: 13px 10px!important;
+}
+
+.navbar-search {
+    border-radius: 50px;
+    box-shadow: none;
+    color: #58666e;
+    background-color: #edf1f2;
+    border: none;
+    height: 30px;
+}
+
+.input-group-btn button {
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    height: 30px;
+    padding: 5px 10px;
+    background-color: #edf1f2;
+}
+
+.navbar-form {
+    margin-top: 12px;
+}
