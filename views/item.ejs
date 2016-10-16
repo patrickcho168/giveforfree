@@ -426,6 +426,7 @@
                                         <center>
                                             <!-- For ongoing owners -->
                                             <% if (loggedIn && mine && item.takerID === null) { %>
+                                                <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#editModal">Edit</button>
                                                 <a data-toggle="modal" data-target="#confirm-delete" data-href="/api/delete/<%= item.itemID %>" class="btn btn-xs btn-danger">Delete</a>
                                                 <% if (item.numWants > 0) { %>
                                                     <a type="button" class="btn btn-xs btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw</a>
@@ -499,14 +500,9 @@
                             <div class="panel-footer" style="vertical-align: middle;">
                                 <div style="vertical-align: middle; position: relative;">
                                     <row>
-                                        <% if (loggedIn && mine && !expired && item.takerID == null) { %>
-                                            <div class="pull-right" style="vertical-align: middle; position:relative; float:right; margin-top: -10px;">
-                                                <button class="btn btn-default pull-right" style="display: inline-block; align: right; top: 0px; float: right;" data-toggle="modal" data-target="#editModal">Edit</button>
-                                                <% } %>
-                                            </div>
-                                            <div>
-                                                <h5 class="text-muted" style="vertical-align: middle;"> Curious? Drop a comment below, or message <%=item.name%>!</h5>
-                                            </div>
+                                        <div>
+                                            <h5 class="text-muted" style="vertical-align: middle;"> Curious? Drop a comment below, or message <%=item.name%>!</h5>
+                                        </div>
                                     </row>
                                 </div>
                             </div>

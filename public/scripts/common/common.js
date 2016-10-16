@@ -37,3 +37,11 @@ function loginSpecial() {
     $('body').removeClass('loaded');
 	window.location.href="/login/facebook";
 }
+
+function scrollDown(n) {
+for (i = 0; i < n; i++) {
+	console.log(i)
+	document.body.scrollTop = document.body.scrollHeight;
+	sleep(5);
+}
+}
