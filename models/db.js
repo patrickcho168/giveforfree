@@ -414,6 +414,7 @@ db.User = User;
 db.Want = Want;
 db.Comment = Comment;
 db.Thank = Thank;
+db.Category = Category;
 db.Notification = Notification;
 db.CommentUpvote = CommentUpvote;
 db.ThankUpvote = ThankUpvote;
