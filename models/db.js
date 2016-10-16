@@ -271,6 +271,28 @@ var ProfilePageWantQuery = function(userId, profileId, numItems, cb) {
   });
 }
 
+var GetGiverRatingById = function(userId, cb) {
+  knex
+    .from('item as i')
+    .sum('i.giverRating as totalGiverRatings')
+    .count('i.giverRating as totalGiverRatingCounts')
+    .where('i.giverID', '=', userId)
+    .then(function(result){
+    return cb(result);
+  });
+}
+
+var GetTakerRatingById = function(userId, cb) {
+  knex
+    .from('item as i')
+    .sum('i.takerRating as totalTakerRatings')
+    .count('i.takerRating as totalTakerRatingCounts')
+    .where('i.takerID', '=', userId)
+    .then(function(result){
+    return cb(result);
+  });
+}
+
 var ProfilePageWantQueryBeforeId = function(userId, profileId, numItems, beforeId, cb) {
   knex
     .from('itemWanter as w')
@@ -428,5 +450,7 @@ db.ProfilePageTotalTakenQuery = ProfilePageTotalTakenQuery;
 db.ProfilePageTotalGivenQuery = ProfilePageTotalGivenQuery;
 db.ItemPageManualQuery = ItemPageManualQuery;
 db.NotificationQuery = NotificationQuery;
+db.GetGiverRatingById = GetGiverRatingById;
+db.GetTakerRatingById = GetTakerRatingById;
 
 module.exports = db;

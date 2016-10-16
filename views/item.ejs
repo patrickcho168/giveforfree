@@ -19,7 +19,7 @@
     <meta property="og:image:height" content="298" />
     <meta name='_csrf' content='<%= csrfToken %>'>
 
-    <title>Give For Free - Meeting the needs of others</title>
+    <title>Give For Free</title>
 
     <!-- JQuery Support -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -140,9 +140,6 @@
     <!-- Push Notifications -->
     <!-- <script src="/scripts/common/notification2.js"></script> -->
 
-    <!-- Facebook Like -->
-    <script src="/scripts/common/fblike.js"></script>
-
     <!-- Auto-Resize Input Fields -->
     <script src="../assets/autosize/js/autosize.js"></script>
 
@@ -185,6 +182,14 @@
 
     <!-- Google Analytics -->
     <script src="/scripts/common/analytics.js"></script>
+
+    <!-- Facebook Like -->
+    <script>
+        $(window).bind("load", function() {
+            $.getScript("/scripts/common/fblike.js", function() {});
+        });
+    </script>
+    <!-- <script src="/scripts/common/fblike.js"></script> -->
 
 </head>
 
