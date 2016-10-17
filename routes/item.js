@@ -530,6 +530,7 @@ module.exports = function(app) {
         req.session.lastPageVisit = '/item/' + itemId;
         var userId;
         var loggedIn;
+        var categories;
         if (req.user === undefined) {
             userId = 0;
             loggedIn = false;
@@ -537,68 +538,77 @@ module.exports = function(app) {
             userId = req.user.appUserId;
             loggedIn = true;
         }
-
-        // Find Item
-        db.ItemPageQuery(userId, itemId, function(data) {
-            console.log(data);
-            if (!(data.length)) {
-                next();
-            } else {
-                var date = moment(data[0].timeExpired);
-                var expiredMin = moment().diff(date, 'minutes');
-                var processedDate = date.locale('en-gb').format("LLL");
-                db.ProfilePageTotalGivenQuery(data[0].giverID, function(gifted) {
-                    db.Comment.where({
-                        itemID: itemId
-                    }).orderBy('timeCreated', 'ASC').fetchAll({withRelated: ['commentedBy']}).then(function(commentData) {
-                        var mine = userId === data[0].giverID;
-                        if (mine && data[0].takerID === null && data[0].numWants > 0) {
-                            db.ItemPageManualQuery(itemId, function(data2) {
-                                res.render('item', {
-                                    id: userId,
-                                    item: data[0],
-                                    mine: mine,
-                                    appId: config.fbClientID,
-                                    domain: config.domain,
-                                    date: processedDate,
-                                    expired: expiredMin > 0,
-                                    karma: gifted[0].numGiven * 10,
-                                    gifts: gifted[0].numGiven,
-                                    manual: data2,
-                                    loggedIn: loggedIn,
-                                    comment: commentData.models,
-                                    notification: req.session.notification,
-                                    moment: moment,
-                                    fbNameSpace: config.fbNamespace,
-                                    csrfToken: req.csrfToken(),
-                                    expiryDate: date
-                                });
-                            });
-                        } else {
-                            var givenToMe = userId === data[0].takerID;
-                            res.render('item', {
-                                id: userId,
-                                item: data[0],
-                                mine: mine,
-                                givenToMe: givenToMe,
-                                appId: config.fbClientID,
-                                domain: config.domain,
-                                date: processedDate,
-                                expired: expiredMin > 0,
-                                karma: gifted[0].numGiven * 10,
-                                gifts: gifted[0].numGiven,
-                                loggedIn: loggedIn,
-                                comment: commentData.models,
-                                notification: req.session.notification,
-                                moment: moment,
-                                fbNameSpace: config.fbNamespace,
-                                csrfToken: req.csrfToken(),
-                                expiryDate: date
-                            });
-                        }
-                    });
+        db.Item.where('itemID', itemId).fetch().then(function(item) {
+            item.categories().fetch().then(function(cat) {
+                categories = cat.toJSON().map(function(obj) {
+                    return obj.name;
                 });
-            }
-        })
+                db.ItemPageQuery(userId, itemId, function(data) {
+                    console.log(data);
+                    console.log(categories);
+                    if (!(data.length)) {
+                        next();
+                    } else {
+                        var date = moment(data[0].timeExpired);
+                        var expiredMin = moment().diff(date, 'minutes');
+                        var processedDate = date.locale('en-gb').format("LLL");
+                        db.ProfilePageTotalGivenQuery(data[0].giverID, function(gifted) {
+                            db.Comment.where({
+                                itemID: itemId
+                            }).orderBy('timeCreated', 'ASC').fetchAll({withRelated: ['commentedBy']}).then(function(commentData) {
+                                var mine = userId === data[0].giverID;
+                                if (mine && data[0].takerID === null && data[0].numWants > 0) {
+                                    db.ItemPageManualQuery(itemId, function(data2) {
+                                        
+                                        res.render('item', {
+                                            id: userId,
+                                            item: data[0],
+                                            mine: mine,
+                                            appId: config.fbClientID,
+                                            domain: config.domain,
+                                            date: processedDate,
+                                            expired: expiredMin > 0,
+                                            karma: gifted[0].numGiven * 10,
+                                            gifts: gifted[0].numGiven,
+                                            manual: data2,
+                                            loggedIn: loggedIn,
+                                            comment: commentData.models,
+                                            notification: req.session.notification,
+                                            moment: moment,
+                                            fbNameSpace: config.fbNamespace,
+                                            csrfToken: req.csrfToken(),
+                                            expiryDate: date,
+                                            categories: categories
+                                        });
+                                    });
+                                } else {
+                                    var givenToMe = userId === data[0].takerID;
+                                    res.render('item', {
+                                        id: userId,
+                                        item: data[0],
+                                        mine: mine,
+                                        givenToMe: givenToMe,
+                                        appId: config.fbClientID,
+                                        domain: config.domain,
+                                        date: processedDate,
+                                        expired: expiredMin > 0,
+                                        karma: gifted[0].numGiven * 10,
+                                        gifts: gifted[0].numGiven,
+                                        loggedIn: loggedIn,
+                                        comment: commentData.models,
+                                        notification: req.session.notification,
+                                        moment: moment,
+                                        fbNameSpace: config.fbNamespace,
+                                        csrfToken: req.csrfToken(),
+                                        expiryDate: date,
+                                        categories: categories
+                                    });
+                                }
+                            });
+                        });
+                    }
+                })
+            });
+        });
     });
 }

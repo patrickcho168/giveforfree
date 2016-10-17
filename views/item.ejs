@@ -613,31 +613,41 @@
                                     <h4 class="list-group-item-heading"><b>Which category does your item belong to?</b></h4>
                                     <select id="input-tags" name="categories[]" multiple class="categories has-options " style="width:70%" auto-complete: "off" placeholder="Select categories...">
                                         <option value="">Select categories...</option>
-                                        <option value="clothes">clothes</option>
-                                        <option value="accessories">accessories</option>
-                                        <option value="furniture & home">furniture & home</option>
-                                        <option value="parenting">parenting</option>
-                                        <option value="health">health</option>
-                                        <option value="beauty">beauty</option>
-                                        <option value="kitchen appliances">kitchen appliances</option>
-                                        <option value="gardening">gardening</option>
-                                        <option value="property">property</option>
-                                        <option value="design & craft">design & craft</option>
-                                        <option value="electronics">electronics</option>
-                                        <option value="sports">sports</option>
-                                        <option value="photography">photography</option>
-                                        <option value="antiques">antiques</option>
-                                        <option value="toys">toys</option>
-                                        <option value="games">games</option>
-                                        <option value="music">music</option>
-                                        <option value="tickets & vouchers">tickets & vouchers</option>
-                                        <option value="auto accessories">auto accessories</option>
-                                        <option value="books">books</option>
-                                        <option value="stationeries">stationeries</option>
-                                        <option value="textbooks">textbooks</option>
-                                        <option value="notes">notes</option>
-                                        <option value="pets">pets</option>
-                                        <option value="other">other</option>
+                                        <% categories_list = [
+                                            "clothes",
+                                            "accessories",
+                                            "furniture & home",
+                                            "parenting",
+                                            "health",
+                                            "beauty",
+                                            "kitchen appliances",
+                                            "gardening",
+                                            "property",
+                                            "design & craft",
+                                            "electronics",
+                                            "sports",
+                                            "photography",
+                                            "antiques",
+                                            "toys",
+                                            "games",
+                                            "music",
+                                            "tickets & vouchers",
+                                            "auto accessories",
+                                            "books",
+                                            "stationery",
+                                            "textbooks",
+                                            "notes",
+                                            "pets",
+                                            "other"
+                                        ] %>
+                                        <% for(var i=0; i<categories_list.length; i++) {%>
+                                            <% if (categories.indexOf(categories_list[i]) != -1) {%>
+
+                                            <option value="<%= categories_list[i] %>" selected="selected"><%= categories_list[i] %></option>
+                                            <% } else { %>
+                                            <option value="<%= categories_list[i] %>"><%= categories_list[i] %></option>
+                                            <% } %>
+                                        <% } %>
                                     </select>
                                 </a>
                                 <a class="list-group-item">
