@@ -271,6 +271,28 @@ var ProfilePageWantQuery = function(userId, profileId, numItems, cb) {
   });
 }
 
+var GetGiverRatingById = function(userId, cb) {
+  knex
+    .from('item as i')
+    .sum('i.giverRating as totalGiverRatings')
+    .count('i.giverRating as totalGiverRatingCounts')
+    .where('i.giverID', '=', userId)
+    .then(function(result){
+    return cb(result);
+  });
+}
+
+var GetTakerRatingById = function(userId, cb) {
+  knex
+    .from('item as i')
+    .sum('i.takerRating as totalTakerRatings')
+    .count('i.takerRating as totalTakerRatingCounts')
+    .where('i.takerID', '=', userId)
+    .then(function(result){
+    return cb(result);
+  });
+}
+
 var ProfilePageWantQueryBeforeId = function(userId, profileId, numItems, beforeId, cb) {
   knex
     .from('itemWanter as w')
@@ -307,7 +329,7 @@ var ItemPageQuery = function(userId, itemId, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.timeExpired', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'i.meetup', 'i.postage', 'i.collectionMessage', 'u.name', 'u.userID', 'u.fbID', 't.name as takerName', 't.userID as takerId', 't.fbID as takerFbID'])
+    .select(['i.itemID', 'i.timeExpired', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'i.meetup', 'i.postage', 'i.collectionMessage', 'i.giverRating', 'i.takerRating', 'u.name', 'u.userID', 'u.fbID', 't.name as takerName', 't.userID as takerId', 't.fbID as takerFbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -429,5 +451,7 @@ db.ProfilePageTotalTakenQuery = ProfilePageTotalTakenQuery;
 db.ProfilePageTotalGivenQuery = ProfilePageTotalGivenQuery;
 db.ItemPageManualQuery = ItemPageManualQuery;
 db.NotificationQuery = NotificationQuery;
+db.GetGiverRatingById = GetGiverRatingById;
+db.GetTakerRatingById = GetTakerRatingById;
 
 module.exports = db;

@@ -24,8 +24,8 @@ toExport.getNotifications = function(req, res, next) {
         var limitNum = 10;
         db.NotificationQuery(userId, limitNum, function(data) {
             // console.log(req.path);
-            // console.log("Notifications:");
-            // console.log(data);
+            console.log("Notifications:");
+            console.log(data);
             req.session.notification = data;
             next();
         });

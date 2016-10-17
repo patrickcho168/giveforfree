@@ -480,3 +480,75 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     background-size: cover;
     background-position: center center;
 }
+
+
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+fieldset, label { margin: auto; padding: 0; }
+
+/****** Style Star Rating Widget *****/
+
+.fixedrating { 
+    border: none;
+    float: left;
+}
+
+.fixedrating > input { display: none; } 
+.fixedrating > label:before { 
+    margin: 5px;
+    font-size: 1.5em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.fixedrating > .half:before { 
+    content: "\f089";
+    position: absolute;
+}
+
+.fixedrating > label { 
+    color: #ddd; 
+    float: right; 
+}
+
+.fixedrating > input:checked ~ label { color: #FFD700;  } , /* show gold star when clicked */
+
+/****** Style Star Rating Widget *****/
+
+fieldset, label { margin: auto; padding: 0; }
+
+.rating { 
+    border: none;
+    float: left;
+}
+
+.rating > input { display: none; } 
+.rating > label:before { 
+    margin: 5px;
+    font-size: 2em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+
+.rating > .half:before { 
+    content: "\f089";
+    position: absolute;
+}
+
+.rating > label { 
+    color: #ddd; 
+    float: right; 
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 

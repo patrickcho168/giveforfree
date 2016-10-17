@@ -19,7 +19,7 @@
     <meta property="og:image:height" content="298" />
     <meta name='_csrf' content='<%= csrfToken %>'>
 
-    <title>Give For Free - Meeting the needs of others</title>
+    <title>Give For Free</title>
 
     <!-- JQuery Support -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -140,9 +140,6 @@
     <!-- Push Notifications -->
     <!-- <script src="/scripts/common/notification2.js"></script> -->
 
-    <!-- Facebook Like -->
-    <script src="/scripts/common/fblike.js"></script>
-
     <!-- Auto-Resize Input Fields -->
     <script src="../assets/autosize/js/autosize.js"></script>
 
@@ -185,6 +182,14 @@
 
     <!-- Google Analytics -->
     <script src="/scripts/common/analytics.js"></script>
+
+    <!-- Facebook Like -->
+    <script>
+        $(window).bind("load", function() {
+            $.getScript("/scripts/common/fblike.js", function() {});
+        });
+    </script>
+    <!-- <script src="/scripts/common/fblike.js"></script> -->
 
 </head>
 
@@ -422,7 +427,7 @@
                                     </div>
 
                                     <!-- User Command Section: Manage different rights for users -->
-                                    <div class="row button-group">
+                                    <div class="row button-group" style="text-align: center;">
                                         <center>
                                             <!-- For ongoing owners -->
                                             <% if (loggedIn && mine && item.takerID === null) { %>
@@ -445,13 +450,61 @@
                                                 <% } %>
                                             <!-- For other users and receiving parties -->
                                             <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                                                <a href="javascript:messageUser();" class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Owner</a>
+                                                <div>
+                                                    <a href="javascript:messageUser();" class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Giver</a>
+                                                </div>
                                                 <% if (item.takerID === id) { %>
-                                                    <a href="javascript:shareItem();" class="btn btn-xs btn-primary message-button" id="facebook-share" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook</a>
+                                                    <div>
+                                                        <a href="javascript:shareItem();" class="btn btn-xs btn-primary message-button" id="facebook-share" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook</a>
+                                                    </div>
+                                                    <fieldset class="rating" style="color: white; font-weight: bold; text-align: center;" itemId="<%= item.itemID %>" >
+                                                        <input class="ratingForGiver" type="radio" id="star5" name="rating" value="10" <% if (item.giverRating === 10) { %>checked="checked" <% } %> /><label class = "full" for="star5" title="5 stars"></label>
+                                                        <input class="ratingForGiver" type="radio" id="star4half" name="rating" value="9" <% if (item.giverRating === 9) { %>checked="checked" <% } %> /><label class="half" for="star4half" title="4.5 stars"></label>
+                                                        <input class="ratingForGiver" type="radio" id="star4" name="rating" value="8" <% if (item.giverRating === 8) { %>checked="checked" <% } %> /><label class = "full" for="star4" title="4 stars"></label>
+                                                        <input class="ratingForGiver" type="radio" id="star3half" name="rating" value="7" <% if (item.giverRating === 7) { %>checked="checked" <% } %> /><label class="half" for="star3half" title="3.5 stars"></label>
+                                                        <input class="ratingForGiver" type="radio" id="star3" name="rating" value="6" <% if (item.giverRating === 6) { %>checked="checked" <% } %> /><label class = "full" for="star3" title="3 stars"></label>
+                                                        <input class="ratingForGiver" type="radio" id="star2half" name="rating" value="5" <% if (item.giverRating === 5) { %>checked="checked" <% } %> /><label class="half" for="star2half" title="2.5 stars"></label>
+                                                        <input class="ratingForGiver" type="radio" id="star2" name="rating" value="4" <% if (item.giverRating === 4) { %>checked="checked" <% } %> /><label class = "full" for="star2" title="2 stars"></label>
+                                                        <input class="ratingForGiver" type="radio" id="star1half" name="rating" value="3" <% if (item.giverRating === 3) { %>checked="checked" <% } %> /><label class="half" for="star1half" title="1.5 stars"></label>
+                                                        <input class="ratingForGiver" type="radio" id="star1" name="rating" value="2" <% if (item.giverRating === 2) { %>checked="checked" <% } %> /><label class = "full" for="star1" title="1 star"></label>
+                                                        <input class="ratingForGiver" type="radio" id="starhalf" name="rating" value="1" <% if (item.giverRating === 1) { %>checked="checked" <% } %> /><label class="half" for="starhalf" title="0.5 stars"></label>
+                                                    </fieldset>
+                                                    <% if (item.giverRating === null) { %>
+                                                        <div style="margin-top: 40px;" class="ratingText">
+                                                            Please give a rating to your giver!
+                                                        </div>
+                                                    <% } else { %>
+                                                        <div style="margin-top: 40px;" class="ratingText">
+                                                            Thanks for giving a rating!
+                                                        </div>
+                                                    <% } %>
                                                 <% } %>
                                             <!-- For successful owners -->
                                             <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                                                <a href="javascript:messageUser();" class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;">Message Recipient</a>
+                                                <div>
+                                                    <a href="javascript:messageUser();" class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Recipient</a>
+                                                </div>
+                                                <fieldset class="rating" style="color: white; font-weight: bold; text-align: center;" itemId="<%= item.itemID %>">
+                                                    <input class="ratingForTaker" type="radio" id="star5" name="rating" value="10" <% if (item.takerRating === 10) { %>checked="checked" <% } %> /><label class = "full" for="star5" title="5 stars"></label>
+                                                    <input class="ratingForTaker" type="radio" id="star4half" name="rating" value="9" <% if (item.takerRating === 9) { %>checked="checked" <% } %> /><label class="half" for="star4half" title="4.5 stars"></label>
+                                                    <input class="ratingForTaker" type="radio" id="star4" name="rating" value="8" <% if (item.takerRating === 8) { %>checked="checked" <% } %> /><label class = "full" for="star4" title="4 stars"></label>
+                                                    <input class="ratingForTaker" type="radio" id="star3half" name="rating" value="7" <% if (item.takerRating === 7) { %>checked="checked" <% } %> /><label class="half" for="star3half" title="3.5 stars"></label>
+                                                    <input class="ratingForTaker" type="radio" id="star3" name="rating" value="6" <% if (item.takerRating === 6) { %>checked="checked" <% } %> /><label class = "full" for="star3" title="3 stars"></label>
+                                                    <input class="ratingForTaker" type="radio" id="star2half" name="rating" value="5" <% if (item.takerRating === 5) { %>checked="checked" <% } %> /><label class="half" for="star2half" title="2.5 stars"></label>
+                                                    <input class="ratingForTaker" type="radio" id="star2" name="rating" value="4" <% if (item.takerRating === 4) { %>checked="checked" <% } %> /><label class = "full" for="star2" title="2 stars"></label>
+                                                    <input class="ratingForTaker" type="radio" id="star1half" name="rating" value="3" <% if (item.takerRating === 3) { %>checked="checked" <% } %> /><label class="half" for="star1half" title="1.5 stars"></label>
+                                                    <input class="ratingForTaker" type="radio" id="star1" name="rating" value="2" <% if (item.takerRating === 2) { %>checked="checked" <% } %> /><label class = "full" for="star1" title="1 star"></label>
+                                                    <input class="ratingForTaker" type="radio" id="starhalf" name="rating" value="1" <% if (item.takerRating === 1) { %>checked="checked" <% } %> /><label class="half" for="starhalf" title="0.5 stars"></label>
+                                                </fieldset>
+                                                <% if (item.takerRating === null) { %>
+                                                    <div style="margin-top: 40px;" class="ratingText">
+                                                        Please give a rating to your recipient.
+                                                    </div>
+                                                <% } else { %>
+                                                    <div style="margin-top: 40px;" class="ratingText">
+                                                        Thanks for giving a rating!
+                                                    </div>
+                                                <% } %>
                                             <% } %>
                                         </center>
                                     </div>

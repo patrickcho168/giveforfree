@@ -84,7 +84,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 // Define routes
 app.use(fbLogin.onlyNotLogout(fbLogin.facebookCache));
-// app.use(fbLogin.onlyNotLogout(notification.getNotifications))
+app.use(fbLogin.onlyNotLogout(notification.getNotifications))
 fbLogin.route(app);
 notification.route(app);
 upload(app);

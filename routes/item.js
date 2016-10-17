@@ -27,6 +27,49 @@ var parseForm = bodyParser.urlencoded({ extended: true, limit: '50mb' });
 
 module.exports = function(app) {
 
+    // -------------- RATINGS
+
+    app.post('/api/item/:id/rateGiver/:score', ensureLogin.ensureLoggedIn(), function(req, res) {
+        var userId = parseInt(req.user.appUserId);
+        var itemId = parseInt(req.params.id);
+        var score = parseInt(req.params.score);
+        console.log(userId);
+        console.log(itemId);
+        console.log(score);
+        if (score !== null && score > 0 && score <= 10) {
+            db.Item.where({
+                itemID: itemId,
+                takerID: userId,
+            }).fetch().then(function(itemData) {
+                if (itemData && itemData.attributes && itemData.attributes.giverID !== null) {
+                    itemData.save({
+                        giverRating: score,
+                    })
+                }
+            })
+        }
+    })
+
+    app.post('/api/item/:id/rateTaker/:score', ensureLogin.ensureLoggedIn(), function(req, res) {
+        var userId = parseInt(req.user.appUserId);
+        var itemId = parseInt(req.params.id);
+        var score = parseInt(req.params.score);
+        if (score !== null && score > 0 && score <= 10) {
+            db.Item.where({
+                itemID: itemId,
+                giverID: userId
+            }).fetch().then(function(itemData) {
+                if (itemData && itemData.attributes && itemData.attributes.takerID !== null) {
+                    itemData.save({
+                        takerRating: score,
+                    })
+                }
+            })
+        }
+    })
+
+    // -------------- COMMENTS
+
     app.get('/item/:id/comment', function(req, res, next) {
         var itemId = req.params.id;
         db.Comment.where({
@@ -177,6 +220,8 @@ module.exports = function(app) {
         })
     })
 
+    // -------------- GIVE
+
     // This is for giving to random person
     app.get('/api/give/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
         var userId = parseInt(req.user.appUserId);
@@ -267,6 +312,7 @@ module.exports = function(app) {
         });
     })
 
+    // -------------- DELETE
 
     // Delete an item
     app.get('/api/delete/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
@@ -286,6 +332,8 @@ module.exports = function(app) {
         });
         res.redirect("/");
     });
+
+    // -------------- WANT AND UNWANT
 
     // Want a product (given itemID and userID)
     // Should return success header?
@@ -490,14 +538,11 @@ module.exports = function(app) {
             userId = req.user.appUserId;
             loggedIn = true;
         }
-
-
         db.Item.where('itemID', itemId).fetch().then(function(item) {
             item.categories().fetch().then(function(cat) {
                 categories = cat.toJSON().map(function(obj) {
                     return obj.name;
                 });
-
                 db.ItemPageQuery(userId, itemId, function(data) {
                     console.log(data);
                     console.log(categories);
@@ -537,10 +582,12 @@ module.exports = function(app) {
                                         });
                                     });
                                 } else {
+                                    var givenToMe = userId === data[0].takerID;
                                     res.render('item', {
                                         id: userId,
                                         item: data[0],
                                         mine: mine,
+                                        givenToMe: givenToMe,
                                         appId: config.fbClientID,
                                         domain: config.domain,
                                         date: processedDate,

@@ -63,6 +63,48 @@ $(document).on("click", ".unsnag", function() {
         });
 });
 
+// Rate Giver
+$(document).on("click", ".ratingForTaker", function() {
+    var itemId = $(this).parent().attr("itemId");
+    var score = $(this).attr("value");
+
+    // Change text
+    $(this).parent().siblings('.ratingText').text("Thanks for giving a rating!");
+
+    // Send post request
+    $.post("/api/item/" + itemId + "/rateTaker/" + score)
+        .done(function() {
+
+        })
+        .fail(function() {
+
+        })
+        .always(function() {
+
+        });
+})
+
+// Rate Giver
+$(document).on("click", ".ratingForGiver", function() {
+    var itemId = $(this).parent().attr("itemId");
+    var score = $(this).attr("value");
+
+    // Change text
+    $(this).parent().siblings('.ratingText').text("Thanks for giving a rating!");
+
+    // Send post request
+    $.post("/api/item/" + itemId + "/rateGiver/" + score)
+        .done(function() {
+
+        })
+        .fail(function() {
+
+        })
+        .always(function() {
+
+        });
+})
+
 // Carousel Logic
 jQuery(document).ready(function($) {
 
