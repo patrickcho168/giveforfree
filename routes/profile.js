@@ -260,9 +260,9 @@ module.exports = function(app) {
                         totalRatings += takerRatingData[0].totalTakerRatings;
                         totalCounts += takerRatingData[0].totalTakerRatingCounts;
                     }
-                    var rating = "No Rating Yet";
+                    var rating = 6;
                     if (totalCounts > 0) {
-                        rating = totalRatings/totalCounts;
+                        rating = Math.ceil(totalRatings/totalCounts);
                     }
                     req.session.lastPageVisit = '/profile/' + otherUserId;
                     if (req.user === undefined) {
