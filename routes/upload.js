@@ -99,7 +99,8 @@ function saveCategories(item, categories) {
             return categoriesPos.indexOf(cat) + 1;
         });
 
-        return item.categories().attach(ids);
+        item.categories().detach();
+        item.categories().attach(ids);
     }
 }
 
@@ -252,6 +253,11 @@ module.exports = function(app) {
                         req.flash('success_messages', 'Your item details are updated!');
                         res.redirect("/item/" + itemId);
                     });
+
+
+                    if (req.body.categories) {
+                        saveCategories(item, req.body.categories.replace("&amp;", "&").split(','));
+                    }
                 }
 
             } else {
