@@ -6,12 +6,12 @@
   overflow: hidden;
   position: absolute;
   top: -3px;
-  right: -3px;
+  right: 5px;
 }
 
 .ribbon-green {
-  font: bold 15px Sans-Serif;
-  color: #333;
+  font-size: 15px;
+  color: #fff !important;
   text-align: center;
   text-shadow: rgba(255,255,255,0.5) 0px 1px 0px;
   -webkit-transform: rotate(45deg);
@@ -23,12 +23,12 @@
   left: -5px;
   top: 15px;
   width: 120px;
-  background-color: #BFDC7A;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#BFDC7A), to(#8EBF45)); 
-  background-image: -webkit-linear-gradient(top, #BFDC7A, #8EBF45); 
-  background-image:    -moz-linear-gradient(top, #BFDC7A, #8EBF45); 
-  background-image:     -ms-linear-gradient(top, #BFDC7A, #8EBF45); 
-  background-image:      -o-linear-gradient(top, #BFDC7A, #8EBF45); 
+  background-color: #c09f80;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#c09f80), to(#c09f80)); 
+  background-image: -webkit-linear-gradient(top, #c09f80, #c09f80); 
+  background-image:    -moz-linear-gradient(top, #c09f80, #c09f80); 
+  background-image:     -ms-linear-gradient(top, #c09f80, #c09f80); 
+  background-image:      -o-linear-gradient(top, #c09f80, #c09f80); 
   color: #6a6340;
   -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
   -moz-box-shadow:    0px 0px 3px rgba(0,0,0,0.3);
@@ -89,7 +89,7 @@
 
 .ribbon-green:before, .ribbon-green:after {
   content: "";
-  border-top:   3px solid #6e8900;   
+  border-top:   3px solid #c09f80;   
   border-left:  3px solid transparent;
   border-right: 3px solid transparent;
   position:absolute;

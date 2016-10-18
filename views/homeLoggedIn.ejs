@@ -133,7 +133,7 @@
 									<% if (typeof notification != 'undefined' ) { %>
 										<span class="badge"><%= notification.length %></span>
 									<% } %>
-									<span> Patrick</span>
+									<span> <%= user.name %></span>
 								</div>
 			                </a>
 			            </li>
@@ -236,19 +236,35 @@
 
 			<div class="panel title-banner">
 				<div class="title-content col">
-					<h1>Welcome, Patrick Cho Chung Ting!</h1>
-					<!-- TODO: the user name -->
-					<div class="sub-titles">
-						<p class="sub-title-first">
-							Start by giving a gift today!
-						</p>
-						<a class="give-button" type="button" href="/upload">Give a gift</a>
-						<p class="sub-title-second">
-							<a onclick="scrollDown();">
-								Or browse FREE gifts below <i class="fa fa-arrow-circle-o-down"></i>
-							</a>
-						</p>
-					</div>
+					<% if(loggedIn) { %>
+						<h1>Welcome, <%= user.name %>!</h1>
+						<!-- TODO: the user name -->
+						<div class="sub-titles">
+							<p class="sub-title-first">
+								Start by giving a gift today!
+							</p>
+							<a class="give-button" type="button" href="/upload">Give a gift</a>
+							<p class="sub-title-second">
+								<a onclick="scrollDown();">
+									Or browse FREE gifts below <i class="fa fa-arrow-circle-o-down"></i>
+								</a>
+							</p>
+						</div>
+					<% } else { %>
+						<h1>Welcome!</h1>
+						<!-- TODO: the user name -->
+						<div class="sub-titles">
+							<p class="sub-title-first">
+								Log in now to get FREE gifts!
+							</p>
+							<a class="give-button" type="button" href="javascript:loginSpecial();">Log in</a>
+							<p class="sub-title-second">
+								<a onclick="scrollDown();">
+									Or browse FREE gifts below <i class="fa fa-arrow-circle-o-down"></i>
+								</a>
+							</p>
+						</div>
+					<% } %>
 				</div>
 				<div class="title-img">
 					<div class="bg">

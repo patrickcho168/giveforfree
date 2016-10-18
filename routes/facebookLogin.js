@@ -66,11 +66,17 @@ toExport.route = function(app) {
             });
         } else {
             var userId = req.user.appUserId;
-            res.render('homeLoggedIn', {
-                notification: req.session.notification,
-                moment: moment,
-                id: userId,
-                loggedIn: true
+            db.User.where({
+                userID: userId
+            }).fetch().then(function(user) {
+                console.log(user);
+                res.render('homeLoggedIn', {
+                    notification: req.session.notification,
+                    moment: moment,
+                    id: userId,
+                    user: user.attributes,
+                    loggedIn: true
+                });
             });
         }
     });
