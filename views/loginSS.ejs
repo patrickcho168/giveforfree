@@ -74,49 +74,39 @@
     </div>
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-
-            <!-- Left Header Icon -->
-            <div class="navbar-header">
-
-                <!-- Collapsed Nav -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <!-- Logo and Name -->
-                <a class="navbar-brand" href="/">
-                    <h4 style="margin-top: 0px;">
-                    <img src="../images/common/logo-new.svg" width="30px" height="30px" style="margin-top: -5px;"/>
-                    Give For Free!</h4>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-fixed-top">
+        <div class="navbar-header">
+            <div class="navbar-brand">
+                <a class="navbar-logo" onclick="clickLogo();">
+                    <img src="../images/common/gff-logo.svg" class="logo-full" alt="" />
+                    <img src="../images/common/gff-logo-s.svg" class="logo-mobile" alt="" />
                 </a>
             </div>
 
-            <!-- Menu -->
-            <div class="collapse navbar-collapse" id="nav-menu">
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li id="nav-feed">
-                        <a href="/">
-                            <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
-                        </a>
-                    </li>
-                    <li id="nav-logout">
-                        <a href="javascript:loginSpecial();">
-                            <i class="fa fa-lock" aria-hidden="true"></i> Login
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <button type="button" class="navbar-toggle collapsed user-button" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
+                <i class="fa fa-user"></i>
+            </button>
         </div>
+
+        <div class="collapse navbar-collapse" id="nav-menu">
+            <ul class="nav navbar-nav navbar-right">
+                <li id="nav-feed">
+                    <a href="/">
+                        <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
+                    </a>
+                </li>
+                <li id="nav-logout">
+                    <a href="javascript:loginSpecial();">Log in</a>
+                </li>
+            </ul>
+        </div>
+        <!-- Menu -->
+
     </nav>
 
     <!-- Section 1: Login -->
-    <header id="login" class="login">
+    <!-- <header id="login" class="login">
         <div class="text-vertical-center">
             <h1>It's FREE</h1>
             <h3>Give and Take Pre-loved Goods</h3>
@@ -125,196 +115,197 @@
                 <h4><i class="fa fa-facebook-square" aria-hidden="true"></i> Login using Facebook</h4>
             </a>
         </div>
-    </header>
+    </header> -->
+    <div class="main-container">
+        <div class="panel login-panel">
+            <div class="panel-cover">
+                <div class="penel-left"></div>
+                <div class="panel-right">
+                    <h2>Give For Free</h2>
+                    <p>
+                        Give and Take Pre-loved Goods
+                    </p>
+                    <a href="javascript:loginSpecial();"><i class="fa fa-facebook-square"></i> Facebook Login</a>
+                </div>
+            </div>
+        </div>
 
-    <!-- Section 2: About -->
-    <section id="about" class="about">
-        <div class="container" id="about-container">
-            <div class="row text-center">
+        <!-- Section 2: About -->
+        <div class="penel what-panel">
 
                 <!-- Introduction -->
-                <div class="col-lg-10 col-lg-offset-1">
-                    <h2>What is Give For Free?</h2>
-                    <hr class="small">
-                    <div class="row">
+                <h2>What is Give For Free?</h2>
+                <div class="row">
 
-                        <div class="col-md-4 col-sm-6">
-                            <div class="about-item">
-                                <span class="glyphicon glyphicon-leaf" id="gift-icon" aria-hidden="true"></span>
-                                <h4>
-                                    <strong>Zero Waste</strong>
-                                </h4>
-                                <p>
-                                    One man's junk is another man's treasure.
-                                </p>
-                            </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="about-item">
+                            <span class="glyphicon glyphicon-leaf" id="gift-icon" aria-hidden="true"></span>
+                            <h4>
+                                <strong>Zero Waste</strong>
+                            </h4>
+                            <p>
+                                One man's junk is another man's treasure.
+                            </p>
+                            <a href="#"></a>
                         </div>
+                    </div>
 
-                        <div class="col-md-4 col-sm-6">
-                            <div class="about-item">
-                                <span class="glyphicon glyphicon-usd" id="friends-icon" aria-hidden="true"></span>
-                                <h4>
-                                    <strong>Shopping For FREE</strong>
-                                </h4>
-                                <p>
-                                    We are all about the 100% discounts.
-                                </p>
-                            </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="about-item">
+                            <span class="glyphicon glyphicon-usd" id="friends-icon" aria-hidden="true"></span>
+                            <h4>
+                                <strong>Shopping For FREE</strong>
+                            </h4>
+                            <p>
+                                We are all about the 100% discounts.
+                            </p>
                         </div>
+                    </div>
 
-                        <div class="col-md-4 col-sm-6">
-                            <div class="about-item">
-                                <span class="glyphicon glyphicon-thumbs-up" id="karma-icon" aria-hidden="true"></span>
-                                <h4>
-                                    <strong>Engine Of Reciprocity</strong>
-                                </h4>
-                                <p>
-                                    Give and take makes good friends. <br> - Scottish Proverb
-                                </p>
-                            </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="about-item">
+                            <span class="glyphicon glyphicon-thumbs-up" id="karma-icon" aria-hidden="true"></span>
+                            <h4>
+                                <strong>Engine Of Reciprocity</strong>
+                            </h4>
+                            <p>
+                                Give and take makes good friends. <br> - Scottish Proverb
+                            </p>
                         </div>
+                    </div>
 
+                </div>
+        </div>
+
+        <div class="panel how-panel">
+            <h2>How does it work?</h2>
+
+            <div class="gifting">
+
+                <div class="feature-subtitles">
+                    <h3><strong>Gifting</strong></h3>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 feature">
+                        <img class="feature-icons" id="feat-1" src="images/landing/upload-images.svg">
+                        <h4>Snap</h4>
+                        <p class="lead">Build an image gallery for your gift</p>
+                    </div>
+
+                    <div class="col-sm-4 feature">
+                        <img class="feature-icons" id="feat-2" src="images/landing/controlled-visibility.svg">
+                        <h4>Post</h4>
+                        <p class="lead">Share your gift with all your Facebook friends</p>
+                    </div>
+
+                    <div class="col-sm-4 feature">
+                        <img class="feature-icons " id="feat-3" src="images/landing/pick-lottery.svg">
+                        <h4>Give</h4>
+                        <p class="lead">Pick the lucky one to receive your gift</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="receiving">
+
+                <div class="feature-subtitles">
+                    <h3><strong>Receiving</strong></h3>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 feature">
+                        <img class="feature-icons" id="feat-4" src="images/landing/curated-selection.svg">
+                        <h4>Snag</h4>
+                        <p class="lead">Indicate your interest in a FREE gift you've always wanted</p>
+                    </div>
+
+                    <div class="col-sm-4 feature">
+                        <img class="feature-icons" id="feat-5" src="images/landing/smart-recommendations.svg">
+                        <h4>Receive</h4>
+                        <p class="lead">It's your lucky day! Go get your FREE gift</p>
+                    </div>
+
+                    <div class="col-sm-4 feature">
+                        <img class="feature-icons" id="feat-6" src="images/landing/integrated-messaging.svg">
+                        <h4>Thank</h4>
+                        <p class="lead">Show your appreciation to the giver</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="panel contact-panel">
+            <h2>Our Team</h2>
+            <div class="contact-row row">
+
+                <div class="col-sm-6 contact-item">
+                    <div class="col-sm-4">
+                        <img src="/images/home/xujie.gif" style="width:100%; max-width:130px"/>
+                        <!-- <span class="glyphicon glyphicon-bullhorn" id="bullhorn-icon" aria-hidden="true"></span> -->
+                    </div>
+                    <div class="col-sm-8 teammate-description">
+                        <h4> Ng Xu Jie </h4>
+                        <p> Xu Jie is our team manager, marketeer and front-end developer. </p>
                     </div>
                 </div>
 
-                <!-- Features -->
-                <div class="col-lg-10 col-lg-offset-1">
-                    <h2>How does it work?</h2>
-                    <hr class="small">
-
-                    <div class="col-md-12" id="sub-first">
-
-                        <div class="feature-subtitles">
-                            <h3><strong>Gifting</strong></h3>
-                        </div>
-
-                        <div class="col-sm-4 feature">
-                            <img class="feature-icons" id="feat-1" src="images/landing/upload-images.svg">
-                            <h4>Snap</h4>
-                            <p class="lead">Build an image gallery for your gift</p>
-                        </div>
-
-                        <div class="col-sm-4 feature">
-                            <img class="feature-icons" id="feat-2" src="images/landing/controlled-visibility.svg">
-                            <h4>Post</h4>
-                            <p class="lead">Share your gift with all your Facebook friends</p>
-                        </div>
-
-                        <div class="col-sm-4 feature">
-                            <img class="feature-icons " id="feat-3" src="images/landing/pick-lottery.svg">
-                            <h4>Give</h4>
-                            <p class="lead">Pick the lucky one to receive your gift</p>
-                        </div>
-
+                <div class="col-sm-6 contact-item">
+                    <div class="col-sm-4">
+                        <img src="/images/home/larry.gif" style="width:100%; max-width:130px"/>
+                        <!-- <span class="glyphicon glyphicon-blackboard" id="blackboard-icon" aria-hidden="true"></span> -->
                     </div>
-
-                    <div class="col-md-12" id="sub-second">
-
-                        <div class="feature-subtitles">
-                            <h3><strong>Receiving</strong></h3>
-                        </div>
-
-                        <div class="col-sm-4 feature">
-                            <img class="feature-icons" id="feat-4" src="images/landing/curated-selection.svg">
-                            <h4>Snag</h4>
-                            <p class="lead">Indicate your interest in a FREE gift you've always wanted</p>
-                        </div>
-
-                        <div class="col-sm-4 feature">
-                            <img class="feature-icons" id="feat-5" src="images/landing/smart-recommendations.svg">
-                            <h4>Receive</h4>
-                            <p class="lead">It's your lucky day! Go get your FREE gift</p>
-                        </div>
-
-                        <div class="col-sm-4 feature">
-                            <img class="feature-icons" id="feat-6" src="images/landing/integrated-messaging.svg">
-                            <h4>Thank</h4>
-                            <p class="lead">Show your appreciation to the giver</p>
-                        </div>
-
+                    <div class="col-sm-8 teammate-description">
+                        <h4> Huang Lie Jun </h4>
+                        <p> Lie Jun is our UX/UI designer and front-end developer. </p>
                     </div>
-
                 </div>
 
             </div>
-        </div>
-    </section>
 
-    <!-- Section 3: Contact Us -->
-    <section id="contact" class="contact">
-        <div class="container" id="contact-container">
+
             <div class="row">
-                <div class="col-lg-10 col-lg-offset-1 text-center">
-                    <h2>Our Team</h2>
-                    <hr class="small">
-                    <div class="contact-row col-sm-12">
 
-                        <div class="col-sm-6 contact-item">
-                            <div class="col-sm-4">
-                                <img src="/images/home/xujie.gif" style="width:100%; max-width:130px"/>
-                                <!-- <span class="glyphicon glyphicon-bullhorn" id="bullhorn-icon" aria-hidden="true"></span> -->
-                            </div>
-                            <div class="col-sm-8 teammate-description">
-                                <h4> Ng Xu Jie </h4>
-                                <p> Xu Jie is our team manager, marketeer and front-end developer. </p>
-                            </div>
+                <div class="col-sm-6 contact-item">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <img src="/images/home/ken.gif" style="width:100%; max-width:130px"/>
+                            <!-- <span class="glyphicon glyphicon-cog" id="cog-icon" aria-hidden="true"></span> -->
                         </div>
-
-                        <div class="col-sm-6 contact-item">
-                            <div class="col-sm-4">
-                                <img src="/images/home/larry.gif" style="width:100%; max-width:130px"/>
-                                <!-- <span class="glyphicon glyphicon-blackboard" id="blackboard-icon" aria-hidden="true"></span> -->
-                            </div>
-                            <div class="col-sm-8 teammate-description">
-                                <h4> Huang Lie Jun </h4>
-                                <p> Lie Jun is our UX/UI designer and front-end developer. </p>
-                            </div>
+                        <div class="col-sm-8 teammate-description">
+                            <h4> Ken Oung Yong Quan </h4>
+                            <p> Ken is our back-end developer, managing our database and server APIs. </p>
                         </div>
-
                     </div>
-
-
-                    <div class="col-sm-12">
-
-                        <div class="col-sm-6 contact-item">
-                            <div class="col-sm-4">
-                                <img src="/images/home/ken.gif" style="width:100%; max-width:130px"/>
-                                <!-- <span class="glyphicon glyphicon-cog" id="cog-icon" aria-hidden="true"></span> -->
-                            </div>
-                            <div class="col-sm-8 teammate-description">
-                                <h4> Ken Oung Yong Quan </h4>
-                                <p> Ken is our back-end developer, managing our database and server APIs. </p>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 contact-item">
-                            <div class="col-sm-4">
-                                <img src="/images/home/pat.gif" style="width:100%; max-width:130px"/>
-                                <!-- <span class="glyphicon glyphicon-globe" id="globe-icon" aria-hidden="true"></span> -->
-                            </div>
-                            <div class="col-sm-8 teammate-description">
-                                <h4> Patrick Cho </h4>
-                                <p> Patrick is our back-end developer, managing our database and server APIs. </p>
-                            </div>
-                        </div>
-
-                    </div>
-
-
                 </div>
+
+                <div class="col-sm-6 contact-item">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <img src="/images/home/pat.gif" style="width:100%; max-width:130px"/>
+                            <!-- <span class="glyphicon glyphicon-globe" id="globe-icon" aria-hidden="true"></span> -->
+                        </div>
+                        <div class="col-sm-8 teammate-description">
+                            <h4> Patrick Cho </h4>
+                            <p> Patrick is our back-end developer, managing our database and server APIs. </p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
+
         </div>
-    </section>
+    </div>
 
     <!-- Footer -->
     <footer>
-        <div class="container footer-container">
-            <div class="col-xs-10 col-xs-offset-1 text-center">
+        <div class="footer-container">
+            <div class="text-center">
                 <hr class="xsall">
                 <div class="col-xs-12 text-center" style="padding-bottom: 10px;">
-                    <small><span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true">  </span>  <a href="mailto:giveforfreefeedback@gmail.com"> giveforfreefeedback[at]gmail[dot]com</a></small>
+                    <small><a href="mailto:giveforfreefeedback@gmail.com"><i class="fa fa-envelope"></i> giveforfreefeedback@gmail.com</a></small>
                     <br>
-                    <small><span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span>  <a href="/privacy"> Privacy Clause</a></small>
+                    <small><a href="/privacy"><i class="fa fa-eye"></i> Privacy Clause</a></small>
                 </div>
                 <div class="col-xs-12 text-center">
                     <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
@@ -322,7 +313,6 @@
             </div>
         </div>
     </footer>
-
 </body>
 
 
