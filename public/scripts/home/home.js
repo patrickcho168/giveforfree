@@ -10,6 +10,8 @@ var lastItemId = 0;
 // Number of items to load every AJAX
 var numItems = 12;
 
+var sideBarOpen = false;
+
 var canAJAX = true;
 
 var urlAJAX = '/api/allItems/' + 0 + '/' + numItems;;
@@ -94,6 +96,27 @@ $(document).ready(function() {
 
     addRealViews(html, urlAJAX);
 
+    $('.navbar-logo').on('click', function() {
+        if ($(window).width() < 767) {
+            $('html, body').animate({ scrollTop: 0 }, 500);
+        }
+    });
+
+    $('.category-button').on('click', function() {
+        $('.floating-bar-mobile').toggleClass('show-bar');
+        $('.main-container').toggleClass('open');
+    });
+});
+
+$(document).scroll(function() {
+    var y = $(document).scrollTop();
+    var x = $(window).width();
+    var floatingBar = $('.floating-bar-full');
+    if(x >= 753 && y >= 590) {
+        floatingBar.css({"position": "fixed", "top": "92px", "padding-right": "30px"});
+    } else if(x >= 753 && y < 590) {
+        floatingBar.css({"position": "relative", "top": "0px", "padding-right": "15px"});
+    }
 });
 
 $(window).scroll(function() {
@@ -113,6 +136,10 @@ function handleBrokenImage(image) {
     image.onerror = "";
     image.src = "/images/common/default-placeholder.png";
     return true;
+}
+
+function scrollDown() {
+    $('html, body').animate({ scrollTop: $('.gifts-banner').offset().top - 87 }, 500);
 }
 
 $(window).load(function() {

@@ -15,6 +15,7 @@ html, body {
 body {
     font-family: 'Roboto', sans-serif;
     font-size: 100%;
+    position: absolute;
 }
 .font-smoothing {
     -webkit-font-smoothing: antialiased;
@@ -44,6 +45,11 @@ p {
     /*font-size: 1.35em;*/
     font-weight: lighter;
 }
+
+a {
+    transition: all 0.5s;
+}
+
 a:link {
     text-decoration: none;
 }
@@ -250,6 +256,122 @@ img.clipped {
     z-index: -1;
 }
 
+.input-group input:focus {
+    outline: none!important;
+    box-shadow: none!important;
+}
+
+.navbar {
+    /*height: 70px;*/
+    padding: 10px;
+    background-color: #fff;
+    color: #58666e;
+    box-shadow: 0 2px 2px rgba(0,0,0,.05),0 1px 0 rgba(0,0,0,.05);
+}
+
+@media (max-width: 767px) {
+    .navbar-collapse .navbar-form{
+        margin: 0;
+        border: 0 none;
+    }
+    .navbar-form .form-group {
+        float: left;
+        min-width: 80%;
+        margin-right: 10px;
+    }
+}
+@media (min-width: 768px) {
+    .navbar-collapse.collapse {
+        display: inline-block!important;
+        float: left;
+    }
+
+    #nav-menu {
+        float: right;
+    }
+}
+
+.navbar-header button i {
+    font-size: 20px;
+}
+
+.navbar-brand {
+    padding: 0;
+}
+
+.navbar-brand img {
+    height: 50px;
+}
+
+.navbar-collapse a {
+    color: #111;
+    font-size: 13px;
+}
+
+.navbar-collapse #nav-logout a {
+    color: #98a6ad;
+}
+
+.navbar-collapse a:focus, .navbar-collapse a:hover {
+    background: #fff!important;
+    outline: none!important;
+    color: #58666e!important;
+}
+
+.navbar-collapse .badge {
+    position: relative;
+    margin-left: -10px;
+    padding: 2px 5px;
+    top: -10px;
+
+    font-family: 'Roboto', sans-serif;
+    background-color: #f05050;
+    border: 2px solid #fff;
+}
+
+.navbar-collapse img {
+    width:25px;
+    border-radius: 50px;
+}
+
+#nav-profile a {
+    padding: 13px 10px!important;
+}
+
+.navbar-collapse .navbar-form {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    float: left!important;
+}
+
+.navbar-search {
+    border-radius: 50px;
+    box-shadow: none;
+    color: #58666e;
+    background-color: #edf1f2;
+    border: none;
+    height: 30px;
+}
+
+.input-group-btn button {
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    height: 30px;
+    padding: 5px 10px;
+    background-color: #edf1f2;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+@media(min-width: 768px) {
+    .navbar-form {
+        margin-left: 25px;
+    }
+}
+
+
 /* Remove Blue Glow */
 
 
@@ -275,13 +397,26 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 
 /* Footer */
 
+.footer-container {
+    height: 100px;
+    background-color: #565656;
+}
+
+.footer-container a {
+    color: #fff;
+}
+
+.footer-container i {
+    color: #c09f80;
+}
+
 .contact-list {
     text-align: center;
 }
 .copyright {
     text-align: center;
     padding-bottom: 10px;
-    /*color: #EEEEEE;*/
+    color: #d7cec7;
 }
 #loader-wrapper {
     position: fixed;
@@ -434,6 +569,10 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
     /* Android 2.1+, Chrome 1-25, iOS 3.2-6.1, Safari 3.2-6  */
     transition: all 0.3s 1s ease-out;
     /* Chrome 26, Firefox 16+, iOS 7+, IE 10+, Opera, Safari 6.1+  */
+}
+
+.panel {
+    transition: all 0.5s;
 }
 
 .avatar {
