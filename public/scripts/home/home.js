@@ -97,9 +97,7 @@ $(document).ready(function() {
     addRealViews(html, urlAJAX);
 
     $('.navbar-logo').on('click', function() {
-        if ($(window).width() < 767) {
-            $('html, body').animate({ scrollTop: 0 }, 500);
-        }
+        $('html, body').animate({ scrollTop: 0 }, 500);
     });
 
     $('.category-button').on('click', function() {
