@@ -130,14 +130,6 @@
 }
 
 /* for modification */
-.logo-full {
-    display: block;
-}
-
-.logo-mobile {
-    display: none;
-}
-
 .title-banner {
     display: table;
     height: 560px;
@@ -346,14 +338,6 @@
 }
 
 @media (max-width: 767px) {
-    .logo-full {
-        display: none;
-    }
-
-    .logo-mobile {
-        display: block;
-    }
-
     .main-container {
         padding-top: 90px;
         padding-left: 10px;
