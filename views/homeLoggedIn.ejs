@@ -10,7 +10,7 @@
 	<meta name="author" content="">
 	<link rel="manifest" href="/manifest.json">
 
-	<title>Give For Free - Meeting the needs of others</title>
+	<title>Give For Free</title>
 
 	<!-- Bootstrap Support -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -39,9 +39,6 @@
 	<!-- Push Notifications -->
 	<!-- <script src="/scripts/common/notification2.js"></script> -->
 
-	<!-- Facebook Like -->
-    <script src="/scripts/common/fblike.js"></script>
-
 	<!-- Bootstrap CSS (override) -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -64,6 +61,14 @@
 
 	<!-- Google Analytics -->
 	<script src="/scripts/common/analytics.js"></script>
+
+    <!-- Facebook Like -->
+    <script>
+        $(window).bind("load", function() {
+            $.getScript("/scripts/common/fblike.js", function() {});
+        });
+    </script>
+    <!-- <script src="/scripts/common/fblike.js"></script> -->
 
 </head>
 

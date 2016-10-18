@@ -248,43 +248,63 @@ module.exports = function(app) {
         csrfProtection,
         function(req, res) {
             var otherUserId = parseInt(req.params.id);
-            req.session.lastPageVisit = '/profile/' + otherUserId;
-            if (req.user === undefined) {
-                var mine = false;
-                db.User.where({
-                    userID: otherUserId
-                }).fetch().then(function(user) {
-                    res.render('profile', {
-                        loggedIn: false,
-                        myProfile: mine,
-                        user: user.attributes,
-                        id: 0,
-                        friendProperty: {},
-                        friends: [],
-                        notification: req.session.notification,
-                        csrfToken: req.csrfToken()
-                    });
-                });
-            } else {
-                var mine = otherUserId === req.user.appUserId;
-                db.User.where({
-                    userID: otherUserId
-                }).fetch().then(function(user) {
-                    db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
-                        res.render('profile', {
-                            loggedIn: true,
-                            myProfile: mine,
-                            user: user.attributes,
-                            id: req.user.appUserId,
-                            friendProperty: req.user.fbFriendsToPropertyMap,
-                            friends: data.models,
-                            notification: req.session.notification,
-                            moment: moment,
-                            csrfToken: req.csrfToken()
+            db.GetGiverRatingById(otherUserId, function(giverRatingData) {
+                db.GetTakerRatingById(otherUserId, function(takerRatingData) {
+                    var totalCounts = 0;
+                    var totalRatings = 0;
+                    if (giverRatingData[0].totalGiverRatingCounts !== 0) {
+                        totalRatings += giverRatingData[0].totalGiverRatings;
+                        totalCounts += giverRatingData[0].totalGiverRatingCounts;
+                    }
+                    if (takerRatingData[0].totalTakerRatingCounts !== 0) {
+                        totalRatings += takerRatingData[0].totalTakerRatings;
+                        totalCounts += takerRatingData[0].totalTakerRatingCounts;
+                    }
+                    var rating = 6;
+                    if (totalCounts > 0) {
+                        rating = Math.ceil(totalRatings/totalCounts);
+                    }
+                    req.session.lastPageVisit = '/profile/' + otherUserId;
+                    if (req.user === undefined) {
+                        var mine = false;
+                        db.User.where({
+                            userID: otherUserId
+                        }).fetch().then(function(user) {
+                            res.render('profile', {
+                                loggedIn: false,
+                                myProfile: mine,
+                                user: user.attributes,
+                                userRating: rating,
+                                id: 0,
+                                friendProperty: {},
+                                friends: [],
+                                notification: req.session.notification,
+                                csrfToken: req.csrfToken()
+                            });
                         });
-                    });
-                });
-            }
+                    } else {
+                        var mine = otherUserId === req.user.appUserId;
+                        db.User.where({
+                            userID: otherUserId
+                        }).fetch().then(function(user) {
+                            db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
+                                res.render('profile', {
+                                    loggedIn: true,
+                                    myProfile: mine,
+                                    user: user.attributes,
+                                    userRating: rating,
+                                    id: req.user.appUserId,
+                                    friendProperty: req.user.fbFriendsToPropertyMap,
+                                    friends: data.models,
+                                    notification: req.session.notification,
+                                    moment: moment,
+                                    csrfToken: req.csrfToken()
+                                });
+                            });
+                        });
+                    }
+                })
+            })
         }
     );
 

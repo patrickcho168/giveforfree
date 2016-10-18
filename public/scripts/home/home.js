@@ -8,7 +8,7 @@ var triggered = 0;
 var lastItemId = 0;
 
 // Number of items to load every AJAX
-var numItems = 9;
+var numItems = 12;
 
 var sideBarOpen = false;
 
