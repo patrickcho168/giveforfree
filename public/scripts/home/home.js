@@ -36,27 +36,21 @@ function addRealViews(html, url) {
                 // Increment trackers to track load state
                 lastItemId = data[data.length - 1].itemID;
 
-
                 /*** Factory for views ***/
                 $.each(data, function(key, value) {
-                    html = '<div class="item col-lg-3 col-md-3 col-sm-4 col-ms-6 col-xs-12" style="margin-bottom: 20px;">';
-                    // Main Item Photo
-                    html += '<a href="/item/' + value.itemID + '" target="_blank"><div class="thumbnail" style="padding: 0; border: none;" align="center">';
-
-                    html += '<div class="box"><img style="display: block;" class="clipped" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '" onerror="handleBrokenImage(this);"></div>';
-
-                    // Item Title
-                    html += '<div class="caption-area" align="left">';
-                    html += '<br/><h6 class="item-header hide-overflow" style="padding-left: 10px; padding-top: 0px; margin: 5px  auto;"><a href="/item/' + value.itemID + '" target="_blank">' + value.title + '</a></h6>';
-                    html += '<row><p class="item-author hide-overflow" style="margin: 5px auto;">';
-
-                    html += '<a href="/profile/' + value.userID + '" target="_blank" class="small-avatar col-lg-4" style="background-image: url(http://graph.facebook.com/' + value.fbID + '/picture?type=large);" style="margin: auto 10px; padding: 0; width: 30px; height: 30px; border-radius:50%;"><span style="padding-left: 20px;">' + value.name + '</span></a></p></row>';
-                    // Item Snag Counts
+                    html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
+                    html += '<div class="panel">';
+                    html += '<a href="/item/' + value.itemID + '"><img src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '" alt="" class="img-responsive"/></a>';
+                    html += '<div class="item-info">';
+                    html += '<a href="/item/' + value.itemID + '"><p class="hide-overflow">' + value.title + '</p></a>';
+                    html += '<a href="/profile/' + value.userID + '" class="seller-info row">';
+                    html += '<img src="http://graph.facebook.com/' + value.fbID + '/picture" alt="" />';
+                    html += '<span>' + value.name + '</span>';
+                    html += '</a>';
                     if (value.numWants >= 1) {
-                        html += '<small class="item-snags pull-right text-muted" align="right" style="padding-right: 10px; padding-top: 0; padding-bottom: 10px;"><b>' + value.numWants + ' people want this.</b></small>';
+                        html += '<small class="addition-info pull-right">' + value.numWants + ' people want this.</small>';
                     } else {
-                        html += '<small class="item-snags pull-right text-muted" align="right" style="padding-right: 10px; padding-top: 0;padding-bottom: 10px;">' + '<b>Be the first to check this out!</b></small>';
-
+                        html += '<small class="addition-info pull-right">Be the first to check this out!</small>';
                     }
                     if (value.meWant) {
                         html += '<div class="ribbon-wrapper-green">';
@@ -65,13 +59,10 @@ function addRealViews(html, url) {
                         html += '</div>';
                         html += '</div>';
                     }
-
-                    html += '</div>';
-                    html += '</div></a>';
-                    html += '</div>';
+                    html += '</div></div></div>'
 
 
-                    $('#infinite-scroll-container').append(html);
+                    $('#infinite-scroll-container2').append(html);
                     $('#placeholder-main').hide();
 
                 });
@@ -106,16 +97,16 @@ $(document).ready(function() {
     });
 });
 
-$(document).scroll(function() {
-    var y = $(document).scrollTop();
-    var x = $(window).width();
-    var floatingBar = $('.floating-bar-full');
-    if(x >= 753 && y >= 590) {
-        floatingBar.css({"position": "fixed", "top": "92px", "padding-right": "30px"});
-    } else if(x >= 753 && y < 590) {
-        floatingBar.css({"position": "relative", "top": "0px", "padding-right": "15px"});
-    }
-});
+// $(document).scroll(function() {
+//     var y = $(document).scrollTop();
+//     var x = $(window).width();
+//     var floatingBar = $('.floating-bar-full');
+//     if(x >= 753 && y >= 590) {
+//         floatingBar.css({"position": "fixed", "top": "92px", "padding-right": "30px"});
+//     } else if(x >= 753 && y < 590) {
+//         floatingBar.css({"position": "relative", "top": "0px", "padding-right": "15px"});
+//     }
+// });
 
 $(window).scroll(function() {
     if ($(window).scrollTop() + $(window).height() == $(document).height()) {
