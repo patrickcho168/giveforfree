@@ -11,8 +11,10 @@
 /* Main Container */
 
 .main-container {
-    padding-top: 36px;
+    padding: 100px 30px 0px 30px;
+    font-family: 'Source Sans Pro', sans-serif;
 }
+
 .container {
     margin-top: 20px;
 }
@@ -79,6 +81,13 @@ textarea {
     resize: none;
     border-bottom: none;
     display: block;
+}
+button {
+    transition: all .5s;
+}
+.donation-info-form button:hover {
+    background-color: #d7cec7!important;
+    color: #fff!important;
 }
 :focus {
     outline: none;
@@ -164,32 +173,35 @@ img {
     margin-bottom: 22px;
 }
 .dtp-btn-cancel {
-    background: #d9534f;
+    background: #565656;
     box-shadow: none;
     margin: 0px 5px;
     color: white;
     font-weight: bold;
 }
 .dtp-btn-cancel:hover {
-    background: #d43f3a;
+    background: #ddd;
     box-shadow: none;
     margin: 0px 5px;
     color: white;
     font-weight: bold;
 }
 .dtp-btn-ok {
-    background: #5cb85c;
+    background: #c09f80;
     box-shadow: none;
     margin: 0px auto;
     color: white;
     font-weight: bold;
 }
 .dtp-btn-ok:hover {
-    background: #4cae4c;
+    background: #d7cec7;
     box-shadow: none;
     margin: 0px auto;
     color: white;
     font-weight: bold;
+}
+.dtp-content button {
+    transition: all .5s;
 }
 .large-label {
     font-size: 1.5em;
@@ -202,6 +214,350 @@ img {
 .checkbox input[type="checkbox"]:focus+ label::before {
     outline: none;
 }
+
+.checkbox {
+    padding-left: 25px!important;
+}
+
+.checkbox.checkbox-circle label::before {
+    margin-top: 6px;
+}
+
+.checkbox-primary input[type="checkbox"]:checked+label::before, .checkbox-primary input[type="radio"]:checked+label::before {
+    background-color: #c09f80;
+    border: 1px #c09f80 solid;
+}
+
+.checkbox.checkbox-circle label::after {
+    margin-top: 6px;
+}
+
+.check-two {
+    margin: 0;
+}
 .title-panel {
     background: #EA5455;
+}
+
+/*modification*/
+
+.basic-info-card-group {
+    height: 84vh;
+    border: none;
+}
+
+.basic-info-card-group .left-group {
+    height: 100%;
+}
+
+.basic-info-card-group .right-group {
+    height: 100%;
+    padding-left: 0;
+}
+
+.description-panel {
+    height: 100%;
+    border: 0;
+    padding-top: 70px;
+    padding-bottom: 70px;
+    padding-left: 10%;
+}
+
+.description-panel h2 {
+    margin-top: 0;
+    color: #76323f;
+    margin-bottom: 0;
+}
+
+.description-panel p {
+    color: #565656;
+}
+
+.photo-panel {
+    height: 100%;
+    border: 0;
+}
+
+.buttons {
+    width: 100%;
+    text-align: center;
+    margin: 30px 0px 30px 0px;
+}
+
+.buttons a {
+    font-size: 14px;
+    background-color: #c09f80;
+    color: #fff;
+    font-weight: 300;
+}
+
+.buttons .prev {
+    padding: 10px 10px 10px 20px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+
+.buttons .next {
+    padding: 10px 20px 10px 10px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.image-crop .cr-boundary {
+    width: 100%!important;
+}
+
+.image-crop img {
+    width: 100%;
+    padding: 0!important;
+    margin: 0!important;
+}
+
+.name-input-holder {
+    padding: 20px;
+    height: auto;
+}
+
+.name-input {
+    color: #76323f;
+    text-align: center;
+    font-size: 3em;
+    font-weight: 400;
+    margin-top: 50px;
+}
+
+.image-preview {
+    display: none!important;
+}
+
+.image-confirm {
+    font-weight: 300!important;
+    background-color: #c09f80!important;
+    border-radius: 50px;
+    padding: 10px 20px;
+    border: none;
+}
+
+.category-select-holder {
+    margin-top: 50px;
+}
+
+
+.description-input-holder p, .category-select-holder p {
+    color: #565656;
+}
+
+.description-input-holder textarea {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.selectize-control {
+    margin-top: 20px;
+}
+
+.selectize-control .items {
+    padding: 0!important;
+}
+
+.selectize-control .items .item {
+    background-image: none!important;
+    background-color: #76323f!important;
+    border: none!important;
+    padding: 10px!important;
+    font-weight: 300!important;
+}
+
+.category-select-holder input {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 20px!important;
+    font-weight: 300;
+}
+
+#cropperHolder img {
+    width: 200px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    opacity: .8;
+}
+
+#cropperHolder {
+    color: #565656;
+}
+
+
+.more-info-panel, .donation-info-panel {
+    border: none;
+    height: 85vh;
+    width: 100%;
+    margin: 25px 0px;
+    display: table;
+    table-layout: fixed;
+}
+
+.step-photo-1 {
+    display: table-cell;
+    height: 100%;
+    vertical-align: top;
+    float: none;
+
+    background: url(../../images/upload/step2.jpg) center center;
+}
+
+.step-photo-2 {
+    display: table-cell;
+    height: 100%;
+    vertical-align: top;
+    float: none;
+
+    background: url(../../images/upload/step3.png) center center;
+}
+
+.more-info-form, .donation-info-form {
+    display: table-cell;
+    height: 100%;
+    float: none;
+    vertical-align: middle;
+    padding-top: 70px;
+    padding-bottom: 70px;
+    padding-left: 10%;
+}
+
+.more-info-form h2, .donation-info-form h2 {
+    margin-top: 0;
+    color: #76323f;
+    margin-bottom: 0;
+}
+
+.more-info-form p, .more-info-form p {
+    color: #565656;
+}
+
+.more-info-form .input-date {
+    font-size: 2em;
+    font-weight: 300;
+    color: #565656!important;
+}
+
+.delivery-info {
+    margin-top: 50px;
+}
+
+.delivery-info p {
+    margin-bottom: 20px;
+}
+
+.delivery-info label {
+    font-size: 2em;
+    font-weight: 300;
+    color: #565656;
+    margin-left: 10px;
+}
+
+.share-info {
+    margin-top: 60px;
+}
+
+.share-info label {
+    font-size: 2em;
+    font-weight: 300;
+    color: #565656!important;
+    margin-left: -15px;
+}
+
+.share-info .share-label .active {
+    color: #3b5998;
+}
+
+.share-info i {
+    color: #ddd;
+    transition: all .5s;
+}
+
+.share-info .checkbox.checkbox-circle label::before {
+    display: none;
+}
+
+.share-info .checkbox.checkbox-circle label::after {
+    display: none;
+}
+
+.charity-selection img {
+    height: 60px;
+    transition: all .5s;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.covered {
+    opacity: 0.4;
+}
+
+.donation-info {
+    margin-top: 60px;
+}
+
+.donation-info {
+    font-weight: 300;
+    font-size: 2em;
+    color: #565656;
+}
+
+.donation-info .money-input input {
+    width: 200px;
+    margin-left: 20px;
+}
+
+.donation-info-form button {
+    margin-top: 40px;
+    background-color: #c09f80;
+    border-radius: 50px;
+    color: #fff;
+    padding: 10px 20px;
+    bottom: 0;
+}
+
+@media (max-width: 767px) {
+    .main-container {
+        padding-top: 90px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .basic-info-card-group {
+        height: auto;
+    }
+
+    .basic-info-card-group .right-group {
+        padding-left: 15px;
+        height: auto;
+    }
+
+    .more-info-panel, .donation-info-panel {
+        height: auto;
+    }
+
+    .description-panel {
+        margin-bottom: 0;
+        min-height: 80vh;
+    }
+
+    .more-info-panel, .donation-info-panel, .more-info-form, .donation-info-form {
+        display: block;
+    }
+
+    .step-photo-2, .step-photo-1 {
+        display: none;
+    }
+
+    .name-input-holder input {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        font-size: 1.8em;
+    }
+
+    .cr-boundary {
+        height: 300px!important;
+    }
 }
