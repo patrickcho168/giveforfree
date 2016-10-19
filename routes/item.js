@@ -524,6 +524,37 @@ module.exports = function(app) {
         }
     });
 
+    // Find items posted by anyone other than yourself
+    app.get('/api/items/:categoryName/:lastItemId/:loadNum', function(req, res) {
+        // db.getNextItems(req.params.pageNum, req.user.fbFriendsId, function(result) {
+        //   res.json(result);
+        // });
+        var lastSeenItem = parseInt(req.params.lastItemId);
+        var numItems = parseInt(req.params.loadNum);
+        if (req.user === undefined) {
+            if (lastSeenItem === 0) {
+                db.HomePageItemQuery(0, numItems, function(data) {
+                    res.json(data);
+                })
+            } else {
+                db.HomePageItemQueryBeforeId(0, numItems, lastSeenItem, function(data) {
+                    res.json(data);
+                })
+            }
+        } else {
+            var userId = parseInt(req.user.appUserId);
+            if (lastSeenItem === 0) {
+                db.HomePageItemQuery(userId, numItems, function(data) {
+                    res.json(data);
+                })
+            } else {
+                db.HomePageItemQueryBeforeId(userId, numItems, lastSeenItem, function(data) {
+                    res.json(data);
+                })
+            }
+        }
+    });
+
     // ITEM PAGE
     app.get('/item/:id', csrfProtection, function(req, res, next) {
         var itemId = req.params.id;

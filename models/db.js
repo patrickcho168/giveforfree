@@ -204,6 +204,57 @@ var HomePageItemQueryBeforeId = function(userId, numItems, beforeId, cb) {
   });
 }
 
+var CategoryPageItemQuery = function(userId, numItems, categoryID, cb) {
+  knex
+    .from('item as i')
+    .leftJoin('user as u', 'u.userID', 'i.giverID')
+    .leftJoin('itemWanter as iw', 'iw.itemID', 'i.itemID')
+    .leftJoin('itemWanter as iwu', function() {
+      this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
+    })
+    .leftJoin('categoryItem as ci', , function() {
+      this.on('ci.itemID', '=', 'i.itemID').andOn('ci.categoryID', '=', categoryID)
+    })
+    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'u.name', 'u.userID', 'u.fbID'])
+    .count('iw.itemID as numWants')
+    .countDistinct('iwu.itemID as meWant')
+    .groupBy('i.itemID')
+    .whereNull('i.takerID')
+    .where('i.giverID', '!=', userId)
+    .where('i.timeExpired', '>', knex.raw('NOW()'))
+    .orderBy('i.itemID', 'DESC')
+    .limit(numItems)
+    .then(function(result){
+    return cb(result);
+  });
+}
+
+var CategoryPageItemQueryBeforeId = function(userId, numItems, beforeId, cb) {
+  knex
+    .from('item as i')
+    .leftJoin('user as u', 'u.userID', 'i.giverID')
+    .leftJoin('itemWanter as iw', 'iw.itemID', 'i.itemID')
+    .leftJoin('itemWanter as iwu', function() {
+      this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
+    })
+    .leftJoin('categoryItem as ci', , function() {
+      this.on('ci.itemID', '=', 'i.itemID').andOn('ci.categoryID', '=', categoryID)
+    })
+    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'u.name', 'u.userID', 'u.fbID'])
+    .count('iw.itemID as numWants')
+    .countDistinct('iwu.itemID as meWant')
+    .groupBy('i.itemID')
+    .whereNull('i.takerID')
+    .where('i.giverID', '!=', userId)
+    .where('i.itemID', '<', beforeId)
+    .where('i.timeExpired', '>', knex.raw('NOW()'))
+    .orderBy('i.itemID', 'DESC')
+    .limit(numItems)
+    .then(function(result){
+    return cb(result);
+  });
+}
+
 var ProfilePageGiveQuery = function(userId, profileId, numItems, cb) {
   knex
     .from('item as i')
