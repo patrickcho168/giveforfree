@@ -63,11 +63,11 @@
 	<script src="/scripts/common/analytics.js"></script>
 
     <!-- Facebook Like -->
-    <script>
-        $(window).bind("load", function() {
-            $.getScript("/scripts/common/fblike.js", function() {});
-        });
-    </script>
+    // <script>
+    //     $(window).bind("load", function() {
+    //         $.getScript("/scripts/common/fblike.js", function() {});
+    //     });
+    // </script>
     <!-- <script src="/scripts/common/fblike.js"></script> -->
 
 </head>
@@ -170,47 +170,37 @@
 			<nav class="category-bar">
 				<ul class="nav">
 					<li class="category-bar-title">Categories</li>
-					<li class="category-bar-item"><a href="#">Clothes <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Accessories <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Furniture & Home <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Parenting <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Health <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Beauty <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Kitchen Appliances <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Gardening <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Property <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Design & Craft <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Electronics <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Sports <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Photography <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Antiques <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Toys <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Games <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Music <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Tickets & Vouchers <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Auto Accessories <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Books <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Stationery <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Textbooks <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Notes <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Pets <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Other <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Beauty <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Kitchen Appliances <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Gardening <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Property <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Design & Craft <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Electronics <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Sports <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Photography <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Antiques <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Toys <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Games <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Music <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Tickets & Vouchers <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Auto Accessories <i class="fa fa-angle-right pull-right"></i></a></li>
-					<li class="category-bar-item"><a href="#">Books <i class="fa fa-angle-right pull-right"></i></a></li>
-				</ul>
+					<% var categories = [
+				        "Clothes ",
+				        "Accessories ",
+				        "Furniture & Home ",
+				        "Parenting ",
+				        "Health ",
+				        "Beauty ",
+				        "Kitchen Appliances ",
+				        "Gardening ",
+				        "Property ",
+				        "Design & Craft ",
+				        "Electronics ",
+				        "Sports ",
+				        "Photography ",
+				        "Antiques ",
+				        "Toys ",
+				        "Games ",
+				        "Music ",
+				        "Tickets & Vouchers ",
+				        "Auto Accessories ",
+				        "Books ",
+				        "Stationery ",
+				        "Textbooks ",
+				        "Notes ",
+				        "Pets ",
+				        "Other "
+				    ]; %>
+					<% for (i = 0; i < categories.length; i++) { %>
+						<li class="category-bar-item"><a href="#" class="category" id="<%= i %>"><%= categories[i] %><i class="fa fa-angle-right pull-right"></i></a></li>
+					<% } %>
+					</ul>
 			</nav>
 		</div>
 		<!-- Main Content Area -->
@@ -279,46 +269,9 @@
 					<nav class="category-bar">
 						<ul class="nav">
 							<li class="category-bar-title">Categories</li>
-							<li class="category-bar-item"><a href="#">Clothes <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Accessories <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Furniture & Home <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Parenting <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Health <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Beauty <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Kitchen Appliances <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Gardening <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Property <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Design & Craft <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Electronics <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Sports <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Photography <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Antiques <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Toys <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Games <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Music <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Tickets & Vouchers <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Auto Accessories <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Books <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Stationery <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Textbooks <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Notes <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Pets <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Other <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Beauty <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Kitchen Appliances <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Gardening <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Property <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Design & Craft <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Electronics <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Sports <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Photography <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Antiques <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Toys <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Games <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Music <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Tickets & Vouchers <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Auto Accessories <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li class="category-bar-item"><a href="#">Books <i class="fa fa-angle-right pull-right"></i></a></li>
+							<% for (i = 0; i < categories.length; i++) { %>
+								<li class="category-bar-item"><a href="#" class="category" id="<%= i %>"><%= categories[i] %><i class="fa fa-angle-right pull-right"></i></a></li>
+							<% } %>
 						</ul>
 					</nav>
 				</div>

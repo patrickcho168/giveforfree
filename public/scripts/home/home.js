@@ -12,9 +12,11 @@ var numItems = 12;
 
 var sideBarOpen = false;
 
+var category = null;
+
 var canAJAX = true;
 
-var urlAJAX = '/api/allItems/' + 0 + '/' + numItems;;
+var urlAJAX = '/api/allItems/' + 0 + '/' + numItems;
 
 // AJAX Infinite Scrolling Function
 function addRealViews(html, url) {
@@ -95,6 +97,15 @@ $(document).ready(function() {
         $('.floating-bar-mobile').toggleClass('show-bar');
         $('.main-container').toggleClass('open');
     });
+
+    $('a.category').on('click', function() {
+        category = $(this).attr('id');
+        urlAJAX = '/api/items/' + category + '/' + 0 + '/' + numItems;
+        $('#infinite-scroll-container2').empty();
+        addRealViews(html, urlAJAX);
+        console.log(urlAJAX);
+        return false;
+    });
 });
 
 // $(document).scroll(function() {
@@ -113,7 +124,11 @@ $(window).scroll(function() {
 
         triggered += 1;
 
-        if (canAJAX && triggered == 1 && lastItemId > 1) {
+        if (canAJAX && triggered == 1 && lastItemId > 1 && category != null) {
+            canAJAX = false;
+            urlAJAX = '/api/items/' + category + '/' + lastItemId + '/' + numItems;
+            addRealViews(html, urlAJAX);
+        } else if (canAJAX && triggered == 1 && lastItemId > 1) {
             canAJAX = false;
             urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
             addRealViews(html, urlAJAX);

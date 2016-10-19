@@ -525,30 +525,31 @@ module.exports = function(app) {
     });
 
     // Find items posted by anyone other than yourself
-    app.get('/api/items/:categoryName/:lastItemId/:loadNum', function(req, res) {
+    app.get('/api/items/:categoryID/:lastItemId/:loadNum', function(req, res) {
         // db.getNextItems(req.params.pageNum, req.user.fbFriendsId, function(result) {
         //   res.json(result);
         // });
+        var categoryID = parseInt(req.params.categoryID) + 1;
         var lastSeenItem = parseInt(req.params.lastItemId);
         var numItems = parseInt(req.params.loadNum);
         if (req.user === undefined) {
             if (lastSeenItem === 0) {
-                db.HomePageItemQuery(0, numItems, function(data) {
+                db.CategoryPageItemQuery(0, numItems, categoryID, function(data) {
                     res.json(data);
                 })
             } else {
-                db.HomePageItemQueryBeforeId(0, numItems, lastSeenItem, function(data) {
+                db.CategoryPageItemQueryBeforeId(0, numItems, lastSeenItem, categoryID, function(data) {
                     res.json(data);
                 })
             }
         } else {
             var userId = parseInt(req.user.appUserId);
             if (lastSeenItem === 0) {
-                db.HomePageItemQuery(userId, numItems, function(data) {
+                db.CategoryPageItemQuery(userId, numItems, categoryID, function(data) {
                     res.json(data);
                 })
             } else {
-                db.HomePageItemQueryBeforeId(userId, numItems, lastSeenItem, function(data) {
+                db.CategoryPageItemQueryBeforeId(userId, numItems, lastSeenItem, categoryID, function(data) {
                     res.json(data);
                 })
             }

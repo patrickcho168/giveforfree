@@ -212,15 +212,14 @@ var CategoryPageItemQuery = function(userId, numItems, categoryID, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .leftJoin('categoryItem as ci', , function() {
-      this.on('ci.itemID', '=', 'i.itemID').andOn('ci.categoryID', '=', categoryID)
-    })
+    .leftJoin('categoryItem as ci', 'ci.itemID', 'i.itemID')
     .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'u.name', 'u.userID', 'u.fbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
     .whereNull('i.takerID')
     .where('i.giverID', '!=', userId)
+    .where('ci.categoryID', '=', categoryID)
     .where('i.timeExpired', '>', knex.raw('NOW()'))
     .orderBy('i.itemID', 'DESC')
     .limit(numItems)
@@ -229,7 +228,7 @@ var CategoryPageItemQuery = function(userId, numItems, categoryID, cb) {
   });
 }
 
-var CategoryPageItemQueryBeforeId = function(userId, numItems, beforeId, cb) {
+var CategoryPageItemQueryBeforeId = function(userId, numItems, beforeId, categoryID, cb) {
   knex
     .from('item as i')
     .leftJoin('user as u', 'u.userID', 'i.giverID')
@@ -237,9 +236,7 @@ var CategoryPageItemQueryBeforeId = function(userId, numItems, beforeId, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .leftJoin('categoryItem as ci', , function() {
-      this.on('ci.itemID', '=', 'i.itemID').andOn('ci.categoryID', '=', categoryID)
-    })
+    .leftJoin('categoryItem as ci', 'ci.itemID', 'i.itemID')
     .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'u.name', 'u.userID', 'u.fbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
@@ -247,6 +244,7 @@ var CategoryPageItemQueryBeforeId = function(userId, numItems, beforeId, cb) {
     .whereNull('i.takerID')
     .where('i.giverID', '!=', userId)
     .where('i.itemID', '<', beforeId)
+    .where('ci.categoryID', '=', categoryID)
     .where('i.timeExpired', '>', knex.raw('NOW()'))
     .orderBy('i.itemID', 'DESC')
     .limit(numItems)
@@ -493,6 +491,8 @@ db.CommentUpvote = CommentUpvote;
 db.ThankUpvote = ThankUpvote;
 db.HomePageItemQuery = HomePageItemQuery;
 db.HomePageItemQueryBeforeId = HomePageItemQueryBeforeId;
+db.CategoryPageItemQuery = CategoryPageItemQuery;
+db.CategoryPageItemQueryBeforeId = CategoryPageItemQueryBeforeId;
 db.ProfilePageGiveQuery = ProfilePageGiveQuery;
 db.ProfilePageGiveQueryBeforeId = ProfilePageGiveQueryBeforeId;
 db.ProfilePageWantQuery = ProfilePageWantQuery;
