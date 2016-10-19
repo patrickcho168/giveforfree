@@ -58,12 +58,6 @@ $(function() {
         sortField: 'text'
     });
 
-    $('.description-field').popover({
-        container: 'body',
-        content: 'E.g. Size and measurements, old/new, used/unused, etc.',
-        placement: 'bottom'
-    });
-
     var oldScroll = window.onscroll;
     $(document).on('focus', 'input', function(e) {
         window.onscroll = function() {
@@ -158,4 +152,30 @@ function previewFile() {
         }
     }
 
+}
+
+function toggleShareColor() {
+    console.log("aaaa");
+    $('.share-info i').toggleClass('active');
+}
+
+function selectCharity(currentSelection) {
+    var checkBox = $(currentSelection).prev();
+    var checked = checkBox.prop('checked');
+
+    var allBoxes = $('.charity-selection input');
+    var moneyInput = $('.money-input input');
+    var allImg = $('.charity-selection img');
+
+    allBoxes.prop('checked', false);
+    moneyInput.prop('disabled', true);
+    allImg.addClass('covered');
+    $('.no-charity').removeClass('hidden');
+
+    if (!checked) {
+        checkBox.prop('checked', true);
+        moneyInput.prop('disabled', false);
+        $(currentSelection).removeClass('covered');
+        $('.no-charity').addClass('hidden');
+    }
 }
