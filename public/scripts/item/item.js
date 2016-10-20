@@ -1,13 +1,14 @@
 // Want
 $(document).on("click", ".snag", function() {
+    console.log("want");
     var itemId = $(this).attr('itemId');
 
     // Change text
-    $(this).children('b').text("UNWANT!");
+    $($(this).children('span')[1]).text(" Unwant ");
 
     // Change color
-    $(this).removeClass("btn-primary");
-    $(this).addClass("btn-danger");
+    $(this).css('background-color', '#565656');
+    $(this).children('.badge').css('color', '#565656');
 
     // Change type
     $(this).removeClass("snag");
@@ -33,15 +34,15 @@ $(document).on("click", ".snag", function() {
 
 // Unwant
 $(document).on("click", ".unsnag", function() {
+    console.log("unwant");
     var itemId = $(this).attr('itemId');
 
     // Change text
-    $(this).children('b').text("WANT!");
+    $($(this).children('span')[1]).text(" Want ");
 
     // Change color
-    $(this).removeClass("btn-danger");
-    $(this).addClass("btn-primary");
-
+    $(this).css('background-color', '#c09f80');
+    $(this).children('.badge').css('color', '#c09f80');
     // Change type
     $(this).removeClass("unsnag");
     $(this).addClass("snag");
@@ -104,6 +105,21 @@ $(document).on("click", ".ratingForGiver", function() {
 
         });
 })
+
+// For modification
+$(document).on('click', '.btn-modify', function() {
+    $('.modify-button').toggleClass('hidden');
+    $('.edit-button-group').toggleClass('hidden');
+    $('.info-edit').toggleClass('hidden');
+    $('.info-display').toggleClass('hidden');
+});
+
+$(document).on('click', '.btn-cancel', function() {
+    $('.modify-button').toggleClass('hidden');
+    $('.edit-button-group').toggleClass('hidden');
+    $('.info-edit').toggleClass('hidden');
+    $('.info-display').toggleClass('hidden');
+});
 
 // Carousel Logic
 jQuery(document).ready(function($) {
