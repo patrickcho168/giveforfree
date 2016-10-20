@@ -106,6 +106,7 @@ function saveCategories(item, categories) {
 
 function saveItem(req, res, fileName) {
     // Create item based on form
+    console.log(req.body);
     var newItem = new db.Item({
         giverID: req.user.appUserId,
         timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
@@ -115,7 +116,9 @@ function saveItem(req, res, fileName) {
         collectionMessage: xss(req.body.collectionMessage),
         postage: req.body.postage ? 1 : 0,
         meetup: req.body.meetup ? 1 : 0,
-        imageLocation: fileName
+        imageLocation: fileName,
+        charityID: req.body.donateToCharity,
+        donationAmount: req.body.donation
     });
 
     // Save item to database
