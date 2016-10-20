@@ -67,38 +67,24 @@ function createFbFreeItem(title, itemId, imgUrl) {
 
 function saveCategories(item, categories) {
     var categoriesPos = [
-        "clothes",
-        "accessories",
-        "furniture & home",
-        "parenting",
-        "health",
-        "beauty",
-        "kitchen appliances",
-        "gardening",
-        "property",
-        "design & craft",
-        "electronics",
-        "sports",
-        "photography",
-        "antiques",
-        "toys",
-        "games",
-        "music",
-        "tickets & vouchers",
-        "auto accessories",
         "books",
-        "stationery",
-        "textbooks",
-        "notes",
-        "pets",
+        "clothes",
+        "electronics",
+        "entertainment",
+        "furniture",
+        "kitchen appliances",
+        "sports",
+        "toys",
         "other"
     ];
-
+    console.log('categories', categories);
     if (categories) {
         var ids = categories.map(function(cat) {
             return categoriesPos.indexOf(cat) + 1;
         });
 
+
+        console.log('categories ids', ids);
         item.categories().detach();
         item.categories().attach(ids);
     }
@@ -127,6 +113,7 @@ function saveItem(req, res, fileName) {
         var createdItemID = newSavedItem.attributes.itemID;
 
         if (createdItemID != null) {
+
             // Save categories
             if (req.body.categories) {
                 saveCategories(newSavedItem, req.body.categories.replace("&amp;", "&").split(','));

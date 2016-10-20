@@ -111,6 +111,7 @@ $(document).ready(function() {
     });
 
     $('a.category').on('click', function() {
+        triggered = 0;
         category = $(this).attr('id');
         urlAJAX = '/api/items/' + category + '/' + 0 + '/' + numItems;
         $('#infinite-scroll-container2').empty();
@@ -118,6 +119,16 @@ $(document).ready(function() {
         console.log(urlAJAX);
         return false;
     });
+
+    $('a.category-clear').on('click', function() {
+        triggered = 0;
+        urlAJAX = '/api/allItems/' + 0 + '/' + numItems;
+        category = null;
+        $('#infinite-scroll-container2').empty();
+        addRealViews(html, urlAJAX);
+        console.log(urlAJAX);
+        return false;
+    })
 });
 
 $(document).scroll(function() {
@@ -131,8 +142,7 @@ $(document).scroll(function() {
 });
 
 $(window).scroll(function() {
-    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-
+    if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
         triggered += 1;
 
         if (canAJAX && triggered == 1 && lastItemId > 1 && category != null) {
