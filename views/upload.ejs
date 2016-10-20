@@ -144,6 +144,9 @@
 
     <div class="main-container">
         <form action="/upload" method="post" id="new-gift-form" data-toggle="validator">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="hidden" name="croppedImage">
+
             <div class="row basic-info-card-group">
                 <div class="col-md-4 col-sm-5 left-group">
                     <div class="panel photo-panel">
@@ -290,7 +293,7 @@
                             <input type="text" class="input-txt donation-input" disabled name="donation" placeholder="0.00" maxlength="50" autocomplete="off" required>
                         </div>
                     </div>
-                    <button type="button" name="button" type="submit" class="btn btn-md">Create Gift</button>
+                    <button type="submit" name="button" type="submit" class="btn btn-md">Create Gift</button>
                 </div>
             </div>
         <!-- <div class="buttons">

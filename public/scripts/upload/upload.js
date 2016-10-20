@@ -143,7 +143,6 @@ function previewFile() {
                     // Replace cropbox with image
                     $(".image-crop").html("<img src='" + resp + "'width='90%' style='padding: 15px; margin-left: 15px; margin-right: 15px; position: relative;'/>");
                     $("input[name='croppedImage']").val(resp);
-                    $("input[type=file]").remove();
                     $('#create-upload').removeAttr("disabled");
 
                 });
