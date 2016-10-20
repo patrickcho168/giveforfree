@@ -71,8 +71,20 @@ function addRealViews(html, url) {
                 canAJAX = true;
                 triggered = 0;
 
+
             } else {
-                // console.log("no data to load already");
+                console.log("no data to load already");
+                
+            }
+
+            if($('.single-item').length > 0) {
+                $('.gifts-banner').css('height', 300);
+                $('.empty-placeholder-text').addClass('hidden');
+                $('.placeholder-text').removeClass('hidden');
+            } else {
+                $('.gifts-banner').css('height', '73vh');
+                $('.empty-placeholder-text').removeClass('hidden');
+                $('.placeholder-text').addClass('hidden');
             }
         },
 
@@ -119,16 +131,15 @@ $(document).ready(function() {
     })
 });
 
-// $(document).scroll(function() {
-//     var y = $(document).scrollTop();
-//     var x = $(window).width();
-//     var floatingBar = $('.floating-bar-full');
-//     if(x >= 753 && y >= 590) {
-//         floatingBar.css({"position": "fixed", "top": "92px", "padding-right": "30px"});
-//     } else if(x >= 753 && y < 590) {
-//         floatingBar.css({"position": "relative", "top": "0px", "padding-right": "15px"});
-//     }
-// });
+$(document).scroll(function() {
+    var y = $(document).scrollTop();
+    var floatingBar = $('.floating-bar-full');
+    if(y >= 600) {
+        floatingBar.css({"position": "fixed", "top": "87px", "padding-right": "30px"});
+    } else {
+        floatingBar.css({"position": "relative", "top": "0px", "padding-right": "15px"});
+    }
+});
 
 $(window).scroll(function() {
     if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {

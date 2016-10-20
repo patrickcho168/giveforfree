@@ -154,7 +154,6 @@ function previewFile() {
 }
 
 function toggleShareColor() {
-    console.log("aaaa");
     $('.share-info i').toggleClass('active');
 }
 

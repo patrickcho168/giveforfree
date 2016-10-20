@@ -1,4 +1,5 @@
-u/* Main */
+/* Main */
+
 
 .fab {
     position: fixed;
@@ -11,7 +12,7 @@ u/* Main */
     align-items: center;
 }
 .main-container {
-    padding: 100px 30px 0px 30px;
+    padding: 85px 30px 0px 30px;
     font-family: 'Source Sans Pro', sans-serif;
 }
 .container {
@@ -220,6 +221,14 @@ u/* Main */
     margin-right: -7.5px;
 }
 
+.floating-bar-full ::-webkit-scrollbar {
+    display: none;
+}
+
+.floating-bar-full .category-bar a {
+    padding: 8px 0px 8px 15px!important;
+}
+
 .floating-bar-mobile {
     display: none;
 }
@@ -228,8 +237,7 @@ u/* Main */
     background-color: #c09f80;
     color: #565656;
     padding: 15px;
-    min-height: 300px;
-    max-height: 443px;
+    height: 73vh;
     overflow: scroll;
     border-radius: 4px;
 }
@@ -263,7 +271,6 @@ u/* Main */
 }
 
 .placeholder {
-    padding-top: 50px;
     text-align: center;
     color: #565656;
 }
@@ -274,6 +281,9 @@ u/* Main */
 
 .gifts-banner {
     height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .items-display {
@@ -342,7 +352,7 @@ u/* Main */
 
 @media (max-width: 767px) {
     .main-container {
-        padding-top: 90px;
+        padding-top: 77px;
         padding-left: 10px;
         padding-right: 10px;
     }
@@ -375,6 +385,7 @@ u/* Main */
     }
 
     .floating-bar-mobile {
+        font-family: 'Source Sans Pro', sans-serif;
         display: block;
         padding-left: 0px;
         position: fixed;
@@ -386,6 +397,11 @@ u/* Main */
 
     .floating-bar-mobile .category-bar {
         height: 85vh;
+        max-height: none;
+    }
+
+    .floating-bar-mobile .category-bar a {
+        padding-right: 0!important;
     }
 
     .main-container {

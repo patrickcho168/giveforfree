@@ -11,7 +11,7 @@
 /* Main Container */
 
 .main-container {
-    padding: 100px 30px 0px 30px;
+    padding: 90px 30px 0px 30px;
     font-family: 'Source Sans Pro', sans-serif;
 }
 
@@ -519,6 +519,16 @@ img {
 }
 
 @media (max-width: 767px) {
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .left-group, .right-group {
+        padding-left: 0!important;
+        padding-right: 0!important;
+    }
+
     .main-container {
         padding-top: 90px;
         padding-left: 10px;
