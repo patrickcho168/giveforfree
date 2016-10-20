@@ -71,11 +71,17 @@ function addRealViews(html, url) {
                 canAJAX = true;
                 triggered = 0;
 
+
+            } else {
+                console.log("no data to load already");
+                
+            }
+
+            if($('.single-item').length > 0) {
                 $('.gifts-banner').css('height', 300);
                 $('.empty-placeholder-text').addClass('hidden');
                 $('.placeholder-text').removeClass('hidden');
             } else {
-                console.log("no data to load already");
                 $('.gifts-banner').css('height', '73vh');
                 $('.empty-placeholder-text').removeClass('hidden');
                 $('.placeholder-text').addClass('hidden');
