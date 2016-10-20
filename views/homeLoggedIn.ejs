@@ -151,33 +151,8 @@
 			<nav class="category-bar">
 				<ul class="nav">
 					<li class="category-bar-title">Categories</li>
-					<% var categories = [
-				        "Clothes ",
-				        "Accessories ",
-				        "Furniture & Home ",
-				        "Parenting ",
-				        "Health ",
-				        "Beauty ",
-				        "Kitchen Appliances ",
-				        "Gardening ",
-				        "Property ",
-				        "Design & Craft ",
-				        "Electronics ",
-				        "Sports ",
-				        "Photography ",
-				        "Antiques ",
-				        "Toys ",
-				        "Games ",
-				        "Music ",
-				        "Tickets & Vouchers ",
-				        "Auto Accessories ",
-				        "Books ",
-				        "Stationery ",
-				        "Textbooks ",
-				        "Notes ",
-				        "Pets ",
-				        "Other "
-				    ]; %>
+					<li class="category-bar-item"><a href="#" class="category-clear">View All<i class="fa fa-angle-right pull-right"></i></a></li>
+					<% var categories = ['Books', 'Clothes', 'Electronics', 'Entertainment', 'Furniture', 'Kitchen Appliances', 'Sports', 'Toys', 'Other']; %>
 					<% for (i = 0; i < categories.length; i++) { %>
 						<li class="category-bar-item"><a href="#" class="category" id="<%= i %>"><%= categories[i] %><i class="fa fa-angle-right pull-right"></i></a></li>
 					<% } %>
@@ -250,6 +225,8 @@
 					<nav class="category-bar">
 						<ul class="nav">
 							<li class="category-bar-title">Categories</li>
+							
+							<li class="category-bar-item"><a href="#" class="category-clear">View All<i class="fa fa-angle-right pull-right"></i></a></li>
 							<% for (i = 0; i < categories.length; i++) { %>
 								<li class="category-bar-item"><a href="#" class="category" id="<%= i %>"><%= categories[i] %><i class="fa fa-angle-right pull-right"></i></a></li>
 							<% } %>
