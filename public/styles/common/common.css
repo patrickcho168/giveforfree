@@ -9,7 +9,7 @@ html, body {
     background-image: url("/images/common/noise.png");
 
     -webkit-overflow-scrolling: touch !important;
-    overflow: auto !important;
+    /*overflow: auto !important;*/
     height: 100% !important;
 }
 body {
