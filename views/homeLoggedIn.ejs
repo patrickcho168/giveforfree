@@ -152,31 +152,16 @@
 				<ul class="nav">
 					<li class="category-bar-title">Categories</li>
 					<% var categories = [
-				        "Clothes ",
-				        "Accessories ",
-				        "Furniture & Home ",
-				        "Parenting ",
-				        "Health ",
-				        "Beauty ",
-				        "Kitchen Appliances ",
-				        "Gardening ",
-				        "Property ",
-				        "Design & Craft ",
-				        "Electronics ",
-				        "Sports ",
-				        "Photography ",
-				        "Antiques ",
-				        "Toys ",
-				        "Games ",
-				        "Music ",
-				        "Tickets & Vouchers ",
-				        "Auto Accessories ",
-				        "Books ",
-				        "Stationery ",
-				        "Textbooks ",
-				        "Notes ",
-				        "Pets ",
-				        "Other "
+						"All",
+				        "Books",
+				        "Clothes",
+				        "Electronics",
+				        "Furniture",
+				        "Kitchen Appliances",
+				        "Sports",
+				        "Toys",
+				        "Entertainment",
+				        "Other"
 				    ]; %>
 					<% for (i = 0; i < categories.length; i++) { %>
 						<li class="category-bar-item"><a href="#" class="category" id="<%= i %>"><%= categories[i] %><i class="fa fa-angle-right pull-right"></i></a></li>
@@ -259,13 +244,13 @@
 				<div class="col-sm-offset-3 gifts-banner panel">
 					<div class="placeholder">
 						<img src="../images/common/empty-gift.svg" alt="" class="placeholder-img"/>
-						<!-- <h3>Oops!</h3>
-						<p>
+						<h3 class="empty-placeholder-text hidden">Oops!</h3>
+						<p class="empty-placeholder-text hidden">
 							Currently there is no gift yet. <br>
 							Why not be the first one to contribute?
-						</p>  -->
-						<h3>Get a FREE gift today!</h3>
-						<p>
+						</p>
+						<h3 class="placeholder-text">Get a FREE gift today!</h3>
+						<p class="placeholder-text">
 							After receiving a gift, <br>
 							do consider giving a donation! (:
 						</p>
@@ -283,17 +268,14 @@
 		<!-- Footer -->
 	    <footer>
 	        <div class="footer-container">
-	            <div class="text-center">
-	                <hr class="xsall">
-	                <div class="col-xs-12 text-center" style="padding-bottom: 10px;">
-	                    <small><a href="mailto:giveforfreefeedback@gmail.com"><i class="fa fa-envelope"></i> giveforfreefeedback@gmail.com</a></small>
-	                    <br>
-	                    <small><a href="/privacy"><i class="fa fa-eye"></i> Privacy Clause</a></small>
-	                </div>
-	                <div class="col-xs-12 text-center">
-	                    <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
-	                </div>
-	            </div>
+                <div class="col-xs-12 text-center" style="padding-bottom: 10px;">
+                    <small><a href="mailto:giveforfreefeedback@gmail.com"><i class="fa fa-envelope"></i> giveforfreefeedback@gmail.com</a></small>
+                    <br>
+                    <small><a href="/privacy"><i class="fa fa-eye"></i> Privacy Clause</a></small>
+                </div>
+                <div class="col-xs-12 text-center">
+                    <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
+                </div>
 	        </div>
 	    </footer>
 	</div>
