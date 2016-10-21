@@ -313,24 +313,19 @@
                                     <a class="btn btn-lg btn-block btn-unwant unsnag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span><span> Unwant </span><span class="badge"><%= item.numWants %></span> </a>
                                 <% } else if (!expired && item.takerID === null) { %>
                                     <a class="btn btn-lg btn-block btn-want snag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span><span> Want </span><span class="badge"><%= item.numWants %></span> </a>
-                                <% } else if (loggedIn && item.takerID === id) { %>
+                                <% } else if (!expired && loggedIn && item.takerID === id) { %>
                                     <a class="btn btn-lg btn-block btn-donate"><i class="fa fa-heart-o"></i> Donate!</a>
                                 <% } %>
                                 <!-- TODO: the button below will appear when receiver is accepted (current userId = item.takerID) -->
 
                             </div>
-                            <div class="info-button donate-button">
-
-                            </div>
                         <% } else { %>
                             <div class="info-button modify-button">
-                                <a href="#" class="btn btn-lg btn-modify btn-block">Modify</a>
-                                <!-- TODO: make it a valid delete button -->
-                                <a href="#" class="btn btn-lg btn-delete btn-block">Delete</a>
+                                <a href="#" class="btn btn-lg btn-block btn-modify">Modify</a>
+                                <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block btn-delete">Delete</a>
                             </div>
                             <div class="info-button edit-button-group hidden">
-                                <!-- TODO: make it a valid submit button -->
-                                <a href="#" class="btn btn-lg btn-save btn-block">Save</a>
+                                <button href="#" class="btn btn-lg btn-save btn-block" type="submit">Save</button>
                                 <a href="#" class="btn btn-lg btn-cancel btn-block">Cancel</a>
                             </div>
                         <% } %>
@@ -338,13 +333,13 @@
                 </div>
                 <div class="col-sm-8 col-md-9 right-panel">
                     <div class="panel other-info-panel">
-                        <div class="giver-info">
+                        <div class="giver-info info-display">
                             <div class="giver-img pull-left">
                                 <img src="http://graph.facebook.com/<%= item.fbID %>/picture?type=large" alt="" />
                             </div>
                             <a href="/profile/<%= item.giverID %>" class="giver-name"><%= item.name %></a>
 
-                            <% if (loggedIn && mine && item.takerID === null) { %>                                
+                            <% if (loggedIn && mine && item.takerID === null) { %>
                                 <br>
                                 <a type="button" class="btn dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Wanters <span class="badge"><%= item.numWants %></span>
@@ -383,7 +378,15 @@
                                         <input class="ratingForGiver" type="radio" id="star1" name="rating" value="2" <% if (item.giverRating === 2) { %>checked="checked" <% } %> /><label class = "full" for="star1" title="1 star"></label>
                                         <input class="ratingForGiver" type="radio" id="starhalf" name="rating" value="1" <% if (item.giverRating === 1) { %>checked="checked" <% } %> /><label class="half" for="starhalf" title="0.5 stars"></label>
                                     </fieldset>
-
+                                    <% if (item.giverRating === null) { %>
+                                        <div style="margin-top: 30px;" class="ratingText">
+                                            Please give a rating to your giver!
+                                        </div>
+                                    <% } else { %>
+                                        <div style="margin-top: 30px;" class="ratingText">
+                                            Thanks for giving a rating!
+                                        </div>
+                                    <% } %>
                                 <% } %>
                             <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
                                 <div>
@@ -402,23 +405,151 @@
                                     <input class="ratingForTaker" type="radio" id="starhalf" name="rating" value="1" <% if (item.takerRating === 1) { %>checked="checked" <% } %> /><label class="half" for="starhalf" title="0.5 stars"></label>
                                 </fieldset>
                                 <% if (item.takerRating === null) { %>
-                                    <div style="margin-top: 40px;" class="ratingText">
+                                    <div style="margin-top: 30px;" class="ratingText">
                                         Please give a rating to your recipient.
                                     </div>
                                 <% } else { %>
-                                    <div style="margin-top: 40px;" class="ratingText">
+                                    <div style="margin-top: 30px;" class="ratingText">
                                         Thanks for giving a rating!
                                     </div>
                                 <% } %>
                             <% } %>
                         </div>
                         <div class="detail-info">
+                            <div class="row">
+                                <div class="col-sm-6 category-info">
+                                    <h2>Category</h2>
+                                    <p class="subtitle">
+                                        The tags on gift
+                                    </p>
+                                    <div class="category-holder info-display">
+                                        <!-- TODO: for each category have a div here -->
+                                        <span class="category-item"><i class="fa fa-tags"></i>parenting</span>
+                                        <span class="category-item"><i class="fa fa-tags"></i>toys and other</span>
+                                    </div>
+                                    <select id="input-tags" name="categories[]" multiple class="categories has-options info-edit hidden" auto-complete: "off" placeholder="Select categories...">
+                                        <option value="">Select categories...</option>
+                                        <option value="clothes">clothes</option>
+                                        <option value="accessories">accessories</option>
+                                        <option value="furniture & home">furniture & home</option>
+                                        <option value="parenting">parenting</option>
+                                        <option value="health">health</option>
+                                        <option value="beauty">beauty</option>
+                                        <option value="kitchen appliances">kitchen appliances</option>
+                                        <option value="gardening">gardening</option>
+                                        <option value="property">property</option>
+                                        <option value="design & craft">design & craft</option>
+                                        <option value="electronics">electronics</option>
+                                        <option value="sports">sports</option>
+                                        <option value="photography">photography</option>
+                                        <option value="antiques">antiques</option>
+                                        <option value="toys">toys</option>
+                                        <option value="games">games</option>
+                                        <option value="music">music</option>
+                                        <option value="tickets & vouchers">tickets & vouchers</option>
+                                        <option value="auto accessories">auto accessories</option>
+                                        <option value="books">books</option>
+                                        <option value="stationeries">stationeries</option>
+                                        <option value="textbooks">textbooks</option>
+                                        <option value="notes">notes</option>
+                                        <option value="pets">pets</option>
+                                        <option value="other">other</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 deadline-info">
+                                    <h2>Deadline</h2>
+                                    <p class="subtitle">
+                                        The time giveaway is closed.
+                                    </p>
+                                    <p class="deadline info-display"><%= date %></p>
+                                    <input type="text" class="input-txt input-date info-edit hidden" name="date" id="date" value="<%= moment(date, "D MMMM YYYY HH:mm").format(" YYYY-MM-DD ") %>" maxlength="50" autocomplete="off" required>
+                                </div>
+                                <div class="col-sm-6 charity-info">
+                                    <h2>Charity & Donation</h2>
+                                    <p class="subtitle info-display">
+                                        <!-- TODO: get charity name here -->
+                                        Receiver will be donating <strong>Chrity Name</strong> for
+                                    </p>
+                                    <p class="donation-amount info-display">
+                                        <!-- TODO: get donation amount here -->
+                                        <i class="fa fa-usd"></i> 123 SGD
+                                    </p>
+                                    <p class="subtitle info-edit hidden">
+                                        Select charity and choose donation amount.
+                                    </p>
+                                    <div class="charity-selection info-edit hidden">
+                                        <!-- TODO: select the initial charity here. Can just if (something) { trigger click } -->
+                                        <input type="checkbox" id="red-cross" name="donateToRedCross" class="hidden">
+                                        <img src="../images/upload/cws-logo.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                                        <input type="checkbox" id="cat-wel-society" name="donateToCWS" class="hidden">
+                                        <img src="../images/upload/red-cross-logo.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                                    </div>
+                                    <div class="money-input info-edit hidden">
+                                        <i class="fa fa-usd"></i><span> SGD</span>
+                                        <!-- TODO: input initial money value here -->
+                                        <input type="text" class="input-txt donation-input" disabled name="donation" placeholder="0.00" maxlength="50" autocomplete="off" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 delivery-info">
+                                    <h2>Delivery</h2>
+                                    <p class="subtitle">
+                                        Receiver will be receiving gift by
+                                    </p>
+                                    <div class="delivery-holder info-display">
+                                        <% if (item.meetup === 1) { %>
+                                            <span class="category-item"><i class="fa fa-child"></i>Meet Up</span>
+                                        <% } %>
+                                        <% if (item.postage === 1) { %>
+                                            <span class="category-item"><i class="fa fa-cube"></i>Postage</span>
+                                        <% } %>
+                                    </div>
+                                    <div class="checkbox checkbox-primary delivery-info checkbox-circle row info-edit hidden">
+                                        <% if (item.meetup === 1) { %>
+                                            <input type="checkbox" name="meetup" id="meetup" class="check-one hidden" checked>
+                                        <% } else { %>
+                                            <input type="checkbox" name="meetup" id="meetup" class="check-one hidden">
+                                        <% } %>
+                                        <label class="large-label" for="meetup">
+                                            Meet and collect
+                                        </label><br>
 
+                                        <% if (item.postage === 1) { %>
+                                            <input type="checkbox" name="postage" id="postage" class="check-two hidden" checked>
+                                        <% } else { %>
+                                            <input type="checkbox" name="postage" id="postage" class="check-two hidden">
+                                        <% } %>
+                                        <label class="large-label" for="postage">
+                                            Postage service
+                                        </label>
+                                    </div>
+                                </div>
+                                <% if (!mine) { %>
+                                <% } else { %>
+                                    <div class="col-sm-6 mobile-button">
+                                        <div class="info-button mobile-modify-button">
+                                            <a href="#" class="btn btn-lg btn-block mobile-btn-modify">Modify</a>
+                                            <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block mobile-btn-delete">Delete</a>
+                                        </div>
+                                        <div class="info-button mobile-edit-button-group hidden">
+                                            <button href="#" class="btn btn-lg mobile-btn-save btn-block" type="submit">Save</button>
+                                            <a href="#" class="btn btn-lg mobile-btn-cancel btn-block">Cancel</a>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
+
+        <div class="row panel comment-panel">
+            <% if (!mine) { %>
+                <h2 class="comment-title">Curious? Drop a comment below, or <a href="javascript:messageUser();">message <%=item.name%>!<a></h2>
+            <% } %>
+            <div id="comments-container" style="margin-left: 15px; margin-right: 15px;">
+            </div>
+        </div>
 
     </div>
     <!-- Footer -->
