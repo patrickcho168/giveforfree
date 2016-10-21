@@ -240,6 +240,39 @@ module.exports = function(app) {
         // console.log(data);
     });
 
+    app.post('/profile/:id/flag', ensureLogin.ensureLoggedIn(), parseForm, function(req, res) {
+        console.log(req.body);
+        var otherUserId = parseInt(req.params.id);
+        var myUserId = parseInt(req.user.appUserId);
+        db.FlagUser.where({
+            flaggerID: myUserId,
+            flaggedID: otherUserId
+        }).fetch().then(function(flagExist) {
+            if (flagExist) {
+                new db.FlagUser().where({
+                    flaggerID: myUserId,
+                    flaggedID: otherUserId
+                }).save({
+                    flaggerID: myUserId,
+                    flaggedID: otherUserId,
+                    flagText: req.body.flagText
+                }, {patch: true}).then(function() {
+                    res.redirect('/profile/' + otherUserId);
+                });
+            } else {
+                var newFlag = new db.FlagUser({
+                    flaggerID: myUserId,
+                    flaggedID: otherUserId,
+                    flagText: req.body.flagText
+                });
+                newFlag.save().then(function() {
+                    res.redirect('/profile/' + otherUserId);
+                });
+            }
+        })
+        
+    });
+
     // SHOW PROFILE DETAILS
     // SHOW PROFILE WANTS
     // SHOW PROFILE GIVING OUT
@@ -288,17 +321,23 @@ module.exports = function(app) {
                             userID: otherUserId
                         }).fetch().then(function(user) {
                             db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
-                                res.render('profile', {
-                                    loggedIn: true,
-                                    myProfile: mine,
-                                    user: user.attributes,
-                                    userRating: rating,
-                                    id: req.user.appUserId,
-                                    friendProperty: req.user.fbFriendsToPropertyMap,
-                                    friends: data.models,
-                                    notification: req.session.notification,
-                                    moment: moment,
-                                    csrfToken: req.csrfToken()
+                                db.FlagUser.where({
+                                    flaggerID: req.user.appUserId,
+                                    flaggedID: otherUserId
+                                }).fetch().then(function(flagUser) {
+                                    res.render('profile', {
+                                        loggedIn: true,
+                                        myProfile: mine,
+                                        user: user.attributes,
+                                        userRating: rating,
+                                        id: req.user.appUserId,
+                                        friendProperty: req.user.fbFriendsToPropertyMap,
+                                        friends: data.models,
+                                        notification: req.session.notification,
+                                        moment: moment,
+                                        flagUser: flagUser? flagUser.attributes : null,
+                                        csrfToken: req.csrfToken()
+                                    });
                                 });
                             });
                         });

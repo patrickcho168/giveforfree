@@ -43,17 +43,30 @@ function addRealViews(html, url) {
                     html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
                     html += '<div class="panel">';
                     html += '<a href="/item/' + value.itemID + '"><img src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '" alt="" class="img-responsive"/></a>';
+                    html += '<a href="/item/' + value.itemID + '">';
                     html += '<div class="item-info">';
                     html += '<a href="/item/' + value.itemID + '"><p class="hide-overflow">' + value.title + '</p></a>';
                     html += '<a href="/profile/' + value.userID + '" class="seller-info row">';
                     html += '<img src="http://graph.facebook.com/' + value.fbID + '/picture" alt="" />';
                     html += '<span>' + value.name + '</span>';
                     html += '</a>';
-                    if (value.numWants >= 1) {
-                        html += '<small class="addition-info pull-right">' + value.numWants + ' people want this.</small>';
+                    html += '<p>';
+                    if (value.donationAmount > 0) {
+                        if (value.donationAmount % 1 == 0) {
+                            html += '<span style="inline-block"><img src="../images/upload/charity' + value.charityID + '.png" alt="" class="small-charity-logo" /> $' + value.donationAmount;
+                        } else {
+                            html += '<span style="inline-block"><img src="../images/upload/charity' + value.charityID + '.png" alt="" class="small-charity-logo" /> $' + value.donationAmount.toFixed(2);
+                        }
+                        html += '</span>';
                     } else {
-                        html += '<small class="addition-info pull-right">Be the first to check this out!</small>';
+                        html += '<span>FREE</span>';
                     }
+                    if (value.meWant) {
+                        html += '<span class="pull-right"><i class="fa fa-heart addition-info pull-right me-want"></i>' + value.numWants + '</span>';
+                    } else {
+                        html += '<span class="pull-right"><i class="fa fa-heart addition-info pull-right"></i>' + value.numWants + '</span>';
+                    }
+                    html += '</p>';
                     if (value.meWant) {
                         html += '<div class="ribbon-wrapper-green">';
                         html += '<div class="ribbon-green">';
@@ -61,7 +74,7 @@ function addRealViews(html, url) {
                         html += '</div>';
                         html += '</div>';
                     }
-                    html += '</div></div></div>'
+                    html += '</div></a></div></div>';
 
 
                     $('#infinite-scroll-container2').append(html);

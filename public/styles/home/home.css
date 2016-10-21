@@ -183,7 +183,7 @@
     color: #c97f90!important;
 }
 
-.title-content .sub-titles .give-button {
+.give-button {
     background-color: #c09f80;
     padding: 10px 30px;
     border-radius: 50px;
@@ -191,7 +191,7 @@
     font-size: 14px;
 }
 
-.title-content .sub-titles .give-button:hover {
+.give-button:hover {
     /*color: #565656;*/
     background-color: #d7cec7;
 }
@@ -347,7 +347,6 @@
     font-weight: 400;
     margin-top: 7px;
     font-size: 11px;
-    color: #777;
 }
 
 @media (max-width: 767px) {
@@ -419,4 +418,14 @@
     .show-bar {
         right: 0;
     }
+}
+
+.me-want {
+    color: #76323f;
+}
+
+.small-charity-logo {
+    height: auto!important;
+    width: auto!important;
+    max-height: 20px!important;
 }

@@ -92,7 +92,6 @@ function saveCategories(item, categories) {
 
 function saveItem(req, res, fileName) {
     // Create item based on form
-    console.log(req.body);
     var newItem = new db.Item({
         giverID: req.user.appUserId,
         timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),

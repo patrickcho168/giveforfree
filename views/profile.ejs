@@ -217,6 +217,10 @@
                         <%= user.name %>
                         <% if (myProfile) { %>
                             <a data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger">Delete</a>
+                        <% } else if (!flagUser) { %>
+                            <a data-toggle="modal" data-target="#confirm-flag" class="btn btn-danger">Flag User</a>
+                        <% } else { %>
+                            <a data-toggle="modal" data-target="#confirm-flag" class="btn btn-danger">User Flagged</a>
                         <% } %>
                     </p>
                     <fieldset class="fixedrating" style="color: white; font-weight: bold; text-align: center; margin-top: -15px; padding-bottom: 10px;">
@@ -378,6 +382,26 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-danger btn-ok">Delete</a>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Popup for flagging -->
+    <div class="modal fade" id="confirm-flag" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Why are you flagging this user?</h3>
+                </div>
+                <form action="/profile/<%= user.userID %>/flag" method="post" data-toggle="validator">
+                    <div class="modal-body">
+                        <textarea type="text" class="flag-input" name="flagText" autocomplete="off" data-trigger="focus" required><% if (flagUser) { %><%= flagUser.flagText %><% } %></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="button" type="submit" class="btn btn-danger">Confirm</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
