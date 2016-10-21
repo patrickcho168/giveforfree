@@ -632,6 +632,16 @@ fieldset.rating {
     border-radius: 5px!important;
 }
 
+.comment-title {
+    margin: 0px 20px 40px 20px;
+    font-weight: 300;
+    color: #76323f;
+}
+
+.comment-title a {
+    font-weight: 300!important;
+}
+
 #comments-container {
     margin-top: 20px;
 }
@@ -713,5 +723,9 @@ fieldset.rating {
 
     .item-info {
         margin-bottom: 0;
+    }
+
+    .comment-title {
+        font-size: 20px!important;
     }
 }
