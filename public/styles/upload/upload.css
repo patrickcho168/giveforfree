@@ -570,4 +570,9 @@ img {
     .cr-boundary {
         height: 300px!important;
     }
+
+    .cr-vp-square {
+        height: 280px!important;
+        width: 280px!important;
+    }
 }
