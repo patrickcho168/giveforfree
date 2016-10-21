@@ -121,6 +121,22 @@ $(document).on('click', '.btn-cancel', function() {
     $('.info-display').toggleClass('hidden');
 });
 
+$(document).on('click', '.mobile-btn-modify', function() {
+    $('.mobile-modify-button').toggleClass('hidden');
+    $('.mobile-edit-button-group').toggleClass('hidden');
+    $('.info-edit').toggleClass('hidden');
+    $('.info-display').toggleClass('hidden');
+    $('html, body').animate({ scrollTop: 0 }, 500);
+});
+
+$(document).on('click', '.mobile-btn-cancel', function() {
+    $('.mobile-modify-button').toggleClass('hidden');
+    $('.mobile-edit-button-group').toggleClass('hidden');
+    $('.info-edit').toggleClass('hidden');
+    $('.info-display').toggleClass('hidden');
+    $('html, body').animate({ scrollTop: 0 }, 500);
+});
+
 // Carousel Logic
 jQuery(document).ready(function($) {
 
@@ -399,4 +415,25 @@ function handleBrokenImage(image) {
     image.onerror = "";
     image.src = "/images/common/default-placeholder.png";
     return true;
+}
+
+function selectCharity(currentSelection) {
+    var checkBox = $(currentSelection).prev();
+    var checked = checkBox.prop('checked');
+
+    var allBoxes = $('.charity-selection input');
+    var moneyInput = $('.money-input input');
+    var allImg = $('.charity-selection img');
+
+    allBoxes.prop('checked', false);
+    moneyInput.prop('disabled', true);
+    allImg.addClass('covered');
+    $('.no-charity').removeClass('hidden');
+
+    if (!checked) {
+        checkBox.prop('checked', true);
+        moneyInput.prop('disabled', false);
+        $(currentSelection).removeClass('covered');
+        $('.no-charity').addClass('hidden');
+    }
 }
