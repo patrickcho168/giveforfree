@@ -206,95 +206,81 @@
     </div>
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-
-            <!-- Left Header Icon -->
-            <div class="navbar-header">
-
-                <!-- Collapsed Nav -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <!-- Logo and Name -->
-                <a class="navbar-brand" href="/">
-                    <h4 style="margin-top: 0px;">
-                    <img src="../images/common/logo-new.svg" width="30px" height="30px" style="margin-top: -5px;"/>
-                    Give For Free!</h4>
+    <nav class="navbar navbar-fixed-top">
+        <div class="navbar-header">
+            <div class="navbar-brand">
+                <a class="navbar-logo">
+                    <img src="../images/common/gff-logo.svg" class="logo-full" alt="" />
+                    <img src="../images/common/gff-logo-s.svg" class="logo-mobile" alt="" />
                 </a>
             </div>
 
-            <!-- Menu -->
-            <div class="collapse navbar-collapse" id="nav-menu">
+            <button type="button" class="navbar-toggle collapsed category-button" aria-expanded="false">
+                <i class="fa fa-bars"></i>
+            </button>
 
-                <!-- User Actions Menu -->
-                <% if (loggedIn) { %>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li id="nav-create">
-                            <a href="/upload">
-                                <i class="fa fa-gift" aria-hidden="true"></i> Give
-                            </a>
-                        </li>
-                        <li id="nav-feed">
-                            <a href="/">
-                                <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
-                            </a>
-                        </li>
-                        <li id="nav-profile">
-                            <a href="/profile/<%= id %>">
-                                <i class="fa fa-user" aria-hidden="true"></i> Profile
-                            </a>
-                        </li>
-
-                        <% if (typeof notification != 'undefined') { %>
-                            <!-- Notifications -->
-                            <%- include('notification'); %>
-                                <!-- End Notifications -->
-                        <% } %>
-
-                        <!-- Logout -->
-                        <li id="nav-logout">
-                            <a href="/logout">
-                                <i class="fa fa-lock" aria-hidden="true"></i> Logout
-                            </a>
-                        </li>
-                    </ul>
-                <% } else { %>
-                    <!-- Logged Out Navbar Menu -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <li id="nav-feed">
-                            <a href="/">
-                                <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
-                            </a>
-                        </li>
-                        <li id="nav-logout">
-                            <a href="javascript:loginSpecial();">
-                                <i class="fa fa-lock" aria-hidden="true"></i> Login
-                            </a>
-                        </li>
-                    </ul>
-                <% } %>
-            </div>
+            <button type="button" class="navbar-toggle collapsed user-button" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
+                <i class="fa fa-user"></i>
+            </button>
         </div>
+
+        <div class="collapse navbar-collapse" id="nav-menu">
+
+            <ul class="nav navbar-nav navbar-right">
+                <% if(loggedIn) { %>
+                    <li id="nav-profile">
+                        <a href="/profile/<%= id %>">
+                            <div class="user-avatar">
+                                <img src="../images/common/test-user.png" alt="" />
+                                <% if (typeof notification != 'undefined' ) { %>
+                                    <span class="badge"><%= notification.length %></span>
+                                <% } %>
+                                <!-- TODO: pass name of the giver to here -->
+                                <span> Name of giver</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li id="nav-create">
+                        <a href="/upload">
+                            <i class="fa fa-gift" aria-hidden="true"></i> Give
+                        </a>
+                    </li>
+                    <li id="nav-feed">
+                        <a href="/">
+                            <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
+                        </a>
+                    </li>
+                    <li id="nav-logout">
+                        <a href="/logout">Log out</a>
+                    </li>
+                <%  } else { %>
+                    <li id="nav-feed">
+                        <a href="/">
+                            <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
+                        </a>
+                    </li>
+                    <li id="nav-logout">
+                        <a href="javascript:loginSpecial();">Log in</a>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+        <!-- Menu -->
+
     </nav>
 
     <!-- Start of Page Content -->
-    <div class="container main-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="main-container">
 
         <!-- Message Flashing -->
         <!-- Errors -->
-        <% if (locals.error_messages) {
+        <!-- <% if (locals.error_messages) {
             error_messages.forEach(function(message) { %>
             <div class="alert alert-warning"><strong>Uh-oh! </strong>
                 <%= message %>
             </div>
             <% });
         } %>
-        <!-- Success -->
         <% if (locals.success_messages) {
             success_messages.forEach(function(message) { %>
             <div class="alert alert-success"><strong>Awesome! </strong>
@@ -302,402 +288,280 @@
             </div>
             <% });
 
-        } %>
-
-        <row class="col-lg-12 col-md-12 col-sm-12 col-ms-12 col-xs-12">
-
-            <!-- Left Panel Column -->
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="padding: 0 0;">
-                <!-- Banner -->
-                <row>
-                    <div class="panel panel-default title-panel" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin-left: 15px; margin-right: 15px; margin-bottom:20px;" align="center">
-
-                        <img src="../images/item/gift.svg" style="display: block; margin-left: auto; margin-right: auto;padding: 10px 0; width: 100px;">
-                        <p style="font-size:calc(10px + 1.5vw); mvertical-align: middle; padding:10px 0; padding-top: 15px; font-weight: bold; color: white; ">
-                            <%= item.title %>
-                        </p>
-                        <p style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px; font-size: font-size:calc(10px + 1.0vw);"> <i class="fa fa-heart" aria-hidden="true" style="color: #EA5455;"></i>
-                            <%= item.name %>
-                        </p>
-                        <div class="fb-like" data-href="http://www.giveforfree.sg/item/<%= item.itemID %>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true" style="bottom:10px;"></div>
+        } %> -->
+        <form action="/api/update/<%= item.itemID %>" class="form-horizontal form" role="form" method="post">
+            <div class="row item-info">
+                <div class="col-sm-4 col-md-3 panel basic-info-panel">
+                    <div class="item-img">
+                        <img id="display-item" src="https://d24uwljj8haz6q.cloudfront.net/<%= item.imageLocation %>" onerror="handleBrokenImage(this);">
                     </div>
-                </row>
-                <!-- Want / Unwant Button -->
-                <% if (!mine) { %>
-                    <row>
-                        <div style="padding: 0 15px;" align="center">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left:0; padding-right: 0; margin-bottom: 20px;">
+                    <div class="item-basic-info">
+                        <div class="info-text info-display">
+                            <h2><%= item.title %></h2>
+                            <p><%= item.description %></p>
+                        </div>
+                        <div class="info-text info-edit hidden">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                            <input type="text" class="input-txt name-input" name="title" maxlength="50" autocomplete="off" value="<%= item.title %>" required>
+                            <textarea type="text" class="input-txt description-input" name="description"  maxlength="50" autocomplete="off" required><%= item.description %></textarea>
+                        </div>
+                        <% if (!mine) { %>
+                            <div class="info-button want-button">
                                 <% if (!loggedIn && !expired && item.takerID === null) { %>
-                                    <a href="/login" class="btn btn-lg btn-primary btn-block"><span class="glyphicon glyphicon-gift"></span> <b> LOGIN TO WANT!</b> <span class="badge"><%= item.numWants %></span> </a>
+                                    <a href="/login" class="btn btn-lg btn-want btn-block"><span class="glyphicon glyphicon-gift"></span> Login to want</a>
                                 <% } else if (item.meWant === 1 && !expired && item.takerID === null) { %>
-                                    <a class="btn btn-lg btn-danger btn-block unsnag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span>  <b> UNWANT!</b> <span class="badge"><%= item.numWants %></span> </a>
+                                    <a class="btn btn-lg btn-block btn-unwant unsnag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span><span> Unwant </span><span class="badge"><%= item.numWants %></span> </a>
                                 <% } else if (!expired && item.takerID === null) { %>
-                                    <a class="btn btn-lg btn-primary btn-block snag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span> <b> WANT!</b> <span class="badge"><%= item.numWants %></span> </a>
+                                    <a class="btn btn-lg btn-block btn-want snag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span><span> Want </span><span class="badge"><%= item.numWants %></span> </a>
+                                <% } else if (!expired && loggedIn && item.takerID === id) { %>
+                                    <a class="btn btn-lg btn-block btn-donate"><i class="fa fa-heart-o"></i> Donate!</a>
                                 <% } %>
+                                <!-- TODO: the button below will appear when receiver is accepted (current userId = item.takerID) -->
+
                             </div>
-                        </div>
-                    </row>
-                <% } %>
-
-                <!-- Carousel -->
-                <row>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 carousel-section">
-                        <div id="carousel-example-generic" class="carousel slide img-thumbnail carousel-window" data-ride="carousel" data-interval="false">
-                            <!-- Indicators -->
-                            <!-- <ol class="carousel-indicators">
-                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                            </ol> -->
-                            <!-- Wrapper for slides -->
-                            <div class="carousel-inner photos" role="listbox">
-                                <div class="item active">
-                                    <img id="display-item" src="https://d24uwljj8haz6q.cloudfront.net/<%= item.imageLocation %>" onerror="handleBrokenImage(this);">
-                                    <div class="carousel-caption">
-                                    </div>
-                                </div>
+                        <% } else { %>
+                            <div class="info-button modify-button">
+                                <a href="#" class="btn btn-lg btn-block btn-modify">Modify</a>
+                                <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block btn-delete">Delete</a>
                             </div>
-                            <!-- Controls -->
-                            <!-- <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a> -->
-                        </div>
-                    </div>
-                </row>
-
-                <!-- Delivery Mode Panel -->
-                <row>
-                    <div style="padding: 0 15px;" align="center">
-                        <div class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 5px;">
-                            <div class="panel-body" style="padding: 15px 0;">
-                                <h4>Accepted Delivery Mode</h4>
-                                <h5>
-                                    <% if (item.meetup === 1) { %>
-                                    <span class="label label-info">Meet Up</span>
-                                    <% } %>
-                                    <% if (item.postage === 1) { %>
-                                    <span class="label label-warning">Postage</span>
-                                    <% } %>
-                                </h5>
+                            <div class="info-button edit-button-group hidden">
+                                <button href="#" class="btn btn-lg btn-save btn-block" type="submit">Save</button>
+                                <a href="#" class="btn btn-lg btn-cancel btn-block">Cancel</a>
                             </div>
-                        </div>
-                    </div>
-                </row>
-            </div>
-            <!-- End of Left Panel Column -->
-
-
-            <!-- Right Panel Column -->
-            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="padding: 0 0; margin-bottom: 0px;">
-                <div>
-                    <row>
-                        <div style="padding: 0 15px;">
-                            <div class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12 profile-panel">
-                                <div class="panel-body" style="padding: 15px 0; padding-bottom: 20px;">
-
-                                    <!-- Profile Panel -->
-                                    <div class="row">
-                                        <div class="profile-header-container col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <div class="profile-header-img" align="center">
-                                                <div class="avatar-badge" style="background-image: url(http://graph.facebook.com/<%= item.fbID %>/picture?type=large);" style="margin-left: 0; display: block; padding: 0; width: 80px; height: 80px; border-radius:50%;" align="center"></div>
-                                                <div class="clearfix"></div>
-                                                <div class="rank-label-container">
-                                                    <div class="clearfix"></div>
-                                                    <span class="label label-default rank-label"><%= gifts %> gifts</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Location (Not yet supported) -->
-                                    <div class="row">
-                                        <div class="profile-name-container col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 10px;">
-                                            <p class="owner-name">
-                                                <a href="/profile/<%= item.giverID %>">
-                                                    <b> <%= item.name %> </b>
-                                                </a>
-                                            </p>
-                                            <!-- <small class="owner-location"> Singapore </small> -->
-                                        </div>
-                                    </div>
-
-                                    <!-- User Command Section: Manage different rights for users -->
-                                    <div class="row button-group" style="text-align: center;">
-                                        <center>
-                                            <!-- For ongoing owners -->
-                                            <% if (loggedIn && mine && item.takerID === null) { %>
-                                                <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#editModal">Edit</button>
-                                                <a data-toggle="modal" data-target="#confirm-delete" data-href="/api/delete/<%= item.itemID %>" class="btn btn-xs btn-danger">Delete</a>
-                                                <% if (item.numWants > 0) { %>
-                                                    <a type="button" class="btn btn-xs btn-warning" href="/api/give/<%= item.itemID %>"> Random Draw</a>
-                                                    <a type="button" class="btn btn-xs btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Pick <span class="caret"></span>
-                                                    </a>
-                                                    <ul class="dropdown-menu scrollable-menu" style="top:90%; "role="menu">
-                                                        <% for (var i=0; i<manual.length; i++) { %>
-                                                            <li>
-                                                                <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">
-                                                                    <%= manual[i].name %>
-                                                                </a>
-                                                            </li>
-                                                        <% } %>
-                                                    </ul>
-                                                <% } %>
-                                            <!-- For other users and receiving parties -->
-                                            <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                                                <div>
-                                                    <a href="javascript:messageUser();" class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Giver</a>
-                                                </div>
-                                                <% if (item.takerID === id) { %>
-                                                    <div>
-                                                        <a href="javascript:shareItem();" class="btn btn-xs btn-primary message-button" id="facebook-share" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook</a>
-                                                    </div>
-                                                    <fieldset class="rating" style="color: white; font-weight: bold; text-align: center;" itemId="<%= item.itemID %>" >
-                                                        <input class="ratingForGiver" type="radio" id="star5" name="rating" value="10" <% if (item.giverRating === 10) { %>checked="checked" <% } %> /><label class = "full" for="star5" title="5 stars"></label>
-                                                        <input class="ratingForGiver" type="radio" id="star4half" name="rating" value="9" <% if (item.giverRating === 9) { %>checked="checked" <% } %> /><label class="half" for="star4half" title="4.5 stars"></label>
-                                                        <input class="ratingForGiver" type="radio" id="star4" name="rating" value="8" <% if (item.giverRating === 8) { %>checked="checked" <% } %> /><label class = "full" for="star4" title="4 stars"></label>
-                                                        <input class="ratingForGiver" type="radio" id="star3half" name="rating" value="7" <% if (item.giverRating === 7) { %>checked="checked" <% } %> /><label class="half" for="star3half" title="3.5 stars"></label>
-                                                        <input class="ratingForGiver" type="radio" id="star3" name="rating" value="6" <% if (item.giverRating === 6) { %>checked="checked" <% } %> /><label class = "full" for="star3" title="3 stars"></label>
-                                                        <input class="ratingForGiver" type="radio" id="star2half" name="rating" value="5" <% if (item.giverRating === 5) { %>checked="checked" <% } %> /><label class="half" for="star2half" title="2.5 stars"></label>
-                                                        <input class="ratingForGiver" type="radio" id="star2" name="rating" value="4" <% if (item.giverRating === 4) { %>checked="checked" <% } %> /><label class = "full" for="star2" title="2 stars"></label>
-                                                        <input class="ratingForGiver" type="radio" id="star1half" name="rating" value="3" <% if (item.giverRating === 3) { %>checked="checked" <% } %> /><label class="half" for="star1half" title="1.5 stars"></label>
-                                                        <input class="ratingForGiver" type="radio" id="star1" name="rating" value="2" <% if (item.giverRating === 2) { %>checked="checked" <% } %> /><label class = "full" for="star1" title="1 star"></label>
-                                                        <input class="ratingForGiver" type="radio" id="starhalf" name="rating" value="1" <% if (item.giverRating === 1) { %>checked="checked" <% } %> /><label class="half" for="starhalf" title="0.5 stars"></label>
-                                                    </fieldset>
-                                                    <% if (item.giverRating === null) { %>
-                                                        <div style="margin-top: 40px;" class="ratingText">
-                                                            Please give a rating to your giver!
-                                                        </div>
-                                                    <% } else { %>
-                                                        <div style="margin-top: 40px;" class="ratingText">
-                                                            Thanks for giving a rating!
-                                                        </div>
-                                                    <% } %>
-                                                <% } %>
-                                            <!-- For successful owners -->
-                                            <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                                                <div>
-                                                    <a href="javascript:messageUser();" class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Recipient</a>
-                                                </div>
-                                                <fieldset class="rating" style="color: white; font-weight: bold; text-align: center;" itemId="<%= item.itemID %>">
-                                                    <input class="ratingForTaker" type="radio" id="star5" name="rating" value="10" <% if (item.takerRating === 10) { %>checked="checked" <% } %> /><label class = "full" for="star5" title="5 stars"></label>
-                                                    <input class="ratingForTaker" type="radio" id="star4half" name="rating" value="9" <% if (item.takerRating === 9) { %>checked="checked" <% } %> /><label class="half" for="star4half" title="4.5 stars"></label>
-                                                    <input class="ratingForTaker" type="radio" id="star4" name="rating" value="8" <% if (item.takerRating === 8) { %>checked="checked" <% } %> /><label class = "full" for="star4" title="4 stars"></label>
-                                                    <input class="ratingForTaker" type="radio" id="star3half" name="rating" value="7" <% if (item.takerRating === 7) { %>checked="checked" <% } %> /><label class="half" for="star3half" title="3.5 stars"></label>
-                                                    <input class="ratingForTaker" type="radio" id="star3" name="rating" value="6" <% if (item.takerRating === 6) { %>checked="checked" <% } %> /><label class = "full" for="star3" title="3 stars"></label>
-                                                    <input class="ratingForTaker" type="radio" id="star2half" name="rating" value="5" <% if (item.takerRating === 5) { %>checked="checked" <% } %> /><label class="half" for="star2half" title="2.5 stars"></label>
-                                                    <input class="ratingForTaker" type="radio" id="star2" name="rating" value="4" <% if (item.takerRating === 4) { %>checked="checked" <% } %> /><label class = "full" for="star2" title="2 stars"></label>
-                                                    <input class="ratingForTaker" type="radio" id="star1half" name="rating" value="3" <% if (item.takerRating === 3) { %>checked="checked" <% } %> /><label class="half" for="star1half" title="1.5 stars"></label>
-                                                    <input class="ratingForTaker" type="radio" id="star1" name="rating" value="2" <% if (item.takerRating === 2) { %>checked="checked" <% } %> /><label class = "full" for="star1" title="1 star"></label>
-                                                    <input class="ratingForTaker" type="radio" id="starhalf" name="rating" value="1" <% if (item.takerRating === 1) { %>checked="checked" <% } %> /><label class="half" for="starhalf" title="0.5 stars"></label>
-                                                </fieldset>
-                                                <% if (item.takerRating === null) { %>
-                                                    <div style="margin-top: 40px;" class="ratingText">
-                                                        Please give a rating to your recipient.
-                                                    </div>
-                                                <% } else { %>
-                                                    <div style="margin-top: 40px;" class="ratingText">
-                                                        Thanks for giving a rating!
-                                                    </div>
-                                                <% } %>
-                                            <% } %>
-                                        </center>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </row>
-                </div>
-            </div>
-
-            <!-- Main Form Information Panel -->
-            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="padding: 0 0; margin-bottom: 10px;">
-                <div>
-                    <div style="padding: 0 15px;">
-                        <div class="panel panel-default">
-                            <div class="list-group">
-                                <a class="list-group-item">
-                                    <h4 class="list-group-item-heading">Title</h4>
-                                    <p class="list-group-item-text hide-overflow">
-                                        <%= item.title %>
-                                    </p>
-                                </a>
-                                <a class="list-group-item" style="overflow: auto;">
-                                    <h4 class="list-group-item-heading">Description</h4>
-                                    <textarea readonly style="width: 100%; height: 100%; resize:none; font-weight: lighter; font-size: 1.3em; overflow: auto; background: transparent; border: none;" class="list-group-item-text wrap description-text"><%= item.description %></textarea>
-                                </a>
-                                <a class="list-group-item">
-                                    <h4 class="list-group-item-heading">Deadline</h4>
-                                    <p class="list-group-item-text">
-                                        <%= date %>
-                                    </p>
-                                </a>
-                                <div class="bs-callout bs-callout-warning" style="background-color: #FFFBAF; color: #A8896C; margin: 10px; 10px;">
-                                    <% if (item.takerID === null && !expired) { %>
-                                        <h4>Available</h4>
-                                        <h5>This giveaway will end <%= moment(expiryDate).fromNow()%>.</h5>
-                                    <% } else if (item.takerID === null) { %>
-                                        <h4>Expired</h4>
-                                        <h5>This giveaway has ended.</h5>
-                                    <% } else { %>
-                                        <h4>Given Away</h4>
-                                        <h5>This item has been given away to <a style="color: teal;" href="/profile/<%= item.takerId %>"><%= item.takerName%></a>.</h5>
-                                    <% } %>
-                                </div>
-                            </div>
-                            <div class="panel-footer" style="vertical-align: middle;">
-                                <div style="vertical-align: middle; position: relative;">
-                                    <row>
-                                        <div>
-                                            <h5 class="text-muted" style="vertical-align: middle;"> Curious? Drop a comment below, or message <%=item.name%>!</h5>
-                                        </div>
-                                    </row>
-                                </div>
-                            </div>
-                        </div>
+                        <% } %>
                     </div>
                 </div>
-                <!-- Comments -->
-                <div id="comments-container" style="margin-left: 15px; margin-right: 15px;">
-                </div>
-            </div>
-        </row>
-    </div>
-
-    <!-- Modal Popup for editing -->
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Edit Item</h4>
-                </div>
-                <form action="/api/update/<%= item.itemID %>" class="form-horizontal form" role="form" method="post">
-                    <div class="modal-body">
-                        <!-- Errors -->
-                        <% if (locals.error_messages) {
-                            error_messages.forEach(function(message) { %>
-                            <div class="alert alert-warning"><strong>Error: </strong>
-                                <%= message %>
+                <div class="col-sm-8 col-md-9 right-panel">
+                    <div class="panel other-info-panel">
+                        <div class="giver-info info-display">
+                            <div class="giver-img pull-left">
+                                <img src="http://graph.facebook.com/<%= item.fbID %>/picture?type=large" alt="" />
                             </div>
-                            <% });
-                        } %>
-                        <!-- Modal Form -->
-                        <div class="panel panel-default">
-                            <div class="list-group">
-                                <a class="list-group-item">
-                                    <h4 class="list-group-item-heading"><b>What are you giving?</b></h4>
-                                    <p class="list-group-item-text">
-                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                                        <input type="text" class="input-txt" name="title" placeholder="Item name (max. 50 chars)" maxlength="50" autocomplete="off" value="<%=item.title%>" required>
-                                    </p>
-                                </a>
-                                <a class="list-group-item">
-                                    <h4 class="list-group-item-heading"><b>Describe the item you are giving!</b></h4>
-                                    <p class="list-group-item-text">
-                                        <textarea type="text" class="input-txt description-field" name="description" placeholder="Item description (max. 200 chars)" autocomplete="off" data-trigger="focus" id="description-field" maxlength="200" required><%=item.description%></textarea>
-                                    </p>
-                                </a>
-                                <a class="list-group-item">
-                                    <h4 class="list-group-item-heading"><b>When do you want to end this giveaway?</b></h4>
-                                    <p class="list-group-item-text">
-                                        <input type="text" class="input-txt" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" value="<%= moment(date, "D MMMM YYYY HH:mm").format(" YYYY-MM-DD ") %>" required>
-                                    </p>
-                                </a>
-                                <a class="list-group-item">
-                                    <h4 class="list-group-item-heading"><b>Which category does your item belong to?</b></h4>
-                                    <select id="input-tags" name="categories[]" multiple class="categories has-options " style="width:70%" auto-complete: "off" placeholder="Select categories...">
-                                        <option value="">Select categories...</option>
-                                        <% categories_list = [
-                                            "books",
-                                            "clothes",
-                                            "electronics",
-                                            "entertainment",
-                                            "furniture",
-                                            "kitchen appliances",
-                                            "sports",
-                                            "toys",
-                                            "other"
-                                        ] %>
-                                        <% for(var i=0; i<categories_list.length; i++) {%>
-                                            <% if (categories.indexOf(categories_list[i]) != -1) {%>
+                            <a href="/profile/<%= item.giverID %>" class="giver-name"><%= item.name %></a>
 
-                                            <option value="<%= categories_list[i] %>" selected="selected"><%= categories_list[i] %></option>
-                                            <% } else { %>
-                                            <option value="<%= categories_list[i] %>"><%= categories_list[i] %></option>
-                                            <% } %>
+                            <% if (loggedIn && mine && item.takerID === null) { %>
+                                <br>
+                                <a type="button" class="btn dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Wanters <span class="badge"><%= item.numWants %></span>
+                                </a>
+                                <% if (item.numWants > 0) { %>
+                                    <ul class="dropdown-menu scrollable-menu" role="menu">
+                                        <li><a href="/api/give/<%= item.itemID %>" style="padding-left: 10px;">Random draw</a></li>
+                                        <% for (var i=0; i<manual.length; i++) { %>
+                                            <li class="single-wanter">
+                                                <p><%= manual[i].name %></p>
+                                                <div class="link-box">
+                                                    <a href="/profile/<%= manual[i].userID %>">Profile</a>
+                                                    <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">Give</a>
+                                                </div>
+                                            </li>
                                         <% } %>
+                                    </ul>
+                                <% } %>
+                            <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
+                                <div>
+                                    <a href="javascript:messageUser();" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Giver</a>
+                                    <% if (item.takerID === id) { %>
+                                        <a href="javascript:shareItem();" class="btn btn-xs share-button" id="facebook-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
+                                    <% } %>
+                                </div>
+                                <% if (item.takerID === id) { %>
+                                    <fieldset class="rating" style="color: white; font-weight: bold; text-align: center;" itemId="<%= item.itemID %>" >
+                                        <input class="ratingForGiver" type="radio" id="star5" name="rating" value="10" <% if (item.giverRating === 10) { %>checked="checked" <% } %> /><label class = "full" for="star5" title="5 stars"></label>
+                                        <input class="ratingForGiver" type="radio" id="star4half" name="rating" value="9" <% if (item.giverRating === 9) { %>checked="checked" <% } %> /><label class="half" for="star4half" title="4.5 stars"></label>
+                                        <input class="ratingForGiver" type="radio" id="star4" name="rating" value="8" <% if (item.giverRating === 8) { %>checked="checked" <% } %> /><label class = "full" for="star4" title="4 stars"></label>
+                                        <input class="ratingForGiver" type="radio" id="star3half" name="rating" value="7" <% if (item.giverRating === 7) { %>checked="checked" <% } %> /><label class="half" for="star3half" title="3.5 stars"></label>
+                                        <input class="ratingForGiver" type="radio" id="star3" name="rating" value="6" <% if (item.giverRating === 6) { %>checked="checked" <% } %> /><label class = "full" for="star3" title="3 stars"></label>
+                                        <input class="ratingForGiver" type="radio" id="star2half" name="rating" value="5" <% if (item.giverRating === 5) { %>checked="checked" <% } %> /><label class="half" for="star2half" title="2.5 stars"></label>
+                                        <input class="ratingForGiver" type="radio" id="star2" name="rating" value="4" <% if (item.giverRating === 4) { %>checked="checked" <% } %> /><label class = "full" for="star2" title="2 stars"></label>
+                                        <input class="ratingForGiver" type="radio" id="star1half" name="rating" value="3" <% if (item.giverRating === 3) { %>checked="checked" <% } %> /><label class="half" for="star1half" title="1.5 stars"></label>
+                                        <input class="ratingForGiver" type="radio" id="star1" name="rating" value="2" <% if (item.giverRating === 2) { %>checked="checked" <% } %> /><label class = "full" for="star1" title="1 star"></label>
+                                        <input class="ratingForGiver" type="radio" id="starhalf" name="rating" value="1" <% if (item.giverRating === 1) { %>checked="checked" <% } %> /><label class="half" for="starhalf" title="0.5 stars"></label>
+                                    </fieldset>
+                                    <% if (item.giverRating === null) { %>
+                                        <div style="margin-top: 30px;" class="ratingText">
+                                            Please give a rating to your giver!
+                                        </div>
+                                    <% } else { %>
+                                        <div style="margin-top: 30px;" class="ratingText">
+                                            Thanks for giving a rating!
+                                        </div>
+                                    <% } %>
+                                <% } %>
+                            <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
+                                <div>
+                                    <a href="javascript:messageUser();" class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Recipient</a>
+                                </div>
+                                <fieldset class="rating" style="color: white; font-weight: bold; text-align: center;" itemId="<%= item.itemID %>">
+                                    <input class="ratingForTaker" type="radio" id="star5" name="rating" value="10" <% if (item.takerRating === 10) { %>checked="checked" <% } %> /><label class = "full" for="star5" title="5 stars"></label>
+                                    <input class="ratingForTaker" type="radio" id="star4half" name="rating" value="9" <% if (item.takerRating === 9) { %>checked="checked" <% } %> /><label class="half" for="star4half" title="4.5 stars"></label>
+                                    <input class="ratingForTaker" type="radio" id="star4" name="rating" value="8" <% if (item.takerRating === 8) { %>checked="checked" <% } %> /><label class = "full" for="star4" title="4 stars"></label>
+                                    <input class="ratingForTaker" type="radio" id="star3half" name="rating" value="7" <% if (item.takerRating === 7) { %>checked="checked" <% } %> /><label class="half" for="star3half" title="3.5 stars"></label>
+                                    <input class="ratingForTaker" type="radio" id="star3" name="rating" value="6" <% if (item.takerRating === 6) { %>checked="checked" <% } %> /><label class = "full" for="star3" title="3 stars"></label>
+                                    <input class="ratingForTaker" type="radio" id="star2half" name="rating" value="5" <% if (item.takerRating === 5) { %>checked="checked" <% } %> /><label class="half" for="star2half" title="2.5 stars"></label>
+                                    <input class="ratingForTaker" type="radio" id="star2" name="rating" value="4" <% if (item.takerRating === 4) { %>checked="checked" <% } %> /><label class = "full" for="star2" title="2 stars"></label>
+                                    <input class="ratingForTaker" type="radio" id="star1half" name="rating" value="3" <% if (item.takerRating === 3) { %>checked="checked" <% } %> /><label class="half" for="star1half" title="1.5 stars"></label>
+                                    <input class="ratingForTaker" type="radio" id="star1" name="rating" value="2" <% if (item.takerRating === 2) { %>checked="checked" <% } %> /><label class = "full" for="star1" title="1 star"></label>
+                                    <input class="ratingForTaker" type="radio" id="starhalf" name="rating" value="1" <% if (item.takerRating === 1) { %>checked="checked" <% } %> /><label class="half" for="starhalf" title="0.5 stars"></label>
+                                </fieldset>
+                                <% if (item.takerRating === null) { %>
+                                    <div style="margin-top: 30px;" class="ratingText">
+                                        Please give a rating to your recipient.
+                                    </div>
+                                <% } else { %>
+                                    <div style="margin-top: 30px;" class="ratingText">
+                                        Thanks for giving a rating!
+                                    </div>
+                                <% } %>
+                            <% } %>
+                        </div>
+                        <div class="detail-info">
+                            <div class="row">
+                                <div class="col-sm-6 category-info">
+                                    <h2>Category</h2>
+                                    <p class="subtitle">
+                                        The tags on gift
+                                    </p>
+                                    <div class="category-holder info-display">
+                                        <!-- TODO: for each category have a div here -->
+                                        <span class="category-item"><i class="fa fa-tags"></i>parenting</span>
+                                        <span class="category-item"><i class="fa fa-tags"></i>toys and other</span>
+                                    </div>
+                                    <select id="input-tags" name="categories[]" multiple class="categories has-options info-edit hidden" auto-complete: "off" placeholder="Select categories...">
+                                        <option value="">Select categories...</option>
+                                        <option value="clothes">clothes</option>
+                                        <option value="accessories">accessories</option>
+                                        <option value="furniture & home">furniture & home</option>
+                                        <option value="parenting">parenting</option>
+                                        <option value="health">health</option>
+                                        <option value="beauty">beauty</option>
+                                        <option value="kitchen appliances">kitchen appliances</option>
+                                        <option value="gardening">gardening</option>
+                                        <option value="property">property</option>
+                                        <option value="design & craft">design & craft</option>
+                                        <option value="electronics">electronics</option>
+                                        <option value="sports">sports</option>
+                                        <option value="photography">photography</option>
+                                        <option value="antiques">antiques</option>
+                                        <option value="toys">toys</option>
+                                        <option value="games">games</option>
+                                        <option value="music">music</option>
+                                        <option value="tickets & vouchers">tickets & vouchers</option>
+                                        <option value="auto accessories">auto accessories</option>
+                                        <option value="books">books</option>
+                                        <option value="stationeries">stationeries</option>
+                                        <option value="textbooks">textbooks</option>
+                                        <option value="notes">notes</option>
+                                        <option value="pets">pets</option>
+                                        <option value="other">other</option>
                                     </select>
-                                </a>
-                                <a class="list-group-item">
-                                    <h4 class="list-group-item-heading"><b>How would you like the person receiving to collect the item?</b></h4>
-                                    <div class="checkbox checkbox-primary checkbox-circle row">
-                                        <input type="checkbox" id="meet" name="meetup" <% if (item.meetup) { %>checked="checked"<% } %>>
-                                        <label class="large-label" for="meet">
+                                </div>
+                                <div class="col-sm-6 deadline-info">
+                                    <h2>Deadline</h2>
+                                    <p class="subtitle">
+                                        The time giveaway is closed.
+                                    </p>
+                                    <p class="deadline info-display"><%= date %></p>
+                                    <input type="text" class="input-txt input-date info-edit hidden" name="date" id="date" value="<%= moment(date, "D MMMM YYYY HH:mm").format(" YYYY-MM-DD ") %>" maxlength="50" autocomplete="off" required>
+                                </div>
+                                <div class="col-sm-6 charity-info">
+                                    <h2>Charity & Donation</h2>
+                                    <p class="subtitle info-display">
+                                        <!-- TODO: get charity name here -->
+                                        Receiver will be donating <strong>Chrity Name</strong> for
+                                    </p>
+                                    <p class="donation-amount info-display">
+                                        <!-- TODO: get donation amount here -->
+                                        <i class="fa fa-usd"></i> 123 SGD
+                                    </p>
+                                    <p class="subtitle info-edit hidden">
+                                        Select charity and choose donation amount.
+                                    </p>
+                                    <div class="charity-selection info-edit hidden">
+                                        <!-- TODO: select the initial charity here. Can just if (something) { trigger click } -->
+                                        <input type="checkbox" id="red-cross" name="donateToRedCross" class="hidden">
+                                        <img src="../images/upload/charity1.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                                        <input type="checkbox" id="cat-wel-society" name="donateToCWS" class="hidden">
+                                        <img src="../images/upload/charity2.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                                    </div>
+                                    <div class="money-input info-edit hidden">
+                                        <i class="fa fa-usd"></i><span> SGD</span>
+                                        <!-- TODO: input initial money value here -->
+                                        <input type="text" class="input-txt donation-input" disabled name="donation" placeholder="0.00" maxlength="50" autocomplete="off" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 delivery-info">
+                                    <h2>Delivery</h2>
+                                    <p class="subtitle">
+                                        Receiver will be receiving gift by
+                                    </p>
+                                    <div class="delivery-holder info-display">
+                                        <% if (item.meetup === 1) { %>
+                                            <span class="category-item"><i class="fa fa-child"></i>Meet Up</span>
+                                        <% } %>
+                                        <% if (item.postage === 1) { %>
+                                            <span class="category-item"><i class="fa fa-cube"></i>Postage</span>
+                                        <% } %>
+                                    </div>
+                                    <div class="checkbox checkbox-primary delivery-info checkbox-circle row info-edit hidden">
+                                        <% if (item.meetup === 1) { %>
+                                            <input type="checkbox" name="meetup" id="meetup" class="check-one hidden" checked>
+                                        <% } else { %>
+                                            <input type="checkbox" name="meetup" id="meetup" class="check-one hidden">
+                                        <% } %>
+                                        <label class="large-label" for="meetup">
                                             Meet and collect
-                                        </label>
-                                        <input type="checkbox" id="free" name="postage" <% if (item.postage) { %>checked="checked"<% } %>>
-                                        <label class="large-label" for="free">
+                                        </label><br>
+
+                                        <% if (item.postage === 1) { %>
+                                            <input type="checkbox" name="postage" id="postage" class="check-two hidden" checked>
+                                        <% } else { %>
+                                            <input type="checkbox" name="postage" id="postage" class="check-two hidden">
+                                        <% } %>
+                                        <label class="large-label" for="postage">
                                             Postage service
                                         </label>
                                     </div>
-                                </a>
-                                <a class="list-group-item">
-                                    <div class="checkbox checkbox-primary checkbox-circle row">
-                                        <input type="checkbox" id="share" name="postToFacebook">
-                                        <label class="large-label" for="share">
-                                            <i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook
-                                        </label>
+                                </div>
+                                <% if (!mine) { %>
+                                <% } else { %>
+                                    <div class="col-sm-6 mobile-button">
+                                        <div class="info-button mobile-modify-button">
+                                            <a href="#" class="btn btn-lg btn-block mobile-btn-modify">Modify</a>
+                                            <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block mobile-btn-delete">Delete</a>
+                                        </div>
+                                        <div class="info-button mobile-edit-button-group hidden">
+                                            <button href="#" class="btn btn-lg mobile-btn-save btn-block" type="submit">Save</button>
+                                            <a href="#" class="btn btn-lg mobile-btn-cancel btn-block">Cancel</a>
+                                        </div>
                                     </div>
-                                </a>
+                                <% } %>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" type="submit">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Popup for deleting -->
-    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>You are deleting this item ... </h3>
-                </div>
-                <div class="modal-body">
-                    <h5> Are you sure you want to delete this item? This action cannot be undone. </h5>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-danger btn-ok">Delete</a>
                 </div>
             </div>
-        </div>
-    </div>
+        </form>
 
+        <div class="row panel comment-panel">
+            <% if (!mine) { %>
+                <h2 class="comment-title">Curious? Drop a comment below, or <a href="javascript:messageUser();">message <%=item.name%>!<a></h2>
+            <% } %>
+            <div id="comments-container" style="margin-left: 15px; margin-right: 15px;">
+            </div>
+        </div>
+
+    </div>
     <!-- Footer -->
     <footer>
-        <div class="container footer-container">
-            <div class="col-xs-10 col-xs-offset-1 text-center">
-                <hr class="xsall">
-                <div class="col-xs-12 text-center" style="padding-bottom: 10px;">
-                    <small><span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true">  </span>  <a href="mailto:giveforfreefeedback@gmail.com"> giveforfreefeedback[at]gmail[dot]com</a></small>
-                    <br>
-                    <small><span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span>  <a href="/privacy"> Privacy Clause</a></small>
-                </div>
-                <div class="col-xs-12 text-center">
-                    <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
-                </div>
+        <div class="footer-container">
+            <div class="col-xs-12 text-center" style="padding-bottom: 10px;">
+                <small><a href="mailto:giveforfreefeedback@gmail.com"><i class="fa fa-envelope"></i> giveforfreefeedback@gmail.com</a></small>
+                <br>
+                <small><a href="/privacy"><i class="fa fa-eye"></i> Privacy Clause</a></small>
+            </div>
+            <div class="col-xs-12 text-center">
+                <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
             </div>
         </div>
     </footer>
