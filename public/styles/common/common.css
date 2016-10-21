@@ -686,8 +686,8 @@ fieldset, label { margin: auto; padding: 0; }
 
 .rating > input { display: none; }
 .rating > label:before {
-    margin: 5px;
-    font-size: 2em;
+    margin: 3px;
+    font-size: 14px;
     font-family: FontAwesome;
     display: inline-block;
     content: "\f005";

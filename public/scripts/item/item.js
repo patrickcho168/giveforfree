@@ -1,13 +1,14 @@
 // Want
 $(document).on("click", ".snag", function() {
+    console.log("want");
     var itemId = $(this).attr('itemId');
 
     // Change text
-    $(this).children('b').text("UNWANT!");
+    $($(this).children('span')[1]).text(" Unwant ");
 
     // Change color
-    $(this).removeClass("btn-primary");
-    $(this).addClass("btn-danger");
+    $(this).css('background-color', '#565656');
+    $(this).children('.badge').css('color', '#565656');
 
     // Change type
     $(this).removeClass("snag");
@@ -33,15 +34,15 @@ $(document).on("click", ".snag", function() {
 
 // Unwant
 $(document).on("click", ".unsnag", function() {
+    console.log("unwant");
     var itemId = $(this).attr('itemId');
 
     // Change text
-    $(this).children('b').text("WANT!");
+    $($(this).children('span')[1]).text(" Want ");
 
     // Change color
-    $(this).removeClass("btn-danger");
-    $(this).addClass("btn-primary");
-
+    $(this).css('background-color', '#c09f80');
+    $(this).children('.badge').css('color', '#c09f80');
     // Change type
     $(this).removeClass("unsnag");
     $(this).addClass("snag");
@@ -104,6 +105,37 @@ $(document).on("click", ".ratingForGiver", function() {
 
         });
 })
+
+// For modification
+$(document).on('click', '.btn-modify', function() {
+    $('.modify-button').toggleClass('hidden');
+    $('.edit-button-group').toggleClass('hidden');
+    $('.info-edit').toggleClass('hidden');
+    $('.info-display').toggleClass('hidden');
+});
+
+$(document).on('click', '.btn-cancel', function() {
+    $('.modify-button').toggleClass('hidden');
+    $('.edit-button-group').toggleClass('hidden');
+    $('.info-edit').toggleClass('hidden');
+    $('.info-display').toggleClass('hidden');
+});
+
+$(document).on('click', '.mobile-btn-modify', function() {
+    $('.mobile-modify-button').toggleClass('hidden');
+    $('.mobile-edit-button-group').toggleClass('hidden');
+    $('.info-edit').toggleClass('hidden');
+    $('.info-display').toggleClass('hidden');
+    $('html, body').animate({ scrollTop: 0 }, 500);
+});
+
+$(document).on('click', '.mobile-btn-cancel', function() {
+    $('.mobile-modify-button').toggleClass('hidden');
+    $('.mobile-edit-button-group').toggleClass('hidden');
+    $('.info-edit').toggleClass('hidden');
+    $('.info-display').toggleClass('hidden');
+    $('html, body').animate({ scrollTop: 0 }, 500);
+});
 
 // Carousel Logic
 jQuery(document).ready(function($) {
@@ -383,4 +415,25 @@ function handleBrokenImage(image) {
     image.onerror = "";
     image.src = "/images/common/default-placeholder.png";
     return true;
+}
+
+function selectCharity(currentSelection) {
+    var checkBox = $(currentSelection).prev();
+    var checked = checkBox.prop('checked');
+
+    var allBoxes = $('.charity-selection input');
+    var moneyInput = $('.money-input input');
+    var allImg = $('.charity-selection img');
+
+    allBoxes.prop('checked', false);
+    moneyInput.prop('disabled', true);
+    allImg.addClass('covered');
+    $('.no-charity').removeClass('hidden');
+
+    if (!checked) {
+        checkBox.prop('checked', true);
+        moneyInput.prop('disabled', false);
+        $(currentSelection).removeClass('covered');
+        $('.no-charity').addClass('hidden');
+    }
 }
