@@ -88,7 +88,7 @@
 	    <nav class="navbar navbar-fixed-top">
 	        <div class="navbar-header">
 				<div class="navbar-brand">
-					<a href="/" class="navbar-logo">
+					<a class="navbar-logo">
 						<img src="../images/common/gff-logo.svg" class="logo-full" alt="" />
 						<img src="../images/common/gff-logo-s.svg" class="logo-mobile" alt="" />
 					</a>
@@ -151,8 +151,23 @@
 			<nav class="category-bar">
 				<ul class="nav">
 					<li class="category-bar-title">Categories</li>
+<<<<<<< HEAD
 					<li class="category-bar-item"><a href="#" class="category-clear">View All<i class="fa fa-angle-right pull-right"></i></a></li>
 					<% var categories = ['Books', 'Clothes', 'Electronics', 'Entertainment', 'Furniture', 'Kitchen Appliances', 'Sports', 'Toys', 'Other']; %>
+=======
+					<% var categories = [
+						"All",
+				        "Books",
+				        "Clothes",
+				        "Electronics",
+				        "Furniture",
+				        "Kitchen Appliances",
+				        "Sports",
+				        "Toys",
+				        "Entertainment",
+				        "Other"
+				    ]; %>
+>>>>>>> 8e8d5447aedbf8ae98fe6f3e59fb3d0085fc140e
 					<% for (i = 0; i < categories.length; i++) { %>
 						<li class="category-bar-item"><a href="#" class="category" id="<%= i %>"><%= categories[i] %><i class="fa fa-angle-right pull-right"></i></a></li>
 					<% } %>
@@ -183,30 +198,30 @@
 			<div class="panel title-banner">
 				<div class="title-content col">
 					<% if(loggedIn) { %>
-						<h1>Welcome, <br><%= user.name %></h1>
+						<h1>Welcome, <%= user.name %>!</h1>
 						<!-- TODO: the user name -->
 						<div class="sub-titles">
 							<p class="sub-title-first">
-								Start by giving a gift today
+								Start by giving a gift today!
 							</p>
 							<a class="give-button" type="button" href="/upload">Give a gift</a>
 							<p class="sub-title-second">
 								<a onclick="scrollDown();">
-									Or browse for gifts below <i class="fa fa-arrow-circle-o-down"></i>
+									Or browse FREE gifts below <i class="fa fa-arrow-circle-o-down"></i>
 								</a>
 							</p>
 						</div>
 					<% } else { %>
-						<h1>Welcome</h1>
+						<h1>Welcome!</h1>
 						<!-- TODO: the user name -->
 						<div class="sub-titles">
 							<p class="sub-title-first">
-								Log in now to get gifts
+								Log in now to get FREE gifts!
 							</p>
 							<a class="give-button" type="button" href="javascript:loginSpecial();">Log in</a>
 							<p class="sub-title-second">
 								<a onclick="scrollDown();">
-									Or browse for gifts below <i class="fa fa-arrow-circle-o-down"></i>
+									Or browse FREE gifts below <i class="fa fa-arrow-circle-o-down"></i>
 								</a>
 							</p>
 						</div>
@@ -236,18 +251,15 @@
 				<div class="col-sm-offset-3 gifts-banner panel">
 					<div class="placeholder">
 						<img src="../images/common/empty-gift.svg" alt="" class="placeholder-img"/>
-						<h3 class="empty-placeholder-text hidden">Take the lead</h3>
+						<h3 class="empty-placeholder-text hidden">Oops!</h3>
 						<p class="empty-placeholder-text hidden">
-							There are no gifts in this category yet. <br>
-							Why not be the first to contribute? <br><br>
-							<a class="give-button" type="button" href="/upload">Give a gift</a>
+							Currently there is no gift yet. <br>
+							Why not be the first one to contribute?
 						</p>
-						<h3 class="placeholder-text">Receive a gift today</h3>
+						<h3 class="placeholder-text">Get a FREE gift today!</h3>
 						<p class="placeholder-text">
 							After receiving a gift, <br>
-							please proceed to give a donation. <br>
-							Do contribute a gift too. <br><br>
-							<a class="give-button" type="button" href="/upload">Give a gift</a>
+							do consider giving a donation! (:
 						</p>
 					</div>
 				</div>

@@ -67,38 +67,24 @@ function createFbFreeItem(title, itemId, imgUrl) {
 
 function saveCategories(item, categories) {
     var categoriesPos = [
-        "clothes",
-        "accessories",
-        "furniture & home",
-        "parenting",
-        "health",
-        "beauty",
-        "kitchen appliances",
-        "gardening",
-        "property",
-        "design & craft",
-        "electronics",
-        "sports",
-        "photography",
-        "antiques",
-        "toys",
-        "games",
-        "music",
-        "tickets & vouchers",
-        "auto accessories",
         "books",
-        "stationery",
-        "textbooks",
-        "notes",
-        "pets",
+        "clothes",
+        "electronics",
+        "entertainment",
+        "furniture",
+        "kitchen appliances",
+        "sports",
+        "toys",
         "other"
     ];
-
+    console.log('categories', categories);
     if (categories) {
         var ids = categories.map(function(cat) {
             return categoriesPos.indexOf(cat) + 1;
         });
 
+
+        console.log('categories ids', ids);
         item.categories().detach();
         item.categories().attach(ids);
     }
@@ -115,7 +101,9 @@ function saveItem(req, res, fileName) {
         collectionMessage: xss(req.body.collectionMessage),
         postage: req.body.postage ? 1 : 0,
         meetup: req.body.meetup ? 1 : 0,
-        imageLocation: fileName
+        imageLocation: fileName,
+        charityID: req.body.donateToCharity,
+        donationAmount: req.body.donation
     });
 
     // Save item to database
@@ -124,6 +112,7 @@ function saveItem(req, res, fileName) {
         var createdItemID = newSavedItem.attributes.itemID;
 
         if (createdItemID != null) {
+
             // Save categories
             if (req.body.categories) {
                 saveCategories(newSavedItem, req.body.categories.replace("&amp;", "&").split(','));
@@ -173,16 +162,17 @@ function redirectFail(response) {
 
 module.exports = function(app) {
     app.get('/upload', ensureLogin.ensureLoggedIn(), csrfProtection, function(req, res, next) {
-        var otherUserId = parseInt(req.params.id);
-        var mine = otherUserId === req.user.appUserId;
-
-        res.render("upload", {
-            myProfile: mine,
-            user: req.user.attributes,
-            id: req.user.appUserId,
-            notification: req.session.notification,
-            moment: moment,
-            csrfToken: req.csrfToken()
+        var userId = req.user.appUserId;
+        db.User.where({
+            userID: userId
+        }).fetch().then(function(user) {
+            res.render("upload", {
+                user: user.attributes,
+                id: req.user.appUserId,
+                notification: req.session.notification,
+                moment: moment,
+                csrfToken: req.csrfToken()
+            });
         });
     });
 

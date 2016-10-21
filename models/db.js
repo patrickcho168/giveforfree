@@ -159,6 +159,16 @@ var ThankUpvote = bookshelf.Model.extend({
   }
 });
 
+var FlagUser = bookshelf.Model.extend({
+  tableName: 'flagUser',
+  flaggedBy: function() {
+    return this.belongsTo(User, 'flaggerID');
+  },
+  flags: function() {
+    return this.belongsTo(Item, 'flaggedID');
+  }
+});
+
 var HomePageItemQuery = function(userId, numItems, cb) {
   knex
     .from('item as i')
@@ -167,7 +177,7 @@ var HomePageItemQuery = function(userId, numItems, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'u.name', 'u.userID', 'u.fbID'])
+    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'i.donationAmount', 'i.charityID', 'u.name', 'u.userID', 'u.fbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -189,7 +199,7 @@ var HomePageItemQueryBeforeId = function(userId, numItems, beforeId, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'u.name', 'u.userID', 'u.fbID'])
+    .select(['i.itemID', 'i.imageLocation', 'i.title', 'i.description', 'i.donationAmount', 'i.charityID', 'u.name', 'u.userID', 'u.fbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -378,7 +388,7 @@ var ItemPageQuery = function(userId, itemId, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.timeExpired', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'i.meetup', 'i.postage', 'i.collectionMessage', 'i.giverRating', 'i.takerRating', 'u.name', 'u.userID', 'u.fbID', 't.name as takerName', 't.userID as takerId', 't.fbID as takerFbID'])
+    .select(['i.itemID', 'i.timeExpired', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'i.meetup', 'i.postage', 'i.collectionMessage', 'i.giverRating', 'i.takerRating', 'i.charityID', 'i.donationAmount', 'u.name', 'u.userID', 'u.fbID', 't.name as takerName', 't.userID as takerId', 't.fbID as takerFbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -489,6 +499,8 @@ db.Category = Category;
 db.Notification = Notification;
 db.CommentUpvote = CommentUpvote;
 db.ThankUpvote = ThankUpvote;
+db.FlagUser = FlagUser;
+
 db.HomePageItemQuery = HomePageItemQuery;
 db.HomePageItemQueryBeforeId = HomePageItemQueryBeforeId;
 db.CategoryPageItemQuery = CategoryPageItemQuery;

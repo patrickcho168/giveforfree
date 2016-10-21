@@ -43,17 +43,30 @@ function addRealViews(html, url) {
                     html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
                     html += '<div class="panel">';
                     html += '<a href="/item/' + value.itemID + '"><img src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '" alt="" class="img-responsive"/></a>';
+                    html += '<a href="/item/' + value.itemID + '">';
                     html += '<div class="item-info">';
                     html += '<a href="/item/' + value.itemID + '"><p class="hide-overflow">' + value.title + '</p></a>';
                     html += '<a href="/profile/' + value.userID + '" class="seller-info row">';
                     html += '<img src="http://graph.facebook.com/' + value.fbID + '/picture" alt="" />';
                     html += '<span>' + value.name + '</span>';
                     html += '</a>';
-                    if (value.numWants >= 1) {
-                        html += '<small class="addition-info pull-right">' + value.numWants + ' people want this.</small>';
+                    html += '<p>';
+                    if (value.donationAmount > 0) {
+                        if (value.donationAmount % 1 == 0) {
+                            html += '<span style="inline-block"><img src="../images/upload/charity' + value.charityID + '.png" alt="" class="small-charity-logo" /> $' + value.donationAmount;
+                        } else {
+                            html += '<span style="inline-block"><img src="../images/upload/charity' + value.charityID + '.png" alt="" class="small-charity-logo" /> $' + value.donationAmount.toFixed(2);
+                        }
+                        html += '</span>';
                     } else {
-                        html += '<small class="addition-info pull-right">Be the first to check this out!</small>';
+                        html += '<span>FREE</span>';
                     }
+                    if (value.meWant) {
+                        html += '<span class="pull-right"><i class="fa fa-heart addition-info pull-right me-want"></i>' + value.numWants + '</span>';
+                    } else {
+                        html += '<span class="pull-right"><i class="fa fa-heart addition-info pull-right"></i>' + value.numWants + '</span>';
+                    }
+                    html += '</p>';
                     if (value.meWant) {
                         html += '<div class="ribbon-wrapper-green">';
                         html += '<div class="ribbon-green">';
@@ -61,7 +74,7 @@ function addRealViews(html, url) {
                         html += '</div>';
                         html += '</div>';
                     }
-                    html += '</div></div></div>'
+                    html += '</div></a></div></div>';
 
 
                     $('#infinite-scroll-container2').append(html);
@@ -111,6 +124,7 @@ $(document).ready(function() {
     });
 
     $('a.category').on('click', function() {
+        triggered = 0;
         category = $(this).attr('id');
         urlAJAX = '/api/items/' + category + '/' + 0 + '/' + numItems;
         $('#infinite-scroll-container2').empty();
@@ -118,6 +132,16 @@ $(document).ready(function() {
         console.log(urlAJAX);
         return false;
     });
+
+    $('a.category-clear').on('click', function() {
+        triggered = 0;
+        urlAJAX = '/api/allItems/' + 0 + '/' + numItems;
+        category = null;
+        $('#infinite-scroll-container2').empty();
+        addRealViews(html, urlAJAX);
+        console.log(urlAJAX);
+        return false;
+    })
 });
 
 $(document).scroll(function() {
@@ -131,8 +155,7 @@ $(document).scroll(function() {
 });
 
 $(window).scroll(function() {
-    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-
+    if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
         triggered += 1;
 
         if (canAJAX && triggered == 1 && lastItemId > 1 && category != null) {

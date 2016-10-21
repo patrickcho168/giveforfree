@@ -5,8 +5,8 @@
   height: 88px;
   overflow: hidden;
   position: absolute;
-  top: -7px;
-  right: -4px;
+  top: -6px;
+  right: 4px;
 }
 
 .ribbon-green {
@@ -24,11 +24,11 @@
   top: 15px;
   width: 120px;
   background-color: #c09f80;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#c09f80), to(#c09f80));
-  background-image: -webkit-linear-gradient(top, #c09f80, #c09f80);
-  background-image:    -moz-linear-gradient(top, #c09f80, #c09f80);
-  background-image:     -ms-linear-gradient(top, #c09f80, #c09f80);
-  background-image:      -o-linear-gradient(top, #c09f80, #c09f80);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#c09f80), to(#c09f80)); 
+  background-image: -webkit-linear-gradient(top, #c09f80, #c09f80); 
+  background-image:    -moz-linear-gradient(top, #c09f80, #c09f80); 
+  background-image:     -ms-linear-gradient(top, #c09f80, #c09f80); 
+  background-image:      -o-linear-gradient(top, #c09f80, #c09f80); 
   color: #6a6340;
   -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
   -moz-box-shadow:    0px 0px 3px rgba(0,0,0,0.3);
@@ -50,11 +50,11 @@
   top: 15px;
   width: 120px;
   background-color: #A9A9A9;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#A9A9A9), to(#A9A9A9));
-  background-image: -webkit-linear-gradient(top, #A9A9A9, #A9A9A9);
-  background-image:    -moz-linear-gradient(top, #A9A9A9, #A9A9A9);
-  background-image:     -ms-linear-gradient(top, #A9A9A9, #A9A9A9);
-  background-image:      -o-linear-gradient(top, #A9A9A9, #A9A9A9);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#A9A9A9), to(#A9A9A9)); 
+  background-image: -webkit-linear-gradient(top, #A9A9A9, #A9A9A9); 
+  background-image:    -moz-linear-gradient(top, #A9A9A9, #A9A9A9); 
+  background-image:     -ms-linear-gradient(top, #A9A9A9, #A9A9A9); 
+  background-image:      -o-linear-gradient(top, #A9A9A9, #A9A9A9); 
   color: #6a6340;
   -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
   -moz-box-shadow:    0px 0px 3px rgba(0,0,0,0.3);
@@ -76,11 +76,11 @@
   top: 15px;
   width: 120px;
   background-color: #FF9999;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#FF9999), to(#FF9999));
-  background-image: -webkit-linear-gradient(top, #FF9999, #FF9999);
-  background-image:    -moz-linear-gradient(top, #FF9999, #FF9999);
-  background-image:     -ms-linear-gradient(top, #FF9999, #FF9999);
-  background-image:      -o-linear-gradient(top, #FF9999, #FF9999);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#FF9999), to(#FF9999)); 
+  background-image: -webkit-linear-gradient(top, #FF9999, #FF9999); 
+  background-image:    -moz-linear-gradient(top, #FF9999, #FF9999); 
+  background-image:     -ms-linear-gradient(top, #FF9999, #FF9999); 
+  background-image:      -o-linear-gradient(top, #FF9999, #FF9999); 
   color: #6a6340;
   -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
   -moz-box-shadow:    0px 0px 3px rgba(0,0,0,0.3);
@@ -89,7 +89,7 @@
 
 .ribbon-green:before, .ribbon-green:after {
   content: "";
-  border-top:   3px solid #c09f80;
+  border-top:   3px solid #c09f80;   
   border-left:  3px solid transparent;
   border-right: 3px solid transparent;
   position:absolute;
@@ -105,7 +105,7 @@
 
 .ribbon-grey:before, .ribbon-grey:after {
   content: "";
-  border-top:   3px solid #A9A9A9;
+  border-top:   3px solid #A9A9A9;   
   border-left:  3px solid transparent;
   border-right: 3px solid transparent;
   position:absolute;
@@ -121,7 +121,7 @@
 
 .ribbon-red:before, .ribbon-grey:after {
   content: "";
-  border-top:   3px solid #FF9999;
+  border-top:   3px solid #FF9999;   
   border-left:  3px solid transparent;
   border-right: 3px solid transparent;
   position:absolute;
@@ -134,3 +134,4 @@
 .ribbon-red:after {
   right: 0;
 }
+ 

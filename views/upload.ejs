@@ -94,7 +94,7 @@
     <nav class="navbar navbar-fixed-top">
         <div class="navbar-header">
             <div class="navbar-brand">
-                <a class="navbar-logo">
+                <a href="/" class="navbar-logo">
                     <img src="../images/common/gff-logo.svg" class="logo-full" alt="" />
                     <img src="../images/common/gff-logo-s.svg" class="logo-mobile" alt="" />
                 </a>
@@ -119,7 +119,7 @@
                             <% if (typeof notification != 'undefined' ) { %>
                                 <span class="badge"><%= notification.length %></span>
                             <% } %>
-                            <span> Patrick</span>
+                            <span> <%= user.name %></span>
                         </div>
                     </a>
                 </li>
@@ -167,14 +167,14 @@
                             <div align="center" id="cropperHolder">
                                 <img src="../images/common/empty-gift.svg" alt="" />
                                 <h3> Click to upload an image </h3>
-                                <p> Upload and crop an image of the item ... </p>
+                                <p> Upload and crop an image of your gift. </p>
                             </div>
                         </a>
                         <!-- Post Image Preview -->
                         <div id="image" style="display: none;">
                         </div>
                         <div class="name-input-holder">
-                            <input type="text" class="input-txt name-input" name="title" placeholder="Name of the item" maxlength="50" autocomplete="off" required>
+                            <input type="text" class="input-txt name-input" name="title" placeholder="Name of your gift" maxlength="50" autocomplete="off" required>
                         </div>
                     </div>
 
@@ -184,44 +184,33 @@
                         <div class="description-input-holder">
                             <h2>Description</h2>
                             <p>
-                                The size and measurements. <span class="no-description-alert hidden" style="color: #f05050;">You have to fill in the description.</span>
+                                Size and measurements. Meetup Details. <span class="no-description-alert hidden" style="color: #f05050;">You have to fill in the description.</span>
                                 <!-- TODO: implement validation-->
                             </p>
-                            <textarea type="text" class="input-txt description-field" name="description" placeholder="This item is..." autocomplete="off" data-trigger="focus" id="description-field" maxlength="200" required></textarea>
+                            <textarea type="text" class="input-txt description-field" name="description" placeholder="My gift is..." autocomplete="off" data-trigger="focus" id="description-field" maxlength="200" required></textarea>
                         </div>
                         <div class="category-select-holder">
                             <h2>Category</h2>
                             <p>
-                                Paste some tags on it. <span class="no-category-alert hidden" style="color: #f05050;">You have to choose at least one tag.</span>
+                                Include at least one category. <span class="no-category-alert hidden" style="color: #f05050;">You have to choose at least one tag.</span>
                                 <!-- TODO: implement validation-->
                             </p>
                             <select id="input-tags" name="categories[]" multiple class="categories has-options " style="width:70%" auto-complete: "off" placeholder="Select categories...">
-                                <option value="">Select categories...</option>
-                                <option value="clothes">clothes</option>
-                                <option value="accessories">accessories</option>
-                                <option value="furniture & home">furniture & home</option>
-                                <option value="parenting">parenting</option>
-                                <option value="health">health</option>
-                                <option value="beauty">beauty</option>
-                                <option value="kitchen appliances">kitchen appliances</option>
-                                <option value="gardening">gardening</option>
-                                <option value="property">property</option>
-                                <option value="design & craft">design & craft</option>
-                                <option value="electronics">electronics</option>
-                                <option value="sports">sports</option>
-                                <option value="photography">photography</option>
-                                <option value="antiques">antiques</option>
-                                <option value="toys">toys</option>
-                                <option value="games">games</option>
-                                <option value="music">music</option>
-                                <option value="tickets & vouchers">tickets & vouchers</option>
-                                <option value="auto accessories">auto accessories</option>
-                                <option value="books">books</option>
-                                <option value="stationeries">stationeries</option>
-                                <option value="textbooks">textbooks</option>
-                                <option value="notes">notes</option>
-                                <option value="pets">pets</option>
-                                <option value="other">other</option>
+                                <option value="">Add categories...</option>
+                                <% categories_list = [
+                                    "books",
+                                    "clothes",
+                                    "electronics",
+                                    "entertainment",
+                                    "furniture",
+                                    "kitchen appliances",
+                                    "sports",
+                                    "toys",
+                                    "other"
+                                ] %>
+                                <% for(var i=0; i<categories_list.length; i++) {%>
+                                    <option value="<%= categories_list[i] %>"><%= categories_list[i] %></option>
+                                <% } %>
                             </select>
                         </div>
                     </div>
@@ -233,7 +222,7 @@
                     <div class="date-info">
                         <h2>End Date</h2>
                         <p>
-                            A deadline for giveaway. <span class="no-date-alert hidden" style="color: #f05050;">You have to select a deadline.</span>
+                            Once end date passes, no one can want your gift anymore. <span class="no-date-alert hidden" style="color: #f05050;">You have to select a deadline.</span>
                             <!-- TODO: implement validation-->
                         </p>
                         <input type="text" class="input-txt input-date" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" required>
@@ -258,7 +247,7 @@
                     </div>
                     <div class="share-info">
                         <h2>Share</h2>
-                        <p>Let friends know the gift.</p>
+                        <p>Let your friends know about your gift!</p>
                         <div class="checkbox checkbox-primary checkbox-circle row">
                             <input type="checkbox" id="share" name="postToFacebook" class="hidden">
                             <label class="large-label share-label" for="share" onclick="toggleShareColor();">
@@ -274,23 +263,23 @@
                     <div class="charity-info">
                         <h2>Charity</h2>
                         <p>
-                            Gift receiver would donate money to
+                            Gift receiver will donate money to
                         </p>
                         <div class="charity-selection">
-                            <input type="checkbox" id="red-cross" name="donateToRedCross" class="hidden">
-                            <img src="../images/upload/cws-logo.png" alt="" class="covered" onclick="selectCharity(this);"/>
-                            <input type="checkbox" id="cat-wel-society" name="donateToCWS" class="hidden">
-                            <img src="../images/upload/red-cross-logo.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                            <input type="radio" id="red-cross" name="donateToCharity" value="1" class="hidden">
+                            <img src="../images/upload/charity1.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                            <input type="radio" id="cat-wel-society" name="donateToCharity" value="2" class="hidden">
+                            <img src="../images/upload/charity2.png" alt="" class="covered" onclick="selectCharity(this);"/>
                         </div>
                     </div>
                     <div class="donation-info">
                         <h2>Donation Amount</h2>
                         <p>
-                            Gift receiver would donate <span class="no-charity" style="color: #565656;">(you have not choose charity yet.)</span>
+                            Amount that gift receiver will donate. <span class="no-charity" style="color: #565656;">(Please choose a charity first.)</span>
                         </p>
                         <div class="money-input">
                             <i class="fa fa-usd"></i><span> SGD</span>
-                            <input type="text" class="input-txt donation-input" disabled name="donation" placeholder="0.00" maxlength="50" autocomplete="off" required>
+                            <input type="number" min="1.00" step="0.01" class="input-txt donation-input" disabled name="donation" placeholder="10" maxlength="50" autocomplete="off" required>
                         </div>
                     </div>
                     <button type="submit" name="button" type="submit" class="btn btn-md">Create Gift</button>
