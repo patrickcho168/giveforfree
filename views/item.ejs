@@ -544,8 +544,8 @@
         </form>
 
         <div class="row panel comment-panel">
-            <% if (!mine) { %>
-                <h2 class="comment-title">Curious? Drop a comment below, or <a href="javascript:messageUser();">message <%=item.name%>!<a></h2>
+            <% if (!mine && loggedIn) { %>
+                <h3 class="comment-title">Curious? Comment below or <a href="javascript:messageUser();">message <%=item.name%>!<a></h3>
             <% } %>
             <div id="comments-container" style="margin-left: 15px; margin-right: 15px;">
             </div>
