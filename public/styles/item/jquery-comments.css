@@ -421,11 +421,12 @@ http://viima.github.io/jquery-comments/*/
 
 .jquery-comments ul.main li.comment .name {
 	line-height: 1.4em;
-	font-weight: bold;
+	font-weight: 400;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	text-align: left;
+	color: #c09f80;
 }
 
 .jquery-comments ul.main li.comment .name a {
@@ -463,6 +464,7 @@ http://viima.github.io/jquery-comments/*/
 	word-break: break-word;
 	text-align: left;
 	font-weight: 400;
+	color: #565656;
 }
 
 .jquery-comments ul.main li.comment .wrapper .content a.attachment i {
