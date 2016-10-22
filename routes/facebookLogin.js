@@ -69,7 +69,6 @@ toExport.route = function(app) {
             db.User.where({
                 userID: userId
             }).fetch().then(function(user) {
-                console.log(user);
                 res.render('homeLoggedIn', {
                     notification: req.session.notification,
                     moment: moment,

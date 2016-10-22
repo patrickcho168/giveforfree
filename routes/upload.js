@@ -187,7 +187,6 @@ module.exports = function(app) {
         }).fetch().then(function(item) {
             // If this item exists
             if (item) {
-                console.log(req.body);
                 // Simple form validation
                 req.checkBody({
                     'title': {
@@ -232,6 +231,8 @@ module.exports = function(app) {
                     res.redirect(301, '/item/'+itemId);
                 } else {
                     // Update item
+                    console.log("DATE");
+                    console.log(req.body.date);
                     item.save({
                         title: xss(req.body.title),
                         description: xss(req.body.description),
