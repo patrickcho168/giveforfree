@@ -494,11 +494,6 @@ textarea {
     color: #c09f80;
 }
 
-.dropdown-menu {
-    top: 155px;
-    left: 130px;
-}
-
 .message-button, .share-button {
     font-weight: 300;
     font-size: 14px;
@@ -824,6 +819,10 @@ fieldset.rating {
     }
 
     .about-charity, .charity-intro {
+        margin-left: 12px;
+    }
+
+    .taker-info .giver-img {
         margin-left: 12px;
     }
 }

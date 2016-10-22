@@ -498,6 +498,10 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-5">
+                                    <h4 class="about-charity">About Charity</h4>
+                                    <p class="charity-intro">
+                                        This charity is for blablablablabla...
+                                    </p>
                                     <h4 class="giver-info-title">Giver</h4>
                                     <div class="giver-info">
                                         <div class="giver-img pull-left">
@@ -524,12 +528,24 @@
                                                     <% } %>
                                                 </ul>
                                             <% } %>
+                                        <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
+                                            <div>
+                                                <a href="javascript:messageUser();" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Giver</a>
+                                                <% if (item.takerID === id) { %>
+                                                    <a href="javascript:shareItem();" class="btn btn-xs share-button" id="facebook-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
+                                                <% } %>
+                                            </div>
                                         <% } %>
                                     </div>
-                                    <h4 class="about-charity">About Charity</h4>
-                                    <p class="charity-intro">
-                                        This charity is for blablablablabla...
-                                    </p>
+                                    <% if (item.takerID !== null) { %>
+                                        <div class="taker-info">
+                                            <h4 class="giver-info-title">Receiver</h4>
+                                            <div class="giver-img pull-left">
+                                                <img src="../images/common/test-user.png" alt="" />
+                                            </div>
+                                            <a href="/profile/<%= item.takerID %>" class="giver-name">Receiver Name</a>
+                                        </div>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>
