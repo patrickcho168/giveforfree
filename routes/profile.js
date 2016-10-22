@@ -302,42 +302,52 @@ module.exports = function(app) {
                         var mine = false;
                         db.User.where({
                             userID: otherUserId
-                        }).fetch().then(function(user) {
-                            res.render('profile', {
-                                loggedIn: false,
-                                myProfile: mine,
-                                user: user.attributes,
-                                userRating: rating,
-                                id: 0,
-                                friendProperty: {},
-                                friends: [],
-                                notification: req.session.notification,
-                                flagUser: null,
-                                csrfToken: req.csrfToken()
+                        }).fetch().then(function(otherUser) {
+                            db.User.where({
+                                userID: req.user.appUserId
+                            }).fetch().then(function(user) {
+                                res.render('profile', {
+                                    loggedIn: false,
+                                    myProfile: mine,
+                                    otherUser: otherUser.attributes,
+                                    user: user ? user.attributes : null,
+                                    userRating: rating,
+                                    id: 0,
+                                    friendProperty: {},
+                                    friends: [],
+                                    notification: req.session.notification,
+                                    flagUser: null,
+                                    csrfToken: req.csrfToken()
+                                });
                             });
                         });
                     } else {
                         var mine = otherUserId === req.user.appUserId;
                         db.User.where({
                             userID: otherUserId
-                        }).fetch().then(function(user) {
+                        }).fetch().then(function(otherUser) {
                             db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
                                 db.FlagUser.where({
                                     flaggerID: req.user.appUserId,
                                     flaggedID: otherUserId
                                 }).fetch().then(function(flagUser) {
-                                    res.render('profile', {
-                                        loggedIn: true,
-                                        myProfile: mine,
-                                        user: user.attributes,
-                                        userRating: rating,
-                                        id: req.user.appUserId,
-                                        friendProperty: req.user.fbFriendsToPropertyMap,
-                                        friends: data.models,
-                                        notification: req.session.notification,
-                                        moment: moment,
-                                        flagUser: flagUser? flagUser.attributes : null,
-                                        csrfToken: req.csrfToken()
+                                    db.User.where({
+                                        userID: req.user.appUserId
+                                    }).fetch().then(function(user) {
+                                        res.render('profile', {
+                                            loggedIn: true,
+                                            myProfile: mine,
+                                            otherUser: otherUser ? otherUser.attributes : null,
+                                            user: user ? user.attributes : null,
+                                            userRating: rating,
+                                            id: req.user.appUserId,
+                                            friendProperty: req.user.fbFriendsToPropertyMap,
+                                            friends: data.models,
+                                            notification: req.session.notification,
+                                            moment: moment,
+                                            flagUser: flagUser? flagUser.attributes : null,
+                                            csrfToken: req.csrfToken()
+                                        });
                                     });
                                 });
                             });

@@ -38,6 +38,7 @@
         var myName = "<%= user.name %>";
         var myAppId = <%= id %>;
         var appProfileId = <%= user.userID %>;
+        var userFbId = "<%= user.fbID %>";
 
         $(window).load(function() {
             myFriends = <%- JSON.stringify(friends) %>;
@@ -67,6 +68,7 @@
     <link rel="stylesheet" href="../styles/common/bootstrap-edit.css">
     <link rel="stylesheet" href="../styles/common/common.css">
     <link rel="stylesheet" href="../styles/profile/profile.css">
+    <link rel="stylesheet" href="/styles/home/home.css">
 
     <!-- Ribbon Labelling -->
     <link rel="stylesheet" href="/styles/common/ribbon.css">
@@ -194,7 +196,7 @@
                 <div class="profile-cover">
                     <div class="info-wrapper">
                         <div class="photo-wrapper">
-                                <img src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large" class="user-img">
+                                <img src="http://graph.facebook.com/<%= otherUser.fbID %>/picture?type=large" class="user-img">
                                 <% if (myProfile) { %>
                                     <a data-toggle="modal" data-target="#confirm-delete" class="btn btn-modify btn-delete">Delete Account</a>
                                 <% } else if (!flagUser) { %>
@@ -206,7 +208,7 @@
 
                         <div class="content-wrapper">
                                 <p class="user-name">
-                                    <%= user.name %>
+                                    <%= otherUser.name %>
                                 </p><br>
                                 <fieldset class="fixedrating">
                                     <input type="radio" id="star5" name="rating" value="5" <% if (userRating === 10) { %>checked="checked" <% } %> disabled/><label class = "full" for="star5" title="5 stars"></label>
@@ -240,7 +242,7 @@
                                     $5,000
                                 </p>
                                 <p class="donation-text">
-                                    donated through getting gifts
+                                    donated through receiving gifts
                                 </p>
                             </div>
                         </div>
@@ -264,17 +266,28 @@
             <div class="tab-pane fade in active" id="gifts">
                 <div class="row">
                     <div class="panel">
-                        <div class="gifts-banner hidden">
+                        <div class="gifts-banner hidden" id="gifts-banner">
                             <div class="placeholder">
         						<img src="../images/common/empty-gift.svg" alt="" class="placeholder-img"/>
-        						<h3 class="empty-placeholder-text">Thank you</h3>
+        						<h3 class="empty-placeholder-text">
+                                    <% if (myProfile) { %>
+                                        Thank you
+                                    <% } else { %>
+                                        Ta da!
+                                    <% } %>
+                                </h3>
         						<p class="empty-placeholder-text">
-        							Thank you for your contribution<br>
-        							View your gifts below <br><br>
+                                    <% if (myProfile) { %>
+        				                Thank you for your contribution<br>
+        				                View your gifts below <br><br>
+                                    <% } else { %>
+                                        Check out some gifts<br>
+                                        Remember to donate once you receive a gift<br><br>
+                                    <% } %>
         						</p>
         					</div>
                         </div>
-                        <div class="gifts-banner-empty">
+                        <div class="gifts-banner-empty" id="gifts-banner-empty">
                             <div class="placeholder">
         						<img src="../images/common/empty-gift.svg" alt="" class="placeholder-img"/>
                                 <% if (myProfile) { %>
@@ -287,15 +300,15 @@
                                 <% } else { %>
                                     <h3 class="empty-placeholder-text">Oops!</h3>
             						<p class="empty-placeholder-text">
-            							This person has no gifts yet. <br>
+            							<%= otherUser.name %> has no gifts yet. <br>
                                         Come back later!
             						</p>
                                 <% } %>
         					</div>
                         </div>
     				</div>
-                    <div class="col-sm-offset-3 items-display">
-                        <div class="row" id="infinite-scroll-container2">
+                    <div class="items-display">
+                        <div class="row" id="infinite-scroll-container-gifts">
 
                         </div>
                     </div>
@@ -312,7 +325,7 @@
             <!-- Wants -->
             <div class="tab-pane fade" id="wants">
                 <div class="panel">
-                    <div class="gifts-banner hidden">
+                    <div class="gifts-banner hidden" id="wants-banner">
                         <div class="placeholder">
                             <img src="../images/common/empty-gift.svg" alt="" class="placeholder-img"/>
                             <h3 class="empty-placeholder-text">Ta da!</h3>
@@ -322,7 +335,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="gifts-banner-empty">
+                    <div class="gifts-banner-empty" id="wants-banner-empty">
                         <div class="placeholder">
                             <img src="../images/common/empty-gift.svg" alt="" class="placeholder-img"/>
                             <% if (myProfile) { %>
@@ -342,8 +355,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-offset-3 items-display">
-                    <div class="row" id="infinite-scroll-container2">
+                <div class="items-display">
+                    <div class="row" id="infinite-scroll-container-wants">
 
                     </div>
                 </div>
@@ -371,12 +384,12 @@
                                 <% for(var i=0; i<friends.length; i++) { %>
                                     <div class="col-xs-6 col-sm-2" style="margin-top: 10px;">
                                         <div class="media-left">
-                                            <a href="/profile/<%= friends[i].attributes.userID %>" class="avatar" style="background-image: url(https://graph.facebook.com/<%= friendProperty[friends[i].attributes.userID].fbID %>/picture" style="margin: auto 10px; padding: 0; width: 120px; height: 120px; border-radius:50%;"></a>
+                                            <a href="/profile/<%= friends[i].attributes.userID %>" class="avatar" style="background-image: url(https://graph.facebook.com/<%= friendProperty[friends[i].attributes.userID].fbID %>/picture?type=large" style="margin: auto 10px; padding: 0; width: 120px; height: 120px; border-radius:50%;"></a>
                                         </div>
                                         <a href="/profile/<%= friends[i].attributes.userID %>" style="font-size: 1.5em;">
                                             <div class="media-body">
                                                 <div class="friend-title hide-overflow" style="margin-top: 5px; color: #565656;">
-                                                    Name
+                                                    <%= friendProperty[friends[i].attributes.userID].name %>
                                                 </div>
                                                 <div class="notification-meta">
                                                 </div>
@@ -421,7 +434,7 @@
                 <div class="modal-header">
                     <h3>Why are you flagging this user?</h3>
                 </div>
-                <form action="/profile/<%= user.userID %>/flag" method="post" data-toggle="validator">
+                <form action="/profile/<%= otherUser.userID %>/flag" method="post" data-toggle="validator">
                     <div class="modal-body">
                         <textarea type="text" class="flag-input" name="flagText" autocomplete="off" data-trigger="focus" required><% if (flagUser) { %><%= flagUser.flagText %><% } %></textarea>
                     </div>

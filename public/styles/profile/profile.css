@@ -8,89 +8,10 @@
     padding-top: 8.0rem;
 }
 
-/* Profile Jumbotron */
-
-.profile-area {
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
-    border-radius: 6px;
-    background-color: #eee;
-    align-self: center;
-}
-.profile-photo-holder {
-    vertical-align: center;
-    width: 15vw;
-    height: 15vw;
-    min-width: 48px;
-    min-height: 48px;
-}
-.counters {
-    padding-top: 0px;
-}
-.counter {
-    padding-bottom: 0px;
-}
-.count {
-    font-size: 1.5em;
-    padding: 0 0;
-}
-.count-label {
-    font-size: 0.8em;
-    padding: 0 0;
-    font-weight: bold;
-}
-.text-holder {
-    vertical-align: center;
-}
-.profile-photo {
-    width: 15vw;
-    height: 15vw;
-    min-width: 48px;
-    min-height: 48px;
-}
-.tabs {
-    align: center;
-}
-.tabs li {
-    width: 33.3333%;
-    height: auto;
-    align: center;
-}
-
 /* Scroll Container */
 
 .infinite-scroll-container {
     padding-top: 50px;
-}
-
-/* Thumbnail */
-
-.item-header {
-    font-size: 1.2em;
-}
-.item-author {
-    font-size: 1.0em;
-    font-weight: 50;
-    /*color: black;*/
-    /*font-style: italic;*/
-}
-.item-caption {
-    font-size: 1.0em;
-    text-align: justify;
-    text-justify: inter-word;
-    padding: 0 5px;
-}
-.item-call {
-    font-weight: bold;
-    align-content: center;
-}
-.call-button {
-    padding: 10px 0;
-}
-.item-snags {
-    font-size: 0.8em;
-    text-align: right;
-    padding-top: 10px;
 }
 
 /*@media (min-width: 1200px) {
@@ -98,80 +19,6 @@
         max-width: 980px;
     }
 }*/
-
-
-/* Masonry Approach #1 */
-.tab-content .row {
-    margin: 0;
-}
-
-.tab-content .panel {
-    margin-bottom: 0;
-}
-.grid-item {
-    display: inline-block;
-    margin: 0.20rem;
-    padding: 1rem;
-    width: 100%;
-}
-.thumbnail {
-    position: relative;
-    display: block;
-    border-radius: 8px;
-}
-.title-panel {
-    background: #4D606E;
-}
-.nav-tabs.centered> li, .nav-pills.centered> li {
-    float: none;
-    display: inline-block;
-    *display: inline;
-    /* ie7 fix */
-    zoom: 1;
-    /* hasLayout ie7 trigger */
-}
-.nav-tabs.centered, .nav-pills.centered {
-    text-align: center;
-}
-.icon-tab {
-    font-size: calc(40px - 1.5vw);
-}
-.thumbnail:hover {
-    background: #337ab7;
-    color: white;
-    -webkit-transition: background 0.5s ease-out;
-    -moz-transition: background 0.5s ease-out;
-    -o-transition: background 0.5s ease-out;
-    transition: background 0.5s ease-out;
-}
-.thumbnail:hover a {
-    color: white;
-}
-
-.thumbnail:hover .text-muted {
-    color: white;
-}
-.placeholder-image {
-    /*background-repeat: no-repeat;*/
-    /*background-size: contain;*/
-    background-image: url('/images/home/default-placeholder.png');
-}
-.thumbnail img.wide {
-    max-width: 100%;
-    max-height: 100%;
-    /*height: auto;*/
-    width: 150%;
-    float: left;
-    float: right;
-}
-.thumbnail img.tall {
-    max-height: 100%;
-    max-width: 100%;
-    /*width: auto;*/
-    height: 150%;
-    float: top;
-    float: bottom;
-}
 
 textarea.flag-input {
     width: 100%;
