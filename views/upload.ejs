@@ -25,6 +25,9 @@
     <!-- Bootstrap Support -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <!-- Validator -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+
     <!-- Checkbox Styling -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.7/awesome-bootstrap-checkbox.min.css
     ">
@@ -41,9 +44,6 @@
 
     <!-- Auto-Resize Input Fields -->
     <script src="../assets/autosize/js/autosize.js"></script>
-
-    <!-- Validator -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.js"></script>
 
     <!-- Bootstrap CSS (Override) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -143,7 +143,7 @@
     </nav>
 
     <div class="main-container">
-        <form action="/upload" method="post" id="new-gift-form" role="form" data-toggle="validator">
+        <form action="/upload" name='uploadForm' method="post" id="new-gift-form" role="form">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <input type="hidden" name="croppedImage">
 
@@ -177,28 +177,28 @@
                 <div class="col-md-8 col-sm-7 right-group">
                     <div class="panel description-panel">
                         <div class="name-input-holder">
-                            <h2>Gift Name</h2>
+                            <label for="title"><h2>Gift Name</h2></label>
                             <p>
                                 A descriptive name that tells us what this is. <span class="no-description-alert hidden" style="color: #f05050;">You need to name the item!</span>
                                 <!-- TODO: implement validation-->
                             </p>
-                            <input type="text" class="input-txt name-input" name="title" placeholder="This is a ..." maxlength="50" autocomplete="off">
+                            <input type="text" class="input-txt name-input" id="title" name="title" placeholder="This is a ..." maxlength="50" data-validation="required">
                         </div>
                         <div class="description-input-holder">
-                            <h2>Description</h2>
+                            <label for="description"><h2>Description</h2></label>
                             <p>
                                 Size and measurements. Meetup Details. <span class="no-description-alert hidden" style="color: #f05050;">You have to fill in the description.</span>
                                 <!-- TODO: implement validation-->
                             </p>
-                            <textarea type="text" class="input-txt description-field" name="description" placeholder="My gift is..." autocomplete="off" data-trigger="focus" id="description-field" maxlength="200"></textarea>
+                            <textarea type="text" class="input-txt description-field" name="description" id="description" placeholder="My gift is..." id="description-field" maxlength="200"  data-validation="required"></textarea>
                         </div>
                         <div class="category-select-holder">
-                            <h2>Category</h2>
+                            <label for="category"><h2>Category</h2></label>
                             <p>
                                 Select the most appropriate category. <span class="no-category-alert hidden" style="color: #f05050;">You need to choose a category.</span>
                                 <!-- TODO: implement validation-->
                             </p>
-                            <select id="input-tags" name="categories[]">
+                            <select id="input-tags" name="categories[]" id="category" data-validation="required">
                                 <option value="">Select a category...</option>
                                 <% categories_list = [
                                     "books",
@@ -229,7 +229,7 @@
                                 Once end date passes, no one can want your gift anymore. <span class="no-date-alert hidden" style="color: #f05050;">You have to select a deadline.</span>
                                 <!-- TODO: implement validation-->
                             </p>
-                            <input type="text" class="input-txt input-date" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off">
+                            <input type="text" class="input-txt input-date" name="date" id="date" placeholder="Pick an end date..." maxlength="50" data-validation="required">
                         </div>
                         <div class="delivery-info">
                             <h2>Delivery</h2>
@@ -239,11 +239,11 @@
                             </p>
 
                             <div class="checkbox checkbox-primary checkbox-circle row">
-                                <input type="checkbox" name="meetup" id="meetup" class="check-one hidden">
+                                <input type="checkbox" name="meetup" id="meetup" class="check-one hidden" data-validation="required" data-validation-optional-if-answered="postage">
                                 <label class="large-label" for="meetup">
                                     Meet and collect
                                 </label><br>
-                                <input type="checkbox" name="postage" id="postage" class="check-two hidden">
+                                <input type="checkbox" name="postage" id="postage" class="check-two hidden" data-validation="required" data-validation-optional-if-answered="meetup">
                                 <label class="large-label" for="postage">
                                     Postage service
                                 </label>
@@ -266,26 +266,35 @@
                 <div class="step-photo-2 col-md-4 col-sm-5"></div>
                 <div class="donation-info-form col-md-8 col-sm-7">
                     <div class="donation-wrapper">
-                        <div class="charity-info">
-                            <h2>Charity</h2>
-                            <p>
-                                Gift receiver will donate money to
-                            </p>
-                            <div class="charity-selection">
-                                <input type="radio" id="red-cross" name="donateToCharity" value="1" class="hidden">
-                                <img src="../images/upload/charity1.png" alt="" class="covered" onclick="selectCharity(this);"/>
-                                <input type="radio" id="cat-wel-society" name="donateToCharity" value="2" class="hidden">
-                                <img src="../images/upload/charity2.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                        <div class="row">
+                            <div class="col-md-12"><h2>Charity</h2></div>
+                            <div class="charity-info col-md-6">
+                                <p>
+                                    I want to raise money for ...
+                                </p>
+                                <div class="charity-selection">
+                                    <input type="radio" id="red-cross" name="donateToCharity" value="1" class="hidden" data-validation="required" data-validation-optional-if-answered="givefree, donateToCharity">
+                                    <img src="../images/upload/charity1.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                                    <input type="radio" id="cat-wel-society" name="donateToCharity" value="2" class="hidden" data-validation="required" data-validation-optional-if-answered="givefree, donateToCharity">
+                                    <img src="../images/upload/charity2.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                                </div>                        
+                            </div>
+
+                            <div class="col-md-6 give-free checkbox checkbox-primary checkbox-circle row">
+                                <input type="checkbox" name="givefree" id="givefree" class="check-one hidden" data-validation="required" data-validation-optional-if-answered="donateToCharity" onchange="giveFree(this)">
+                                <label class="large-label" for="givefree">
+                                    I'm giving this away for free.
+                                </label>
                             </div>
                         </div>
-                        <div class="donation-info">
+                        <div class="donation-info no-charity covered">
                             <h2>Donation Amount</h2>
                             <p>
-                                Amount that gift receiver will donate. <span class="no-charity" style="color: #565656;">(Please choose a charity first.)</span>
+                                Amount that gift receiver will donate.
                             </p>
                             <div class="money-input">
                                 <i class="fa fa-usd"></i><span> SGD</span>
-                                <input type="number" min="1.00" step="0.01" class="input-txt donation-input" disabled name="donation" placeholder="10" maxlength="50" autocomplete="off">
+                                <input type="number" min="1.00" step="0.01" class="input-txt donation-input" name="donation" placeholder="10" maxlength="50" data-validation='required' data-validation-depends-on="donateToCharity">
                             </div>
                         </div>
                         <button type="submit" name="button" type="submit" class="btn btn-md">Create Gift</button>
@@ -312,7 +321,6 @@
             </div>
         </div>
     </footer>
-
 </body>
 
 </html>

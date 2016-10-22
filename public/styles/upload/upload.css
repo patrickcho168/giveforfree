@@ -315,11 +315,11 @@ img {
     margin: 0!important;
 }
 
-
 .name-input {
     font-size: 20px;
     font-weight: 300;
-    margin-bottom: 20px;
+    width: 50%;
+    min-width: 200px;
 }
 
 .image-preview {
@@ -334,7 +334,11 @@ img {
     border: none;
 }
 
-.category-select-holder, .description-input-holder {
+.description-input-holder {
+    margin-top: 30px;
+}
+
+.category-select-holder {
     margin-top: 10px;
 }
 
@@ -487,7 +491,7 @@ img {
 }
 
 .donation-info {
-    margin-top: 60px;
+    margin-top: 30px;
 }
 
 .donation-info {
@@ -573,4 +577,25 @@ div#cropperHolder {
 
 div#cropperHolder:hover {
     opacity: 1;
+}
+
+.form-error {
+    font-size: 12px;
+}
+
+[data-notify='container'] {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 15px!important;
+    font-weight: bold;
+}
+
+.give-free label {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.charity-info p {
+    font-size: 20px;
+    margin-top: 10px;
 }

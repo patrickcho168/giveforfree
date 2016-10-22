@@ -1,33 +1,5 @@
 $(function() {
-    var REGEX_ALPHA_NUMERIC = '([^\w\s])';
-
-    var categories = [
-        "clothes",
-        "accessories",
-        "furniture & home",
-        "parenting",
-        "health",
-        "beauty",
-        "kitchen appliances",
-        "gardening",
-        "property",
-        "design & craft",
-        "electronics",
-        "sports",
-        "photography",
-        "antiques",
-        "toys",
-        "games",
-        "music",
-        "tickets & vouchers",
-        "auto accessories",
-        "books",
-        "stationery",
-        "textbooks",
-        "notes",
-        "pets",
-        "other"
-    ];
+    initializeForm();    
 
     $('[data-toggle="popover"]').popover();
 
@@ -53,6 +25,53 @@ $(function() {
 
 });
 
+function initializeForm() {
+    $.validate({
+        modules : 'logic',
+        validateHiddenInputs: true,
+        validateOnBlur: false,
+        onError : function($form) {
+          $.notify({
+              // options
+                message: "You didn't fill up some fields. Please check again."
+          }, {
+              // settings
+              type: 'danger'
+          }); 
+        },
+        onSuccess: function($form) {
+            // If image is cropped
+            if ($("input[name='croppedImage']").val() != "") {
+                return true;
+
+            // If image selected but not cropped
+            } else if ($("div.image-preview").length == 0) {
+
+                $.notify({
+                    // options
+                      message: "Please finish cropping your image."
+                }, {
+                    // settings
+                    type: 'danger'
+                }); 
+
+                return false;
+
+            // If image not yet uploaded
+            } else {
+                $.notify({
+                    // options
+                      message: "Please upload an image for your item!"
+                }, {
+                    // settings
+                    type: 'danger'
+                }); 
+
+                return false;
+            }
+        }
+    });
+}
 
 function triggerUpload() {
     $('#upload-trigger').trigger('click');
@@ -157,18 +176,43 @@ function selectCharity(currentSelection) {
     var checked = checkBox.prop('checked');
 
     var allBoxes = $('.charity-selection input');
+    var freeBox = $("input[name='givefree']");
     var moneyInput = $('.money-input input');
     var allImg = $('.charity-selection img');
 
     allBoxes.prop('checked', false);
-    moneyInput.prop('disabled', true);
+    freeBox.prop('checked', false);
     allImg.addClass('covered');
-    $('.no-charity').removeClass('hidden');
 
     if (!checked) {
         checkBox.prop('checked', true);
-        moneyInput.prop('disabled', false);
         $(currentSelection).removeClass('covered');
-        $('.no-charity').addClass('hidden');
+
+        $('.no-charity').removeClass('covered');
+        if (moneyInput.val() == 0) {
+            moneyInput.val(10);
+        }
+
+        moneyInput.prop('disabled', false);   
+    } else if ($('.no-charity').is(':visible')) {
+        $('.no-charity').addClass('covered');
+        moneyInput.prop('disabled', true);   
+    }
+}
+
+function giveFree(freebox) {
+    if ($(freebox).prop('checked') == true) {
+        var moneyInput = $('.money-input input');
+
+        // Set charities to zero
+        $('.no-charity').addClass('covered');
+        moneyInput.prop('disabled', true);   
+        moneyInput.val(0);   
+
+        var allBoxes = $('.charity-selection input');
+        var allImg = $('.charity-selection img');
+
+        allBoxes.prop('checked', false);
+        allImg.addClass('covered');
     }
 }
