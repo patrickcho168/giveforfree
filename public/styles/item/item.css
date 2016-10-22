@@ -289,6 +289,10 @@ textarea {
     bottom: 10px;
 }
 
+.info-text p {
+    font-size: 15px;
+}
+
 .info-button {
     text-align: center;
 }
@@ -578,6 +582,35 @@ fieldset.rating {
     border: none!important;
     padding: 10px!important;
     font-weight: 300!important;
+}
+
+.charity-info {
+    height: 200px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.charity-info .charity-img {
+    height: 60px;
+}
+
+.charity-info .charity-details {
+    margin-left: 10px;
+}
+
+.charity-info p {
+    margin-bottom: 0;
+}
+
+.charity-info h2 {
+    color: #565656;
+    font-weight: 400;
+    margin: 0;
+}
+
+.charity-info img {
+    height: 100%;
 }
 
 .charity-selection img {

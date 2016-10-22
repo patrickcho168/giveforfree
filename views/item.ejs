@@ -292,12 +292,7 @@
                     <div class="item-basic-info">
                         <div class="info-text info-display">
                             <h2><%= item.title %></h2>
-                            <p><%= item.description %></p>
-                        </div>
-                        <div class="info-text info-edit hidden">
-                            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                            <input type="text" class="input-txt name-input" name="title" maxlength="50" autocomplete="off" value="<%= item.title %>" required>
-                            <textarea type="text" class="input-txt description-input" name="description"  maxlength="50" autocomplete="off" required><%= item.description %></textarea>
+                            <p>Donation amount: $ <%= item.donationAmount %></p>
                         </div>
                         <% if (!mine) { %>
                             <div class="info-button want-button">
@@ -337,88 +332,36 @@
                 </div>
                 <div class="col-sm-8 col-md-9 right-panel">
                     <div class="panel other-info-panel">
-                        <div class="giver-info info-display">
-                            <div class="giver-img pull-left">
-                                <img src="http://graph.facebook.com/<%= item.fbID %>/picture?type=large" alt="" />
-                            </div>
-                            <a href="/profile/<%= item.giverID %>" class="giver-name"><%= item.name %></a>
+                        <% if (item.donationAmount > 0) { %>
+                            <div class="charity-info">
+                                <div class="charity-img pull-left info-display">
+                                    <img src="../images/upload/charity<%= item.charityID %>.png" alt="" />
+                                </div>
+                                <div class="charity-details info-display">
+                                    <p>
+                                        Your donation will go to
+                                    </p>
+                                    <h2><%= item.charityName %></h2>
+                                </div>
+                                <h2 class="info-edit hidden">Charity & Donation</h2>
+                                <p class="subtitle info-edit hidden">
+                                    Select charity and choose donation amount.
+                                </p>
+                                <div class="charity-selection info-edit hidden">
+                                    <!-- TODO: select the initial charity here. Can just if (something) { trigger click } -->
+                                    <input type="checkbox" id="red-cross" name="donateToRedCross" class="hidden">
+                                    <img src="../images/upload/charity1.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                                    <input type="checkbox" id="cat-wel-society" name="donateToCWS" class="hidden">
+                                    <img src="../images/upload/charity2.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                                </div>
+                                <div class="money-input info-edit hidden">
+                                    <i class="fa fa-usd"></i><span> SGD</span>
 
-                            <% if (loggedIn && mine && item.takerID === null) { %>
-                                <br>
-                                <a type="button" class="btn dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Wanters <span class="badge"><%= item.numWants %></span>
-                                </a>
-                                <% if (item.numWants > 0) { %>
-                                    <ul class="dropdown-menu scrollable-menu" role="menu">
-                                        <li><a href="/api/give/<%= item.itemID %>" style="padding-left: 10px;">Random draw</a></li>
-                                        <% for (var i=0; i<manual.length; i++) { %>
-                                            <li class="single-wanter">
-                                                <p><%= manual[i].name %></p>
-                                                <div class="link-box">
-                                                    <a href="/profile/<%= manual[i].userID %>">Profile</a>
-                                                    <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">Give</a>
-                                                </div>
-                                            </li>
-                                        <% } %>
-                                    </ul>
-                                <% } %>
-                            <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                                <div>
-                                    <a href="javascript:messageUser();" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Giver</a>
-                                    <% if (item.takerID === id) { %>
-                                        <a href="javascript:shareItem();" class="btn btn-xs share-button" id="facebook-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
-                                    <% } %>
+                                    <input type="text" class="input-txt donation-input" disabled name="donation" value="<%= item.donationAmount %>" maxlength="50" autocomplete="off" required>
                                 </div>
-                                <% if (item.takerID === id) { %>
-                                    <fieldset class="rating" style="color: white; font-weight: bold; text-align: center;" itemId="<%= item.itemID %>" >
-                                        <input class="ratingForGiver" type="radio" id="star5" name="rating" value="10" <% if (item.giverRating === 10) { %>checked="checked" <% } %> /><label class = "full" for="star5" title="5 stars"></label>
-                                        <input class="ratingForGiver" type="radio" id="star4half" name="rating" value="9" <% if (item.giverRating === 9) { %>checked="checked" <% } %> /><label class="half" for="star4half" title="4.5 stars"></label>
-                                        <input class="ratingForGiver" type="radio" id="star4" name="rating" value="8" <% if (item.giverRating === 8) { %>checked="checked" <% } %> /><label class = "full" for="star4" title="4 stars"></label>
-                                        <input class="ratingForGiver" type="radio" id="star3half" name="rating" value="7" <% if (item.giverRating === 7) { %>checked="checked" <% } %> /><label class="half" for="star3half" title="3.5 stars"></label>
-                                        <input class="ratingForGiver" type="radio" id="star3" name="rating" value="6" <% if (item.giverRating === 6) { %>checked="checked" <% } %> /><label class = "full" for="star3" title="3 stars"></label>
-                                        <input class="ratingForGiver" type="radio" id="star2half" name="rating" value="5" <% if (item.giverRating === 5) { %>checked="checked" <% } %> /><label class="half" for="star2half" title="2.5 stars"></label>
-                                        <input class="ratingForGiver" type="radio" id="star2" name="rating" value="4" <% if (item.giverRating === 4) { %>checked="checked" <% } %> /><label class = "full" for="star2" title="2 stars"></label>
-                                        <input class="ratingForGiver" type="radio" id="star1half" name="rating" value="3" <% if (item.giverRating === 3) { %>checked="checked" <% } %> /><label class="half" for="star1half" title="1.5 stars"></label>
-                                        <input class="ratingForGiver" type="radio" id="star1" name="rating" value="2" <% if (item.giverRating === 2) { %>checked="checked" <% } %> /><label class = "full" for="star1" title="1 star"></label>
-                                        <input class="ratingForGiver" type="radio" id="starhalf" name="rating" value="1" <% if (item.giverRating === 1) { %>checked="checked" <% } %> /><label class="half" for="starhalf" title="0.5 stars"></label>
-                                    </fieldset>
-                                    <% if (item.giverRating === null) { %>
-                                        <div style="margin-top: 30px;" class="ratingText">
-                                            Please give a rating to your giver!
-                                        </div>
-                                    <% } else { %>
-                                        <div style="margin-top: 30px;" class="ratingText">
-                                            Thanks for giving a rating!
-                                        </div>
-                                    <% } %>
-                                <% } %>
-                            <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                                <div>
-                                    <a href="javascript:messageUser();" class="btn btn-xs btn-primary message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Recipient</a>
-                                </div>
-                                <fieldset class="rating" style="color: white; font-weight: bold; text-align: center;" itemId="<%= item.itemID %>">
-                                    <input class="ratingForTaker" type="radio" id="star5" name="rating" value="10" <% if (item.takerRating === 10) { %>checked="checked" <% } %> /><label class = "full" for="star5" title="5 stars"></label>
-                                    <input class="ratingForTaker" type="radio" id="star4half" name="rating" value="9" <% if (item.takerRating === 9) { %>checked="checked" <% } %> /><label class="half" for="star4half" title="4.5 stars"></label>
-                                    <input class="ratingForTaker" type="radio" id="star4" name="rating" value="8" <% if (item.takerRating === 8) { %>checked="checked" <% } %> /><label class = "full" for="star4" title="4 stars"></label>
-                                    <input class="ratingForTaker" type="radio" id="star3half" name="rating" value="7" <% if (item.takerRating === 7) { %>checked="checked" <% } %> /><label class="half" for="star3half" title="3.5 stars"></label>
-                                    <input class="ratingForTaker" type="radio" id="star3" name="rating" value="6" <% if (item.takerRating === 6) { %>checked="checked" <% } %> /><label class = "full" for="star3" title="3 stars"></label>
-                                    <input class="ratingForTaker" type="radio" id="star2half" name="rating" value="5" <% if (item.takerRating === 5) { %>checked="checked" <% } %> /><label class="half" for="star2half" title="2.5 stars"></label>
-                                    <input class="ratingForTaker" type="radio" id="star2" name="rating" value="4" <% if (item.takerRating === 4) { %>checked="checked" <% } %> /><label class = "full" for="star2" title="2 stars"></label>
-                                    <input class="ratingForTaker" type="radio" id="star1half" name="rating" value="3" <% if (item.takerRating === 3) { %>checked="checked" <% } %> /><label class="half" for="star1half" title="1.5 stars"></label>
-                                    <input class="ratingForTaker" type="radio" id="star1" name="rating" value="2" <% if (item.takerRating === 2) { %>checked="checked" <% } %> /><label class = "full" for="star1" title="1 star"></label>
-                                    <input class="ratingForTaker" type="radio" id="starhalf" name="rating" value="1" <% if (item.takerRating === 1) { %>checked="checked" <% } %> /><label class="half" for="starhalf" title="0.5 stars"></label>
-                                </fieldset>
-                                <% if (item.takerRating === null) { %>
-                                    <div style="margin-top: 30px;" class="ratingText">
-                                        Please give a rating to your recipient.
-                                    </div>
-                                <% } else { %>
-                                    <div style="margin-top: 30px;" class="ratingText">
-                                        Thanks for giving a rating!
-                                    </div>
-                                <% } %>
-                            <% } %>
-                        </div>
+                            </div>
+
+                        <% } %>
                         <div class="detail-info">
                             <div class="row">
                                 <div class="col-sm-6 category-info">
@@ -457,32 +400,7 @@
                                     <p class="deadline info-display"><%= date %></p>
                                     <input type="text" class="input-txt input-date info-edit hidden" name="date" id="date" value="<%= moment(date, "D MMMM YYYY HH:mm").format("YYYY-MM-DD") %>" maxlength="50" autocomplete="off" required>
                                 </div>
-                                <div class="col-sm-6 charity-info">
-                                    <h2>Charity & Donation</h2>
-                                    <p class="subtitle info-display">
-                                        <!-- TODO: get charity name here -->
-                                        Proceeds of this amount will be going to <strong><%= item.charityName %></strong>
-                                    </p>
-                                    <p class="donation-amount info-display">
-                                        <!-- TODO: get donation amount here -->
-                                        <i class="fa fa-usd"></i> <%= item.donationAmount %> SGD
-                                    </p>
-                                    <p class="subtitle info-edit hidden">
-                                        Select charity and choose donation amount.
-                                    </p>
-                                    <div class="charity-selection info-edit hidden">
-                                        <!-- TODO: select the initial charity here. Can just if (something) { trigger click } -->
-                                        <input type="checkbox" id="red-cross" name="donateToRedCross" class="hidden">
-                                        <img src="../images/upload/charity1.png" alt="" class="covered" onclick="selectCharity(this);"/>
-                                        <input type="checkbox" id="cat-wel-society" name="donateToCWS" class="hidden">
-                                        <img src="../images/upload/charity2.png" alt="" class="covered" onclick="selectCharity(this);"/>
-                                    </div>
-                                    <div class="money-input info-edit hidden">
-                                        <i class="fa fa-usd"></i><span> SGD</span>
-                                            
-                                        <input type="text" class="input-txt donation-input" disabled name="donation" value="<%= item.donationAmount %>" maxlength="50" autocomplete="off" required>
-                                    </div>
-                                </div>
+
                                 <div class="col-sm-6 delivery-info">
                                     <h2>Delivery</h2>
                                     <p class="subtitle">
