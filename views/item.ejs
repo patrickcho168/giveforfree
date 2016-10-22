@@ -226,9 +226,6 @@
                         <a href="/profile/<%= id %>">
                             <div class="user-avatar">
                                 <img src="../images/common/test-user.png" alt="" />
-                                <% if (typeof notification != 'undefined' ) { %>
-                                    <span class="badge"><%= notification.length %></span>
-                                <% } %>
                                 <!-- TODO: pass name of the giver to here -->
                                 <span> <%= user.name %></span>
                             </div>
@@ -244,6 +241,11 @@
                             <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
                         </a>
                     </li>
+                    <% if (typeof notification != 'undefined') { %>
+                        <!-- Notifications -->
+                        <%- include('notification'); %>
+                        <!-- End Notifications -->
+                    <% } %>
                     <li id="nav-logout">
                         <a href="/logout">Log out</a>
                     </li>
@@ -478,8 +480,7 @@
                                         <img src="../images/upload/charity2.png" alt="" class="covered" onclick="selectCharity(this);"/>
                                     </div>
                                     <div class="money-input info-edit hidden">
-                                        <i class="fa fa-usd"></i><span> SGD</span>
-                                            
+                                        <i class="fa fa-usd"></i><span> SGD</span>                                            
                                         <input type="text" class="input-txt donation-input" disabled name="donation" value="<%= item.donationAmount %>" maxlength="50" autocomplete="off" required>
                                     </div>
                                 </div>

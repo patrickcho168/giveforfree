@@ -116,9 +116,6 @@
                     <a href="/profile/<%= id %>">
                         <div class="user-avatar">
                             <img src="../images/common/test-user.png" alt="" />
-                            <% if (typeof notification != 'undefined' ) { %>
-                                <span class="badge"><%= notification.length %></span>
-                            <% } %>
                             <span> <%= user.name %></span>
                         </div>
                     </a>
@@ -133,6 +130,11 @@
                         <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
                     </a>
                 </li>
+                <% if (typeof notification != 'undefined') { %>
+                    <!-- Notifications -->
+                    <%- include('notification'); %>
+                    <!-- End Notifications -->
+                <% } %>
                 <li id="nav-logout">
                     <a href="/logout">Log out</a>
                 </li>
