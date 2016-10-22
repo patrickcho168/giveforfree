@@ -18,6 +18,7 @@ var freeItem = require('./routes/item');
 var privacy = require('./routes/privacy');
 var handleErrors = require('./routes/handleErrors')
 var facebook = require('./controllers/facebook');
+var paypal = require('./controllers/paypal');
 var config = require('./config');
 var db = require('./models/db');
 var moment = require('moment');
@@ -90,6 +91,7 @@ notification.route(app);
 upload(app);
 profile(app);
 freeItem(app);
+paypal(app);
 privacy(app);
 handleErrors(app);
 

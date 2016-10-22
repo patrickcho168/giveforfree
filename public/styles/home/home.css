@@ -326,6 +326,7 @@
 .items-display .item-info {
     padding: 10px 10px;
     height: 100px;
+    text-align: left;
 }
 
 .items-display .item-info .row {
@@ -411,7 +412,7 @@
         transition: all .5s;
     }
 
-    .open {
+    .sidebar-open {
         transform: translate3d(-200px,0,0);
     }
 

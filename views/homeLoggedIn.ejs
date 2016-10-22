@@ -111,9 +111,6 @@
 			                <a href="/profile/<%= id %>">
 								<div class="user-avatar">
 									<img src="../images/common/test-user.png" alt="" />
-									<% if (typeof notification != 'undefined' ) { %>
-										<span class="badge"><%= notification.length %></span>
-									<% } %>
 									<span> <%= user.name %></span>
 								</div>
 			                </a>
@@ -128,6 +125,11 @@
 			                    <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
 			                </a>
 			            </li>
+						<% if (typeof notification != 'undefined') { %>
+		                    <!-- Notifications -->
+		                    <%- include('notification'); %>
+		                    <!-- End Notifications -->
+		                <% } %>
 						<li id="nav-logout">
 							<a href="/logout">Log out</a>
 						</li>
@@ -225,7 +227,7 @@
 					<nav class="category-bar">
 						<ul class="nav">
 							<li class="category-bar-title">Categories</li>
-							
+
 							<li class="category-bar-item"><a href="#" class="category-clear">View All<i class="fa fa-angle-right pull-right"></i></a></li>
 							<% for (i = 0; i < categories.length; i++) { %>
 								<li class="category-bar-item"><a href="#" class="category" id="<%= i %>"><%= categories[i] %><i class="fa fa-angle-right pull-right"></i></a></li>

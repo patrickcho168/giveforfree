@@ -42,6 +42,9 @@
     <!-- Auto-Resize Input Fields -->
     <script src="../assets/autosize/js/autosize.js"></script>
 
+    <!-- Validator -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.js"></script>
+
     <!-- Bootstrap CSS (Override) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -63,11 +66,6 @@
     <!-- Bootstrap Notifications -->
     <link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
     <script src="../scripts/common/notify.min.js"></script>
-
-    <!-- Selectize -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/js/standalone/selectize.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/css/selectize.default.min.css">
-    <link rel="stylesheet" href="../styles/upload/selectize-mod.css">
 
     <!-- Animations -->
     <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
@@ -116,9 +114,6 @@
                     <a href="/profile/<%= id %>">
                         <div class="user-avatar">
                             <img src="../images/common/test-user.png" alt="" />
-                            <% if (typeof notification != 'undefined' ) { %>
-                                <span class="badge"><%= notification.length %></span>
-                            <% } %>
                             <span> <%= user.name %></span>
                         </div>
                     </a>
@@ -133,6 +128,11 @@
                         <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
                     </a>
                 </li>
+                <% if (typeof notification != 'undefined') { %>
+                    <!-- Notifications -->
+                    <%- include('notification'); %>
+                    <!-- End Notifications -->
+                <% } %>
                 <li id="nav-logout">
                     <a href="/logout">Log out</a>
                 </li>
@@ -143,7 +143,7 @@
     </nav>
 
     <div class="main-container">
-        <form action="/upload" method="post" id="new-gift-form" data-toggle="validator">
+        <form action="/upload" method="post" id="new-gift-form" role="form" data-toggle="validator">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <input type="hidden" name="croppedImage">
 
@@ -152,8 +152,6 @@
                     <div class="panel photo-panel">
                         <div class="input-group image-preview">
                             <a class="btn btn-default image-preview-input">
-                                <span class="glyphicon glyphicon-picture"></span>
-                                <span>Browse</span>
                                 <input type="file" onchange="previewFile()" accept="image/png, image/jpeg, image/gif" name="input-file-cropped" style="height: 100%;" id="upload-trigger" />
                             </a>
                         </div>
@@ -165,7 +163,7 @@
                         </div>
                         <a id="image-holder" onclick="triggerUpload()">
                             <div align="center" id="cropperHolder">
-                                <img src="../images/common/empty-gift.svg" alt="" />
+                                <img id="emptygift" src="../images/common/empty-gift.svg" alt="" />
                                 <h3> Click to upload an image </h3>
                                 <p> Upload and crop an image of your gift. </p>
                             </div>
@@ -173,30 +171,35 @@
                         <!-- Post Image Preview -->
                         <div id="image" style="display: none;">
                         </div>
-                        <div class="name-input-holder">
-                            <input type="text" class="input-txt name-input" name="title" placeholder="Name of your gift" maxlength="50" autocomplete="off" required>
-                        </div>
                     </div>
 
                 </div>
                 <div class="col-md-8 col-sm-7 right-group">
                     <div class="panel description-panel">
+                        <div class="name-input-holder">
+                            <h2>Gift Name</h2>
+                            <p>
+                                A descriptive name that tells us what this is. <span class="no-description-alert hidden" style="color: #f05050;">You need to name the item!</span>
+                                <!-- TODO: implement validation-->
+                            </p>
+                            <input type="text" class="input-txt name-input" name="title" placeholder="This is a ..." maxlength="50" autocomplete="off">
+                        </div>
                         <div class="description-input-holder">
                             <h2>Description</h2>
                             <p>
                                 Size and measurements. Meetup Details. <span class="no-description-alert hidden" style="color: #f05050;">You have to fill in the description.</span>
                                 <!-- TODO: implement validation-->
                             </p>
-                            <textarea type="text" class="input-txt description-field" name="description" placeholder="My gift is..." autocomplete="off" data-trigger="focus" id="description-field" maxlength="200" required></textarea>
+                            <textarea type="text" class="input-txt description-field" name="description" placeholder="My gift is..." autocomplete="off" data-trigger="focus" id="description-field" maxlength="200"></textarea>
                         </div>
                         <div class="category-select-holder">
                             <h2>Category</h2>
                             <p>
-                                Include at least one category. <span class="no-category-alert hidden" style="color: #f05050;">You have to choose at least one tag.</span>
+                                Select the most appropriate category. <span class="no-category-alert hidden" style="color: #f05050;">You need to choose a category.</span>
                                 <!-- TODO: implement validation-->
                             </p>
-                            <select id="input-tags" name="categories[]" multiple class="categories has-options " style="width:70%" auto-complete: "off" placeholder="Select categories...">
-                                <option value="">Add categories...</option>
+                            <select id="input-tags" name="categories[]">
+                                <option value="">Select a category...</option>
                                 <% categories_list = [
                                     "books",
                                     "clothes",
@@ -219,40 +222,42 @@
             <div class="panel more-info-panel row">
                 <div class="step-photo-1 col-md-4 col-sm-5"></div>
                 <div class="more-info-form col-md-8 col-sm-7">
-                    <div class="date-info">
-                        <h2>End Date</h2>
-                        <p>
-                            Once end date passes, no one can want your gift anymore. <span class="no-date-alert hidden" style="color: #f05050;">You have to select a deadline.</span>
-                            <!-- TODO: implement validation-->
-                        </p>
-                        <input type="text" class="input-txt input-date" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off" required>
-                    </div>
-                    <div class="delivery-info">
-                        <h2>Delivery</h2>
-                        <p>
-                            The way the gift will be sent. <span class="no-delivery-alert hidden" style="color: #f05050;">You have to choose at least one way of deliverying.</span>
-                            <!-- TODO: implement validation-->
-                        </p>
-
-                        <div class="checkbox checkbox-primary checkbox-circle row">
-                            <input type="checkbox" name="meetup" id="meetup" class="check-one hidden">
-                            <label class="large-label" for="meetup">
-                                Meet and collect
-                            </label><br>
-                            <input type="checkbox" name="postage" id="postage" class="check-two hidden">
-                            <label class="large-label" for="postage">
-                                Postage service
-                            </label>
+                    <div class="more-info-wrapper">
+                        <div class="date-info">
+                            <h2>End Date</h2>
+                            <p>
+                                Once end date passes, no one can want your gift anymore. <span class="no-date-alert hidden" style="color: #f05050;">You have to select a deadline.</span>
+                                <!-- TODO: implement validation-->
+                            </p>
+                            <input type="text" class="input-txt input-date" name="date" id="date" placeholder="Pick an end date..." maxlength="50" autocomplete="off">
                         </div>
-                    </div>
-                    <div class="share-info">
-                        <h2>Share</h2>
-                        <p>Let your friends know about your gift!</p>
-                        <div class="checkbox checkbox-primary checkbox-circle row">
-                            <input type="checkbox" id="share" name="postToFacebook" class="hidden">
-                            <label class="large-label share-label" for="share" onclick="toggleShareColor();">
-                                <i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook
-                            </label>
+                        <div class="delivery-info">
+                            <h2>Delivery</h2>
+                            <p>
+                                The way the gift will be sent. <span class="no-delivery-alert hidden" style="color: #f05050;">You have to choose at least one way of deliverying.</span>
+                                <!-- TODO: implement validation-->
+                            </p>
+
+                            <div class="checkbox checkbox-primary checkbox-circle row">
+                                <input type="checkbox" name="meetup" id="meetup" class="check-one hidden">
+                                <label class="large-label" for="meetup">
+                                    Meet and collect
+                                </label><br>
+                                <input type="checkbox" name="postage" id="postage" class="check-two hidden">
+                                <label class="large-label" for="postage">
+                                    Postage service
+                                </label>
+                            </div>
+                        </div>
+                        <div class="share-info">
+                            <h2>Share</h2>
+                            <p>Let your friends know about your gift!</p>
+                            <div class="checkbox checkbox-primary checkbox-circle row">
+                                <input type="checkbox" id="share" name="postToFacebook" class="hidden">
+                                <label class="large-label share-label" for="share" onclick="toggleShareColor();">
+                                    <i class="fa fa-facebook-official" aria-hidden="true"></i> Share on Facebook
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -260,29 +265,31 @@
             <div class="panel donation-info-panel row">
                 <div class="step-photo-2 col-md-4 col-sm-5"></div>
                 <div class="donation-info-form col-md-8 col-sm-7">
-                    <div class="charity-info">
-                        <h2>Charity</h2>
-                        <p>
-                            Gift receiver will donate money to
-                        </p>
-                        <div class="charity-selection">
-                            <input type="radio" id="red-cross" name="donateToCharity" value="1" class="hidden">
-                            <img src="../images/upload/charity1.png" alt="" class="covered" onclick="selectCharity(this);"/>
-                            <input type="radio" id="cat-wel-society" name="donateToCharity" value="2" class="hidden">
-                            <img src="../images/upload/charity2.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                    <div class="donation-wrapper">
+                        <div class="charity-info">
+                            <h2>Charity</h2>
+                            <p>
+                                Gift receiver will donate money to
+                            </p>
+                            <div class="charity-selection">
+                                <input type="radio" id="red-cross" name="donateToCharity" value="1" class="hidden">
+                                <img src="../images/upload/charity1.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                                <input type="radio" id="cat-wel-society" name="donateToCharity" value="2" class="hidden">
+                                <img src="../images/upload/charity2.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                            </div>
                         </div>
-                    </div>
-                    <div class="donation-info">
-                        <h2>Donation Amount</h2>
-                        <p>
-                            Amount that gift receiver will donate. <span class="no-charity" style="color: #565656;">(Please choose a charity first.)</span>
-                        </p>
-                        <div class="money-input">
-                            <i class="fa fa-usd"></i><span> SGD</span>
-                            <input type="number" min="1.00" step="0.01" class="input-txt donation-input" disabled name="donation" placeholder="10" maxlength="50" autocomplete="off" required>
+                        <div class="donation-info">
+                            <h2>Donation Amount</h2>
+                            <p>
+                                Amount that gift receiver will donate. <span class="no-charity" style="color: #565656;">(Please choose a charity first.)</span>
+                            </p>
+                            <div class="money-input">
+                                <i class="fa fa-usd"></i><span> SGD</span>
+                                <input type="number" min="1.00" step="0.01" class="input-txt donation-input" disabled name="donation" placeholder="10" maxlength="50" autocomplete="off">
+                            </div>
                         </div>
+                        <button type="submit" name="button" type="submit" class="btn btn-md">Create Gift</button>
                     </div>
-                    <button type="submit" name="button" type="submit" class="btn btn-md">Create Gift</button>
                 </div>
             </div>
         <!-- <div class="buttons">
