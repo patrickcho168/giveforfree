@@ -163,11 +163,6 @@
     <link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
     <script src="../scripts/common/notify.min.js"></script>
 
-    <!-- Selectize -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/js/standalone/selectize.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/css/selectize.default.min.css">
-    <link rel="stylesheet" href="../styles/upload/selectize-mod.css">
-
     <!-- Animations -->
     <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
 
@@ -434,22 +429,25 @@
                                             <span class="category-item"><i class="fa fa-tags"></i><%= categories[i] %></span>
                                         <% } %>
                                     </div>
-                                    <select id="input-tags" name="categories[]" multiple class="categories has-options info-edit hidden" auto-complete: "off" placeholder="Select categories...">
-                                        <% categories_list = [
-                                            "books",
-                                            "clothes",
-                                            "electronics",
-                                            "entertainment",
-                                            "furniture",
-                                            "kitchen appliances",
-                                            "sports",
-                                            "toys",
-                                            "other"
-                                        ] %>
-                                        <% for(var i=0; i<categories_list.length; i++) {%>
-                                            <option value="<%= categories_list[i] %>"><%= categories_list[i] %></option>
-                                        <% } %>
-                                    </select>
+                                    <div class="category-select-holder hidden info-edit">
+                                        <select id="input-tags" name="categories[]">
+                                            <option value="">Select a category...</option>
+                                            <% categories_list = [
+                                                "books",
+                                                "clothes",
+                                                "electronics",
+                                                "entertainment",
+                                                "furniture",
+                                                "kitchen appliances",
+                                                "sports",
+                                                "toys",
+                                                "other"
+                                            ] %>
+                                            <% for(var i=0; i<categories_list.length; i++) {%>
+                                                <option value="<%= categories_list[i] %>" <% if (categories_list[i] === categories[0]) { %> selected <% } %> ><%= categories_list[i] %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="col-sm-6 deadline-info">
                                     <h2>Deadline</h2>

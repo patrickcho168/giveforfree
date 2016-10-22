@@ -375,23 +375,6 @@ $(function() {
 
     $('textarea').autosize();
 
-    $('#input-tags').selectize({
-        delimiter: ',',
-        persist: false,
-        create: function(input) {
-
-            return {
-                value: "other",
-                text: "other"
-            }
-        }
-    });
-
-    $('#select-mode').selectize({
-        create: true,
-        sortField: 'text'
-    });
-
     $('.description-field').popover({
         container: 'body',
         content: 'E.g. Size and measurements, old/new, used/unused, etc.',
