@@ -41,23 +41,6 @@ $(function() {
 
     $('textarea').autosize();
 
-    $('#input-tags').selectize({
-        delimiter: ',',
-        persist: false,
-        create: function(input) {
-
-            return {
-                value: "other",
-                text: "other"
-            }
-        }
-    });
-
-    $('#select-mode').selectize({
-        create: true,
-        sortField: 'text'
-    });
-
     var oldScroll = window.onscroll;
     $(document).on('focus', 'input', function(e) {
         window.onscroll = function() {
