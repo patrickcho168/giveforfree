@@ -463,7 +463,11 @@
                                     <h2>Charity & Donation</h2>
                                     <p class="subtitle info-display">
                                         <!-- TODO: get charity name here -->
+<<<<<<< HEAD
+                                        Receiver will be donating <strong><%- item.charityName %></strong> for
+=======
                                         Proceeds of this amount will be going to <strong><%= item.charityName %></strong>
+>>>>>>> master
                                     </p>
                                     <p class="donation-amount info-display">
                                         <!-- TODO: get donation amount here -->
