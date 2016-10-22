@@ -199,6 +199,18 @@ function addRealViews(html) {
                             html += 'wanted';
                             html += '</div>';
                             html += '</div>';
+                        } else if (value.giverID === myAppId && value.takerID !== null) {
+                            html += '<div class="ribbon-wrapper-green">';
+                            html += '<div class="ribbon-grey">';
+                            html += 'given away';
+                            html += '</div>';
+                            html += '</div>';
+                        } else if (value.giverID === myAppId && value.takerID === null && !value.expired) {
+                            html += '<div class="ribbon-wrapper-green">';
+                            html += '<div class="ribbon-green">';
+                            html += 'ongoing';
+                            html += '</div>';
+                            html += '</div>';
                         } else if (value.expired) {
                             html += '<div class="ribbon-wrapper-green">';
                             if (value.giverID === myAppId) {
@@ -209,19 +221,7 @@ function addRealViews(html) {
                             html += 'expired';
                             html += '</div>';
                             html += '</div>';
-                        } else if (value.giverID === myAppId && value.takerID !== null) {
-                            html += '<div class="ribbon-wrapper-green">';
-                            html += '<div class="ribbon-grey">';
-                            html += 'given away';
-                            html += '</div>';
-                            html += '</div>';
-                        } else if (value.giverID === myAppId && value.takerID === null) {
-                            html += '<div class="ribbon-wrapper-green">';
-                            html += '<div class="ribbon-green">';
-                            html += 'ongoing';
-                            html += '</div>';
-                            html += '</div>';
-                        }
+                        } 
 
                         html += '</div>';
                         html += '</div></a>';
