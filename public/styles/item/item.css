@@ -774,6 +774,7 @@ fieldset.rating {
 
     .mobile-button {
         display: block;
+        margin-bottom: 20px;
     }
 
     .mobile-btn-modify, .mobile-btn-save {
@@ -807,5 +808,22 @@ fieldset.rating {
 
     .comment-title {
         font-size: 20px!important;
+    }
+
+    .description-info {
+        margin-top: 40px;
+    }
+
+    .giver-info-title {
+        margin-top: 40px;
+        margin-left: 12px;
+    }
+
+    .giver-info {
+        margin-left: 10px;
+    }
+
+    .about-charity, .charity-intro {
+        margin-left: 12px;
     }
 }
