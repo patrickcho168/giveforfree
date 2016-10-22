@@ -673,7 +673,7 @@ fieldset, label { margin: auto; padding: 0; }
     float: right;
 }
 
-.fixedrating > input:checked ~ label { color: #FFD700;  } , /* show gold star when clicked */
+.fixedrating > input:checked ~ label { color: #eac67a;  } , /* show gold star when clicked */
 
 /****** Style Star Rating Widget *****/
 
