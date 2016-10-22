@@ -44,6 +44,12 @@
         var currentItemId = <%= item.itemID %>;
         var userId = <%= id %>;
         var userFbId = "<%= user.fbID %>";
+        var cost = '100';
+        var charity = {
+            name: "SPCA",
+            email: 'tzyinc-facilitator@hotmail.com'
+        };
+
         window.fbAsyncInit = function() {
             FB.init({
                 appId: '<%= appId %>',
@@ -308,7 +314,7 @@
                                     <% } %>
                                 <% } else { %>
                                     <% if (item.takerID === id) { %>
-                                        <a class="btn btn-lg btn-block btn-donate"><i class="fa fa-heart-o"></i> Donate!</a>
+                                        <a class="btn btn-lg btn-block btn-donate" id="paypal"><i class="fa fa-heart-o"></i> Donate!</a>
                                     <% } else if (item.takerID !== null) { %>
                                         <a href="/profile/<%= item.takerID %>" class="btn btn-lg btn-want btn-block"><i class="fa fa-heart-o"></i> Given to <%= item.takerName %></a>
                                     <% } else if (item.meWant === 1 && !expired) { %>

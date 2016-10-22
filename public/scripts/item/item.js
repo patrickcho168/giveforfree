@@ -137,6 +137,23 @@ $(document).on('click', '.mobile-btn-cancel', function() {
     $('html, body').animate({ scrollTop: 0 }, 500);
 });
 
+$(document).on('click', '#paypal', function() {
+    var input = {
+        cost: cost,
+        charity: charity,
+        redirectUrl: window.location.href
+    };
+    $.ajax({type:'post',
+            url:'/paypalAdpay',
+            data:input,
+            datatype:'json',
+            success: function(data){
+                console.log(data);
+                window.location = data;
+            }
+    });
+})
+
 // Carousel Logic
 jQuery(document).ready(function($) {
 
