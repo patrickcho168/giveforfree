@@ -292,7 +292,16 @@
                     <div class="item-basic-info">
                         <div class="info-text info-display">
                             <h2><%= item.title %></h2>
-                            <p>Donation amount: $ <%= item.donationAmount %></p>
+                            <p>$ <%= item.donationAmount %> to <%= item.charityName %></p>
+                            <div class="category-holder info-display">
+                                <% for (var i=0; i<categories.length; i++) { %>
+                                    <span class="category-item"><i class="fa fa-tags"></i> <%= categories[i] %></span>
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="info-text info-edit hidden">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                            <input type="text" class="input-txt name-input" name="title" maxlength="50" autocomplete="off" value="<%= item.title %>" required>
                         </div>
                         <% if (!mine) { %>
                             <div class="info-button want-button">
@@ -333,8 +342,8 @@
                 <div class="col-sm-8 col-md-9 right-panel">
                     <div class="panel other-info-panel">
                         <% if (item.donationAmount > 0) { %>
-                            <div class="charity-info">
-                                <div class="charity-img pull-left info-display">
+                            <div class="charity-info info-display">
+                                <div class="charity-img pull-left">
                                     <img src="../images/upload/charity<%= item.charityID %>.png" alt="" />
                                 </div>
                                 <div class="charity-details info-display">
@@ -343,39 +352,51 @@
                                     </p>
                                     <h2><%= item.charityName %></h2>
                                 </div>
-                                <h2 class="info-edit hidden">Charity & Donation</h2>
-                                <p class="subtitle info-edit hidden">
-                                    Select charity and choose donation amount.
-                                </p>
-                                <div class="charity-selection info-edit hidden">
-                                    <!-- TODO: select the initial charity here. Can just if (something) { trigger click } -->
-                                    <input type="checkbox" id="red-cross" name="donateToRedCross" class="hidden">
-                                    <img src="../images/upload/charity1.png" alt="" class="covered" onclick="selectCharity(this);"/>
-                                    <input type="checkbox" id="cat-wel-society" name="donateToCWS" class="hidden">
-                                    <img src="../images/upload/charity2.png" alt="" class="covered" onclick="selectCharity(this);"/>
-                                </div>
-                                <div class="money-input info-edit hidden">
-                                    <i class="fa fa-usd"></i><span> SGD</span>
-
-                                    <input type="text" class="input-txt donation-input" disabled name="donation" value="<%= item.donationAmount %>" maxlength="50" autocomplete="off" required>
-                                </div>
                             </div>
 
                         <% } %>
-                        <div class="detail-info">
-                            <div class="row">
-                                <div class="col-sm-6 category-info">
+                        <div class="detail-info info-edit hidden">
+                            <div class="row" style="margin-bottom: 20px;">
+                                <div class="col-sm-6 charity-edit">
+                                    <h2>Charity</h2>
+                                    <p class="subtitle">
+                                        Select charity.
+                                    </p>
+                                    <div class="charity-selection">
+                                        <!-- TODO: select the initial charity here. Can just if (something) { trigger click } -->
+                                        <input type="checkbox" id="red-cross" name="donateToRedCross" class="hidden">
+                                        <img src="../images/upload/charity1.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                                        <input type="checkbox" id="cat-wel-society" name="donateToCWS" class="hidden">
+                                        <img src="../images/upload/charity2.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 donation-edit">
+                                    <h2>Donation</h2>
+                                    <p class="subtitle">
+                                        Choose donation amount.
+                                    </p>
+                                    <div class="money-input">
+                                        <i class="fa fa-usd"></i><span> SGD</span>
+                                        <input type="text" class="input-txt donation-input" disabled name="donation" value="<%= item.donationAmount %>" maxlength="50" autocomplete="off" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-bottom: 20px;">
+                                <div class="col-sm-6 deadline-info">
+                                    <h2>Deadline</h2>
+                                    <p class="subtitle">
+                                        This giveaway ends on
+                                    </p>
+                                    <input type="text" class="input-txt input-date" name="date" id="date" value="<%= moment(date, "D MMMM YYYY HH:mm").format("YYYY-MM-DD") %>" maxlength="50" autocomplete="off" required>
+                                </div>
+
+                                <div class="col-sm-6 delivery-info">
                                     <h2>Category</h2>
                                     <p class="subtitle">
                                         The tags on gift
                                     </p>
-                                    <div class="category-holder info-display">
-                                        <!-- TODO: for each category have a div here -->
-                                        <% for (var i=0; i<categories.length; i++) { %>
-                                            <span class="category-item"><i class="fa fa-tags"></i><%= categories[i] %></span>
-                                        <% } %>
-                                    </div>
-                                    <select id="input-tags" name="categories[]" multiple class="categories has-options info-edit hidden" auto-complete: "off" placeholder="Select categories...">
+                                    <select id="input-tags" name="categories[]" multiple class="categories has-options" auto-complete: "off" placeholder="Select categories...">
                                         <% categories_list = [
                                             "books",
                                             "clothes",
@@ -392,29 +413,14 @@
                                         <% } %>
                                     </select>
                                 </div>
-                                <div class="col-sm-6 deadline-info">
-                                    <h2>Deadline</h2>
-                                    <p class="subtitle">
-                                        This giveaway ends on
-                                    </p>
-                                    <p class="deadline info-display"><%= date %></p>
-                                    <input type="text" class="input-txt input-date info-edit hidden" name="date" id="date" value="<%= moment(date, "D MMMM YYYY HH:mm").format("YYYY-MM-DD") %>" maxlength="50" autocomplete="off" required>
-                                </div>
-
+                            </div>
+                            <div class="row" style="margin-bottom: 20px;">
                                 <div class="col-sm-6 delivery-info">
                                     <h2>Delivery</h2>
                                     <p class="subtitle">
                                         Receiver will be receiving gift by
                                     </p>
-                                    <div class="delivery-holder info-display">
-                                        <% if (item.meetup === 1) { %>
-                                            <span class="category-item"><i class="fa fa-child"></i>Meet Up</span>
-                                        <% } %>
-                                        <% if (item.postage === 1) { %>
-                                            <span class="category-item"><i class="fa fa-cube"></i>Postage</span>
-                                        <% } %>
-                                    </div>
-                                    <div class="checkbox checkbox-primary delivery-info checkbox-circle row info-edit hidden">
+                                    <div class="checkbox checkbox-primary delivery-info checkbox-circle row">
                                         <% if (item.meetup === 1) { %>
                                             <input type="checkbox" name="meetup" id="meetup" class="check-one hidden" checked>
                                         <% } else { %>
@@ -434,19 +440,97 @@
                                         </label>
                                     </div>
                                 </div>
-                                <% if (!mine) { %>
-                                <% } else { %>
-                                    <div class="col-sm-6 mobile-button">
-                                        <div class="info-button mobile-modify-button">
-                                            <a href="#" class="btn btn-lg btn-block mobile-btn-modify">Modify</a>
-                                            <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block mobile-btn-delete">Delete</a>
-                                        </div>
-                                        <div class="info-button mobile-edit-button-group hidden">
-                                            <button href="#" class="btn btn-lg mobile-btn-save btn-block" type="submit">Save</button>
-                                            <a href="#" class="btn btn-lg mobile-btn-cancel btn-block">Cancel</a>
+                                <div class="col-sm-6 description-info">
+                                    <h2>Description</h2>
+                                    <p class="subtitle">
+                                        Some words about the gift.
+                                    </p>
+                                    <div class="description-edit">
+                                        <textarea type="text" class="input-txt description-input" name="description"  maxlength="200" autocomplete="off" required><%= item.description %></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <% if (!mine) { %>
+                            <% } else { %>
+                                <div class="col-sm-6 mobile-button">
+                                    <div class="info-button mobile-modify-button">
+                                        <a href="#" class="btn btn-lg btn-block mobile-btn-modify">Modify</a>
+                                        <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block mobile-btn-delete">Delete</a>
+                                    </div>
+                                    <div class="info-button mobile-edit-button-group hidden">
+                                        <button href="#" class="btn btn-lg mobile-btn-save btn-block" type="submit">Save</button>
+                                        <a href="#" class="btn btn-lg mobile-btn-cancel btn-block">Cancel</a>
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="detail-info info-display">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-7">
+                                    <div class="description-info">
+                                        <p class="subtitle">
+                                            Some words about the gift.
+                                        </p>
+                                        <p class="item-description">
+                                            <%= item.description %>
+                                        </p>
+                                    </div>
+                                    <div class="deadline-info">
+                                        <p class="subtitle">
+                                            This giveaway ends on
+                                        </p>
+                                        <p class="deadline">
+                                            <%= date %>
+                                        </p>
+                                    </div>
+                                    <div class="delivery-info">
+                                        <p class="subtitle">
+                                            Receiver will be receiving gift by
+                                        </p>
+                                        <div class="delivery-holder info-display">
+                                            <% if (item.meetup === 1) { %>
+                                                <span class="category-item"><i class="fa fa-child"></i>Meet Up</span>
+                                            <% } %>
+                                            <% if (item.postage === 1) { %>
+                                                <span class="category-item"><i class="fa fa-cube"></i>Postage</span>
+                                            <% } %>
                                         </div>
                                     </div>
-                                <% } %>
+                                </div>
+                                <div class="col-sm-6 col-md-5">
+                                    <h4 class="giver-info-title">Giver</h4>
+                                    <div class="giver-info">
+                                        <div class="giver-img pull-left">
+                                            <img src="http://graph.facebook.com/<%= item.fbID %>/picture?type=large" alt="" />
+                                        </div>
+                                        <a href="/profile/<%= item.giverID %>" class="giver-name"><%= item.name %></a>
+
+                                        <% if (loggedIn && mine && item.takerID === null) { %>
+                                            <br>
+                                            <a type="button" class="btn dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Wanters <span class="badge"><%= item.numWants %></span>
+                                            </a>
+                                            <% if (item.numWants > 0) { %>
+                                                <ul class="dropdown-menu scrollable-menu" role="menu">
+                                                    <li><a href="/api/give/<%= item.itemID %>" style="padding-left: 10px;">Random draw</a></li>
+                                                    <% for (var i=0; i<manual.length; i++) { %>
+                                                        <li class="single-wanter">
+                                                            <p><%= manual[i].name %></p>
+                                                            <div class="link-box">
+                                                                <a href="/profile/<%= manual[i].userID %>">Profile</a>
+                                                                <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">Give</a>
+                                                            </div>
+                                                        </li>
+                                                    <% } %>
+                                                </ul>
+                                            <% } %>
+                                        <% } %>
+                                    </div>
+                                    <h4 class="about-charity">About Charity</h4>
+                                    <p class="charity-intro">
+                                        This charity is for blablablablabla...
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -454,14 +538,13 @@
             </div>
         </form>
 
-        <div class="row panel comment-panel">
-            <% if (!mine && loggedIn) { %>
-                <h3 class="comment-title">Curious? Comment below or <a href="javascript:messageUser();">message <%=item.name%>!<a></h3>
+        <div class="row panel" style="padding: 20px;">
+            <% if (!mine) { %>
+                <h3 class="comment-title">Curious? Comment below!<a></h3>
             <% } %>
             <div id="comments-container" style="margin-left: 15px; margin-right: 15px;">
             </div>
         </div>
-
     </div>
     <!-- Footer -->
     <footer>

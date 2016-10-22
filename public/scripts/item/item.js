@@ -112,6 +112,7 @@ $(document).on('click', '.btn-modify', function() {
     $('.edit-button-group').toggleClass('hidden');
     $('.info-edit').toggleClass('hidden');
     $('.info-display').toggleClass('hidden');
+    $('.charity-info').css('display', 'block');
 });
 
 $(document).on('click', '.btn-cancel', function() {
@@ -119,6 +120,7 @@ $(document).on('click', '.btn-cancel', function() {
     $('.edit-button-group').toggleClass('hidden');
     $('.info-edit').toggleClass('hidden');
     $('.info-display').toggleClass('hidden');
+    $('.charity-info').css('display', 'flex');
 });
 
 $(document).on('click', '.mobile-btn-modify', function() {
