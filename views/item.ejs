@@ -356,7 +356,7 @@
 
                         <% } %>
                         <div class="detail-info info-edit hidden">
-                            <div class="row" style="margin-bottom: 20px;">
+                            <div class="row">
                                 <div class="col-sm-6 charity-edit">
                                     <h2>Charity</h2>
                                     <p class="subtitle">
@@ -382,7 +382,7 @@
                                 </div>
                             </div>
 
-                            <div class="row" style="margin-bottom: 20px;">
+                            <div class="row">
                                 <div class="col-sm-6 deadline-info">
                                     <h2>Deadline</h2>
                                     <p class="subtitle">
@@ -450,19 +450,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <% if (!mine) { %>
-                            <% } else { %>
-                                <div class="col-sm-6 mobile-button">
-                                    <div class="info-button mobile-modify-button">
-                                        <a href="#" class="btn btn-lg btn-block mobile-btn-modify">Modify</a>
-                                        <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block mobile-btn-delete">Delete</a>
-                                    </div>
-                                    <div class="info-button mobile-edit-button-group hidden">
-                                        <button href="#" class="btn btn-lg mobile-btn-save btn-block" type="submit">Save</button>
-                                        <a href="#" class="btn btn-lg mobile-btn-cancel btn-block">Cancel</a>
-                                    </div>
-                                </div>
-                            <% } %>
+                            
                         </div>
                         <div class="detail-info info-display">
                             <div class="row">

@@ -559,7 +559,7 @@ fieldset.rating {
 .detail-info .input-date {
     margin-left: 11px;
     margin-top: 0px;
-    font-size: 2em;
+    font-size: 1.8em;
     font-weight: 300;
     color: #565656;
 }
@@ -567,7 +567,7 @@ fieldset.rating {
 .detail-info .donation-amount {
     margin-left: 15px;
     margin-top: 30px;
-    font-size: 2em;
+    font-size: 1.8em;
 }
 
 .detail-info .delivery-holder {
@@ -652,7 +652,7 @@ fieldset.rating {
     margin-left: 15px;
     /*margin-top: 30px;*/
     font-weight: 300;
-    font-size: 2em;
+    font-size: 1.8em;
     color: #565656;
 }
 
