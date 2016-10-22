@@ -35,7 +35,7 @@ var urlAJAX = null;
 // AJAX Infinite Scrolling Function
 function addRealViews(html) {
 
-    var currentTab = $(".nav-tabs").find(".active").attr('id');
+    var currentTab = $(".nav-pills").find(".active").attr('id');
 
     switch (currentTab) {
         case "tab-gifts":
@@ -134,43 +134,51 @@ function addRealViews(html) {
 
                     /*** Factory for views ***/
                     $.each(data, function(key, value) {
+
                         if (value.giverID !== myAppId && value.takerID !== null && value.takerID !== myAppId) {
-                            html = '<div class="item col-lg-3 col-md-3 col-sm-4 col-ms-6 col-xs-12" style="margin-bottom: 20px; opacity: 0.6;">';
+                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item" style="opacity: 0.4;">';
                         } else if (value.giverID !== myAppId && value.takerID !== null && value.takerID === myAppId) {
-                            html = '<div class="item col-lg-3 col-md-3 col-sm-4 col-ms-6 col-xs-12" style="margin-bottom: 20px; opacity: 0.6;">';
+                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item" style="opacity: 0.4;">';
                         } else if (loggedIn && value.giverID !== myAppId && value.meWant === 0 && !value.expired) { // NEED TO ADD NOT EXPIRED
-                            html = '<div class="item col-lg-3 col-md-3 col-sm-4 col-ms-6 col-xs-12" style="margin-bottom: 20px;">';
+                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
                         } else if (loggedIn && value.giverID !== myAppId && value.meWant > 0 && !value.expired) {
-                            html = '<div class="item col-lg-3 col-md-3 col-sm-4 col-ms-6 col-xs-12" style="margin-bottom: 20px;">';
+                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
                         } else if (value.giverID !== myAppId && value.expired) {
-                            html = '<div class="item col-lg-3 col-md-3 col-sm-4 col-ms-6 col-xs-12" style="margin-bottom: 20px; opacity: 0.6;">';
+                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item" style="opacity: 0.4;">';
                         } else if (value.giverID === myAppId && value.takerID !== null) {
-                            html = '<div class="item col-lg-3 col-md-3 col-sm-4 col-ms-6 col-xs-12" style="margin-bottom: 20px; opacity: 0.6;">';
+                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item" style="opacity: 0.4;">';
                         } else if (value.giverID === myAppId && value.takerID === null) {
-                            html = '<div class="item col-lg-3 col-md-3 col-sm-4 col-ms-6 col-xs-12" style="margin-bottom: 20px;">';
+                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
                         } else {
-                            html = '<div class="item col-lg-3 col-md-3 col-sm-4 col-ms-6 col-xs-12" style="margin-bottom: 20px;">';
-                        }
-                        // Main Item Photo
-                        html += '<a href="/item/' + value.itemID + '" target="_blank"><div class="thumbnail" style="padding: 0; border: none;" align="center">';
-
-                        html += '<div class="box"><img style="display: block;" class="clipped" src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '" onerror="handleBrokenImage(this);"></div>';
-
-                        // Item Title
-                        html += '<div class="caption-area" align="left">';
-                        html += '<br/><h6 class="item-header hide-overflow" style="padding-left: 10px; padding-top: 0px; margin: 5px  auto;"><a href="/item/' + value.itemID + '" target="_blank">' + value.title + '</a></h6>';
-                        html += '<row><p class="item-author hide-overflow" style="margin: 5px auto;">';
-
-                        html += '<a href="/profile/' + value.userID + '" target="_blank" class="small-avatar col-lg-4" style="background-image: url(http://graph.facebook.com/' + value.fbID + '/picture?type=large);" style="margin: auto 10px; padding: 0; width: 30px; height: 30px; border-radius:50%;"><span style="padding-left: 20px;">' + value.name + '</span></a></p></row>';
-
-                        // Item Snag Counts
-                        if (value.numWants >= 1) {
-                            html += '<small class="item-snags pull-right text-muted" align="right" style="padding-right: 10px; padding-top: 0; padding-bottom: 10px;"><b>' + value.numWants + ' people want this.</b></small>';
-                        } else {
-                            html += '<small class="item-snags pull-right text-muted" align="right" style="padding-right: 10px; padding-top: 0;padding-bottom: 10px;">' + '<b>Be the first to check this out!</b></small>';
+                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
                         }
 
-                        // Labels
+                        html += '<div class="panel">';
+                        html += '<a href="/item/' + value.itemID + '"><img src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '" alt="" class="img-responsive"/></a>';
+                        html += '<a href="/item/' + value.itemID + '">';
+                        html += '<div class="item-info">';
+                        html += '<a href="/item/' + value.itemID + '"><p class="hide-overflow">' + value.title + '</p></a>';
+                        html += '<a href="/profile/' + value.userID + '" class="seller-info row">';
+                        html += '<img src="http://graph.facebook.com/' + value.fbID + '/picture" alt="" />';
+                        html += '<span>' + value.name + '</span>';
+                        html += '</a>';
+                        html += '<p>';
+                        if (value.donationAmount > 0) {
+                            if (value.donationAmount % 1 == 0) {
+                                html += '<span style="inline-block"><img src="../images/upload/charity' + value.charityID + '.png" alt="" class="small-charity-logo" /> $' + value.donationAmount;
+                            } else {
+                                html += '<span style="inline-block"><img src="../images/upload/charity' + value.charityID + '.png" alt="" class="small-charity-logo" /> $' + value.donationAmount.toFixed(2);
+                            }
+                            html += '</span>';
+                        } else {
+                            html += '<span>FREE</span>';
+                        }
+                        if (value.meWant) {
+                            html += '<span class="pull-right"><i class="fa fa-heart addition-info pull-right me-want"></i>' + value.numWants + '</span>';
+                        } else {
+                            html += '<span class="pull-right"><i class="fa fa-heart addition-info pull-right"></i>' + value.numWants + '</span>';
+                        }
+                        html += '</p>';
                         if (value.giverID !== myAppId && value.takerID !== null && value.takerID !== myAppId) {
                             html += '<div class="ribbon-wrapper-green">';
                             html += '<div class="ribbon-grey">';
@@ -191,6 +199,18 @@ function addRealViews(html) {
                             html += 'wanted';
                             html += '</div>';
                             html += '</div>';
+                        } else if (value.giverID === myAppId && value.takerID !== null) {
+                            html += '<div class="ribbon-wrapper-green">';
+                            html += '<div class="ribbon-grey">';
+                            html += 'given away';
+                            html += '</div>';
+                            html += '</div>';
+                        } else if (value.giverID === myAppId && value.takerID === null && !value.expired) {
+                            html += '<div class="ribbon-wrapper-green">';
+                            html += '<div class="ribbon-green">';
+                            html += 'ongoing';
+                            html += '</div>';
+                            html += '</div>';
                         } else if (value.expired) {
                             html += '<div class="ribbon-wrapper-green">';
                             if (value.giverID === myAppId) {
@@ -201,19 +221,7 @@ function addRealViews(html) {
                             html += 'expired';
                             html += '</div>';
                             html += '</div>';
-                        } else if (value.giverID === myAppId && value.takerID !== null) {
-                            html += '<div class="ribbon-wrapper-green">';
-                            html += '<div class="ribbon-grey">';
-                            html += 'given away';
-                            html += '</div>';
-                            html += '</div>';
-                        } else if (value.giverID === myAppId && value.takerID === null) {
-                            html += '<div class="ribbon-wrapper-green">';
-                            html += '<div class="ribbon-green">';
-                            html += 'ongoing';
-                            html += '</div>';
-                            html += '</div>';
-                        }
+                        } 
 
                         html += '</div>';
                         html += '</div></a>';
@@ -222,14 +230,16 @@ function addRealViews(html) {
                         switch (currentTab) {
                             case "gifts":
                                 firstGifts = false;
-                                $('#gifts').append(html);
-                                $('#gifts-placeholder').hide();
+                                $('#infinite-scroll-container-gifts').append(html);
+                                $('#gifts-banner-empty').hide();
+                                $('#gifts-banner').removeClass('hidden');
                                 break;
                             case "wants":
                                 firstWants = false;
 
-                                $('#wants').append(html);
-                                $('#wants-placeholder').hide();
+                                $('#infinite-scroll-container-wants').append(html);
+                                $('#wants-banner-empty').hide();
+                                $('#wants-banner').removeClass('hidden');
                                 break;
                             case "thanks":
                                 firstThanks = false;
@@ -266,21 +276,22 @@ function addRealViews(html) {
 $(document).ready(function() {
 
     var currentHash = window.location.hash;
+    console.log(currentHash);
     switch (currentHash) {
         case "#gifts":
-            $(".nav-tabs").find(".active").removeClass("active");
+            $(".nav-pills").find(".active").removeClass("active");
             $("#tab-gifts").addClass("active");
             break;
         case "#wants":
-            $(".nav-tabs").find(".active").removeClass("active");
+            $(".nav-pills").find(".active").removeClass("active");
             $("#tab-wants").addClass("active");
             break;
         case "#thanks":
-            $(".nav-tabs").find(".active").removeClass("active");
+            $(".nav-pills").find(".active").removeClass("active");
             $("#tab-thanks").addClass("active");
             break;
         case "#friends":
-            $(".nav-tabs").find(".active").removeClass("active");
+            $(".nav-pills").find(".active").removeClass("active");
             $("#tab-friends").addClass("active");
             break;
         default:
@@ -290,8 +301,8 @@ $(document).ready(function() {
 
     addRealViews(html);
 
-    $('.nav-tabs a').click(function() {
-        $(".nav-tabs").find(".active").removeClass("active");
+    $('.nav-pills a').click(function() {
+        $(".nav-pills").find(".active").removeClass("active");
         $(this).parent().addClass("active");
         triggered = 0;
 
@@ -323,7 +334,7 @@ $(document).ready(function() {
         roundProfilePictures: true,
         noCommentsText: 'No Thank You Messages.',
         textareaPlaceholderText: isMine ? 'Reply to your Thank You Messages' :'Leave a Thank You Message',
-        // profilePictureURL: 'http://graph.facebook.com/' + userFbID + '/picture',
+        profilePictureURL: 'http://graph.facebook.com/' + userFbId + '/picture',
         getComments: function(success, error) {
             $.ajax({
                 url: '/profile/' + appProfileId + '/thank',

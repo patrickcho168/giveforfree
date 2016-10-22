@@ -326,6 +326,7 @@
 .items-display .item-info {
     padding: 10px 10px;
     height: 100px;
+    text-align: left;
 }
 
 .items-display .item-info .row {

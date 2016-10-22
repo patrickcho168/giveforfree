@@ -112,6 +112,7 @@ $(document).on('click', '.btn-modify', function() {
     $('.edit-button-group').toggleClass('hidden');
     $('.info-edit').toggleClass('hidden');
     $('.info-display').toggleClass('hidden');
+    $('.charity-info').css('display', 'block');
 });
 
 $(document).on('click', '.btn-cancel', function() {
@@ -119,6 +120,7 @@ $(document).on('click', '.btn-cancel', function() {
     $('.edit-button-group').toggleClass('hidden');
     $('.info-edit').toggleClass('hidden');
     $('.info-display').toggleClass('hidden');
+    $('.charity-info').css('display', 'flex');
 });
 
 $(document).on('click', '.mobile-btn-modify', function() {
@@ -136,6 +138,23 @@ $(document).on('click', '.mobile-btn-cancel', function() {
     $('.info-display').toggleClass('hidden');
     $('html, body').animate({ scrollTop: 0 }, 500);
 });
+
+$(document).on('click', '#paypal', function() {
+    var input = {
+        cost: cost,
+        charity: charity,
+        redirectUrl: window.location.href
+    };
+    $.ajax({type:'post',
+            url:'/paypalAdpay',
+            data:input,
+            datatype:'json',
+            success: function(data){
+                console.log(data);
+                window.location = data;
+            }
+    });
+})
 
 // Carousel Logic
 jQuery(document).ready(function($) {
@@ -374,23 +393,6 @@ $(function() {
 
 
     $('textarea').autosize();
-
-    $('#input-tags').selectize({
-        delimiter: ',',
-        persist: false,
-        create: function(input) {
-
-            return {
-                value: "other",
-                text: "other"
-            }
-        }
-    });
-
-    $('#select-mode').selectize({
-        create: true,
-        sortField: 'text'
-    });
 
     $('.description-field').popover({
         container: 'body',

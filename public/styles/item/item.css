@@ -92,6 +92,7 @@
 }
 .dropdown-menu {
     left: auto;
+    top: inherit;
 }
 .message-button {
     color: white;
@@ -289,6 +290,10 @@ textarea {
     bottom: 10px;
 }
 
+.info-text p {
+    font-size: 15px;
+}
+
 .info-button {
     text-align: center;
 }
@@ -358,7 +363,7 @@ textarea {
     /*margin-bottom: 10px;*/
 }
 
-.info-button .btn-cancel {
+.btn-cancel {
     background-color: #888;
     border-radius: 2px;
     color: #fff;
@@ -366,17 +371,17 @@ textarea {
     /*margin-bottom: 10px;*/
 }
 
-.info-button .btn-modify:hover, .info-button .btn-save:hover {
+.btn-modify:hover, .btn-save:hover {
     background-color: #d7cec7!important;
     color: #fff;
 }
 
-.info-button .btn-delete:hover {
+.btn-delete:hover {
     background-color: #565656!important;
     color: #fff;
 }
 
-.info-button .btn-cancel:hover {
+.btn-cancel:hover {
     background-color:  #565656!important;
     color: #fff;
 }
@@ -394,13 +399,24 @@ textarea {
     padding: 0 10px!important;
     max-height: 74px;
     font-size: 14px;
-    font-weight: 300;
+    font-weight: 400;
     color: #565656;
-    text-align: center;
+}
+
+.item-description {
+    padding: 0 10px!important;
+    font-size: 14px;
+    font-weight: 400;
+    color: #565656;
+    margin-top: 10px;
 }
 
 .description-input ::-webkit-scrollbar {
     display: none!important;
+}
+
+.description-info {
+    margin-top: 20px;
 }
 
 .right-panel {
@@ -417,17 +433,23 @@ textarea {
 
 .giver-info {
     width: 100%;
-    height: 150px;
-    padding: 40px 20px 0px 40px;
+    /*height: 120px;*/
+    /*padding: 20px 20px 0px 20px;*/
+}
+
+.giver-info-title {
+    color: #76323f;
+    font-weight: 300;
+    margin-top: 20px;
 }
 
 .giver-img img {
-    height: 80px;
+    height: 60px;
     border-radius: 50px;
 }
 
 .giver-name {
-    font-size: 2em;
+    font-size: 1.5em;
     color: #565656;
     margin-left: 15px;
 }
@@ -442,19 +464,21 @@ textarea {
 }
 
 .view-wanter {
-    background-color: #c09f80;
+    background-color: #76323f;
     padding: 5px 10px;
     border-radius: 50px;
     color: #fff;
     font-weight: 300;
     margin-left: 10px;
-    margin-top: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .single-wanter p {
     margin-left: 10px;
-    color: #565656;
+    color: #565656!important;
     margin-bottom: 0px;
+    text-align: left;
 }
 
 .single-wanter .link-box {
@@ -463,18 +487,17 @@ textarea {
     flex-direction: row;
 }
 
-.single-wanter a {
+.single-wanter .link-box a {
+    color: #565656!important;
     margin-left: 10px;
+    margin-right: 0;
     font-size: 12px;
+    padding: 0;
 }
 
 .view-wanter .badge {
     background-color: #fff;
-    color: #c09f80;
-}
-
-.dropdown-menu {
-    left: 150px;
+    color: #76323f;
 }
 
 .message-button, .share-button {
@@ -492,7 +515,7 @@ fieldset.rating {
 }
 
 .detail-info {
-    padding: 20px;
+    padding: 20px 40px;
 }
 
 .detail-info h2 {
@@ -505,19 +528,21 @@ fieldset.rating {
 .detail-info .subtitle {
     color: #565656;
     margin-left: 11px;
+    margin-bottom: 10px;
 }
 
 .detail-info  .category-info, .detail-info  .deadline-info {
-    height: 190px;
+    /*height: 190px;*/
 }
 
-.detail-info .category-holder {
-    margin-left: 15px;
-    margin-top: 20px;
+.category-holder {
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 10px;
 }
 
 .detail-info .category-item {
-    font-size: 2em;
+    font-size: 1.6em;
     /*padding: 5px;*/
     font-weight: 300;
     background-color: #fff;
@@ -531,16 +556,16 @@ fieldset.rating {
 }
 
 .detail-info .deadline {
-    margin-left: 15px;
-    margin-top: 20px;
-    font-size: 2em;
+    margin-left: 10px;
+    margin-top: 10px;
+    font-size: 1.6em;
     color: #565656;
 }
 
 .detail-info .input-date {
     margin-left: 11px;
     margin-top: 0px;
-    font-size: 2em;
+    font-size: 1.8em;
     font-weight: 300;
     color: #565656;
 }
@@ -548,17 +573,29 @@ fieldset.rating {
 .detail-info .donation-amount {
     margin-left: 15px;
     margin-top: 30px;
-    font-size: 2em;
+    font-size: 1.8em;
 }
 
 .detail-info .delivery-holder {
-    margin-left: 15px;
-    margin-top: 30px;
+    margin-left: 10px;
+    margin-top: 10px;
 }
 
 .delivery-holder i {
     font-size: 15px;
     margin-right: 5px;
+}
+
+.description-edit {
+    margin-top: 20px;
+}
+
+.deadline-info {
+    margin-top: 20px;
+}
+
+.delivery-info {
+    margin-top: 20px;
 }
 
 .selectize-input {
@@ -579,6 +616,37 @@ fieldset.rating {
     font-weight: 300!important;
 }
 
+.charity-info {
+    height: 100px;
+    padding: 40px 40px 20px 40px;
+    /*display: flex;
+    flex-direction: row;*/
+}
+
+.charity-info .charity-img {
+    height: 60px;
+    margin-right: 10px;
+}
+
+.charity-info p {
+    margin-bottom: 0;
+}
+
+.charity-info h2 {
+    color: #565656;
+    font-weight: 400;
+    margin: 0;
+}
+
+.charity-info img {
+    height: 100%;
+}
+
+.charity-edit h2 {
+    color: #76323f;
+    font-weight: 300;
+}
+
 .charity-selection img {
     height: 50px;
     transition: all .5s;
@@ -588,9 +656,9 @@ fieldset.rating {
 
 .money-input {
     margin-left: 15px;
-    margin-top: 30px;
+    /*margin-top: 30px;*/
     font-weight: 300;
-    font-size: 2em;
+    font-size: 1.8em;
     color: #565656;
 }
 
@@ -622,19 +690,19 @@ fieldset.rating {
     padding: 40px;
 }
 
-.comment-panel .jquery-comments .textarea-wrapper:before, .comment-panel .jquery-comments .textarea-wrapper:after {
-    display: none;
+.textarea-wrapper:before, .textarea-wrapper:after {
+    display: none!important;
 }
 
-.comment-panel .textarea {
-    border: 1px #565656 solid;
+#comments-container .textarea {
+    border: 1px #999 solid;
     border-radius: 5px!important;
 }
 
 .comment-title {
-    margin: 0px 20px 40px 20px;
+    margin: 20px 20px 40px 20px;
     font-weight: 300;
-    color: #76323f;
+    color: #565656s;
 }
 
 .comment-title a {
@@ -643,6 +711,20 @@ fieldset.rating {
 
 #comments-container {
     margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.about-charity {
+    font-weight: 300;
+    color: #76323f;
+    margin-top: 40px;
+}
+
+.charity-intro {
+    margin-top: 10px;
+    font-weight: 400;
+    font-size: 14px;
+    color: #565656;
 }
 
 
@@ -679,13 +761,13 @@ fieldset.rating {
         display: none;
     }
 
-    .info-button .btn-modify, .info-button .btn-save, .info-button .btn-delete, .info-button .btn-cancel  {
+    .btn-modify, .btn-save, .btn-delete, .btn-cancel  {
         width: auto;
     }
 
-    .charity-info, .delivery-info {
+    /*.charity-info, .delivery-info {
         height: 190px;
-    }
+    }*/
 
     .money-input {
         margin-top: 10px;
@@ -693,6 +775,7 @@ fieldset.rating {
 
     .mobile-button {
         display: block;
+        margin-bottom: 20px;
     }
 
     .mobile-btn-modify, .mobile-btn-save {
@@ -726,5 +809,30 @@ fieldset.rating {
 
     .comment-title {
         font-size: 20px!important;
+    }
+
+    .description-info {
+        margin-top: 40px;
+    }
+
+    .giver-info-title {
+        margin-top: 40px;
+        margin-left: 12px;
+    }
+
+    .giver-info {
+        margin-left: 10px;
+    }
+
+    .about-charity, .charity-intro {
+        margin-left: 12px;
+    }
+
+    .taker-info .giver-img {
+        margin-left: 12px;
+    }
+
+    .dropdown-menu {
+        width: 90%;
     }
 }
