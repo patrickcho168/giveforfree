@@ -167,7 +167,7 @@ jQuery(document).ready(function($) {
     $('#comments-container').comments({
         roundProfilePictures: true,
         readOnly: loggedIn ? false : true,
-        // profilePictureURL: 'http://graph.facebook.com/' + userFbID + '/picture',
+        profilePictureURL: 'http://graph.facebook.com/' + userFbId + '/picture',
         getComments: function(success, error) {
             $.ajax({
                 url: '/item/' + currentItemId + '/comment',
