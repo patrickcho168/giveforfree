@@ -329,12 +329,29 @@
                             </div>
                         <% } else if (item.takerID === null) { %>
                             <div class="info-button modify-button">
+                                <a type="button" class="btn btn-lg btn-block dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Wanters <span class="badge"><%= item.numWants %></span>
+                                </a>
+                                <% if (item.numWants > 0) { %>
+                                    <ul class="dropdown-menu scrollable-menu" role="menu">
+                                        <li><a href="/api/give/<%= item.itemID %>" style="padding-left: 10px;">Random draw</a></li>
+                                        <% for (var i=0; i<manual.length; i++) { %>
+                                            <li class="single-wanter">
+                                                <p><%= manual[i].name %></p>
+                                                <div class="link-box">
+                                                    <a href="/profile/<%= manual[i].userID %>">Profile</a>
+                                                    <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">Give</a>
+                                                </div>
+                                            </li>
+                                        <% } %>
+                                    </ul>
+                                <% } %>
                                 <a href="#" class="btn btn-lg btn-block btn-modify">Modify</a>
-                                <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block btn-delete">Delete</a>
                             </div>
                             <div class="info-button edit-button-group hidden">
                                 <button href="#" class="btn btn-lg btn-save btn-block" type="submit">Save</button>
                                 <a href="#" class="btn btn-lg btn-cancel btn-block">Cancel</a>
+                                <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block btn-delete">Delete</a>
                             </div>
                         <% } %>
                     </div>
@@ -450,7 +467,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class="detail-info info-display">
                             <div class="row">
@@ -499,23 +516,7 @@
 
                                         <% if (loggedIn && mine && item.takerID === null) { %>
                                             <br>
-                                            <a type="button" class="btn dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Wanters <span class="badge"><%= item.numWants %></span>
-                                            </a>
-                                            <% if (item.numWants > 0) { %>
-                                                <ul class="dropdown-menu scrollable-menu" role="menu">
-                                                    <li><a href="/api/give/<%= item.itemID %>" style="padding-left: 10px;">Random draw</a></li>
-                                                    <% for (var i=0; i<manual.length; i++) { %>
-                                                        <li class="single-wanter">
-                                                            <p><%= manual[i].name %></p>
-                                                            <div class="link-box">
-                                                                <a href="/profile/<%= manual[i].userID %>">Profile</a>
-                                                                <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">Give</a>
-                                                            </div>
-                                                        </li>
-                                                    <% } %>
-                                                </ul>
-                                            <% } %>
+
                                         <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
                                             <div>
                                                 <a href="javascript:messageUser();" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Giver</a>
@@ -541,12 +542,29 @@
                         <% } else { %>
                             <div class="col-sm-6 mobile-button">
                                 <div class="info-button mobile-modify-button">
+                                    <a type="button" class="btn btn-lg btn-block dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Wanters <span class="badge"><%= item.numWants %></span>
+                                    </a>
+                                    <% if (item.numWants > 0) { %>
+                                        <ul class="dropdown-menu scrollable-menu" role="menu">
+                                            <li><a href="/api/give/<%= item.itemID %>" style="padding-left: 10px;">Random draw</a></li>
+                                            <% for (var i=0; i<manual.length; i++) { %>
+                                                <li class="single-wanter">
+                                                    <p><%= manual[i].name %></p>
+                                                    <div class="link-box">
+                                                        <a href="/profile/<%= manual[i].userID %>">Profile</a>
+                                                        <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">Give</a>
+                                                    </div>
+                                                </li>
+                                            <% } %>
+                                        </ul>
+                                    <% } %>
                                     <a href="#" class="btn btn-lg btn-block mobile-btn-modify">Modify</a>
-                                    <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block mobile-btn-delete">Delete</a>
                                 </div>
                                 <div class="info-button mobile-edit-button-group hidden">
                                     <button href="#" class="btn btn-lg mobile-btn-save btn-block" type="submit">Save</button>
                                     <a href="#" class="btn btn-lg mobile-btn-cancel btn-block">Cancel</a>
+                                    <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block mobile-btn-delete">Delete</a>
                                 </div>
                             </div>
                         <% } %>

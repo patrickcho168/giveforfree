@@ -92,6 +92,7 @@
 }
 .dropdown-menu {
     left: auto;
+    top: inherit;
 }
 .message-button {
     color: white;
@@ -362,7 +363,7 @@ textarea {
     /*margin-bottom: 10px;*/
 }
 
-.info-button .btn-cancel {
+.btn-cancel {
     background-color: #888;
     border-radius: 2px;
     color: #fff;
@@ -370,17 +371,17 @@ textarea {
     /*margin-bottom: 10px;*/
 }
 
-.info-button .btn-modify:hover, .info-button .btn-save:hover {
+.btn-modify:hover, .btn-save:hover {
     background-color: #d7cec7!important;
     color: #fff;
 }
 
-.info-button .btn-delete:hover {
+.btn-delete:hover {
     background-color: #565656!important;
     color: #fff;
 }
 
-.info-button .btn-cancel:hover {
+.btn-cancel:hover {
     background-color:  #565656!important;
     color: #fff;
 }
@@ -463,19 +464,21 @@ textarea {
 }
 
 .view-wanter {
-    background-color: #c09f80;
+    background-color: #76323f;
     padding: 5px 10px;
     border-radius: 50px;
     color: #fff;
     font-weight: 300;
     margin-left: 10px;
     margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .single-wanter p {
     margin-left: 10px;
-    color: #565656;
+    color: #565656!important;
     margin-bottom: 0px;
+    text-align: left;
 }
 
 .single-wanter .link-box {
@@ -484,14 +487,17 @@ textarea {
     flex-direction: row;
 }
 
-.single-wanter a {
+.single-wanter .link-box a {
+    color: #565656!important;
     margin-left: 10px;
+    margin-right: 0;
     font-size: 12px;
+    padding: 0;
 }
 
 .view-wanter .badge {
     background-color: #fff;
-    color: #c09f80;
+    color: #76323f;
 }
 
 .message-button, .share-button {
@@ -755,7 +761,7 @@ fieldset.rating {
         display: none;
     }
 
-    .info-button .btn-modify, .info-button .btn-save, .info-button .btn-delete, .info-button .btn-cancel  {
+    .btn-modify, .btn-save, .btn-delete, .btn-cancel  {
         width: auto;
     }
 
@@ -824,5 +830,9 @@ fieldset.rating {
 
     .taker-info .giver-img {
         margin-left: 12px;
+    }
+
+    .dropdown-menu {
+        width: 90%;
     }
 }
