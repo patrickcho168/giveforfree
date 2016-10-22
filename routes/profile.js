@@ -312,6 +312,7 @@ module.exports = function(app) {
                                 friendProperty: {},
                                 friends: [],
                                 notification: req.session.notification,
+                                flagUser: null,
                                 csrfToken: req.csrfToken()
                             });
                         });

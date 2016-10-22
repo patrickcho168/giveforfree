@@ -576,8 +576,6 @@ module.exports = function(app) {
                     return obj.name;
                 });
                 db.ItemPageQuery(userId, itemId, function(data) {
-                    console.log(data);
-                    console.log(categories);
                     if (!(data.length)) {
                         next();
                     } else {
@@ -600,7 +598,6 @@ module.exports = function(app) {
                                             domain: config.domain,
                                             date: processedDate,
                                             expired: expiredMin > 0,
-                                            karma: gifted[0].numGiven * 10,
                                             gifts: gifted[0].numGiven,
                                             manual: data2,
                                             loggedIn: loggedIn,
@@ -624,7 +621,6 @@ module.exports = function(app) {
                                         domain: config.domain,
                                         date: processedDate,
                                         expired: expiredMin > 0,
-                                        karma: gifted[0].numGiven * 10,
                                         gifts: gifted[0].numGiven,
                                         loggedIn: loggedIn,
                                         comment: commentData.models,
