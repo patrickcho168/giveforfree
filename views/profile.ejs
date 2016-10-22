@@ -370,12 +370,12 @@
                                 are listed below <br><br>
                             </p>
                             <div class="row">
-                                <% for(var i=0; i<7; i++) { %>
+                                <% for(var i=0; i<friends.length; i++) { %>
                                     <div class="col-xs-6 col-sm-2" style="margin-top: 10px;">
                                         <div class="media-left">
-                                            <a href="#" class="avatar" style="background-image: url(../../images/common/test-user.png" style="margin: auto 10px; padding: 0; width: 120px; height: 120px; border-radius:50%;"></a>
+                                            <a href="/profile/<%= friends[i].attributes.userID %>" class="avatar" style="background-image: url(https://graph.facebook.com/<%= friendProperty[friends[i].attributes.userID].fbID %>/picture" style="margin: auto 10px; padding: 0; width: 120px; height: 120px; border-radius:50%;"></a>
                                         </div>
-                                        <a href="#" style="font-size: 1.5em;">
+                                        <a href="/profile/<%= friends[i].attributes.userID %>" style="font-size: 1.5em;">
                                             <div class="media-body">
                                                 <div class="friend-title hide-overflow" style="margin-top: 5px; color: #565656;">
                                                     Name
