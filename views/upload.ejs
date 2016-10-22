@@ -152,8 +152,6 @@
                     <div class="panel photo-panel">
                         <div class="input-group image-preview">
                             <a class="btn btn-default image-preview-input">
-                                <span class="glyphicon glyphicon-picture"></span>
-                                <span>Browse</span>
                                 <input type="file" onchange="previewFile()" accept="image/png, image/jpeg, image/gif" name="input-file-cropped" style="height: 100%;" id="upload-trigger" />
                             </a>
                         </div>
@@ -173,14 +171,19 @@
                         <!-- Post Image Preview -->
                         <div id="image" style="display: none;">
                         </div>
-                        <div class="name-input-holder">
-                            <input type="text" class="input-txt name-input" name="title" placeholder="Name of your gift" maxlength="50" autocomplete="off" required>
-                        </div>
                     </div>
 
                 </div>
                 <div class="col-md-8 col-sm-7 right-group">
                     <div class="panel description-panel">
+                        <div class="name-input-holder">
+                            <h2>Name</h2>
+                            <p>
+                                A descriptive name that tells us what this is. <span class="no-description-alert hidden" style="color: #f05050;">You need to name the item!</span>
+                                <!-- TODO: implement validation-->
+                            </p>
+                            <input type="text" class="input-txt name-input" name="title" placeholder="This is a ..." maxlength="50" autocomplete="off" required>
+                        </div>
                         <div class="description-input-holder">
                             <h2>Description</h2>
                             <p>
@@ -192,7 +195,7 @@
                         <div class="category-select-holder">
                             <h2>Category</h2>
                             <p>
-                                Include at least one category. <span class="no-category-alert hidden" style="color: #f05050;">You have to choose at least one tag.</span>
+                                Include at least one category. <span class="no-category-alert hidden" style="color: #f05050;">You need to choose a category.</span>
                                 <!-- TODO: implement validation-->
                             </p>
                             <select id="input-tags" name="categories[]" multiple class="categories has-options " style="width:70%" auto-complete: "off" placeholder="Select categories...">

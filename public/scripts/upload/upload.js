@@ -148,8 +148,9 @@ function previewFile() {
             $(".image-confirm").click(function() {
                 $uploadCrop.croppie('result', {
                     type: 'canvas',
-                    format: 'png',
-                    size: 'viewport'
+                    format: 'jpeg',
+                    size: {'width': 400},
+                    quality: 1
                 }).then(function(resp) {
                     // Replace cropbox with image
                     $(".image-crop").html("<img src='" + resp + "'width='90%' style='padding: 15px; margin-left: 15px; margin-right: 15px; position: relative;'/>");

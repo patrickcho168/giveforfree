@@ -81,6 +81,8 @@ textarea {
     resize: none;
     border-bottom: none;
     display: block;
+    overflow: hidden!important;
+    max-height: 95px;
 }
 button {
     transition: all .5s;
@@ -313,17 +315,11 @@ img {
     margin: 0!important;
 }
 
-.name-input-holder {
-    padding: 20px;
-    height: auto;
-}
 
 .name-input {
-    color: #76323f;
-    text-align: center;
-    font-size: 3em;
-    font-weight: 400;
-    margin-top: 50px;
+    font-size: 20px;
+    font-weight: 300;
+    margin-bottom: 10px;
 }
 
 .image-preview {
@@ -338,23 +334,22 @@ img {
     border: none;
 }
 
-.category-select-holder {
-    margin-top: 50px;
+.category-select-holder, .description-input-holder {
+    margin-top: 10px;
 }
-
 
 .description-input-holder p, .category-select-holder p {
     color: #565656;
 }
 
 .description-input-holder textarea {
-    margin-top: 20px;
+    margin-top: 10px;
     font-size: 20px;
     font-weight: 300;
 }
 
 .selectize-control {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .selectize-control .items {
@@ -561,12 +556,6 @@ img {
         display: none;
     }
 
-    .name-input-holder input {
-        margin-top: 30px;
-        margin-bottom: 30px;
-        font-size: 1.8em;
-    }
-
     .cr-boundary {
         height: 300px!important;
     }
@@ -575,4 +564,8 @@ img {
         height: 280px!important;
         width: 280px!important;
     }
+}
+
+a#image-holder {
+    cursor: pointer;
 }
