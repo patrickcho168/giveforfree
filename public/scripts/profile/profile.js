@@ -1,7 +1,7 @@
 if (location.hash) {
     window.scrollTo(0, 0);
     setTimeout(function() {
-        window.scrollTo(0, 0);  
+        window.scrollTo(0, 0);
     }, 1);
 }
 
@@ -536,4 +536,14 @@ $(window).load(function() {
         var imgClass = (this.width / this.height > 1) ? 'wide' : 'tall';
         $(this).addClass(imgClass);
     })
+});
+
+$(document).scroll(function() {
+    var y = $(document).scrollTop();
+    var floatingBar = $('.floating-bar-full');
+    if(y >= 377) {
+        floatingBar.css({"position": "fixed", "top": "87px", "padding-right": "30px"});
+    } else {
+        floatingBar.css({"position": "relative", "top": "0px", "padding-right": "15px"});
+    }
 });
