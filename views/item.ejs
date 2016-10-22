@@ -297,13 +297,13 @@
                     </div>
                     <div class="item-basic-info">
                         <div class="info-text info-display">
-                            <h2><%= item.title %></h2>
-                            <p><%= item.description %></p>
+                            <h2><%- item.title %></h2>
+                            <p><%- item.description %></p>
                         </div>
                         <div class="info-text info-edit hidden">
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                            <input type="text" class="input-txt name-input" name="title" maxlength="50" autocomplete="off" value="<%= item.title %>" required>
-                            <textarea type="text" class="input-txt description-input" name="description"  maxlength="50" autocomplete="off" required><%= item.description %></textarea>
+                            <input type="text" class="input-txt name-input" name="title" maxlength="50" autocomplete="off" value="<%- item.title %>" required>
+                            <textarea type="text" class="input-txt description-input" name="description"  maxlength="50" autocomplete="off" required><%- item.description %></textarea>
                         </div>
                         <% if (!mine) { %>
                             <div class="info-button want-button">
@@ -337,7 +337,7 @@
                             <div class="giver-img pull-left">
                                 <img src="http://graph.facebook.com/<%= item.fbID %>/picture?type=large" alt="" />
                             </div>
-                            <a href="/profile/<%= item.giverID %>" class="giver-name"><%= item.name %></a>
+                            <a href="/profile/<%= item.giverID %>" class="giver-name"><%- item.name %></a>
 
                             <% if (loggedIn && mine && item.takerID === null) { %>
                                 <br>
@@ -349,7 +349,7 @@
                                         <li><a href="/api/give/<%= item.itemID %>" style="padding-left: 10px;">Random draw</a></li>
                                         <% for (var i=0; i<manual.length; i++) { %>
                                             <li class="single-wanter">
-                                                <p><%= manual[i].name %></p>
+                                                <p><%- manual[i].name %></p>
                                                 <div class="link-box">
                                                     <a href="/profile/<%= manual[i].userID %>">Profile</a>
                                                     <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">Give</a>
@@ -469,7 +469,7 @@
                                     <h2>Charity & Donation</h2>
                                     <p class="subtitle info-display">
                                         <!-- TODO: get charity name here -->
-                                        Receiver will be donating <strong><%= item.charityName %></strong> for
+                                        Receiver will be donating <strong><%- item.charityName %></strong> for
                                     </p>
                                     <p class="donation-amount info-display">
                                         <!-- TODO: get donation amount here -->
@@ -546,7 +546,7 @@
 
         <div class="row panel comment-panel">
             <% if (!mine && loggedIn) { %>
-                <h3 class="comment-title">Curious? Comment below or <a href="javascript:messageUser();">message <%=item.name%>!<a></h3>
+                <h3 class="comment-title">Curious? Comment below or <a href="javascript:messageUser();">message <%- item.name%>!<a></h3>
             <% } %>
             <div id="comments-container" style="margin-left: 15px; margin-right: 15px;">
             </div>

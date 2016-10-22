@@ -437,3 +437,5 @@ function selectCharity(currentSelection) {
         $('.no-charity').addClass('hidden');
     }
 }
+
+
