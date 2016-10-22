@@ -94,8 +94,19 @@ function previewFile() {
     var reader = new FileReader();
 
     if (file) {
+        // Check file type
+        if (file.type.indexOf("image") == -1) {
+            $('#create-upload').attr("disabled", "disabled");
+            $.notify({
+                // options
+                message: "That file you tried to upload doesn't look like an image. Please try a different file."
+            }, {
+                // settings
+                type: 'danger'
+            });            
+        }
         // Check file size
-        if (file.size > 5 * 1024 * 1024) {
+        else if (file.size > 5 * 1024 * 1024) {
             $('#create-upload').attr("disabled", "disabled");
             $.notify({
                 // options
