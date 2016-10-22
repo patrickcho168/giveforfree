@@ -416,6 +416,14 @@ img {
     vertical-align: middle;
     padding-top: 70px;
     padding-bottom: 70px;
+    padding-left: 0;
+}
+
+.more-info-wrapper {
+    padding-left: 10%;
+}
+
+.donation-wrapper {
     padding-left: 10%;
 }
 

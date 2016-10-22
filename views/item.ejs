@@ -43,6 +43,7 @@
         var loggedIn = <%= loggedIn %>;
         var currentItemId = <%= item.itemID %>;
         var userId = <%= id %>;
+        var userFbId = "<%= user.fbID %>";
         window.fbAsyncInit = function() {
             FB.init({
                 appId: '<%= appId %>',
@@ -107,9 +108,6 @@
                 <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
                 toId = '<%= item.takerFbID %>';
                 <% } %>
-
-                console.log(toId);
-                console.log('<%= domain %>/item/<%= item.itemID %>');
 
                 FB.ui({
                     method: 'send',
@@ -215,10 +213,6 @@
                 </a>
             </div>
 
-            <button type="button" class="navbar-toggle collapsed category-button" aria-expanded="false">
-                <i class="fa fa-bars"></i>
-            </button>
-
             <button type="button" class="navbar-toggle collapsed user-button" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
                 <i class="fa fa-user"></i>
             </button>
@@ -232,11 +226,8 @@
                         <a href="/profile/<%= id %>">
                             <div class="user-avatar">
                                 <img src="../images/common/test-user.png" alt="" />
-                                <% if (typeof notification != 'undefined' ) { %>
-                                    <span class="badge"><%= notification.length %></span>
-                                <% } %>
                                 <!-- TODO: pass name of the giver to here -->
-                                <span> Name of giver</span>
+                                <span> <%= user.name %></span>
                             </div>
                         </a>
                     </li>
@@ -250,6 +241,11 @@
                             <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
                         </a>
                     </li>
+                    <% if (typeof notification != 'undefined') { %>
+                        <!-- Notifications -->
+                        <%- include('notification'); %>
+                        <!-- End Notifications -->
+                    <% } %>
                     <li id="nav-logout">
                         <a href="/logout">Log out</a>
                     </li>
@@ -307,19 +303,29 @@
                         </div>
                         <% if (!mine) { %>
                             <div class="info-button want-button">
-                                <% if (!loggedIn && !expired && item.takerID === null) { %>
-                                    <a href="/login" class="btn btn-lg btn-want btn-block"><span class="glyphicon glyphicon-gift"></span> Login to want</a>
-                                <% } else if (item.meWant === 1 && !expired && item.takerID === null) { %>
-                                    <a class="btn btn-lg btn-block btn-unwant unsnag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span><span> Unwant </span><span class="badge"><%= item.numWants %></span> </a>
-                                <% } else if (!expired && item.takerID === null) { %>
-                                    <a class="btn btn-lg btn-block btn-want snag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span><span> Want </span><span class="badge"><%= item.numWants %></span> </a>
-                                <% } else if (!expired && loggedIn && item.takerID === id) { %>
-                                    <a class="btn btn-lg btn-block btn-donate"><i class="fa fa-heart-o"></i> Donate!</a>
+                                <% if (!loggedIn) { %>
+                                    <% if (!expired && item.takerID === null) { %>
+                                        <a href="/login" class="btn btn-lg btn-want btn-block"><span class="glyphicon glyphicon-gift"></span> Login to want</a>
+                                    <% } else if (item.takerID !== null) { %>
+                                        <a href="/profile/<%= item.takerID %>" class="btn btn-lg btn-want btn-block"><i class="fa fa-heart-o"></i> Given to <%= item.takerName %></a>
+                                    <% } else if (expired && item.takerID === null) { %>
+                                        <div class="btn btn-lg btn-want btn-block"><i class="fa fa-heart-o"></i> Gift has expired</div>
+                                    <% } %>
+                                <% } else { %>
+                                    <% if (item.takerID === id) { %>
+                                        <a class="btn btn-lg btn-block btn-donate"><i class="fa fa-heart-o"></i> Donate!</a>
+                                    <% } else if (item.takerID !== null) { %>
+                                        <a href="/profile/<%= item.takerID %>" class="btn btn-lg btn-want btn-block"><i class="fa fa-heart-o"></i> Given to <%= item.takerName %></a>
+                                    <% } else if (item.meWant === 1 && !expired) { %>
+                                        <a class="btn btn-lg btn-block btn-unwant unsnag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span><span> Unwant </span><span class="badge"><%= item.numWants %></span> </a>
+                                    <% } else if (!expired) { %>
+                                        <a class="btn btn-lg btn-block btn-want snag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span><span> Want </span><span class="badge"><%= item.numWants %></span> </a>
+                                    <% } else { %>
+                                        <div class="btn btn-lg btn-want btn-block"><i class="fa fa-heart-o"></i> Gift has expired</div>
+                                    <% } %>
                                 <% } %>
-                                <!-- TODO: the button below will appear when receiver is accepted (current userId = item.takerID) -->
-
                             </div>
-                        <% } else { %>
+                        <% } else if (item.takerID === null) { %>
                             <div class="info-button modify-button">
                                 <a href="#" class="btn btn-lg btn-block btn-modify">Modify</a>
                                 <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block btn-delete">Delete</a>
@@ -429,32 +435,20 @@
                                         <% } %>
                                     </div>
                                     <select id="input-tags" name="categories[]" multiple class="categories has-options info-edit hidden" auto-complete: "off" placeholder="Select categories...">
-                                        <option value="">Select categories...</option>
-                                        <option value="clothes">clothes</option>
-                                        <option value="accessories">accessories</option>
-                                        <option value="furniture & home">furniture & home</option>
-                                        <option value="parenting">parenting</option>
-                                        <option value="health">health</option>
-                                        <option value="beauty">beauty</option>
-                                        <option value="kitchen appliances">kitchen appliances</option>
-                                        <option value="gardening">gardening</option>
-                                        <option value="property">property</option>
-                                        <option value="design & craft">design & craft</option>
-                                        <option value="electronics">electronics</option>
-                                        <option value="sports">sports</option>
-                                        <option value="photography">photography</option>
-                                        <option value="antiques">antiques</option>
-                                        <option value="toys">toys</option>
-                                        <option value="games">games</option>
-                                        <option value="music">music</option>
-                                        <option value="tickets & vouchers">tickets & vouchers</option>
-                                        <option value="auto accessories">auto accessories</option>
-                                        <option value="books">books</option>
-                                        <option value="stationeries">stationeries</option>
-                                        <option value="textbooks">textbooks</option>
-                                        <option value="notes">notes</option>
-                                        <option value="pets">pets</option>
-                                        <option value="other">other</option>
+                                        <% categories_list = [
+                                            "books",
+                                            "clothes",
+                                            "electronics",
+                                            "entertainment",
+                                            "furniture",
+                                            "kitchen appliances",
+                                            "sports",
+                                            "toys",
+                                            "other"
+                                        ] %>
+                                        <% for(var i=0; i<categories_list.length; i++) {%>
+                                            <option value="<%= categories_list[i] %>"><%= categories_list[i] %></option>
+                                        <% } %>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 deadline-info">
@@ -463,13 +457,13 @@
                                         This giveaway ends on
                                     </p>
                                     <p class="deadline info-display"><%= date %></p>
-                                    <input type="text" class="input-txt input-date info-edit hidden" name="date" id="date" value="<%= moment(date, "D MMMM YYYY HH:mm").format(" YYYY-MM-DD ") %>" maxlength="50" autocomplete="off" required>
+                                    <input type="text" class="input-txt input-date info-edit hidden" name="date" id="date" value="<%= moment(date, "D MMMM YYYY HH:mm").format("YYYY-MM-DD") %>" maxlength="50" autocomplete="off" required>
                                 </div>
                                 <div class="col-sm-6 charity-info">
                                     <h2>Charity & Donation</h2>
                                     <p class="subtitle info-display">
                                         <!-- TODO: get charity name here -->
-                                        Receiver will be donating <strong><%- item.charityName %></strong> for
+                                        Proceeds of this amount will be going to <strong><%= item.charityName %></strong>
                                     </p>
                                     <p class="donation-amount info-display">
                                         <!-- TODO: get donation amount here -->
@@ -486,9 +480,8 @@
                                         <img src="../images/upload/charity2.png" alt="" class="covered" onclick="selectCharity(this);"/>
                                     </div>
                                     <div class="money-input info-edit hidden">
-                                        <i class="fa fa-usd"></i><span> SGD</span>
-                                            
-                                        <input type="text" class="input-txt donation-input" disabled name="donation" placeholder="<%= item.donationAmount %>" maxlength="50" autocomplete="off" required>
+                                        <i class="fa fa-usd"></i><span> SGD</span>                                            
+                                        <input type="text" class="input-txt donation-input" disabled name="donation" value="<%= item.donationAmount %>" maxlength="50" autocomplete="off" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 delivery-info">

@@ -108,84 +108,68 @@
     </div>
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-
-            <!-- Left Header Icon -->
-            <div class="navbar-header">
-
-                <!-- Collapsed Nav -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <!-- Logo and Name -->
-                <a class="navbar-brand" href="/">
-                    <h4 style="margin-top: 0px;">
-                    <img src="../images/common/logo-new.svg" width="30px" height="30px" style="margin-top: -5px;"/>
-                    Give For Free!</h4>
+    <nav class="navbar navbar-fixed-top">
+        <div class="navbar-header">
+            <div class="navbar-brand">
+                <a href="/" class="navbar-logo">
+                    <img src="../images/common/gff-logo.svg" class="logo-full" alt="" />
+                    <img src="../images/common/gff-logo-s.svg" class="logo-mobile" alt="" />
                 </a>
             </div>
 
-            <!-- Menu -->
-            <div class="collapse navbar-collapse" id="nav-menu">
-
-                <!-- User Actions Menu -->
-                <% if (loggedIn) { %>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li id="nav-create">
-                            <a href="/upload">
-                                <i class="fa fa-gift" aria-hidden="true"></i> Give
-                            </a>
-                        </li>
-                        <li id="nav-feed">
-                            <a href="/">
-                                <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
-                            </a>
-                        </li>
-                        <li id="nav-profile" class="active">
-                            <a href="/profile/<%= id %>">
-                                <i class="fa fa-user" aria-hidden="true"></i> Profile
-                            </a>
-                        </li>
-
-                        <% if (typeof notification != 'undefined') { %>
-                            <!-- Notifications -->
-                            <%- include('notification'); %>
-                                <!-- End Notifications -->
-                        <% } %>
-
-                        <!-- Logout -->
-                        <li id="nav-logout">
-                            <a href="/logout">
-                                <i class="fa fa-lock" aria-hidden="true"></i> Logout
-                            </a>
-                        </li>
-                    </ul>
-                <% } else { %>
-                    <!-- Logged Out Navbar Menu -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <li id="nav-feed">
-                            <a href="/">
-                                <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
-                            </a>
-                        </li>
-                        <li id="nav-logout">
-                            <a href="javascript:loginSpecial();">
-                                <i class="fa fa-lock" aria-hidden="true"></i> Login
-                            </a>
-                        </li>
-                    </ul>
-                <% } %>
-            </div>
+            <button type="button" class="navbar-toggle collapsed user-button" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
+                <i class="fa fa-user"></i>
+            </button>
         </div>
+
+        <div class="collapse navbar-collapse" id="nav-menu">
+
+            <ul class="nav navbar-nav navbar-right">
+                <% if(loggedIn) { %>
+                    <li id="nav-profile">
+                        <a href="/profile/<%= id %>">
+                            <div class="user-avatar">
+                                <img src="../images/common/test-user.png" alt="" />
+                                <span> <%= user.name %></span>
+                            </div>
+                        </a>
+                    </li>
+                    <li id="nav-create">
+                        <a href="/upload">
+                            <i class="fa fa-gift" aria-hidden="true"></i> Give
+                        </a>
+                    </li>
+                    <li id="nav-feed">
+                        <a href="/">
+                            <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
+                        </a>
+                    </li>
+                    <% if (typeof notification != 'undefined') { %>
+                        <!-- Notifications -->
+                        <%- include('notification'); %>
+                        <!-- End Notifications -->
+                    <% } %>
+                    <li id="nav-logout">
+                        <a href="/logout">Log out</a>
+                    </li>
+                <%  } else { %>
+                    <li id="nav-feed">
+                        <a href="/">
+                            <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
+                        </a>
+                    </li>
+                    <li id="nav-logout">
+                        <a href="javascript:loginSpecial();">Log in</a>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+        <!-- Menu -->
+
     </nav>
 
     <!-- Start of Page Content -->
-    <div class="container main-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="main-container">
 
         <!-- Message Flashing -->
         <!-- Errors -->
@@ -207,164 +191,210 @@
         } %>
 
         <!-- Title Banner -->
-        <row>
-            <div style="padding-left: 20px; padding-right: 20px;">
-                <div class="panel panel-default title-panel col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-ms-10 col-ms-offset-1 col-xs-10 col-xs-offset-1" style="display: flex; justify-content:center; align-content:center; flex-direction:column; margin-bottom: 20px;" align="center">
+        <div class="panel profile-banner">
+            <div class="profile-panel">
+                <div class="profile-cover">
+                    <div class="info-wrapper">
+                        <div class="photo-wrapper">
+                                <img src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large" class="user-img">
+                                <% if (myProfile) { %>
+                                    <a data-toggle="modal" data-target="#confirm-delete" class="btn btn-modify btn-delete">Delete Account</a>
+                                <% } else if (!flagUser) { %>
+                                    <a data-toggle="modal" data-target="#confirm-flag" class="btn btn-modify">Flag User</a>
+                                <% } else { %>
+                                    <a data-toggle="modal" data-target="#confirm-flag" class="btn btn-modify">User Flagged</a>
+                                <% } %>
+                            </div>
 
-                    <img src="../images/profile/elf.svg" style="display: block; margin-left: auto; margin-right: auto; padding: 10px 0; width: 100px;">
-                    <!-- <img class="col-lg-4" src="http://graph.facebook.com/<%= user.fbID %>/picture?type=large" style="padding: 10px 0; width: 100px; border-radius:50%;"> -->
-                    <p style="font-size:calc(16px + 1.5vw); mvertical-align: middle; padding:10px 0; padding-top: 15px; font-weight: bold; color: white; ">
-                        <%= user.name %>
-                        <% if (myProfile) { %>
-                            <a data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger">Delete</a>
-                        <% } else if (loggedIn && !flagUser) { %>
-                            <a data-toggle="modal" data-target="#confirm-flag" class="btn btn-danger">Flag User</a>
-                        <% } else if (loggedIn) { %>
-                            <a data-toggle="modal" data-target="#confirm-flag" class="btn btn-danger">User Flagged</a>
-                        <% } %>
-                    </p>
-                    <fieldset class="fixedrating" style="color: white; font-weight: bold; text-align: center; margin-top: -15px; padding-bottom: 10px;">
-                        <input type="radio" id="star5" name="rating" value="5" <% if (userRating === 10) { %>checked="checked" <% } %> disabled/><label class = "full" for="star5" title="5 stars"></label>
-                        <input type="radio" id="star4half" name="rating" value="4 and a half" <% if (userRating === 9) { %>checked="checked" <% } %> disabled/><label class="half" for="star4half" title="4.5 stars"></label>
-                        <input type="radio" id="star4" name="rating" value="4" <% if (userRating === 8) { %>checked="checked" <% } %> disabled/><label class = "full" for="star4" title="4 stars"></label>
-                        <input type="radio" id="star3half" name="rating" value="3 and a half" <% if (userRating === 7) { %>checked="checked" <% } %> disabled/><label class="half" for="star3half" title="3.5 stars"></label>
-                        <input type="radio" id="star3" name="rating" value="3" <% if (userRating === 6) { %>checked="checked" <% } %> disabled/><label class = "full" for="star3" title="3 stars"></label>
-                        <input type="radio" id="star2half" name="rating" value="2 and a half" <% if (userRating === 5) { %>checked="checked" <% } %> disabled/><label class="half" for="star2half" title="2.5 stars"></label>
-                        <input type="radio" id="star2" name="rating" value="2" <% if (userRating === 4) { %>checked="checked" <% } %> disabled/><label class = "full" for="star2" title="2 stars"></label>
-                        <input type="radio" id="star1half" name="rating" value="1 and a half" <% if (userRating === 3) { %>checked="checked" <% } %> disabled/><label class="half" for="star1half" title="1.5 stars"></label>
-                        <input type="radio" id="star1" name="rating" value="1" <% if (userRating === 2) { %>checked="checked" <% } %> disabled/><label class = "full" for="star1" title="1 star"></label>
-                        <input type="radio" id="starhalf" name="rating" value="half" <% if (userRating === 1) { %>checked="checked" <% } %> disabled/><label class="half" for="starhalf" title="0.5 stars"></label>
-                    </fieldset>
-                    <h4 style="color: white; font-weight: bold; margin-top: -10px; padding-bottom: 5px;"></h4>
-                    <div class="fb-like" data-href="http://www.giveforfree.sg/profile/<%= id %>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true" style="bottom:10px;"></div>
+                        <div class="content-wrapper">
+                                <p class="user-name">
+                                    <%= user.name %>
+                                </p><br>
+                                <fieldset class="fixedrating">
+                                    <input type="radio" id="star5" name="rating" value="5" <% if (userRating === 10) { %>checked="checked" <% } %> disabled/><label class = "full" for="star5" title="5 stars"></label>
+                                    <input type="radio" id="star4half" name="rating" value="4 and a half" <% if (userRating === 9) { %>checked="checked" <% } %> disabled/><label class="half" for="star4half" title="4.5 stars"></label>
+                                    <input type="radio" id="star4" name="rating" value="4" <% if (userRating === 8) { %>checked="checked" <% } %> disabled/><label class = "full" for="star4" title="4 stars"></label>
+                                    <input type="radio" id="star3half" name="rating" value="3 and a half" <% if (userRating === 7) { %>checked="checked" <% } %> disabled/><label class="half" for="star3half" title="3.5 stars"></label>
+                                    <input type="radio" id="star3" name="rating" value="3" <% if (userRating === 6) { %>checked="checked" <% } %> disabled/><label class = "full" for="star3" title="3 stars"></label>
+                                    <input type="radio" id="star2half" name="rating" value="2 and a half" <% if (userRating === 5) { %>checked="checked" <% } %> disabled/><label class="half" for="star2half" title="2.5 stars"></label>
+                                    <input type="radio" id="star2" name="rating" value="2" <% if (userRating === 4) { %>checked="checked" <% } %> disabled/><label class = "full" for="star2" title="2 stars"></label>
+                                    <input type="radio" id="star1half" name="rating" value="1 and a half" <% if (userRating === 3) { %>checked="checked" <% } %> disabled/><label class="half" for="star1half" title="1.5 stars"></label>
+                                    <input type="radio" id="star1" name="rating" value="1" <% if (userRating === 2) { %>checked="checked" <% } %> disabled/><label class = "full" for="star1" title="1 star"></label>
+                                    <input type="radio" id="starhalf" name="rating" value="half" <% if (userRating === 1) { %>checked="checked" <% } %> disabled/><label class="half" for="starhalf" title="0.5 stars"></label>
+                                </fieldset><br>
+                                <div class="fb-like" data-href="http://www.giveforfree.sg/profile/<%= id %>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+                            </div>
+                    </div>
+
+
+                    <div class="data-wrapper">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-12 col-md-12 give-info">
+                                <p class="donation-money">
+                                    $120,000
+                                </p>
+                                <p class="donation-text">
+                                    donated through giving
+                                </p>
+                            </div>
+                            <div class="col-xs-6 col-sm-12 col-md-12 receive-info">
+                                <p class="donation-money">
+                                    $5,000
+                                </p>
+                                <p class="donation-text">
+                                    donated through getting gifts
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </row>
-
-        <!-- Tabs and Content -->
-        <div class='tabs-x tabs-left tab-bordered col-lg-12' id="tabs"></div>
-        <div>
-            <row>
-                <div class="clearfix"></div>
-                <ul id="my-tabs" class="nav nav-tabs my-tabs centered" role="tablist">
-                    <li class="active icon-tab" id="tab-gifts"><a href="#gifts" role="tab" data-toggle="tab"><i class="fa fa-gift" aria-hidden="true"></i> <text class="hidden-xs"> Gifts</text></a></li>
-                    <li class="icon-tab" id="tab-wants"><a href="#wants" role="tab" data-toggle="tab"><i class="fa fa-star" aria-hidden="true"></i> <text class="hidden-xs"> Wants</text></a></li>
-                    <li class="icon-tab" id="tab-thanks"><a href="#thanks" role="tab" data-toggle="tab"><i class="fa fa-thumbs-up" aria-hidden="true"></i><text class="hidden-xs"> Thanks</text></a></li>
+            <div class="profile-switcher">
+                <ul id="my-tabs" class="nav nav-pills" role="tablist">
+                    <li class="active icon-tab" id="tab-gifts"><a href="#gifts" role="tab" data-toggle="tab"><i class="fa fa-gift" aria-hidden="true"></i> Gifts</a></li>
+                    <li class="icon-tab" id="tab-wants"><a href="#wants" role="tab" data-toggle="tab"><i class="fa fa-star" aria-hidden="true"></i> Wants</a></li>
+                    <li class="icon-tab" id="tab-thanks"><a href="#thanks" role="tab" data-toggle="tab"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Thanks</a></li>
                     <% if (myProfile) { %>
-                    <li class="icon-tab" id="tab-friends"><a href="#friends" role="tab" data-toggle="tab"><i class="fa fa-child" aria-hidden="true"></i> <text class="hidden-xs"> Friends</text></a></li>
+                    <li class="icon-tab" id="tab-friends"><a href="#friends" role="tab" data-toggle="tab"><i class="fa fa-child" aria-hidden="true"></i> Friends</a></li>
                     <% } %>
                 </ul>
-            </row>
-            <div id="my-tabs-contents" class="tab-content" align="center">
-                <!-- Gifts -->
-                <div class="tab-pane fade in active col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="gifts">
-                    <div id="gifts-placeholder">
-                        <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
-                        <% if (myProfile) { %>
-                        <p>
-                            You have nothing to give for now.
-                            <br> Try <a href="/upload"> uploading </a> one!
-                        <% } else { %>
-                        <p>
-                            <%= user.name %> has nothing to give for now.
-                            <br> Come back later!
-                        </p>
-                        <% } %>
+            </div>
+        </div>
+
+        <div id="my-tabs-contents" class="tab-content" align="center">
+            <!-- Gifts -->
+            <div class="tab-pane fade in active" id="gifts">
+                <div class="row">
+                    <div class="panel">
+                        <div class="gifts-banner hidden">
+                            <div class="placeholder">
+        						<img src="../images/common/empty-gift.svg" alt="" class="placeholder-img"/>
+        						<h3 class="empty-placeholder-text">Thank you</h3>
+        						<p class="empty-placeholder-text">
+        							Thank you for your contribution<br>
+        							View your gifts below <br><br>
+        						</p>
+        					</div>
+                        </div>
+                        <div class="gifts-banner-empty">
+                            <div class="placeholder">
+        						<img src="../images/common/empty-gift.svg" alt="" class="placeholder-img"/>
+                                <% if (myProfile) { %>
+            						<h3 class="empty-placeholder-text">Take the lead</h3>
+            						<p class="empty-placeholder-text">
+            							You have no gifts yet. <br>
+            							Why not contribute one? <br><br>
+            							<a class="give-button" type="button" href="/upload">Give a gift</a>
+            						</p>
+                                <% } else { %>
+                                    <h3 class="empty-placeholder-text">Oops!</h3>
+            						<p class="empty-placeholder-text">
+            							This person has no gifts yet. <br>
+                                        Come back later!
+            						</p>
+                                <% } %>
+        					</div>
+                        </div>
+    				</div>
+                    <div class="col-sm-offset-3 items-display">
+                        <div class="row" id="infinite-scroll-container2">
+
+                        </div>
                     </div>
                 </div>
-                <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="thanks">
-                    <div id="comments-container" style="margin-left: 15px; margin-right: 15px;">
+            </div>
+            <div class="tab-pane fade" id="thanks">
+                <div class="panel comment-panel">
+                    <div id="comments-container">
 
                     </div>
                 </div>
-                                    <!-- <div id="thanks-placeholder">
-                                        <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
-                                        <p>
-                                            <%= user.name %> has yet to receive any thank-you messages.
-                                                <br> Send
-                                                <%= user.name %> one now! </p>
-                                    </div> -->
+            </div>
 
-                                    <!-- <div id="gifts-loader">
-                            <br/>
-                            Come back later!
-                        </p>
+            <!-- Wants -->
+            <div class="tab-pane fade" id="wants">
+                <div class="panel">
+                    <div class="gifts-banner hidden">
+                        <div class="placeholder">
+                            <img src="../images/common/empty-gift.svg" alt="" class="placeholder-img"/>
+                            <h3 class="empty-placeholder-text">Ta da!</h3>
+                            <p class="empty-placeholder-text">
+                                All your wanted gifts are listed below.<br>
+                                Please have a look!<br><br>
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <!-- Wants -->
-                <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="wants">
-                    <div id="wants-placeholder">
-                        <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
-                        <% if (myProfile) { %>
-                        <p>
-                            You have no wants for now.
-                            <br/>
-                            Go get something <a href="/"> FREE </a>!
-                        </p>
-                        <% } else { %>
-                        <p>
-                            <%= user.name %> has no wants for now.
-                            <br/>
-                            Chat with <%= user.name %>!
-                        </p>
-                        <% } %>
-                    </div>
-                </div>
-                <!-- Thanks -->
-                <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="thanks">
-                    <div id="thanks-placeholder">
-                        <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
-                        <p>
-                            <%= user.name %> has yet to receive any thank-you messages.
-                            <br/>
-                            Send <%= user.name %> one now! </p>
-                    </div>
-                </div>
-                <!-- Friends -->
-                <% if (myProfile) { %>
-                <div class="tab-pane fade col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12" style="padding-top: 30px;" id="friends">
-                    <% if (friends.length > 0) { %>
-                        <div id="friends-placeholder" style="display:none;"></div>
-                    <% } else { %>
-                        <div id="friends-placeholder">
-                            <img src="../images/common/empty-box-placeholder.svg" align="center" style="height: 200px; width: 200px;" />
-                            <% if (loggedIn) { %>
-                                <p>
-                                    <%= user.name %> doesn't have any friends using G4F...
-                                    <br/>
-                                    Let your friends know about this awesome cause!
+                    <div class="gifts-banner-empty">
+                        <div class="placeholder">
+                            <img src="../images/common/empty-gift.svg" alt="" class="placeholder-img"/>
+                            <% if (myProfile) { %>
+                                <h3 class="empty-placeholder-text">Oops!</h3>
+                                <p class="empty-placeholder-text">
+                                    You have no wanted gifts yet. <br>
+                                    Want to browse some? <br><br>
+                                    <a class="give-button" type="button" href="/">Browse some gifts</a>
                                 </p>
                             <% } else { %>
-                                <p>
-                                    Log in to find your friends!
+                                <h3 class="empty-placeholder-text">Oops!</h3>
+                                <p class="empty-placeholder-text">
+                                    This person has no wanted gifts yet. <br>
+                                    Come back later!
                                 </p>
                             <% } %>
                         </div>
-                    <% } %>
+                    </div>
+                </div>
+                <div class="col-sm-offset-3 items-display">
+                    <div class="row" id="infinite-scroll-container2">
 
-                    <% if (friends.length > 0) {
-                        for(var i=0; i<friends.length; i++) {%>
-                            <div class="col-lg-2">
-                                <div class="media-left">
-                                    <a href="/profile/<%= friends[i].attributes.userID %>" class="avatar" style="background-image: url(https://graph.facebook.com/<%= friendProperty[friends[i].attributes.userID].fbID %>/picture?type=large);" style="margin: auto 10px; padding: 0; width: 120px; height: 120px; border-radius:50%;"></a>
-                                </div>
-                                <a href="/profile/<%= friends[i].attributes.userID %>" style="font-size: 1.5em;">
-                                    <div class="media-body">
-                                        <div class="friend-title hide-overflow" style="margin-top: 10px;">
-                                            <strong><%= friends[i].attributes.name %><strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Friends -->
+            <% if (myProfile) { %>
+            <div class="tab-pane fade" id="friends">
+                <div class="panel">
+                    <div class="friends-banner">
+                        <img src="../images/common/friends.svg" alt="" class="placeholder-img friends-img"/>
+                        <% if (friends.length === 0) { %>
+                            <h3 class="empty-placeholder-text">Oops!</h3>
+                            <p class="empty-placeholder-text">
+                                You have no friends on Give For Free yet. <br>
+                                Why not invite them to join? <br><br>
+                            </p>
+                        <% } else { %>
+                            <h3 class="empty-placeholder-text">Say hello to your friends!</h3>
+                            <p class="empty-placeholder-text">
+                                Your Facebook friends who have joined Give For Free<br>
+                                are listed below <br><br>
+                            </p>
+                            <div class="row">
+                                <% for(var i=0; i<friends.length; i++) { %>
+                                    <div class="col-xs-6 col-sm-2" style="margin-top: 10px;">
+                                        <div class="media-left">
+                                            <a href="/profile/<%= friends[i].attributes.userID %>" class="avatar" style="background-image: url(https://graph.facebook.com/<%= friendProperty[friends[i].attributes.userID].fbID %>/picture" style="margin: auto 10px; padding: 0; width: 120px; height: 120px; border-radius:50%;"></a>
                                         </div>
-                                        <div class="notification-meta">
-                                        </div>
+                                        <a href="/profile/<%= friends[i].attributes.userID %>" style="font-size: 1.5em;">
+                                            <div class="media-body">
+                                                <div class="friend-title hide-overflow" style="margin-top: 5px; color: #565656;">
+                                                    Name
+                                                </div>
+                                                <div class="notification-meta">
+                                                </div>
+                                            </div>
+                                        </a>
                                     </div>
-                                </a>
+                                <% } %>
                             </div>
                         <% } %>
-                    <% } %>
-                    <br/>
+                        <br/>
+                    </div>
                 </div>
-                <% } %>
             </div>
+            <% } %>
         </div>
+
     </div>
 
     <!-- Modal Popup for deleting -->
@@ -408,21 +438,17 @@
 
     <!-- Footer -->
     <footer>
-        <div class="container footer-container">
-            <div class="col-xs-10 col-xs-offset-1 text-center">
-                <hr class="xsall">
-                <div class="col-xs-12 text-center" style="padding-bottom: 10px;">
-                    <small><span class="glyphicon glyphicon-envelope" id="envelope-icon" aria-hidden="true">  </span>  <a href="mailto:giveforfreefeedback@gmail.com"> giveforfreefeedback[at]gmail[dot]com</a></small>
-                    <br>
-                    <small><span class="glyphicon glyphicon-eye-open" id="eye-icon" aria-hidden="true"></span>  <a href="/privacy"> Privacy Clause</a></small>
-                </div>
-                <div class="col-xs-12 text-center">
-                    <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
-                </div>
+        <div class="footer-container">
+            <div class="col-xs-12 text-center" style="padding-bottom: 10px;">
+                <small><a href="mailto:giveforfreefeedback@gmail.com"><i class="fa fa-envelope"></i> giveforfreefeedback@gmail.com</a></small>
+                <br>
+                <small><a href="/privacy"><i class="fa fa-eye"></i> Privacy Clause</a></small>
+            </div>
+            <div class="col-xs-12 text-center">
+                <small class="col-xs-12 text-muted copyright">Copyright &copy; Give For Free 2016 </small>
             </div>
         </div>
     </footer>
-
 </body>
 
 </html>
