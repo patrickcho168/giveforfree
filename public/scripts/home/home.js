@@ -87,7 +87,7 @@ function addRealViews(html, url) {
 
             } else {
                 console.log("no data to load already");
-                
+
             }
 
             if($('.single-item').length > 0) {
