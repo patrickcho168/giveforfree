@@ -41,23 +41,6 @@ $(function() {
 
     $('textarea').autosize();
 
-    $('#input-tags').selectize({
-        delimiter: ',',
-        persist: false,
-        create: function(input) {
-
-            return {
-                value: "other",
-                text: "other"
-            }
-        }
-    });
-
-    $('#select-mode').selectize({
-        create: true,
-        sortField: 'text'
-    });
-
     var oldScroll = window.onscroll;
     $(document).on('focus', 'input', function(e) {
         window.onscroll = function() {
@@ -94,8 +77,19 @@ function previewFile() {
     var reader = new FileReader();
 
     if (file) {
+        // Check file type
+        if (file.type.indexOf("image") == -1) {
+            $('#create-upload').attr("disabled", "disabled");
+            $.notify({
+                // options
+                message: "That file you tried to upload doesn't look like an image. Please try a different file."
+            }, {
+                // settings
+                type: 'danger'
+            });            
+        }
         // Check file size
-        if (file.size > 5 * 1024 * 1024) {
+        else if (file.size > 5 * 1024 * 1024) {
             $('#create-upload').attr("disabled", "disabled");
             $.notify({
                 // options
@@ -137,8 +131,9 @@ function previewFile() {
             $(".image-confirm").click(function() {
                 $uploadCrop.croppie('result', {
                     type: 'canvas',
-                    format: 'png',
-                    size: 'viewport'
+                    format: 'jpeg',
+                    size: {'width': 400},
+                    quality: 1
                 }).then(function(resp) {
                     // Replace cropbox with image
                     $(".image-crop").html("<img src='" + resp + "'width='90%' style='padding: 15px; margin-left: 15px; margin-right: 15px; position: relative;'/>");
