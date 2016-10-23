@@ -38,24 +38,30 @@ module.exports = function(app){
 		if (~req.url.indexOf('/api/paid')) parseRaw(req, res, next)
 		else return next();  
 	});
-	
+	function getAtt(params, toGet){		
+		var strArr = params.split(toGet);
+		var strArr2 = strArr[1].split("&");
+		return strArr2[0];	
+	}
 	
 	app.post('/api/paid', function(req, res) {
 		console.log("ipn received");
 		res.send(200);
 		res.end();
 		var params = req.body;
+		console.log(params);
 		ipn.verify(params,{'allow_sandbox': true}, function callback(err, msg) {
 			console.log("ipn verify");
+			
 		  if (err) {
 			console.log(err);
 		  } else {
 			console.log("ipn success");
-
-			if (params.payment_status == 'Completed') {
-			  // Payment has been confirmed as completed
-			  console.log("payment completed");
-			}
+			
+			var payKey = getAtt(params, "&pay_key=");
+			console.log("payKey "+payKey);
+			var paymentStatus = getAtt(params, "&status=");
+			console.log("status "+paymentStatus)
 		  }
 		});
 	})
@@ -85,14 +91,14 @@ module.exports = function(app){
 			actionType:     'PAY',
 			currencyCode:   'SGD',
 			feesPayer:      'SECONDARYONLY',
-			memo:           'Donation to ' + req.body.charity.name, // Add Charity Name
+			memo:           'Donation to ' + req.body.charityName, // Add Charity Name
 			ipnNotificationUrl: 'http://tenzy.ddns.net/api/paid', // TO CHANGE THIS
 			cancelUrl:      req.body.redirectUrl, // Back to Item Page
 			returnUrl:      req.body.redirectUrl, // Back to Item Page
 			receiverList: {
 				receiver: [
 					{
-						email:  req.body.charity.email, // Generated from Request (Charity's Email)
+						email:  req.body.charityEmail, // Generated from Request (Charity's Email)
 						amount: toPay.toString(),
 						primary:'true'
 					},{
@@ -106,8 +112,8 @@ module.exports = function(app){
 
 		paypalSdk.pay(payload, function (err, response) {
 			if (err) {
-				//console.log(err);
-				//console.log(response);
+				console.log(err);
+				console.log(response);
 			} else {
 				// Response will have the original Paypal API response
 				//console.log(response);
