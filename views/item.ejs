@@ -357,6 +357,19 @@
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                             <input type="text" class="input-txt name-input" name="title" maxlength="50" autocomplete="off" value="<%= item.title %>" required>
                         </div>
+                        
+                        <% if (loggedIn && !mine && (item.takerID === null || item.takerID === id)) { %>
+                            <div class="message-giver">
+                                <a href="javascript:messageUser();" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Giver</a>
+                                <% if (item.takerID === id) { %>
+                                    <a href="javascript:shareItem();" class="btn btn-xs share-button" id="facebook-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
+                                <% } %>
+                            </div>
+                        <% } else if (loggedIn && mine && item.takerID !== null) { %>
+                            <div class="message-giver">
+                                <a href="javascript:messageUser();" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Donor</a>
+                            </div>
+                        <% } %>
                         <% if (!mine) { %>
                             <div class="info-button want-button">
                                 <% if (!loggedIn) { %>
@@ -611,13 +624,6 @@
                                         <% if (loggedIn && mine && item.takerID === null) { %>
                                             <br>
 
-                                        <% } else if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                                            <div>
-                                                <a href="javascript:messageUser();" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Giver</a>
-                                                <% if (item.takerID === id) { %>
-                                                    <a href="javascript:shareItem();" class="btn btn-xs share-button" id="facebook-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
-                                                <% } %>
-                                            </div>
                                         <% } %>
                                     </div>
                                     <% if (item.takerID !== null) { %>
