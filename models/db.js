@@ -228,7 +228,7 @@ var CategoryPageItemQuery = function(userId, numItems, categoryID, cb) {
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
     .whereNull('i.takerID')
-    .where('i.giverID', '!=', userId)
+    // .where('i.giverID', '!=', userId)
     .where('ci.categoryID', '=', categoryID)
     .where('i.timeExpired', '>', knex.raw('NOW()'))
     .orderBy('i.itemID', 'DESC')
@@ -252,7 +252,7 @@ var CategoryPageItemQueryBeforeId = function(userId, numItems, beforeId, categor
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
     .whereNull('i.takerID')
-    .where('i.giverID', '!=', userId)
+    // .where('i.giverID', '!=', userId)
     .where('i.itemID', '<', beforeId)
     .where('ci.categoryID', '=', categoryID)
     .where('i.timeExpired', '>', knex.raw('NOW()'))
@@ -389,7 +389,7 @@ var ItemPageQuery = function(userId, itemId, cb) {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
     .leftJoin('charity as c', 'c.charityID', 'i.charityID')
-    .select(['i.itemID', 'i.timeExpired', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'i.meetup', 'i.postage', 'i.collectionMessage', 'i.giverRating', 'i.takerRating', 'i.charityID', 'i.donationAmount', 'c.charityName as charityName', 'u.name', 'u.userID', 'u.fbID', 't.name as takerName', 't.userID as takerId', 't.fbID as takerFbID'])
+    .select(['i.itemID', 'i.timeExpired', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'i.meetup', 'i.postage', 'i.collectionMessage', 'i.giverRating', 'i.takerRating', 'i.charityID', 'i.donationAmount', 'i.donatedAmount', 'i.delivered', 'c.charityName as charityName', 'u.name', 'u.userID', 'u.fbID', 't.name as takerName', 't.userID as takerId', 't.fbID as takerFbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -444,6 +444,8 @@ var ProfilePageTotalTakenQuery = function(userId, cb) {
 // NotificationType 3: Someone commented on an item that I am currently snagging and hasn't been given out
 // NotificationType 4: The item that I am currently snagging has been given out (to who?)
 // NotificationType 5: Receive a thanks on my wall
+// NotificationType 6: Donation Done
+// NotificationType 7: Delivery Done
 
 var NotificationQuery = function(userId, limitNum, cb) {
   knex
@@ -466,7 +468,7 @@ var NotificationQuery = function(userId, limitNum, cb) {
     .leftJoin('comment as c', function() {
       this.on('n.commentID', '=', 'c.commentID').andOn('c.commenterID', '!=', userId)
     })
-    .select(['u.name', 'n.notificationID', 'n.notificationType', 'n.itemID', 'n.userID', 'n.wantID', 'n.commentID', 'n.thankID', 'n.timeCreated', 'iw.timeWanted', 'n.active', 'rn.readnotificationID', 'i.giverID', 'i.takerID', 'i.title', 'iw.wanterID', 't.receiverID', 'c.commenterID'])
+    .select(['u.name', 'n.notificationID', 'n.notificationType', 'n.itemID', 'n.userID', 'n.wantID', 'n.commentID', 'n.thankID', 'n.timeCreated', 'iw.timeWanted', 'n.active', 'rn.readnotificationID', 'i.giverID', 'i.takerID', 'i.title', 'i.donationAmount', 'iw.wanterID', 't.receiverID', 'c.commenterID'])
     .where('n.active', '=', 1) // Active Notification
     .whereNull('rn.readnotificationID') // Not Read Yet
     .where('n.timeCreated', '<=', moment().format("YYYY-MM-DD HH:mm:ss")) // Notification has already been created
@@ -481,6 +483,10 @@ var NotificationQuery = function(userId, limitNum, cb) {
         this.where('n.notificationType', '=', 4).whereNotNull('iw.wanterID') // Notification Type 4
       }).orWhere(function() {
         this.where('n.notificationType', '=', 5).whereNotNull('t.receiverID') // Notification Type 5
+      }).orWhere(function() {
+        this.where('n.notificationType', '=', 6).andWhere('i.giverID', '=', userId) // Notification Type 6
+      }).orWhere(function() {
+        this.where('n.notificationType', '=', 7).andWhere('i.giverID', '=', userId) // Notification Type 7
       })
     })
     .orderBy('n.timeCreated', 'DESC')

@@ -136,17 +136,17 @@ function addRealViews(html) {
                     $.each(data, function(key, value) {
 
                         if (value.giverID !== myAppId && value.takerID !== null && value.takerID !== myAppId) {
-                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item" style="opacity: 0.4;">';
+                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
                         } else if (value.giverID !== myAppId && value.takerID !== null && value.takerID === myAppId) {
-                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item" style="opacity: 0.4;">';
+                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
                         } else if (loggedIn && value.giverID !== myAppId && value.meWant === 0 && !value.expired) { // NEED TO ADD NOT EXPIRED
                             html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
                         } else if (loggedIn && value.giverID !== myAppId && value.meWant > 0 && !value.expired) {
                             html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
                         } else if (value.giverID !== myAppId && value.expired) {
-                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item" style="opacity: 0.4;">';
+                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
                         } else if (value.giverID === myAppId && value.takerID !== null) {
-                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item" style="opacity: 0.4;">';
+                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
                         } else if (value.giverID === myAppId && value.takerID === null) {
                             html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
                         } else {
@@ -182,13 +182,13 @@ function addRealViews(html) {
                         if (value.giverID !== myAppId && value.takerID !== null && value.takerID !== myAppId) {
                             html += '<div class="ribbon-wrapper-green">';
                             html += '<div class="ribbon-grey">';
-                            html += 'others';
+                            html += 'given away';
                             html += '</div>';
                             html += '</div>';
                         } else if (value.giverID !== myAppId && value.takerID !== null && value.takerID === myAppId) {
                             html += '<div class="ribbon-wrapper-green">';
-                            html += '<div class="ribbon-grey">';
-                            html += 'won';
+                            html += '<div class="ribbon-red">';
+                            html += 'given to you';
                             html += '</div>';
                             html += '</div>';
                         } else if (loggedIn && value.giverID !== myAppId && value.meWant === 0 && !value.expired) { // NEED TO ADD NOT EXPIRED
@@ -199,7 +199,7 @@ function addRealViews(html) {
                             html += 'wanted';
                             html += '</div>';
                             html += '</div>';
-                        } else if (value.giverID === myAppId && value.takerID !== null) {
+                        } else if (value.giverID === myAppId && value.takerID !== null) { // IF I GAVE
                             html += '<div class="ribbon-wrapper-green">';
                             html += '<div class="ribbon-grey">';
                             html += 'given away';

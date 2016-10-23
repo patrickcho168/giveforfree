@@ -37,7 +37,7 @@
         var isMine = <%= myProfile %>;
         var myName = "<%= user.name %>";
         var myAppId = <%= id %>;
-        var appProfileId = <%= user.userID %>;
+        var appProfileId = <%= otherUser.userID %>;
         var userFbId = "<%= user.fbID %>";
 
         $(window).load(function() {
@@ -131,19 +131,19 @@
                     <li id="nav-profile">
                         <a href="/profile/<%= id %>">
                             <div class="user-avatar">
-                                <img src="../images/common/test-user.png" alt="" />
+                                <img src="http://graph.facebook.com/<%= user.fbID %>/picture" alt="" />
                                 <span> <%= user.name %></span>
                             </div>
                         </a>
                     </li>
                     <li id="nav-create">
                         <a href="/upload">
-                            <i class="fa fa-gift" aria-hidden="true"></i> Give
+                            <i class="fa fa-gift fa-fw" aria-hidden="true"></i> Give
                         </a>
                     </li>
                     <li id="nav-feed">
                         <a href="/">
-                            <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
+                            <i class="fa fa-newspaper-o fa-fw" aria-hidden="true"></i> Feed
                         </a>
                     </li>
                     <% if (typeof notification != 'undefined') { %>
@@ -157,7 +157,7 @@
                 <%  } else { %>
                     <li id="nav-feed">
                         <a href="/">
-                            <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
+                            <i class="fa fa-newspaper-o fa-fw" aria-hidden="true"></i> Feed
                         </a>
                     </li>
                     <li id="nav-logout">
@@ -200,7 +200,8 @@
                         <div class="photo-wrapper">
                                 <img src="http://graph.facebook.com/<%= otherUser.fbID %>/picture?type=large" class="user-img">
                                 <% if (myProfile) { %>
-                                    <a data-toggle="modal" data-target="#confirm-delete" class="btn btn-modify btn-delete">Delete Account</a>
+                                    <!-- Cannot delete account -->
+                                    <!-- <a data-toggle="modal" data-target="#confirm-delete" class="btn btn-modify btn-delete">Delete Account</a> -->
                                 <% } else if (!flagUser) { %>
                                     <a data-toggle="modal" data-target="#confirm-flag" class="btn btn-modify">Flag User</a>
                                 <% } else { %>
@@ -212,6 +213,7 @@
                                 <p class="user-name">
                                     <%= otherUser.name %>
                                 </p><br>
+                                <!--
                                 <fieldset class="fixedrating">
                                     <input type="radio" id="star5" name="rating" value="5" <% if (userRating === 10) { %>checked="checked" <% } %> disabled/><label class = "full" for="star5" title="5 stars"></label>
                                     <input type="radio" id="star4half" name="rating" value="4 and a half" <% if (userRating === 9) { %>checked="checked" <% } %> disabled/><label class="half" for="star4half" title="4.5 stars"></label>
@@ -224,6 +226,7 @@
                                     <input type="radio" id="star1" name="rating" value="1" <% if (userRating === 2) { %>checked="checked" <% } %> disabled/><label class = "full" for="star1" title="1 star"></label>
                                     <input type="radio" id="starhalf" name="rating" value="half" <% if (userRating === 1) { %>checked="checked" <% } %> disabled/><label class="half" for="starhalf" title="0.5 stars"></label>
                                 </fieldset><br>
+                                -->
                                 <div class="fb-like" data-href="http://www.giveforfree.sg/profile/<%= id %>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
                             </div>
                     </div>
@@ -330,11 +333,19 @@
                     <div class="gifts-banner hidden" id="wants-banner">
                         <div class="placeholder">
                             <img src="../images/common/empty-gift.svg" alt="" class="placeholder-img"/>
-                            <h3 class="empty-placeholder-text">Ta da!</h3>
-                            <p class="empty-placeholder-text">
-                                All your wanted gifts are listed below.<br>
-                                Please have a look!<br><br>
-                            </p>
+                            <% if (myProfile) { %>
+                                <h3 class="empty-placeholder-text">Ta da!</h3>
+                                <p class="empty-placeholder-text">
+                                    All your wanted gifts are listed below.<br>
+                                    Please have a look!<br><br>
+                                </p>
+                            <% } else { %>
+                                <h3 class="empty-placeholder-text">Ta da!</h3>
+                                <p class="empty-placeholder-text">
+                                    Check out what others have wanted below.<br>
+                                    You might find something you like too!<br><br>
+                                </p>
+                            <% } %>
                         </div>
                     </div>
                     <div class="gifts-banner-empty" id="wants-banner-empty">

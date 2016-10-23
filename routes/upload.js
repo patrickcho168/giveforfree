@@ -49,7 +49,6 @@ function createFbStory(itemId, startTime, endTime, fbFreeItemId) {
         'start_time': startTime,
         'end_time': endTime
     };
-    console.log(querystring.stringify(object));
     return querystring.stringify(object);
 }
 
@@ -77,14 +76,11 @@ function saveCategories(item, categories) {
         "toys",
         "other"
     ];
-    console.log('categories', categories);
     if (categories) {
         var ids = categories.map(function(cat) {
             return categoriesPos.indexOf(cat) + 1;
         });
 
-
-        console.log('categories ids', ids);
         item.categories().detach();
         item.categories().attach(ids);
     }
@@ -110,6 +106,7 @@ function saveItem(req, res, fileName) {
     newItem.save().then(function(newSavedItem) {
 
         var createdItemID = newSavedItem.attributes.itemID;
+        console.log(createdItemID);
 
         if (createdItemID != null) {
 
@@ -117,12 +114,10 @@ function saveItem(req, res, fileName) {
             if (req.body.categories) {
                 saveCategories(newSavedItem, req.body.categories.replace("&amp;", "&").split(','));
             }
-            console.log(createdItemID);
             req.flash('success_messages', 'Woohoo! Your item is now live!!!');
             setTimeout(redirectSuccess, 1, createdItemID, res);
             // res.redirect("/item/" + createdItemID);
         } else {
-            console.log(createdItemID);
             req.flash('error_messages', 'Drats we encountered some problems uploading your item! Please try again!');
             setTimeout(redirectFail, 1, res);
         }
@@ -137,13 +132,11 @@ function saveItem(req, res, fileName) {
             var newItemTimeExpired = newSavedItem.attributes.timeExpired;
             // var apiCall = '/' + userFbId + '/feed';
             // facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, createdItemID, newItemUrl), function(data) {});
-            console.log("FACEBOOK STORY CREATION");
             var apiCall = '/me/' + config.fbNamespace + ':give';
             var objectApiCall = '/me/objects/' + config.fbNamespace + ':free_item'
             facebook.getFbData(req.user.accessToken, objectApiCall, createFbFreeItem(newItemTitle, createdItemID, newItemUrl), function(data) {
-                console.log(data);
                 facebook.getFbData(req.user.accessToken, apiCall, createFbStory(createdItemID, newItemTimeCreated, newItemTimeExpired, JSON.parse(data).id), function(data2) {
-                    console.log(data2);
+
                 });
             });
 
@@ -231,15 +224,15 @@ module.exports = function(app) {
                     res.redirect(301, '/item/'+itemId);
                 } else {
                     // Update item
-                    console.log("DATE");
-                    console.log(req.body.date);
                     item.save({
                         title: xss(req.body.title),
                         description: xss(req.body.description),
                         timeExpired: moment(req.body.date + " 23:59:59").format("YYYY-MM-DD HH:mm:ss"),
                         collectionMessage: xss(req.body.collectionMessage),
                         postage: req.body.postage ? 1 : 0,
-                        meetup: req.body.meetup ? 1 : 0
+                        meetup: req.body.meetup ? 1 : 0,
+                        charityID: req.body.donateToCharity,
+                        donationAmount: req.body.donation
                     }).then(function() {
                         req.flash('success_messages', 'Your item details are updated!');
                         res.redirect("/item/" + itemId);

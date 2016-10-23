@@ -27,15 +27,62 @@ var parseForm = bodyParser.urlencoded({ extended: true, limit: '50mb' });
 
 module.exports = function(app) {
 
+    // -------------- DONATE
+
+    app.post('/api/item/donate/:id', ensureLogin.ensureLoggedIn(), function(req, res) {
+        var userId = parseInt(req.user.appUserId);
+        var itemId = parseInt(req.params.id);
+        db.Item.where({
+            itemID: itemId,
+            takerID: userId,
+        }).fetch().then(function(itemData) {
+            if (itemData && itemData.attributes && itemData.attributes.giverID !== null) {
+                itemData.save({
+                    donatedAmount: itemData.attributes.donationAmount,
+                })
+                var newNote = new db.Notification({
+                    timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+                    active: 1,
+                    notificationType: 6,
+                    itemID: itemId,
+                    userID: userId
+                });
+                newNote.save();
+            }
+        })
+    })
+
+    // -------------- DELIVERED
+
+    app.post('/api/item/deliver/:id', ensureLogin.ensureLoggedIn(), function(req, res) {
+        var userId = parseInt(req.user.appUserId);
+        var itemId = parseInt(req.params.id);
+        db.Item.where({
+            itemID: itemId,
+            takerID: userId,
+        }).fetch().then(function(itemData) {
+            if (itemData && itemData.attributes && itemData.attributes.giverID !== null) {
+                itemData.save({
+                    delivered: 1,
+                })
+                var newNote = new db.Notification({
+                    timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+                    active: 1,
+                    notificationType: 7,
+                    itemID: itemId,
+                    userID: userId
+                });
+                newNote.save();
+            }
+        })
+    })
+
     // -------------- RATINGS
 
     app.post('/api/item/:id/rateGiver/:score', ensureLogin.ensureLoggedIn(), function(req, res) {
         var userId = parseInt(req.user.appUserId);
         var itemId = parseInt(req.params.id);
         var score = parseInt(req.params.score);
-        console.log(userId);
-        console.log(itemId);
-        console.log(score);
         if (score !== null && score > 0 && score <= 10) {
             db.Item.where({
                 itemID: itemId,
@@ -573,7 +620,6 @@ module.exports = function(app) {
         db.User.where({
             userID: userId
         }).fetch().then(function(user) {
-            console.log(user);
             db.Item.where('itemID', itemId).fetch().then(function(item) {
                 item.categories().fetch().then(function(cat) {
                     categories = cat.toJSON().map(function(obj) {
@@ -627,6 +673,7 @@ module.exports = function(app) {
                                             date: processedDate,
                                             expired: expiredMin > 0,
                                             gifts: gifted[0].numGiven,
+                                            manual: [],
                                             loggedIn: loggedIn,
                                             comment: commentData.models,
                                             notification: req.session.notification,

@@ -23,9 +23,6 @@ toExport.getNotifications = function(req, res, next) {
         var userId = parseInt(req.user.appUserId);
         var limitNum = 10;
         db.NotificationQuery(userId, limitNum, function(data) {
-            // console.log(req.path);
-            console.log("Notifications:");
-            console.log(data);
             req.session.notification = data;
             next();
         });
@@ -93,7 +90,6 @@ toExport.pushNotification = function(userId) {
     db.User.where({
         userID: userId
     }).fetch().then(function(user) {
-        console.log(user.attributes.gcm);
         if (user && user.attributes.gcm) {
             var options = {
                 url: 'https://android.googleapis.com/gcm/send',

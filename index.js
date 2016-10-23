@@ -22,12 +22,13 @@ var paypal = require('./controllers/paypal');
 var config = require('./config');
 var db = require('./models/db');
 var moment = require('moment');
+var compass = require('compass');
 moment().format();
 
 var app = express();
 
+app.use(compass({ cwd: 'public' }));
 app.use(express.static('public'));
-app.use('/static', express.static('public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 

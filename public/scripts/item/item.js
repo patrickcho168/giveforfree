@@ -1,6 +1,5 @@
 // Want
 $(document).on("click", ".snag", function() {
-    console.log("want");
     var itemId = $(this).attr('itemId');
 
     // Change text
@@ -17,6 +16,9 @@ $(document).on("click", ".snag", function() {
     // Increment number of people snagging
     var snag_count = parseInt($(this).children(".badge").text()) + 1;
     $(this).children(".badge").text(snag_count);
+    $('#progress-want').addClass("completed");
+    $('#progress-want').removeClass("active");
+    $('#progress-give').addClass("active");
 
     // Send post request
     // Should check for success
@@ -34,7 +36,6 @@ $(document).on("click", ".snag", function() {
 
 // Unwant
 $(document).on("click", ".unsnag", function() {
-    console.log("unwant");
     var itemId = $(this).attr('itemId');
 
     // Change text
@@ -50,6 +51,9 @@ $(document).on("click", ".unsnag", function() {
     // Decrement number of people snagging
     var snag_count = parseInt($(this).children(".badge").text()) - 1;
     $(this).children(".badge").text(snag_count);
+    $('#progress-want').removeClass("completed");
+    $('#progress-want').addClass("active");
+    $('#progress-give').removeClass("active");
 
     // Send post request
     $.post("/api/unwant/" + itemId)
@@ -106,18 +110,44 @@ $(document).on("click", ".ratingForGiver", function() {
         });
 })
 
+// Rate Giver
+$(document).on("click", "#delivered", function() {
+    var itemId = $(this).attr("itemId");
+    $('#progress-deliver').removeClass("active");
+    $('#progress-deliver').addClass("completed");
+    $(this).hide();
+
+    // Send post request
+    $.post("/api/item/deliver/" + itemId)
+        .done(function() {
+
+        })
+        .fail(function() {
+
+        })
+        .always(function() {
+
+        });
+})
+
 // For modification
 $(document).on('click', '.btn-modify', function() {
+    $('.mobile-modify-button').toggleClass('hidden');
     $('.modify-button').toggleClass('hidden');
+    $('.want-button').toggleClass('hidden');
     $('.edit-button-group').toggleClass('hidden');
+    $('.mobile-edit-button-group').toggleClass('hidden');
     $('.info-edit').toggleClass('hidden');
     $('.info-display').toggleClass('hidden');
     $('.charity-info').css('display', 'block');
 });
 
 $(document).on('click', '.btn-cancel', function() {
+    $('.mobile-modify-button').toggleClass('hidden');
     $('.modify-button').toggleClass('hidden');
+    $('.want-button').toggleClass('hidden');
     $('.edit-button-group').toggleClass('hidden');
+    $('.mobile-edit-button-group').toggleClass('hidden');
     $('.info-edit').toggleClass('hidden');
     $('.info-display').toggleClass('hidden');
     $('.charity-info').css('display', 'flex');
@@ -125,6 +155,9 @@ $(document).on('click', '.btn-cancel', function() {
 
 $(document).on('click', '.mobile-btn-modify', function() {
     $('.mobile-modify-button').toggleClass('hidden');
+    $('.modify-button').toggleClass('hidden');
+    $('.want-button').toggleClass('hidden');
+    $('.edit-button-group').toggleClass('hidden');
     $('.mobile-edit-button-group').toggleClass('hidden');
     $('.info-edit').toggleClass('hidden');
     $('.info-display').toggleClass('hidden');
@@ -133,6 +166,9 @@ $(document).on('click', '.mobile-btn-modify', function() {
 
 $(document).on('click', '.mobile-btn-cancel', function() {
     $('.mobile-modify-button').toggleClass('hidden');
+    $('.modify-button').toggleClass('hidden');
+    $('.want-button').toggleClass('hidden');
+    $('.edit-button-group').toggleClass('hidden');
     $('.mobile-edit-button-group').toggleClass('hidden');
     $('.info-edit').toggleClass('hidden');
     $('.info-display').toggleClass('hidden');
@@ -140,20 +176,39 @@ $(document).on('click', '.mobile-btn-cancel', function() {
 });
 
 $(document).on('click', '#paypal', function() {
-    var input = {
-        cost: cost,
-        charity: charity,
-        redirectUrl: window.location.href
-    };
-    $.ajax({type:'post',
-            url:'/paypalAdpay',
-            data:input,
-            datatype:'json',
-            success: function(data){
-                console.log(data);
-                window.location = data;
-            }
-    });
+    var itemId = $(this).attr("itemId");
+    $('#progress-donate').removeClass("active");
+    $('#progress-donate').addClass("completed");
+    $('#progress-deliver').addClass("active");
+    $('#delivered').removeClass("hidden");
+    $(this).hide();
+
+    // Send post request
+    $.post("/api/item/donate/" + itemId)
+        .done(function() {
+
+        })
+        .fail(function() {
+
+        })
+        .always(function() {
+
+        });
+
+    // var input = {
+    //     cost: cost,
+    //     charity: charity,
+    //     redirectUrl: window.location.href
+    // };
+    // $.ajax({type:'post',
+    //         url:'/paypalAdpay',
+    //         data:input,
+    //         datatype:'json',
+    //         success: function(data){
+    //             console.log(data);
+    //             window.location = data;
+    //         }
+    // });
 })
 
 // Carousel Logic

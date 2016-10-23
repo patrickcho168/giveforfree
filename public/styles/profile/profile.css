@@ -72,7 +72,7 @@ textarea.flag-input {
 }
 
 .photo-wrapper .user-img {
-    height: 120px;
+    width: 120px;
     border-radius: 100px;
 }
 

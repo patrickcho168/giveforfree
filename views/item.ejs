@@ -158,6 +158,7 @@
     <link rel="stylesheet" href="../styles/common/bootstrap-edit.css">
     <link rel="stylesheet" href="../styles/common/common.css">
     <link rel="stylesheet" href="../styles/item/item.css">
+    <link rel="stylesheet" href="../styles/item/progress.css">
 
     <!-- Bootstrap Notifications -->
     <link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
@@ -225,32 +226,33 @@
                     <li id="nav-profile">
                         <a href="/profile/<%= id %>">
                             <div class="user-avatar">
-                                <img src="../images/common/test-user.png" alt="" />
-                                <% if (typeof notification != 'undefined' ) { %>
-                                    <span class="badge"><%= notification.length %></span>
-                                <% } %>
-                                <!-- TODO: pass name of the giver to here -->
+                                <img src="http://graph.facebook.com/<%= user.fbID %>/picture" alt="" />
                                 <span> <%= user.name %></span>
                             </div>
                         </a>
                     </li>
                     <li id="nav-create">
                         <a href="/upload">
-                            <i class="fa fa-gift" aria-hidden="true"></i> Give
+                            <i class="fa fa-gift fa-fw" aria-hidden="true"></i> Give
                         </a>
                     </li>
                     <li id="nav-feed">
                         <a href="/">
-                            <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
+                            <i class="fa fa-newspaper-o fa-fw" aria-hidden="true"></i> Feed
                         </a>
                     </li>
+                    <% if (typeof notification != 'undefined') { %>
+                        <!-- Notifications -->
+                        <%- include('notification'); %>
+                        <!-- End Notifications -->
+                    <% } %>
                     <li id="nav-logout">
                         <a href="/logout">Log out</a>
                     </li>
                 <%  } else { %>
                     <li id="nav-feed">
                         <a href="/">
-                            <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
+                            <i class="fa fa-newspaper-o fa-fw" aria-hidden="true"></i> Feed
                         </a>
                     </li>
                     <li id="nav-logout">
@@ -283,6 +285,54 @@
             <% });
 
         } %> -->
+        <div class="row panel" style="padding-top: 20px;">
+            <ul class="progress-indicator">
+                <li
+                    <% if (item.takerID !== null || mine && manual.length > 0 || !mine && item.meWant === 1) { %>
+                        class="completed"
+                    <% } else { %>
+                        class="active"
+                    <% } %>
+                    id="progress-want"
+                >
+                    <span class="bubble"></span>
+                    <h6>Want</h6>
+                </li>
+                <li
+                    <% if (item.takerID !== null) { %>
+                        class="completed"
+                    <% } else if (mine && manual.length > 0 || !mine && item.meWant === 1) { %>
+                        class="active"
+                    <% } %>
+                    id="progress-give"
+                >
+                    <span class="bubble"></span>
+                    <h6>Give</h6>
+                </li>
+                <li
+                    <% if (item.takerID !== null && item.donatedAmount >= item.donationAmount) { %>
+                        class="completed"
+                    <% } else if (item.takerID !== null) { %>
+                        class="active"
+                    <% } %>
+                    id="progress-donate"
+                >
+                    <span class="bubble"></span>
+                    <h6>Donate</h6>
+                </li>
+                <li
+                    <% if (item.takerID !== null && item.donatedAmount >= item.donationAmount && item.delivered) { %>
+                        class="completed"
+                    <% } else if (item.takerID !== null && item.donatedAmount >= item.donationAmount) { %>
+                        class="active"
+                    <% } %>
+                    id="progress-deliver"
+                >
+                    <span class="bubble"></span>
+                    <h6>Deliver</h6>
+                </li>
+            </ul>
+        </div>
         <form action="/api/update/<%= item.itemID %>" class="form-horizontal form" role="form" method="post">
             <div class="row item-info">
                 <div class="col-sm-4 col-md-3 panel basic-info-panel">
@@ -292,7 +342,11 @@
                     <div class="item-basic-info">
                         <div class="info-text info-display">
                             <h2><%= item.title %></h2>
-                            <p>$ <%= item.donationAmount %> to <%= item.charityName %></p>
+                            <% if (item.donationAmount > 0) { %>
+                                <p>$<%= item.donationAmount %> to <%= item.charityName %></p>
+                            <% } else { %>
+                                <p> FREE </p>
+                            <% } %>
                             <div class="category-holder info-display">
                                 <% for (var i=0; i<categories.length; i++) { %>
                                     <span class="category-item"><i class="fa fa-tags"></i> <%= categories[i] %></span>
@@ -309,49 +363,80 @@
                                     <% if (!expired && item.takerID === null) { %>
                                         <a href="/login" class="btn btn-lg btn-want btn-block"><span class="glyphicon glyphicon-gift"></span> Login to want</a>
                                     <% } else if (item.takerID !== null) { %>
-                                        <a href="/profile/<%= item.takerID %>" class="btn btn-lg btn-want btn-block"><i class="fa fa-heart-o"></i> Given to <%= item.takerName %></a>
+                                        <!-- <a href="/profile/<%= item.takerID %>" class="btn btn-lg btn-want btn-block"><i class="fa fa-heart-o"></i> Given to <%= item.takerName %></a> -->
                                     <% } else if (expired && item.takerID === null) { %>
-                                        <div class="btn btn-lg btn-want btn-block"><i class="fa fa-heart-o"></i> Gift has expired</div>
+                                        <!-- <div class="btn-lg btn-expired btn-block"><i class="fa fa-heart-o"></i> Gift has expired</div> -->
                                     <% } %>
                                 <% } else { %>
                                     <% if (item.takerID === id) { %>
-                                        <a class="btn btn-lg btn-block btn-donate"><i class="fa fa-heart-o"></i> Donate!</a>
+                                        <% if (item.donationAmount > 0) { %>
+                                            <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
+                                                <a class="btn btn-lg btn-block btn-donate" id="paypal" itemId="<%= item.itemID %>"><i class="fa fa-heart-o"></i> Donate to receive gift</a>
+                                                <a class="btn btn-lg btn-block btn-donated hidden" id="delivered" itemId="<%= item.itemID %>"><i class="fa fa-heart-o"></i> Confirm Gift Delivery</a>
+                                            <% } else if (!item.delivered) { %>
+                                                <a class="btn btn-lg btn-block btn-donated" id="delivered" itemId="<%= item.itemID %>"><i class="fa fa-heart-o"></i> Confirm Gift Delivery</a>
+                                            <% } %>
+                                        <% } else if (!item.delivered) { %>
+                                            <a class="btn btn-lg btn-block btn-donated" id="delivered" itemId="<%= item.itemID %>"><i class="fa fa-heart-o"></i> Confirm Gift Delivery</a>
+                                        <% } %>
                                     <% } else if (item.takerID !== null) { %>
-                                        <a href="/profile/<%= item.takerID %>" class="btn btn-lg btn-want btn-block"><i class="fa fa-heart-o"></i> Given to <%= item.takerName %></a>
+                                        <!-- <a href="/profile/<%= item.takerID %>" class="btn btn-lg btn-want btn-block"><i class="fa fa-heart-o"></i> Given to <%= item.takerName %></a> -->
                                     <% } else if (item.meWant === 1 && !expired) { %>
                                         <a class="btn btn-lg btn-block btn-unwant unsnag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span><span> Unwant </span><span class="badge"><%= item.numWants %></span> </a>
                                     <% } else if (!expired) { %>
                                         <a class="btn btn-lg btn-block btn-want snag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span><span> Want </span><span class="badge"><%= item.numWants %></span> </a>
                                     <% } else { %>
-                                        <div class="btn btn-lg btn-want btn-block"><i class="fa fa-heart-o"></i> Gift has expired</div>
+                                        <!-- <div class="btn-lg btn-expired btn-block"><i class="fa fa-heart-o"></i> Gift has expired</div> -->
                                     <% } %>
                                 <% } %>
                             </div>
                         <% } else if (item.takerID === null) { %>
-                            <div class="info-button modify-button">
-                                <a type="button" class="btn btn-lg btn-block dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Wanters <span class="badge"><%= item.numWants %></span>
-                                </a>
-                                <% if (item.numWants > 0) { %>
-                                    <ul class="dropdown-menu scrollable-menu" role="menu">
-                                        <li><a href="/api/give/<%= item.itemID %>" style="padding-left: 10px;">Random draw</a></li>
-                                        <% for (var i=0; i<manual.length; i++) { %>
-                                            <li class="single-wanter">
-                                                <p><%= manual[i].name %></p>
-                                                <div class="link-box">
-                                                    <a href="/profile/<%= manual[i].userID %>">Profile</a>
-                                                    <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">Give</a>
-                                                </div>
-                                            </li>
-                                        <% } %>
-                                    </ul>
+                            <div class="info-button want-button">
+                                <% if (manual.length > 0) { %>
+                                    <% if (!expired) { %>
+                                        <a type="button" class="btn btn-lg btn-block dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Give <span class="badge"><%= item.numWants %> wanters</span>
+                                        </a>
+                                    <% } else { %>
+                                        <a type="button" class="btn btn-lg btn-block dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Give <span class="badge"><%= item.numWants %> wanters</span>
+                                        </a>
+                                    <% } %>
+                                    <% if (item.numWants > 0) { %>
+                                        <ul class="dropdown-menu scrollable-menu" role="menu">
+                                            <li><a href="/api/give/<%= item.itemID %>" style="padding-left: 10px;">Random draw</a></li>
+                                            <% for (var i=0; i<manual.length; i++) { %>
+                                                <li class="single-wanter">
+                                                    <p><%= manual[i].name %></p>
+                                                    <div class="link-box">
+                                                        <a href="/profile/<%= manual[i].userID %>">Profile</a>
+                                                        <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">Give</a>
+                                                    </div>
+                                                </li>
+                                            <% } %>
+                                        </ul>
+                                    <% } %>
                                 <% } %>
-                                <a href="#" class="btn btn-lg btn-block btn-modify">Modify</a>
+                            </div>
+                            <div class="info-button modify-button">
+                                <a href="#" class="btn btn-lg btn-block btn-modify">Modify Item</a>
                             </div>
                             <div class="info-button edit-button-group hidden">
-                                <button href="#" class="btn btn-lg btn-save btn-block" type="submit">Save</button>
-                                <a href="#" class="btn btn-lg btn-cancel btn-block">Cancel</a>
-                                <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block btn-delete">Delete item</a>
+                                <button href="#" class="btn btn-lg btn-save btn-block" type="submit">Save Modification</button>
+                                <a href="#" class="btn btn-lg btn-cancel btn-block">Cancel Modification</a>
+                                <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block btn-delete">Delete Item</a>
+                            </div>
+                        <% } else { %>
+                            <div class="info-button want-button">
+                                <% if (item.donationAmount > 0) { %>
+                                    <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
+                                        <!-- <div class="btn-lg btn-block btn-donated"><i class="fa fa-heart-o"></i> Waiting for Donation</div> -->
+                                    <% } else { %>
+                                        <!-- <div class="btn-lg btn-block btn-donated"><i class="fa fa-heart-o"></i> Deliver</div> -->
+                                    <% } %>
+                                <% } else { %>
+                                    <!-- <div class="btn-lg btn-block btn-donated"><i class="fa fa-heart-o"></i> Deliver </div> -->
+                                <% } %>
                             </div>
                         <% } %>
                     </div>
@@ -365,7 +450,7 @@
                                 </div>
                                 <div class="charity-details info-display">
                                     <p>
-                                        Your donation will go to
+                                        Donation will go to
                                     </p>
                                     <h2><%= item.charityName %></h2>
                                 </div>
@@ -381,10 +466,15 @@
                                     </p>
                                     <div class="charity-selection">
                                         <!-- TODO: select the initial charity here. Can just if (something) { trigger click } -->
-                                        <input type="checkbox" id="red-cross" name="donateToRedCross" class="hidden">
-                                        <img src="../images/upload/charity1.png" alt="" class="covered" onclick="selectCharity(this);"/>
-                                        <input type="checkbox" id="cat-wel-society" name="donateToCWS" class="hidden">
-                                        <img src="../images/upload/charity2.png" alt="" class="covered" onclick="selectCharity(this);"/>
+                                        <script>
+                                            jQuery(document).ready(function($) {
+                                                $( ".charity<%= item.charityID %>" ).trigger( "click" );
+                                            });
+                                        </script>
+                                        <input type="radio" id="red-cross" name="donateToCharity" value="1" class="hidden">
+                                        <img src="../images/upload/charity1.png" alt="" class="covered charity1" onclick="selectCharity(this);"/>
+                                        <input type="radio" id="cat-wel-society" name="donateToCharity" value="2" class="hidden">
+                                        <img src="../images/upload/charity2.png" alt="" class="covered charity2" onclick="selectCharity(this);"/>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 donation-edit">
@@ -474,7 +564,7 @@
                                 <div class="col-sm-6 col-md-7">
                                     <div class="description-info">
                                         <p class="subtitle">
-                                            Some words about the gift.
+                                            Description
                                         </p>
                                         <p class="item-description">
                                             <%= item.description %>
@@ -490,7 +580,7 @@
                                     </div>
                                     <div class="delivery-info">
                                         <p class="subtitle">
-                                            Receiver will be receiving gift by
+                                            Delivery
                                         </p>
                                         <div class="delivery-holder info-display">
                                             <% if (item.meetup === 1) { %>
@@ -503,14 +593,18 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-5">
-                                    <h4 class="about-charity">About Charity</h4>
-                                    <p class="charity-intro">
-                                        This charity is for blablablablabla...
-                                    </p>
-                                    <h4 class="giver-info-title">Giver</h4>
+                                    <% if (item.donationAmount > 0) { %>
+                                        <h4 class="about-charity">The Charity</h4>
+                                        <p class="charity-intro">
+                                            This charity is for blablablablabla...
+                                        </p>
+                                    <% } %>
+                                    <h4 class="giver-info-title">The Giver</h4>
                                     <div class="giver-info">
                                         <div class="giver-img pull-left">
-                                            <img src="http://graph.facebook.com/<%= item.fbID %>/picture?type=large" alt="" />
+                                            <a href="/profile/<%= item.giverID %>">
+                                                <img src="http://graph.facebook.com/<%= item.fbID %>/picture?type=large" alt="" />
+                                            </a>
                                         </div>
                                         <a href="/profile/<%= item.giverID %>" class="giver-name"><%= item.name %></a>
 
@@ -528,11 +622,11 @@
                                     </div>
                                     <% if (item.takerID !== null) { %>
                                         <div class="taker-info">
-                                            <h4 class="giver-info-title">Receiver</h4>
+                                            <h4 class="giver-info-title">The Donor</h4>
                                             <div class="giver-img pull-left">
-                                                <img src="../images/common/test-user.png" alt="" />
+                                                <img src="http://graph.facebook.com/<%= item.takerFbID %>/picture?type=large" alt="" />
                                             </div>
-                                            <a href="/profile/<%= item.takerID %>" class="giver-name">Receiver Name</a>
+                                            <a href="/profile/<%= item.takerID %>" class="giver-name"><%= item.takerName %></a>
                                         </div>
                                     <% } %>
                                 </div>
@@ -542,29 +636,12 @@
                         <% } else { %>
                             <div class="col-sm-6 mobile-button">
                                 <div class="info-button mobile-modify-button">
-                                    <a type="button" class="btn btn-lg btn-block dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Wanters <span class="badge"><%= item.numWants %></span>
-                                    </a>
-                                    <% if (item.numWants > 0) { %>
-                                        <ul class="dropdown-menu scrollable-menu" role="menu">
-                                            <li><a href="/api/give/<%= item.itemID %>" style="padding-left: 10px;">Random draw</a></li>
-                                            <% for (var i=0; i<manual.length; i++) { %>
-                                                <li class="single-wanter">
-                                                    <p><%= manual[i].name %></p>
-                                                    <div class="link-box">
-                                                        <a href="/profile/<%= manual[i].userID %>">Profile</a>
-                                                        <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">Give</a>
-                                                    </div>
-                                                </li>
-                                            <% } %>
-                                        </ul>
-                                    <% } %>
-                                    <a href="#" class="btn btn-lg btn-block mobile-btn-modify">Modify</a>
+                                    <a href="#" class="btn btn-lg btn-block mobile-btn-modify">Modify Item</a>
                                 </div>
                                 <div class="info-button mobile-edit-button-group hidden">
-                                    <button href="#" class="btn btn-lg mobile-btn-save btn-block" type="submit">Save</button>
-                                    <a href="#" class="btn btn-lg mobile-btn-cancel btn-block">Cancel</a>
-                                    <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block mobile-btn-delete">Delete item</a>
+                                    <button href="#" class="btn btn-lg mobile-btn-save btn-block" type="submit">Save Modification</button>
+                                    <a href="#" class="btn btn-lg mobile-btn-cancel btn-block">Cancel Modification</a>
+                                    <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block mobile-btn-delete">Delete Item</a>
                                 </div>
                             </div>
                         <% } %>
@@ -575,7 +652,9 @@
 
         <div class="row panel" style="padding: 20px;">
             <% if (!mine) { %>
-                <h3 class="comment-title">Curious? Comment below!<a></h3>
+                <h3 class="comment-title">Curious? Comment below!</h3>
+            <% } else { %>
+                <h3 class="comment-title">Comments</h3>
             <% } %>
             <div id="comments-container" style="margin-left: 15px; margin-right: 15px;">
             </div>

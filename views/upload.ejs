@@ -113,19 +113,19 @@
                 <li id="nav-profile">
                     <a href="/profile/<%= id %>">
                         <div class="user-avatar">
-                            <img src="../images/common/test-user.png" alt="" />
+                            <img src="http://graph.facebook.com/<%= user.fbID %>/picture" alt="" />
                             <span> <%= user.name %></span>
                         </div>
                     </a>
                 </li>
                 <li id="nav-create">
                     <a href="/upload">
-                        <i class="fa fa-gift" aria-hidden="true"></i> Give
+                        <i class="fa fa-gift fa-fw" aria-hidden="true"></i> Give
                     </a>
                 </li>
                 <li id="nav-feed">
                     <a href="/">
-                        <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
+                        <i class="fa fa-newspaper-o fa-fw" aria-hidden="true"></i> Feed
                     </a>
                 </li>
                 <% if (typeof notification != 'undefined') { %>

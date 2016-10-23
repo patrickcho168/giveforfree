@@ -106,43 +106,43 @@
 			<div class="collapse navbar-collapse" id="nav-menu">
 
 				<ul class="nav navbar-nav navbar-right">
-					<% if(loggedIn) { %>
-						<li id="nav-profile">
-			                <a href="/profile/<%= id %>">
-								<div class="user-avatar">
-									<img src="../images/common/test-user.png" alt="" />
-									<span> <%= user.name %></span>
-								</div>
-			                </a>
-			            </li>
-						<li id="nav-create">
-			                <a href="/upload">
-			                    <i class="fa fa-gift" aria-hidden="true"></i> Give
-			                </a>
-			            </li>
-						<li id="nav-feed">
-			                <a href="/">
-			                    <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
-			                </a>
-			            </li>
-						<% if (typeof notification != 'undefined') { %>
-		                    <!-- Notifications -->
-		                    <%- include('notification'); %>
-		                    <!-- End Notifications -->
-		                <% } %>
-						<li id="nav-logout">
-							<a href="/logout">Log out</a>
-						</li>
-					<%  } else { %>
-						<li id="nav-feed">
-			                <a href="/">
-			                    <i class="fa fa-newspaper-o" aria-hidden="true"></i> Feed
-			                </a>
-			            </li>
-						<li id="nav-logout">
-							<a href="javascript:loginSpecial();">Log in</a>
-						</li>
-					<% } %>
+	                <% if(loggedIn) { %>
+	                    <li id="nav-profile">
+	                        <a href="/profile/<%= id %>">
+	                            <div class="user-avatar">
+	                                <img src="http://graph.facebook.com/<%= user.fbID %>/picture" alt="" />
+	                                <span> <%= user.name %></span>
+	                            </div>
+	                        </a>
+	                    </li>
+	                    <li id="nav-create">
+	                        <a href="/upload">
+	                            <i class="fa fa-gift fa-fw" aria-hidden="true"></i> Give
+	                        </a>
+	                    </li>
+	                    <li id="nav-feed">
+	                        <a href="/">
+	                            <i class="fa fa-newspaper-o fa-fw" aria-hidden="true"></i> Feed
+	                        </a>
+	                    </li>
+	                    <% if (typeof notification != 'undefined') { %>
+	                        <!-- Notifications -->
+	                        <%- include('notification'); %>
+	                        <!-- End Notifications -->
+	                    <% } %>
+	                    <li id="nav-logout">
+	                        <a href="/logout">Log out</a>
+	                    </li>
+	                <%  } else { %>
+	                    <li id="nav-feed">
+	                        <a href="/">
+	                            <i class="fa fa-newspaper-o fa-fw" aria-hidden="true"></i> Feed
+	                        </a>
+	                    </li>
+	                    <li id="nav-logout">
+	                        <a href="javascript:loginSpecial();">Log in</a>
+	                    </li>
+	                <% } %>
 				</ul>
 	        </div>
 	        <!-- Menu -->
