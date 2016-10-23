@@ -389,7 +389,7 @@ var ItemPageQuery = function(userId, itemId, cb) {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
     .leftJoin('charity as c', 'c.charityID', 'i.charityID')
-    .select(['i.itemID', 'i.timeExpired', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'i.meetup', 'i.postage', 'i.collectionMessage', 'i.giverRating', 'i.takerRating', 'i.charityID', 'i.donationAmount', 'i.donatedAmount', 'i.delivered', 'c.charityName as charityName', 'u.name', 'u.userID', 'u.fbID', 't.name as takerName', 't.userID as takerId', 't.fbID as takerFbID'])
+    .select(['i.itemID', 'i.timeExpired', 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'i.meetup', 'i.postage', 'i.collectionMessage', 'i.giverRating', 'i.takerRating', 'i.charityID', 'i.donationAmount', 'i.donatedAmount', 'i.delivered', 'c.charityName as charityName', 'c.charityDescription as charityDescription', 'u.name', 'u.userID', 'u.fbID', 't.name as takerName', 't.userID as takerId', 't.fbID as takerFbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -418,10 +418,9 @@ var ItemPageManualQuery = function(itemId, cb) {
 var ProfilePageTotalGivenQuery = function(userId, cb) {
   knex
     .from('item as i')
-    .count('i.itemID as numGiven')
+    .sum('i.donatedAmount as totalDonatedAmount')
     .where('i.giverID', '=', userId)
     .whereNotNull('i.takerID')
-    .orderBy('i.itemID', 'DESC')
     .then(function(result){
     return cb(result);
   });
@@ -430,9 +429,8 @@ var ProfilePageTotalGivenQuery = function(userId, cb) {
 var ProfilePageTotalTakenQuery = function(userId, cb) {
   knex
     .from('item as i')
-    .count('i.itemID as numTaken')
+    .sum('i.donatedAmount as totalDonatedAmount')
     .where('i.takerID', '=', userId)
-    .orderBy('i.itemID', 'DESC')
     .then(function(result){
     return cb(result);
   });

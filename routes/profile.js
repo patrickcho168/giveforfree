@@ -281,80 +281,90 @@ module.exports = function(app) {
         csrfProtection,
         function(req, res) {
             var otherUserId = parseInt(req.params.id);
-            db.GetGiverRatingById(otherUserId, function(giverRatingData) {
-                db.GetTakerRatingById(otherUserId, function(takerRatingData) {
-                    var totalCounts = 0;
-                    var totalRatings = 0;
-                    if (giverRatingData[0].totalGiverRatingCounts !== 0) {
-                        totalRatings += giverRatingData[0].totalGiverRatings;
-                        totalCounts += giverRatingData[0].totalGiverRatingCounts;
+            db.ProfilePageTotalGivenQuery(otherUserId, function(giverDonationAmount) {
+                if (giverDonationAmount[0].totalDonatedAmount%1 != 0) {
+                    giverDonationAmount[0].totalDonatedAmount = giverDonationAmount[0].totalDonatedAmount.toFixed(2);
+                }
+                db.ProfilePageTotalTakenQuery(otherUserId, function(takerDonationAmount) {
+                    if (takerDonationAmount[0].totalDonatedAmount%1 != 0) {
+                        takerDonationAmount[0].totalDonatedAmount = takerDonationAmount[0].totalDonatedAmount.toFixed(2);
                     }
-                    if (takerRatingData[0].totalTakerRatingCounts !== 0) {
-                        totalRatings += takerRatingData[0].totalTakerRatings;
-                        totalCounts += takerRatingData[0].totalTakerRatingCounts;
-                    }
-                    var rating = 6;
-                    if (totalCounts > 0) {
-                        rating = Math.ceil(totalRatings/totalCounts);
-                    }
-                    req.session.lastPageVisit = '/profile/' + otherUserId;
-                    if (req.user === undefined) {
-                        var mine = false;
-                        db.User.where({
-                            userID: otherUserId
-                        }).fetch().then(function(otherUser) {
-                            db.User.where({
-                                userID: req.user.appUserId
-                            }).fetch().then(function(user) {
-                                res.render('profile', {
-                                    loggedIn: false,
-                                    myProfile: mine,
-                                    otherUser: otherUser.attributes,
-                                    user: user ? user.attributes : null,
-                                    userRating: rating,
-                                    id: 0,
-                                    friendProperty: {},
-                                    friends: [],
-                                    notification: req.session.notification,
-                                    flagUser: null,
-                                    csrfToken: req.csrfToken()
+                    db.GetGiverRatingById(otherUserId, function(giverRatingData) {
+                        db.GetTakerRatingById(otherUserId, function(takerRatingData) {
+                            var totalCounts = 0;
+                            var totalRatings = 0;
+                            if (giverRatingData[0].totalGiverRatingCounts !== 0) {
+                                totalRatings += giverRatingData[0].totalGiverRatings;
+                                totalCounts += giverRatingData[0].totalGiverRatingCounts;
+                            }
+                            if (takerRatingData[0].totalTakerRatingCounts !== 0) {
+                                totalRatings += takerRatingData[0].totalTakerRatings;
+                                totalCounts += takerRatingData[0].totalTakerRatingCounts;
+                            }
+                            var rating = 6;
+                            if (totalCounts > 0) {
+                                rating = Math.ceil(totalRatings/totalCounts);
+                            }
+                            req.session.lastPageVisit = '/profile/' + otherUserId;
+                            if (req.user === undefined) {
+                                var mine = false;
+                                db.User.where({
+                                    userID: otherUserId
+                                }).fetch().then(function(otherUser) {
+                                    res.render('profile', {
+                                        loggedIn: false,
+                                        myProfile: mine,
+                                        otherUser: otherUser.attributes,
+                                        user: null,
+                                        userRating: rating,
+                                        id: 0,
+                                        friendProperty: {},
+                                        friends: [],
+                                        notification: req.session.notification,
+                                        giverDonationAmount: giverDonationAmount[0],
+                                        takerDonationAmount: takerDonationAmount[0],
+                                        flagUser: null,
+                                        csrfToken: req.csrfToken()
+                                    });
                                 });
-                            });
-                        });
-                    } else {
-                        var mine = otherUserId === req.user.appUserId;
-                        db.User.where({
-                            userID: otherUserId
-                        }).fetch().then(function(otherUser) {
-                            db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
-                                db.FlagUser.where({
-                                    flaggerID: req.user.appUserId,
-                                    flaggedID: otherUserId
-                                }).fetch().then(function(flagUser) {
-                                    db.User.where({
-                                        userID: req.user.appUserId
-                                    }).fetch().then(function(user) {
-                                        res.render('profile', {
-                                            loggedIn: true,
-                                            myProfile: mine,
-                                            otherUser: otherUser ? otherUser.attributes : null,
-                                            user: user ? user.attributes : null,
-                                            userRating: rating,
-                                            id: req.user.appUserId,
-                                            friendProperty: req.user.fbFriendsToPropertyMap,
-                                            friends: data.models,
-                                            notification: req.session.notification,
-                                            moment: moment,
-                                            flagUser: flagUser? flagUser.attributes : null,
-                                            csrfToken: req.csrfToken()
+                            } else {
+                                var mine = otherUserId === req.user.appUserId;
+                                db.User.where({
+                                    userID: otherUserId
+                                }).fetch().then(function(otherUser) {
+                                    db.User.where('userID', 'in', req.user.fbFriendsId).fetchAll().then(function(data) {
+                                        db.FlagUser.where({
+                                            flaggerID: req.user.appUserId,
+                                            flaggedID: otherUserId
+                                        }).fetch().then(function(flagUser) {
+                                            db.User.where({
+                                                userID: req.user.appUserId
+                                            }).fetch().then(function(user) {
+                                                res.render('profile', {
+                                                    loggedIn: true,
+                                                    myProfile: mine,
+                                                    otherUser: otherUser ? otherUser.attributes : null,
+                                                    user: user ? user.attributes : null,
+                                                    userRating: rating,
+                                                    id: req.user.appUserId,
+                                                    friendProperty: req.user.fbFriendsToPropertyMap,
+                                                    friends: data.models,
+                                                    notification: req.session.notification,
+                                                    giverDonationAmount: giverDonationAmount[0],
+                                                    takerDonationAmount: takerDonationAmount[0],
+                                                    moment: moment,
+                                                    flagUser: flagUser? flagUser.attributes : null,
+                                                    csrfToken: req.csrfToken()
+                                                });
+                                            });
                                         });
                                     });
                                 });
-                            });
+                            }
                         });
-                    }
-                })
-            })
+                    });
+                });
+            });
         }
     );
 

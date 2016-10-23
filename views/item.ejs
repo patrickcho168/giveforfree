@@ -43,7 +43,10 @@
         var loggedIn = <%= loggedIn %>;
         var currentItemId = <%= item.itemID %>;
         var userId = <%= id %>;
-        var userFbId = "<%= user.fbID %>";
+        var userFbId;
+        <% if (loggedIn) { %>
+            userFbId = "<%= user.fbID %>";
+        <% } %>
         window.fbAsyncInit = function() {
             FB.init({
                 appId: '<%= appId %>',
@@ -609,7 +612,7 @@
                                     <% if (item.donationAmount > 0) { %>
                                         <h4 class="about-charity">The Charity</h4>
                                         <p class="charity-intro">
-                                            This charity is for blablablablabla...
+                                            <%= item.charityDescription %>
                                         </p>
                                     <% } %>
                                     <h4 class="giver-info-title">The Giver</h4>

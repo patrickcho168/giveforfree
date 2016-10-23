@@ -35,10 +35,14 @@
         var loggedIn = <%= loggedIn %>;
         var myFriends = null;
         var isMine = <%= myProfile %>;
-        var myName = "<%= user.name %>";
+        var myName;
+        var userFbId;
+        <% if (loggedIn) { %>
+            myName = "<%= user.name %>";
+            userFbId = "<%= user.fbID %>";
+        <% } %>
         var myAppId = <%= id %>;
         var appProfileId = <%= otherUser.userID %>;
-        var userFbId = "<%= user.fbID %>";
 
         $(window).load(function() {
             myFriends = <%- JSON.stringify(friends) %>;
@@ -202,9 +206,9 @@
                                 <% if (myProfile) { %>
                                     <!-- Cannot delete account -->
                                     <!-- <a data-toggle="modal" data-target="#confirm-delete" class="btn btn-modify btn-delete">Delete Account</a> -->
-                                <% } else if (!flagUser) { %>
+                                <% } else if (!flagUser && loggedIn) { %>
                                     <a data-toggle="modal" data-target="#confirm-flag" class="btn btn-modify">Flag User</a>
-                                <% } else { %>
+                                <% } else if (loggedIn) { %>
                                     <a data-toggle="modal" data-target="#confirm-flag" class="btn btn-modify">User Flagged</a>
                                 <% } %>
                             </div>
@@ -236,7 +240,7 @@
                         <div class="row">
                             <div class="col-xs-6 col-sm-12 col-md-12 give-info">
                                 <p class="donation-money">
-                                    $120,000
+                                    $<%= giverDonationAmount.totalDonatedAmount %>
                                 </p>
                                 <p class="donation-text">
                                     donated through giving
@@ -244,7 +248,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-12 col-md-12 receive-info">
                                 <p class="donation-money">
-                                    $5,000
+                                    $<%= takerDonationAmount.totalDonatedAmount %>
                                 </p>
                                 <p class="donation-text">
                                     donated through receiving gifts
