@@ -8,6 +8,7 @@ var $ = require('jquery');
 
 
 const port=80;
+const httpsport = 443;
 
 app.use('/node_modules', express.static(__dirname + '/../node_modules'));
 app.use('/browser', express.static(__dirname + '/../browser'));
@@ -22,10 +23,9 @@ var options = {
   ca: fs.readFileSync('../../../etc/letsencrypt/live/tenzy.ddns.net/chain.pem')
 };
 
-https.createServer(options, function (req, res) {
-  res.writeHead(200);
-  res.end("hello world\n");
-}).listen(8000);
+https.createServer(options,app).listen(httpsport, function(){
+	console.log("listening on https", httpsport);
+});
 
 function handleRequest(request, response){
     response.end('It Works!! Path Hit: ' + request.url);

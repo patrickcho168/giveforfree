@@ -1,11 +1,67 @@
 var Paypal = require('paypal-adaptive');
-
-
+var ipn = require('paypal-ipn');
 module.exports = function(app){
 	var express = require('express');
 	var bodyparser = require('body-parser');
 	var jsonParser = bodyparser.json()
-	app.use(bodyparser());
+	//app.use(bodyparser());
+	
+	var bpJSON = bodyparser.json();
+	var bpUrl = bodyparser.urlencoded({
+		   extended: false
+	});
+
+	var parseRaw = function(req, res, next) {
+		req.body = '';
+		req.setEncoding('utf8');
+
+		req.on('data', function(chunk) { 
+			 req.body += chunk;
+		});
+
+		req.on('end', function() {
+			 next();
+		});
+	};
+
+	app.use(function(req, res, next){
+		if (!~req.url.indexOf('/api/paid')) bpJSON(req, res, next)
+		else return next();  
+	});
+
+	app.use(function(req, res, next){
+		if (!~req.url.indexOf('/api/paid')) bpUrl(req, res, next)
+		else return next();  
+	});
+
+	app.use(function(req, res, next){
+		if (~req.url.indexOf('/api/paid')) parseRaw(req, res, next)
+		else return next();  
+	});
+	
+	
+	app.post('/api/paid', function(req, res) {
+		console.log("ipn received");
+		res.send(200);
+		res.end();
+		var params = req.body;
+		ipn.verify(params,{'allow_sandbox': true}, function callback(err, msg) {
+			console.log("ipn verify");
+		  if (err) {
+			console.log(err);
+		  } else {
+			console.log("ipn success");
+
+			if (params.payment_status == 'Completed') {
+			  // Payment has been confirmed as completed
+			  console.log("payment completed");
+			}
+		  }
+		});
+	})
+
+	
+	
 	app.post('/paypalAdpay',jsonParser, paypalAdpay);
 	var paypalSdk = new Paypal({
 			userId:    'tzyinc-facilitator_api1.hotmail.com',
@@ -29,17 +85,18 @@ module.exports = function(app){
 			actionType:     'PAY',
 			currencyCode:   'SGD',
 			feesPayer:      'SECONDARYONLY',
-			memo:           'Chained payment example',
-			cancelUrl:      'http://tenzy.ddns.net',
-			returnUrl:      'http://tenzy.ddns.net',
+			memo:           'Donation to ' + req.body.charity.name, // Add Charity Name
+			ipnNotificationUrl: 'http://tenzy.ddns.net/api/paid', // TO CHANGE THIS
+			cancelUrl:      req.body.redirectUrl, // Back to Item Page
+			returnUrl:      req.body.redirectUrl, // Back to Item Page
 			receiverList: {
 				receiver: [
 					{
-						email:  'tzyinc-facilitator@hotmail.com',
+						email:  req.body.charity.email, // Generated from Request (Charity's Email)
 						amount: toPay.toString(),
 						primary:'true'
 					},{
-						email:	'secondary-business@hotmail.com',
+						email:	'secondary-business@hotmail.com', // Give For Free Payment email
 						amount: ours.toString(),
 						primary: 'false'
 					}
@@ -49,83 +106,16 @@ module.exports = function(app){
 
 		paypalSdk.pay(payload, function (err, response) {
 			if (err) {
-				console.log(err);
-				console.log(response);
+				//console.log(err);
+				//console.log(response);
 			} else {
 				// Response will have the original Paypal API response
-				console.log(response);
+				//console.log(response);
 				// But also a paymentApprovalUrl, so you can redirect the sender to checkout easily
-				console.log('Redirect to %s', response.paymentApprovalUrl);
+				//console.log('Redirect to %s', response.paymentApprovalUrl);
 				res.send(response.paymentApprovalUrl);
 			}
 		});
 		
 	};
 }
-
-	
-
-/*
-var payload = {
-    currencyCode:                   'SGD',
-    startingDate:                   new Date().toISOString(),
-    endingDate:                     new Date('2020-01-01').toISOString(),
-    returnUrl:                      'http://your-website.com',
-    cancelUrl:                      'http://your-website.com',
-    ipnNotificationUrl:             'http://your-ipn-listener.com',
-    maxNumberOfPayments:            1,
-    displayMaxTotalAmount:          true,
-    maxTotalAmountOfAllPayments:    '100.00',
-    requestEnvelope: {
-        errorLanguage:  'en_US'
-    }
-}
-
-paypalSdk.preapproval(payload, function (err, response) {
-    if (err) {
-        console.log(err);
-    } else {
-        // Response will have the original Paypal API response
-        console.log(response);
-        // But also a preapprovalUrl, so you can redirect the sender to approve the payment easily
-        console.log('Redirect to %s', response.preapprovalUrl);
-    }
-});
-
-var payload = {
-    requestEnvelope: {
-        errorLanguage:  'en_US'
-    },
-    actionType:     'PAY',
-    currencyCode:   'SGD',
-    feesPayer:      'EACHRECEIVER',
-    memo:           'Chained payment example',
-    cancelUrl:      'http://test.com/cancel',
-    returnUrl:      'http://test.com/success',
-    receiverList: {
-        receiver: [
-            {
-                email:  'primary@test.com',
-                amount: '100.00',
-                primary:'true'
-            },
-            {
-                email:  'secondary@test.com',
-                amount: '10.00',
-                primary:'false'
-            }
-        ]
-    }
-};
-
-paypalSdk.pay(payload, function (err, response) {
-    if (err) {
-        console.log(err);
-    } else {
-        // Response will have the original Paypal API response
-        console.log(response);
-        // But also a paymentApprovalUrl, so you can redirect the sender to checkout easily
-        console.log('Redirect to %s', response.paymentApprovalUrl);
-    }
-});
-*/
