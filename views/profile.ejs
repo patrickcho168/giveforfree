@@ -240,7 +240,7 @@
                         <div class="row">
                             <div class="col-xs-6 col-sm-12 col-md-12 give-info">
                                 <p class="donation-money">
-                                    $<%= giverDonationAmount.totalDonatedAmount %>
+                                    $<% if (giverDonationAmount.totalDonatedAmount) { %><%= giverDonationAmount.totalDonatedAmount %><% } else {%>0<% } %>
                                 </p>
                                 <p class="donation-text">
                                     donated through giving
@@ -248,7 +248,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-12 col-md-12 receive-info">
                                 <p class="donation-money">
-                                    $<%= takerDonationAmount.totalDonatedAmount %>
+                                    $<% if (takerDonationAmount.totalDonatedAmount) { %><%= takerDonationAmount.totalDonatedAmount %><% } else { %>0<% } %>
                                 </p>
                                 <p class="donation-text">
                                     donated through receiving gifts
