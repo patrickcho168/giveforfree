@@ -22,7 +22,7 @@ var paypal = require('./controllers/paypal');
 var config = require('./config');
 var db = require('./models/db');
 var moment = require('moment');
-var compass = require('compass');
+
 moment().format();
 
 var app = express();
