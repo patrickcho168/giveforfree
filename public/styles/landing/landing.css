@@ -100,7 +100,7 @@ nav .search-button, #nav-search {
 
 @media (max-width: 767px) {
     .main-container {
-        padding-top: 90px;
+        padding-top: 75px;
         padding-left: 10px;
         padding-right: 10px;
     }
@@ -150,12 +150,12 @@ nav .search-button, #nav-search {
     float: none;
     height: 100%;
     width: 50%;
-    padding: 20px;
+    padding: 20px 20px 20px 0px;
 }
 
 .panel-right h2 {
     color: #76323f;
-    margin-top: 250px;
+    margin-top: 30vh;
     margin-bottom: 0px;
 }
 
