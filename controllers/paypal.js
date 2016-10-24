@@ -64,7 +64,7 @@ module.exports = function(app){
 					console.log("ipn success");
 					console.log("payKey "+payKey);	
 					console.log("status "+paymentStatus);
-					console.log("paid "+totalAmountPaidstr.split('+')[1];
+					console.log("paid "+totalAmountPaidstr.split('+')[1]);
 					console.log("itemId "+itemId);
 					if (paymentStatus === "COMPLETED") {
 						new db.Item().where({
