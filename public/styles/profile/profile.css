@@ -41,7 +41,6 @@ textarea.flag-input {
 
 .profile-banner {
     width: 100%;
-    height: 360px;
     border: 0;
     display: flex;
     flex-direction: column;
@@ -49,7 +48,6 @@ textarea.flag-input {
 
 .profile-panel {
     width: 100%;
-    height: 290px;
     background: url(../../images/profile/profile-banner-bg.jpg) center center;
     background-size: cover;
 }
@@ -119,8 +117,6 @@ textarea.flag-input {
 }
 
 .profile-switcher {
-    width: 100%;
-    height: 100%;
     padding: 15px;
 }
 
