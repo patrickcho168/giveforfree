@@ -183,13 +183,12 @@ $(document).on('click', '#paypal', function() {
     var charityEmail = $(this).attr("charityEmail");
     var charityID = $(this).attr("charityID");
     var redirectUrl = "https://giveforfree.sg";
-    if (true) {
-        $('#progress-donate').removeClass("active");
-        $('#progress-donate').addClass("completed");
-        $('#progress-deliver').addClass("active");
-        $('#delivered').removeClass("hidden");
-        $(this).hide();
-
+    $('#progress-donate').removeClass("active");
+    $('#progress-donate').addClass("completed");
+    $('#progress-deliver').addClass("active");
+    $('#delivered').removeClass("hidden");
+    $(this).hide();
+    if (false) {
         // Send post request
         $.post("/api/item/donate/" + itemId)
             .done(function() {
