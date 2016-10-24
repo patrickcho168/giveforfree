@@ -273,19 +273,19 @@ textarea.flag-input {
         padding-right: 10px;
     }
 
-    /*.profile-banner {
-        height: auto;
-    }
-
-    .profile-panel {
-        height: auto;
-    }*/
-
     .profile-cover {
         padding-left: 10px;
         padding-right: 10px;
         padding-bottom: 0px;
         display: block;
+    }
+
+    .profile-switcher {
+        padding: 10px 5px;
+    }
+
+    .profile-switcher a {
+        padding: 5px 10px!important;
     }
 
     .content-wrapper {
