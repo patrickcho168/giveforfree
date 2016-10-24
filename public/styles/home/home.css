@@ -360,7 +360,6 @@
     .title-banner {
         display: flex;
         flex-direction: column;
-        height: 85vh;
     }
 
     .title-img {
@@ -376,6 +375,10 @@
         width: auto;
     }
 
+    .title-content .sub-titles p {
+        font-size: 14px;
+    }
+
     .title-content .sub-title-second {
         margin-top: 60px;
     }
@@ -388,23 +391,25 @@
         font-family: 'Source Sans Pro', sans-serif;
         display: block;
         padding-left: 0px;
+        padding-right: 0px;
         position: fixed;
         width: 200px;
         height: 100%;
         right: -200px;
-        top: 90px;
+        top: 78px;
     }
 
     .floating-bar-mobile .category-bar {
-        height: 85vh;
+        height: calc(100% - 78px);
         max-height: none;
+        border-radius: 0px;
     }
 
     .floating-bar-mobile .category-bar a {
         padding-right: 0!important;
     }
 
-    .main-container {
+    .main-container, footer {
         transition: all .5s;
     }
 
