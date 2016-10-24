@@ -360,6 +360,7 @@
     .title-banner {
         display: flex;
         flex-direction: column;
+        height: 85vh;
     }
 
     .title-img {
@@ -371,7 +372,9 @@
 
     .title-content {
         order: 2;
-        display: block;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         width: auto;
     }
 
@@ -394,13 +397,13 @@
         padding-right: 0px;
         position: fixed;
         width: 200px;
-        height: 100%;
+        height: calc(100% - 78px);
         right: -200px;
         top: 78px;
     }
 
     .floating-bar-mobile .category-bar {
-        height: calc(100% - 78px);
+        height: 100%;
         max-height: none;
         border-radius: 0px;
     }
@@ -423,6 +426,10 @@
 
     .show-bar {
         right: 0;
+    }
+
+    .title-content h1 {
+        margin-top: 0;
     }
 }
 
