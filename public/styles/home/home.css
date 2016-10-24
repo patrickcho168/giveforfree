@@ -433,6 +433,16 @@
     }
 }
 
+@media (max-width: 767px) and (orientation:landscape) {
+    .title-banner, .gifts-banner {
+        height: auto!important;
+    }
+
+    .gifts-banner {
+        padding: 20px;
+    }
+}
+
 .me-want {
     color: #76323f;
 }
