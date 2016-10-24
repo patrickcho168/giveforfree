@@ -1,5 +1,6 @@
 var Paypal = require('paypal-adaptive');
 var ipn = require('paypal-ipn');
+var db = require('../models/db');
 
 module.exports = function(app){
 	var express = require('express');
@@ -50,17 +51,33 @@ module.exports = function(app){
 		var payKey = getAtt(params, "&pay_key=");
 		var paymentStatus = getAtt(params, "&status=");
 		var totalAmountPaid = getAtt(params, "&transaction%5B0%5D.amount=");
-		ipn.verify(params,{'allow_sandbox': true}, function callback(err, msg) {
-			console.log("ipn verify");
-			if (err) {
-				console.log(err);
-			} else {
-				console.log("ipn success");
-				console.log("payKey "+payKey);	
-				console.log("status "+paymentStatus);
-				console.log("paid "+totalAmountPaid);
-				console.log("itemId "+itemId);
-			}
+		new db.Item().where({
+            itemID: itemId
+        }).save({
+            payKey: payKey
+        }, {patch: true}).then(function() {
+			ipn.verify(params,{'allow_sandbox': true}, function callback(err, msg) {
+				console.log("ipn verify");
+				if (err) {
+					console.log(err);
+				} else {
+					console.log("ipn success");
+					console.log("payKey "+payKey);	
+					console.log("status "+paymentStatus);
+					console.log("paid "+totalAmountPaidstr.split('+')[1]);
+					console.log("itemId "+itemId);
+					if (paymentStatus === "COMPLETED") {
+						new db.Item().where({
+							itemID: itemId,
+							payKey: payKey
+						}).save({
+							donatedAmount: totalAmountPaidstr.split('+')[1])
+						}, {patch: true}).then(function() {
+							console.log("DONATION DONE");
+						});
+					}
+				}
+			});
 		});
 	})
 
