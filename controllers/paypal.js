@@ -90,9 +90,9 @@ module.exports = function(app){
 	app.post('/api/paypalAdpay',jsonParser, paypalAdpay);
 
 	var paypalSdk = new Paypal({
-		userId:    'tzyinc-facilitator_api1.hotmail.com',
-		password:  'D9VNC4727MW2VYUZ',
-		signature: 'AFcWxV21C7fd0v3bYYYRCpSSRl31AG70SeSsL6EeTScO827AqD.YaY4p',
+		userId:    'giveforfree.payments-facilitator_api1.gmail.com',
+		password:  'Y3NQYMLS7YZ5RFGS',
+		signature: 'AFcWxV21C7fd0v3bYYYRCpSSRl31Az.ETR2blugwnUp.idvqpoBMj20s',
 		sandbox:   true //defaults to false
 	});
 
@@ -100,7 +100,7 @@ module.exports = function(app){
 		console.log(req.body.cost);
 		var toPay = parseFloat(req.body.cost);
 		var fees = toPay/100*3.9 +0.5;
-		var ours = toPay/100*1.1+fees;
+		var ours = Math.min(toPay/100*1.1,1)+fees;
 		ours = Math.round(ours * 100) / 100
 		var theirs = toPay-ours;
 		var itemId = parseInt(req.body.itemId);
@@ -124,7 +124,7 @@ module.exports = function(app){
 						amount: toPay.toString(),
 						primary:'true'
 					},{
-						email:	'secondary-business@hotmail.com', // Give For Free Payment email
+						email:	'giveforfree.payments-facilitator@gmail.com', // Give For Free Payment email
 						amount: ours.toString(),
 						primary: 'false'
 					}
