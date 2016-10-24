@@ -302,6 +302,15 @@ img.clipped {
         border-bottom: 1px #eee solid!important;
     }
 
+    .navbar-fixed-top {
+        padding: 0!important;
+    }
+
+    .navbar-brand {
+        margin-top: 4px;
+        margin-left: 4px;
+    }
+
     .navbar-collapse .navbar-form{
         margin: 0;
         border: 0 none;

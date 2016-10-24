@@ -41,7 +41,6 @@ textarea.flag-input {
 
 .profile-banner {
     width: 100%;
-    height: 360px;
     border: 0;
     display: flex;
     flex-direction: column;
@@ -49,7 +48,6 @@ textarea.flag-input {
 
 .profile-panel {
     width: 100%;
-    height: 290px;
     background: url(../../images/profile/profile-banner-bg.jpg) center center;
     background-size: cover;
 }
@@ -119,8 +117,6 @@ textarea.flag-input {
 }
 
 .profile-switcher {
-    width: 100%;
-    height: 100%;
     padding: 15px;
 }
 
@@ -272,17 +268,9 @@ textarea.flag-input {
 }
 @media (max-width: 767px) {
     .main-container {
-        padding-top: 90px;
+        padding-top: 75px!important;
         padding-left: 10px;
         padding-right: 10px;
-    }
-
-    .profile-banner {
-        height: auto;
-    }
-
-    .profile-panel {
-        height: auto;
     }
 
     .profile-cover {
@@ -290,6 +278,14 @@ textarea.flag-input {
         padding-right: 10px;
         padding-bottom: 0px;
         display: block;
+    }
+
+    .profile-switcher {
+        padding: 10px 5px;
+    }
+
+    .profile-switcher a {
+        padding: 5px 10px!important;
     }
 
     .content-wrapper {

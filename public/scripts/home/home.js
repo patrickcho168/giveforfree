@@ -121,6 +121,7 @@ $(document).ready(function() {
     $('.category-button').on('click', function() {
         $('.floating-bar-mobile').toggleClass('show-bar');
         $('.main-container').toggleClass('sidebar-open');
+        $('footer').toggleClass('sidebar-open');
     });
 
     $('a.category').on('click', function() {
