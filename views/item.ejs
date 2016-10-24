@@ -360,7 +360,7 @@
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                             <input type="text" class="input-txt name-input" name="title" maxlength="50" autocomplete="off" value="<%= item.title %>" required>
                         </div>
-                        
+
                         <% if (loggedIn && !mine && (item.takerID === null || item.takerID === id)) { %>
                             <div class="message-giver">
                                 <a href="javascript:messageUser();" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Giver</a>
@@ -496,7 +496,7 @@
                                 <div class="col-sm-6 donation-edit">
                                     <h2>Donation</h2>
                                     <p class="subtitle">
-                                        Choose donation amount.
+                                        Choose donation amount (recommended minimum 2 dollars).
                                     </p>
                                     <div class="money-input">
                                         <i class="fa fa-usd"></i><span> SGD</span>
