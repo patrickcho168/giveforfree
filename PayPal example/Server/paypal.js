@@ -59,17 +59,16 @@ module.exports = function(app){
 		  }
 		});
 	})
-
-	
 	
 	app.post('/paypalAdpay',jsonParser, paypalAdpay);
+
 	var paypalSdk = new Paypal({
-			userId:    'tzyinc-facilitator_api1.hotmail.com',
-			password:  'D9VNC4727MW2VYUZ',
-			signature: 'AFcWxV21C7fd0v3bYYYRCpSSRl31AG70SeSsL6EeTScO827AqD.YaY4p',
-			sandbox:   true //defaults to false
+		userId:    'tzyinc-facilitator_api1.hotmail.com',
+		password:  'D9VNC4727MW2VYUZ',
+		signature: 'AFcWxV21C7fd0v3bYYYRCpSSRl31AG70SeSsL6EeTScO827AqD.YaY4p',
+		sandbox:   true //defaults to false
 	});
-	
+
 	function paypalAdpay(req, res){
 		console.log(req.body.cost);
 		var toPay = parseFloat(req.body.cost);

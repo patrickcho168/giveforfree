@@ -175,40 +175,48 @@ $(document).on('click', '.mobile-btn-cancel', function() {
     $('html, body').animate({ scrollTop: 0 }, 500);
 });
 
+// Donate
 $(document).on('click', '#paypal', function() {
     var itemId = $(this).attr("itemId");
-    $('#progress-donate').removeClass("active");
-    $('#progress-donate').addClass("completed");
-    $('#progress-deliver').addClass("active");
-    $('#delivered').removeClass("hidden");
-    $(this).hide();
+    var price = $(this).attr("price");
+    var charityName = $(this).attr("charityName");
+    var charityEmail = $(this).attr("charityEmail");
+    var charityID = $(this).attr("charityID");
+    var redirectUrl = "https://giveforfree.sg";
+    if (true) {
+        $('#progress-donate').removeClass("active");
+        $('#progress-donate').addClass("completed");
+        $('#progress-deliver').addClass("active");
+        $('#delivered').removeClass("hidden");
+        $(this).hide();
 
-    // Send post request
-    $.post("/api/item/donate/" + itemId)
-        .done(function() {
+        // Send post request
+        $.post("/api/item/donate/" + itemId)
+            .done(function() {
 
-        })
-        .fail(function() {
+            })
+            .fail(function() {
 
-        })
-        .always(function() {
+            })
+            .always(function() {
 
+            });
+    } else {
+        var body = {
+            charityName: charityName,
+            charityEmail: charityEmail,
+            cost: price,
+            redirectUrl: redirectUrl
+        };
+        $.ajax({type:'post',
+            url:'/api/paypalAdpay',
+            data:body,
+            datatype:'json',
+            success: function(data){
+                window.location = data;
+            }
         });
-
-    // var input = {
-    //     cost: cost,
-    //     charity: charity,
-    //     redirectUrl: window.location.href
-    // };
-    // $.ajax({type:'post',
-    //         url:'/paypalAdpay',
-    //         data:input,
-    //         datatype:'json',
-    //         success: function(data){
-    //             console.log(data);
-    //             window.location = data;
-    //         }
-    // });
+    }
 })
 
 // Carousel Logic

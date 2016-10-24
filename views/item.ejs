@@ -387,7 +387,7 @@
                                     <% if (item.takerID === id) { %>
                                         <% if (item.donationAmount > 0) { %>
                                             <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
-                                                <a class="btn btn-lg btn-block btn-donate" id="paypal" itemId="<%= item.itemID %>"><i class="fa fa-heart-o"></i> Donate to receive gift</a>
+                                                <a class="btn btn-lg btn-block btn-donate" id="paypal" itemId="<%= item.itemID %>" price="<%= item.donationAmount %>" charityName="<%= item.charityName %>" charityEmail="<%= item.charityEmail %>" charityID="<%= item.charityID %>"><i class="fa fa-heart-o"></i> Donate to receive gift</a>
                                                 <a class="btn btn-lg btn-block btn-donated hidden" id="delivered" itemId="<%= item.itemID %>"><i class="fa fa-heart-o"></i> Confirm Gift Delivery</a>
                                             <% } else if (!item.delivered) { %>
                                                 <a class="btn btn-lg btn-block btn-donated" id="delivered" itemId="<%= item.itemID %>"><i class="fa fa-heart-o"></i> Confirm Gift Delivery</a>
