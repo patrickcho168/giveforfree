@@ -101,6 +101,7 @@ module.exports = function(app){
 		var toPay = parseFloat(req.body.cost);
 		var fees = toPay/100*3.9 +0.5;
 		var ours = toPay/100*1.1+fees;
+		ours = Math.round(ours * 100) / 100
 		var theirs = toPay-ours;
 		var itemId = parseInt(req.body.itemId);
 		console.log(theirs,"theirs");
