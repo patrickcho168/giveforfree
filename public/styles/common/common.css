@@ -564,7 +564,7 @@ footer {
     top: 0;
     width: 50%;
     height: 100%;
-    background: #76323f;
+    background: black;
     z-index: 1000;
 }
 #loader-wrapper .loader-section.section-left {
