@@ -781,7 +781,7 @@ fieldset.rating {
 
 @media (max-width: 767px) {
     .main-container {
-        padding-top: 90px;
+        padding-top: 75px;
         padding-left: 25px;
         padding-right: 25px;
     }

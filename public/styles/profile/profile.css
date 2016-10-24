@@ -268,7 +268,7 @@ textarea.flag-input {
 }
 @media (max-width: 767px) {
     .main-container {
-        padding-top: 90px;
+        padding-top: 75px!important;
         padding-left: 10px;
         padding-right: 10px;
     }

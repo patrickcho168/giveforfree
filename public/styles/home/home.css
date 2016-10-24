@@ -352,7 +352,7 @@
 
 @media (max-width: 767px) {
     .main-container {
-        padding-top: 77px;
+        padding-top: 60px;
         padding-left: 10px;
         padding-right: 10px;
     }
@@ -401,9 +401,9 @@
         padding-right: 0px;
         position: fixed;
         width: 200px;
-        height: calc(100% - 78px);
+        height: calc(100% - 57px);
         right: -200px;
-        top: 78px;
+        top: 57px;
     }
 
     .floating-bar-mobile .category-bar {
