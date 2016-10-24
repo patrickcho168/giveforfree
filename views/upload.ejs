@@ -277,7 +277,7 @@
                                     <img src="../images/upload/charity1.png" alt="" class="covered" onclick="selectCharity(this);"/>
                                     <input type="radio" id="cat-wel-society" name="donateToCharity" value="2" class="hidden" data-validation="required" data-validation-optional-if-answered="givefree, donateToCharity">
                                     <img src="../images/upload/charity2.png" alt="" class="covered" onclick="selectCharity(this);"/>
-                                </div>                        
+                                </div>
                             </div>
 
                             <div class="col-md-6 give-free checkbox checkbox-primary checkbox-circle row">
@@ -290,11 +290,11 @@
                         <div class="donation-info no-charity covered">
                             <h2>Donation Amount</h2>
                             <p>
-                                Amount that gift receiver will donate.
+                                Amount that gift receiver will donate (recommended minimum 2 dollars).
                             </p>
                             <div class="money-input">
                                 <i class="fa fa-usd"></i><span> SGD</span>
-                                <input type="number" min="1.00" step="0.01" class="input-txt donation-input" name="donation" placeholder="10" maxlength="50" data-validation='required' data-validation-depends-on="donateToCharity">
+                                <input type="number" min="1.00" step="0.01" class="input-txt donation-input" name="donation" placeholder="2" maxlength="50" data-validation='required' data-validation-depends-on="donateToCharity">
                             </div>
                         </div>
                         <button type="submit" name="button" type="submit" class="btn btn-md">Create Gift</button>
