@@ -41,13 +41,15 @@ module.exports = function(app){
 	});
 	
 	
-	app.post('/api/paid', function(req, res) {
+	app.post('/api/paid/:id', function(req, res) {
 		console.log("ipn received");
 		res.send(200);
 		res.end();
+		var itemId = req.params.id;
 		var params = req.body;
 		var payKey = getAtt(params, "&pay_key=");
 		var paymentStatus = getAtt(params, "&status=");
+		var totalAmountPaid = getAtt(params, "&amount=");
 		ipn.verify(params,{'allow_sandbox': true}, function callback(err, msg) {
 			console.log("ipn verify");
 			if (err) {
@@ -56,6 +58,8 @@ module.exports = function(app){
 				console.log("ipn success");
 				console.log("payKey "+payKey);	
 				console.log("status "+paymentStatus);
+				console.log("paid "+totalAmountPaid);
+				console.log("itemId "+itemId);
 			}
 		});
 	})
@@ -81,6 +85,7 @@ module.exports = function(app){
 		var fees = toPay/100*3.9 +0.5;
 		var ours = toPay/100*1.1+fees;
 		var theirs = toPay-ours;
+		var itemId = parseInt(req.body.itemId);
 		console.log(theirs,"theirs");
 		console.log(ours,"ours");
 		var payload = {
@@ -91,7 +96,7 @@ module.exports = function(app){
 			currencyCode:   'SGD',
 			feesPayer:      'SECONDARYONLY',
 			memo:           'Donation to ' + req.body.charityName, // Add Charity Name
-			ipnNotificationUrl: 'https://giveforfree.sg/api/paid', // TO CHANGE THIS
+			ipnNotificationUrl: 'https://giveforfree.sg/api/paid/' + itemId, // TO CHANGE THIS
 			cancelUrl:      req.body.redirectUrl, // Back to Item Page
 			returnUrl:      req.body.redirectUrl, // Back to Item Page
 			receiverList: {
