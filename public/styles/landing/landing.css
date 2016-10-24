@@ -188,7 +188,7 @@ nav .search-button, #nav-search {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 20px;
+    padding: 15%;
     text-align: center;
     margin-bottom: 20px;
 }
