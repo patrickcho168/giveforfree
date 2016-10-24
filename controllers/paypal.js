@@ -91,7 +91,7 @@ module.exports = function(app){
 			currencyCode:   'SGD',
 			feesPayer:      'SECONDARYONLY',
 			memo:           'Donation to ' + req.body.charityName, // Add Charity Name
-			ipnNotificationUrl: 'https://giveforfree.sg', // TO CHANGE THIS
+			ipnNotificationUrl: 'https://giveforfree.sg/api/paid', // TO CHANGE THIS
 			cancelUrl:      req.body.redirectUrl, // Back to Item Page
 			returnUrl:      req.body.redirectUrl, // Back to Item Page
 			receiverList: {
