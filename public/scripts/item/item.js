@@ -186,7 +186,7 @@ $(document).on('click', '#paypal', function() {
     $('#progress-donate').removeClass("active");
     $('#progress-donate').addClass("completed");
     $('#progress-deliver').addClass("active");
-    $('#delivered').removeClass("hidden");
+    // $('#delivered').removeClass("hidden");
     $(this).hide();
     if (false) {
         // Send post request

@@ -43,13 +43,13 @@ module.exports = function(app){
 	
 	app.post('/api/paid/:id', function(req, res) {
 		console.log("ipn received");
-		res.send(200);
+		res.sendStatus(200);
 		res.end();
 		var itemId = req.params.id;
 		var params = req.body;
 		var payKey = getAtt(params, "&pay_key=");
 		var paymentStatus = getAtt(params, "&status=");
-		var totalAmountPaid = getAtt(params, "&amount=");
+		var totalAmountPaid = getAtt(params, "&transaction%5B0%5D.amount=");
 		ipn.verify(params,{'allow_sandbox': true}, function callback(err, msg) {
 			console.log("ipn verify");
 			if (err) {
