@@ -2,7 +2,7 @@
 var moment = require('moment');
 
 module.exports = function(app) {
-    app.get("/privacy", function(req, res) {
+    app.get("/tnc", function(req, res) {
     	if (req.user === undefined) {
     		res.render("privacy", {loggedIn: false, id: null});
     	} else {
