@@ -607,7 +607,7 @@ footer {
     display: none;
 }
 .loaded #loader-wrapper {
-    display: block;
+    display: none;
 }
 
 .panel {
