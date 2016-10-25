@@ -28,7 +28,7 @@ $(function() {
 $(document).ready(function() {
     $('.donation-input').keyup(function() {
         var donationAmount = $('.donation-input').val();
-        var total = parseInt(donationAmount);
+        var total = parseFloat(donationAmount);
         var theirs, ours, fee;
         if (isNaN(total)) {
             theirs = 0;
@@ -37,6 +37,8 @@ $(document).ready(function() {
             theirs = culculateTheirs(total);
             fee = culculateFee(total);
         }
+        console.log(theirs);
+        console.log(theirs.toFixed(2));
         $('.actual-amount').text(theirs.toFixed(2));
         $('.fee').text(fee.toFixed(2));
     });
