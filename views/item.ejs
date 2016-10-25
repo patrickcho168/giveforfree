@@ -378,7 +378,7 @@
                             <div class="info-button want-button">
                                 <% if (!loggedIn) { %>
                                     <% if (!expired && item.takerID === null) { %>
-                                        <a href="/login" class="btn btn-lg btn-want btn-block"><span class="glyphicon glyphicon-gift"></span> Want</a>
+                                        <a href="/login" class="btn btn-lg btn-want btn-block"><span class="glyphicon glyphicon-gift"></span><span> Want </span><span class="badge"><%= item.numWants %></span> </a>
                                     <% } else if (item.takerID !== null) { %>
                                         <!-- <a href="/profile/<%= item.takerID %>" class="btn btn-lg btn-want btn-block"><i class="fa fa-heart-o"></i> Given to <%= item.takerName %></a> -->
                                     <% } else if (expired && item.takerID === null) { %>
@@ -399,9 +399,9 @@
                                     <% } else if (item.takerID !== null) { %>
                                         <!-- <a href="/profile/<%= item.takerID %>" class="btn btn-lg btn-want btn-block"><i class="fa fa-heart-o"></i> Given to <%= item.takerName %></a> -->
                                     <% } else if (item.meWant === 1 && !expired) { %>
-                                        <a class="btn btn-lg btn-block btn-unwant unsnag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span><span> Unwant </span><span class="badge"><%= item.numWants %></span> </a>
+                                        <a class="btn btn-lg btn-block btn-unwant unsnag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span><span> Unwant </span><span class="badge"><%= item.numWants %> <% if (item.numWants == 1) { %>wanter<% } else { %>wanters<% } %></span></a>
                                     <% } else if (!expired) { %>
-                                        <a class="btn btn-lg btn-block btn-want snag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span><span> Want </span><span class="badge"><%= item.numWants %></span> </a>
+                                        <a class="btn btn-lg btn-block btn-want snag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span><span> Want </span><span class="badge"><%= item.numWants %> <% if (item.numWants == 1) { %>wanter<% } else { %>wanters<% } %></span></a>
                                     <% } else { %>
                                         <!-- <div class="btn-lg btn-expired btn-block"><i class="fa fa-heart-o"></i> Gift has expired</div> -->
                                     <% } %>
@@ -412,11 +412,11 @@
                                 <% if (manual.length > 0) { %>
                                     <% if (!expired) { %>
                                         <a type="button" class="btn btn-lg btn-block dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Give <span class="badge"><%= item.numWants %> wanters</span>
+                                            Give <span class="badge"><%= item.numWants %> <% if (item.numWants == 1) { %>wanter<% } else { %>wanters<% } %></span>
                                         </a>
                                     <% } else { %>
                                         <a type="button" class="btn btn-lg btn-block dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Give <span class="badge"><%= item.numWants %> wanters</span>
+                                            Give <span class="badge"><%= item.numWants %> <% if (item.numWants == 1) { %>wanter<% } else { %>wanters<% } %></span>
                                         </a>
                                     <% } %>
                                     <% if (item.numWants > 0) { %>
