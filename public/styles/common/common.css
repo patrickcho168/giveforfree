@@ -610,9 +610,9 @@ footer {
     display: none;
 }
 
-.loading #loader {
+/*.loading #loader {
     display: block;
-}
+}*/
 
 .lodaing #loader-wrapper {
     display: block;
