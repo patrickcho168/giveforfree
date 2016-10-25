@@ -185,6 +185,8 @@ $(document).on('click', '.mobile-btn-cancel', function() {
 
 // Donate
 $(document).on('click', '#paypal', function() {
+    $('body').removeClass('loaded');
+
     var itemId = $(this).attr("itemId");
     var price = $(this).attr("price");
     var charityName = $(this).attr("charityName");
@@ -511,5 +513,3 @@ function selectCharity(currentSelection) {
         $('.no-charity').addClass('hidden');
     }
 }
-
-
