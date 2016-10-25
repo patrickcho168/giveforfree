@@ -610,6 +610,14 @@ footer {
     display: none;
 }
 
+.loading #loader {
+    display: block;
+}
+
+.lodaing #loader-wrapper {
+    display: block;
+}
+
 .panel {
     transition: all 0.5s;
 }
