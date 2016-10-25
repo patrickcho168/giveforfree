@@ -1,5 +1,5 @@
 $(function() {
-    initializeForm();    
+    initializeForm();
 
     $('[data-toggle="popover"]').popover();
 
@@ -25,6 +25,26 @@ $(function() {
 
 });
 
+$(document).ready(function() {
+    $('.donation-input').keyup(function() {
+        var donationAmount = $('.donation-input').val();
+        var total = parseInt(donationAmount);
+        var theirs, ours;
+        if (isNaN(total)) {
+            theirs = 0;
+        } else {
+            theirs = culculateTheirs(total);
+        }
+        $('.actual-amount').text(theirs.toFixed(2));
+    });
+});
+
+function culculateTheirs(total) {
+    var fees = 3.9 * total/100 + 0.5;
+    var ours = Math.min(1.1 * total/100, 1) + fees;
+    return total - ours;
+}
+
 function initializeForm() {
     $.validate({
         modules : 'logic',
@@ -37,7 +57,7 @@ function initializeForm() {
           }, {
               // settings
               type: 'danger'
-          }); 
+          });
         },
         onSuccess: function($form) {
             // If image is cropped
@@ -53,7 +73,7 @@ function initializeForm() {
                 }, {
                     // settings
                     type: 'danger'
-                }); 
+                });
 
                 return false;
 
@@ -65,7 +85,7 @@ function initializeForm() {
                 }, {
                     // settings
                     type: 'danger'
-                }); 
+                });
 
                 return false;
             }
@@ -105,7 +125,7 @@ function previewFile() {
             }, {
                 // settings
                 type: 'danger'
-            });            
+            });
         }
         // Check file size
         else if (file.size > 5 * 1024 * 1024) {
@@ -190,13 +210,13 @@ function selectCharity(currentSelection) {
 
         $('.no-charity').removeClass('covered');
         if (moneyInput.val() == 0) {
-            moneyInput.val(10);
+            moneyInput.val(2);
         }
 
-        moneyInput.prop('disabled', false);   
+        moneyInput.prop('disabled', false);
     } else if ($('.no-charity').is(':visible')) {
         $('.no-charity').addClass('covered');
-        moneyInput.prop('disabled', true);   
+        moneyInput.prop('disabled', true);
     }
 }
 
@@ -206,8 +226,8 @@ function giveFree(freebox) {
 
         // Set charities to zero
         $('.no-charity').addClass('covered');
-        moneyInput.prop('disabled', true);   
-        moneyInput.val(0);   
+        moneyInput.prop('disabled', true);
+        moneyInput.val(0);
 
         var allBoxes = $('.charity-selection input');
         var allImg = $('.charity-selection img');
