@@ -1,7 +1,5 @@
 $(document).ready(function() {
-
-	$('body').removeClass('loading');
-	$('body').addClass('loaded');
+	// $('body').addClass('loaded');
 
 	$("a.notification-link").click(function(notification) {
 	    var href = this.href;
@@ -32,12 +30,10 @@ $(document).ready(function() {
 
 function loginLoader() {
     $('body').removeClass('loaded');
-	$('body').addClass('loading');
 }
 
 function loginSpecial() {
     $('body').removeClass('loaded');
-	$('body').addClass('loading');
 	window.location.href="/login/facebook";
 }
 
