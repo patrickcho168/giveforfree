@@ -546,7 +546,7 @@ function updateDonationDetail() {
         fee = culculateFee(total);
         ours = culculateOurs(total);
     }
-    $('.actual-amount').text(theirs.toFixed(2));
-    $('.fee').text(fee.toFixed(2));
-    $('.ours').text(ours.toFixed(2));
+    $('.actual-amount').text('$'+theirs.toFixed(2));
+    $('.fee').text('$'+fee.toFixed(2));
+    $('.ours').text('$'+ours.toFixed(2));
 }
