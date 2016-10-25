@@ -29,20 +29,27 @@ $(document).ready(function() {
     $('.donation-input').keyup(function() {
         var donationAmount = $('.donation-input').val();
         var total = parseInt(donationAmount);
-        var theirs, ours;
+        var theirs, ours, fee;
         if (isNaN(total)) {
             theirs = 0;
+            fee = 0;
         } else {
             theirs = culculateTheirs(total);
+            fee = culculateFee(total);
         }
         $('.actual-amount').text(theirs.toFixed(2));
+        $('.fee').text(fee.toFixed(2));
     });
 });
 
 function culculateTheirs(total) {
-    var fees = 3.9 * total/100 + 0.5;
+    var fees = culculateFee(total);
     var ours = Math.min(1.1 * total/100, 1) + fees;
-    return total - ours;
+    return total - ours < 0 ? 0 : total - ours;
+}
+
+function culculateFee(total) {
+    return 3.9 * total/100 + 0.5;
 }
 
 function initializeForm() {
@@ -211,6 +218,8 @@ function selectCharity(currentSelection) {
         $('.no-charity').removeClass('covered');
         if (moneyInput.val() == 0) {
             moneyInput.val(2);
+            $('.actual-amount').text(1.4);
+            $('.fee').text(0.58);
         }
 
         moneyInput.prop('disabled', false);
@@ -228,6 +237,8 @@ function giveFree(freebox) {
         $('.no-charity').addClass('covered');
         moneyInput.prop('disabled', true);
         moneyInput.val(0);
+        $('.actual-amount').text(0);
+        $('.fee').text(0);
 
         var allBoxes = $('.charity-selection input');
         var allImg = $('.charity-selection img');
