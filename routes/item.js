@@ -663,26 +663,28 @@ module.exports = function(app) {
                                         });
                                     } else {
                                         var givenToMe = userId === data[0].takerID;
-                                        res.render('item', {
-                                            id: userId,
-                                            item: data[0],
-                                            mine: mine,
-                                            givenToMe: givenToMe,
-                                            appId: config.fbClientID,
-                                            domain: config.domain,
-                                            date: processedDate,
-                                            expired: expiredMin > 0,
-                                            gifts: gifted[0].numGiven,
-                                            manual: [],
-                                            loggedIn: loggedIn,
-                                            comment: commentData.models,
-                                            notification: req.session.notification,
-                                            moment: moment,
-                                            fbNameSpace: config.fbNamespace,
-                                            csrfToken: req.csrfToken(),
-                                            expiryDate: date,
-                                            categories: categories,
-                                            user: user ? user.attributes : null
+                                        db.ItemPageManualQuery(itemId, function(data2) {
+                                            res.render('item', {
+                                                id: userId,
+                                                item: data[0],
+                                                mine: mine,
+                                                givenToMe: givenToMe,
+                                                appId: config.fbClientID,
+                                                domain: config.domain,
+                                                date: processedDate,
+                                                expired: expiredMin > 0,
+                                                gifts: gifted[0].numGiven,
+                                                manual: data2,
+                                                loggedIn: loggedIn,
+                                                comment: commentData.models,
+                                                notification: req.session.notification,
+                                                moment: moment,
+                                                fbNameSpace: config.fbNamespace,
+                                                csrfToken: req.csrfToken(),
+                                                expiryDate: date,
+                                                categories: categories,
+                                                user: user ? user.attributes : null
+                                            });
                                         });
                                     }
                                 });

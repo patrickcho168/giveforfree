@@ -646,7 +646,7 @@ fieldset.rating {
 }
 
 .delivery-info {
-    margin-top: 20px;
+    margin-top: 20px!important;
 }
 
 .selectize-input {
@@ -938,4 +938,16 @@ fieldset.rating {
 
 .message-giver {
     text-align: center;
+}
+
+.wanter-pic {
+    max-width:20px;
+    max-height:20px;
+    border-radius: 10px;
+}
+
+.wanter-pic:hover {
+    max-width:50px;
+    max-height:50px;   
+    border-radius: 25px;
 }

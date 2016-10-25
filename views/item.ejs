@@ -12,8 +12,8 @@
     <meta property="fb:app_id" content="<%= appId %>" />
     <meta property="og:url" content="<%= domain %>/item/<%= item.itemID %>" />
     <meta property="og:image" content="https://d24uwljj8haz6q.cloudfront.net/<%= item.imageLocation %>" />
-    <meta property="og:description" content="<%= item.description %>" />
-    <meta property="og:title" content="<%= item.title %>" />
+    <meta property="og:description" content="<%- item.description %>" />
+    <meta property="og:title" content="<%- item.title %>" />
     <meta property="og:site_name" content="Give For Free" />
     <meta property="og:image:width" content="450" />
     <meta property="og:image:height" content="298" />
@@ -161,6 +161,7 @@
     <link rel="stylesheet" href="../styles/common/bootstrap-edit.css">
     <link rel="stylesheet" href="../styles/common/common.css">
     <link rel="stylesheet" href="../styles/item/item.css">
+    <link rel="stylesheet" href="../styles/upload/upload.css">
     <link rel="stylesheet" href="../styles/item/progress.css">
 
     <!-- Bootstrap Notifications -->
@@ -344,7 +345,7 @@
                     </div>
                     <div class="item-basic-info">
                         <div class="info-text info-display">
-                            <h2><%= item.title %></h2>
+                            <h2><%- item.title %></h2>
                             <% if (item.donationAmount > 0) { %>
                                 <p>$<%= item.donationAmount %> to <%= item.charityName %></p>
                             <% } else { %>
@@ -358,7 +359,7 @@
                         </div>
                         <div class="info-text info-edit hidden">
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                            <input type="text" class="input-txt name-input" name="title" maxlength="50" autocomplete="off" value="<%= item.title %>" required>
+                            <input type="text" class="input-txt name-input" name="title" maxlength="50" autocomplete="off" value="<%- item.title %>" required>
                         </div>
 
                         <% if (loggedIn && !mine && (item.takerID === null || item.takerID === id)) { %>
@@ -377,7 +378,7 @@
                             <div class="info-button want-button">
                                 <% if (!loggedIn) { %>
                                     <% if (!expired && item.takerID === null) { %>
-                                        <a href="/login" class="btn btn-lg btn-want btn-block"><span class="glyphicon glyphicon-gift"></span> Login to want</a>
+                                        <a href="/login" class="btn btn-lg btn-want btn-block"><span class="glyphicon glyphicon-gift"></span> Want</a>
                                     <% } else if (item.takerID !== null) { %>
                                         <!-- <a href="/profile/<%= item.takerID %>" class="btn btn-lg btn-want btn-block"><i class="fa fa-heart-o"></i> Given to <%= item.takerName %></a> -->
                                     <% } else if (expired && item.takerID === null) { %>
@@ -517,13 +518,16 @@
                                     </p>
                                     <input type="text" class="input-txt input-date" name="date" id="date" value="<%= moment(date, "D MMMM YYYY HH:mm").format("YYYY-MM-DD") %>" maxlength="50" autocomplete="off" required>
                                 </div>
-
-                                <div class="col-sm-6 delivery-info">
+                                
+                                <div class="col-sm-6 category-info category-select-holder">
                                     <h2>Category</h2>
-                                    <p class="subtitle">
-                                        The tags on gift
+
+                                    <p>
+                                    Select the most appropriate category. <span class="no-category-alert hidden" style="color: #f05050;">You need to choose a category.</span>
+                                    <!-- TODO: implement validation-->
                                     </p>
-                                    <select id="input-tags" name="categories[]" multiple class="categories has-options" auto-complete: "off" placeholder="Select categories...">
+                                    <select id="input-tags" name="categories[]" id="category" data-validation="required">
+                                        <option value="">Select a category...</option>
                                         <% categories_list = [
                                             "books",
                                             "clothes",
@@ -573,7 +577,7 @@
                                         Some words about the gift.
                                     </p>
                                     <div class="description-edit">
-                                        <textarea type="text" class="input-txt description-input" name="description"  maxlength="200" autocomplete="off" required><%= item.description %></textarea>
+                                        <textarea type="text" class="input-txt description-input" name="description"  maxlength="200" autocomplete="off" required><%- item.description %></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -587,7 +591,7 @@
                                             Description
                                         </p>
                                         <p class="item-description">
-                                            <%= item.description %>
+                                            <%- item.description %>
                                         </p>
                                     </div>
                                     <div class="deadline-info">
@@ -646,7 +650,7 @@
                             </div>
                         </div>
                         <% if (!mine) { %>
-                        <% } else { %>
+                        <% } else if (item.takerID === null) { %>
                             <div class="mobile-button">
                                 <div class="info-button mobile-modify-button">
                                     <a href="#" class="btn btn-lg btn-block mobile-btn-modify">Modify Item</a>
