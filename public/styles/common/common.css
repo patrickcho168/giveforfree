@@ -296,6 +296,22 @@ img.clipped {
     display: none;
 }
 
+.privacy-container {
+    font-family: 'Source Sans Pro', sans-serif;
+    margin-top: 70px;
+    padding: 30px;
+    color: #565656;
+}
+
+.privacy-container #appendix---privacy-policy {
+    color: #76323f;
+}
+
+.privacy-container h3 {
+    color: #c09f80;
+    font-weight: 300!important;
+}
+
 @media (max-width: 767px) {
     .dropdown-menu {
         border-top: 1px #eee solid!important;
@@ -327,6 +343,15 @@ img.clipped {
 
     .logo-mobile {
         display: block;
+    }
+
+    .privacy-container {
+        margin-top: 70px;
+        padding: 0px 10px;
+    }
+
+    .privacy-container .panel {
+        padding: 30px!important;
     }
 }
 @media (min-width: 768px) {
