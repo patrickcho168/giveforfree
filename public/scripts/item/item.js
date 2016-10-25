@@ -115,7 +115,7 @@ $(document).on("click", "#delivered", function() {
     var itemId = $(this).attr("itemId");
     $('#progress-deliver').removeClass("active");
     $('#progress-deliver').addClass("completed");
-    $(this).hide();
+    $(this).addClass('disabled');
 
     // Send post request
     $.post("/api/item/deliver/" + itemId)
@@ -187,7 +187,7 @@ $(document).on('click', '#paypal', function() {
     $('#progress-donate').addClass("completed");
     $('#progress-deliver').addClass("active");
     // $('#delivered').removeClass("hidden");
-    $(this).hide();
+    $(this).addClass('disabled');
     if (false) {
         // Send post request
         $.post("/api/item/donate/" + itemId)
