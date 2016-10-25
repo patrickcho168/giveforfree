@@ -50,6 +50,7 @@ function addRealViews(html, url) {
                     html += '<img src="http://graph.facebook.com/' + value.fbID + '/picture" alt="" />';
                     html += '<span>' + value.name + '</span>';
                     html += '</a>';
+                    html += '<a href="/item/' + value.itemID + '">';
                     html += '<p>';
                     if (value.donationAmount > 0) {
                         if (value.donationAmount % 1 == 0) {
@@ -66,7 +67,7 @@ function addRealViews(html, url) {
                     } else {
                         html += '<span class="pull-right"><i class="fa fa-heart addition-info pull-right"></i>' + value.numWants + '</span>';
                     }
-                    html += '</p>';
+                    html += '</p></a>';
                     if (value.meWant) {
                         html += '<div class="ribbon-wrapper-green">';
                         html += '<div class="ribbon-green">';

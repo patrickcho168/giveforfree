@@ -15,7 +15,11 @@ $(document).on("click", ".snag", function() {
 
     // Increment number of people snagging
     var snag_count = parseInt($(this).children(".badge").text()) + 1;
-    $(this).children(".badge").text(snag_count);
+    if (snag_count == 1) {
+        $(this).children(".badge").text(snag_count + " wanter");
+    } else {
+        $(this).children(".badge").text(snag_count + " wanters");
+    }
     $('#progress-want').addClass("completed");
     $('#progress-want').removeClass("active");
     $('#progress-give').addClass("active");
@@ -50,7 +54,11 @@ $(document).on("click", ".unsnag", function() {
 
     // Decrement number of people snagging
     var snag_count = parseInt($(this).children(".badge").text()) - 1;
-    $(this).children(".badge").text(snag_count);
+        if (snag_count == 1) {
+        $(this).children(".badge").text(snag_count + " wanter");
+    } else {
+        $(this).children(".badge").text(snag_count + " wanters");
+    }
     $('#progress-want').removeClass("completed");
     $('#progress-want').addClass("active");
     $('#progress-give').removeClass("active");
@@ -115,7 +123,7 @@ $(document).on("click", "#delivered", function() {
     var itemId = $(this).attr("itemId");
     $('#progress-deliver').removeClass("active");
     $('#progress-deliver').addClass("completed");
-    $(this).hide();
+    $(this).addClass('disabled');
 
     // Send post request
     $.post("/api/item/deliver/" + itemId)
@@ -189,7 +197,7 @@ $(document).on('click', '#paypal', function() {
     $('#progress-donate').addClass("completed");
     $('#progress-deliver').addClass("active");
     // $('#delivered').removeClass("hidden");
-    $(this).hide();
+    $(this).addClass('disabled');
     if (false) {
         // Send post request
         $.post("/api/item/donate/" + itemId)
@@ -538,7 +546,7 @@ function updateDonationDetail() {
         fee = culculateFee(total);
         ours = culculateOurs(total);
     }
-    $('.actual-amount').text(theirs.toFixed(2));
-    $('.fee').text(fee.toFixed(2));
-    $('.ours').text(ours.toFixed(2));
+    $('.actual-amount').text('$'+theirs.toFixed(2));
+    $('.fee').text('$'+fee.toFixed(2));
+    $('.ours').text('$'+ours.toFixed(2));
 }

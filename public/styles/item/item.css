@@ -260,6 +260,7 @@ textarea {
 }
 
 .item-img {
+    position: relative;
     width: 100%;
 }
 
@@ -646,7 +647,7 @@ fieldset.rating {
 }
 
 .delivery-info {
-    margin-top: 20px;
+    margin-top: 20px!important;
 }
 
 .selectize-input {
