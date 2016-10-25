@@ -22,7 +22,7 @@ $(document).ready(function() {
 	    var apiUrl = '/api/clear_notifications';
 	    notification.preventDefault();
 	    $.ajax({url: apiUrl, dataType: "json", method: "post"});
-	    $("span.badge").text(0);
+	    $("span.badge").hide();
 	    $("div[id='all-notifications']").empty();
 	});
 

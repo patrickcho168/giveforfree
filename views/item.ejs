@@ -466,7 +466,11 @@
                                 </div>
                                 <div class="charity-details info-display">
                                     <p>
-                                        Donation will go to
+                                        <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
+                                            Donation will go to
+                                        <% } else { %>
+                                            $<%= item.donatedAmount %> has been donated to
+                                        <% } %>
                                     </p>
                                     <h2><%= item.charityName %></h2>
                                 </div>
