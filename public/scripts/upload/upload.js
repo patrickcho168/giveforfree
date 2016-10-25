@@ -162,14 +162,14 @@ function previewFile() {
             reader.addEventListener("load", function() {
                 $uploadCrop = $('#image').croppie({
                     viewport: {
-                        width: cropperWidth*0.9,
-                        height: cropperWidth*0.9,
+                        width: cropperWidth*0.8,
+                        height: cropperWidth*0.8,
                     },
                     boundary: {
                         width: cropperWidth,
                         height: cropperWidth,
                     },
-                    enforceBoundary: false,
+                    enforceBoundary: true,
                     enableExif: true,
                     showZoomer: true
                 });
