@@ -306,4 +306,8 @@ textarea.flag-input {
     .info-wrapper {
         justify-content: center;
     }
+
+    .empty-placeholder-text {
+        padding: 0px 20px;
+    }
 }
