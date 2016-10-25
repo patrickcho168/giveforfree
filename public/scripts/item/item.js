@@ -224,6 +224,11 @@ $(document).on('click', '#paypal', function() {
 
 // Carousel Logic
 jQuery(document).ready(function($) {
+    updateDonationDetail();
+
+    $('.donation-input').keyup(function() {
+        updateDonationDetail();
+    });
 
     $.ajaxSetup({
         headers: {'X-CSRF-Token': $('meta[name="_csrf"]').attr('content')}
@@ -504,4 +509,36 @@ function selectCharity(currentSelection) {
         $(currentSelection).removeClass('covered');
         $('.no-charity').addClass('hidden');
     }
+}
+
+function culculateTheirs(total) {
+    var fees = culculateFee(total);
+    var ours = culculateOurs(total) + fees;
+    return total - ours < 0 ? 0 : total - ours;
+}
+
+function culculateFee(total) {
+    return 3.9 * total/100 + 0.5;
+}
+
+function culculateOurs(total) {
+    return Math.min(1.1 * total/100, 1);
+}
+
+function updateDonationDetail() {
+    var donationAmount = $('.donation-input').val();
+    var total = parseFloat(donationAmount);
+    var theirs, ours, fee;
+    if (isNaN(total)) {
+        theirs = 0;
+        fee = 0;
+        ours = 0;
+    } else {
+        theirs = culculateTheirs(total);
+        fee = culculateFee(total);
+        ours = culculateOurs(total);
+    }
+    $('.actual-amount').text(theirs.toFixed(2));
+    $('.fee').text(fee.toFixed(2));
+    $('.ours').text(ours.toFixed(2));
 }
