@@ -27,11 +27,9 @@ $(function() {
 
 $(document).ready(function() {
 
-    $('.donation-input').focus(function(e) {
-        return false;
-    });
+    $('.donation-input').keyup(function(evt) {
+        evt.preventDefault();
 
-    $('.donation-input').keyup(function() {
         var donationAmount = $('.donation-input').val();
         var total = parseFloat(donationAmount);
         var theirs, ours, fee;
