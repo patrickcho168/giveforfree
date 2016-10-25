@@ -1,5 +1,5 @@
 $(function() {
-    initializeForm();    
+    initializeForm();
 
     $('[data-toggle="popover"]').popover();
 
@@ -13,17 +13,56 @@ $(function() {
 
     $('textarea').autosize();
 
-    var oldScroll = window.onscroll;
-    $(document).on('focus', 'input', function(e) {
-        window.onscroll = function() {
-            window.scroll(0, 0);
-        };
-        setTimeout(function() {
-            window.onscroll = oldScroll;
-        }, 100);
-    });
+    // var oldScroll = window.onscroll;
+    // $(document).on('focus', 'input', function(e) {
+    //     window.onscroll = function() {
+    //         window.scroll(0, 0);
+    //     };
+    //     setTimeout(function() {
+    //         window.onscroll = oldScroll;
+    //     }, 100);
+    // });
 
 });
+
+$(document).ready(function() {
+
+    $('.donation-input').keyup(function(evt) {
+        updateDonationDetail();
+    });
+});
+
+function culculateTheirs(total) {
+    var fees = culculateFee(total);
+    var ours = culculateOurs(total) + fees;
+    return total - ours < 0 ? 0 : total - ours;
+}
+
+function culculateFee(total) {
+    return 3.9 * total/100 + 0.5;
+}
+
+function culculateOurs(total) {
+    return Math.min(1.1 * total/100, 1);
+}
+
+function updateDonationDetail() {
+    var donationAmount = $('.donation-input').val();
+    var total = parseFloat(donationAmount);
+    var theirs, ours, fee;
+    if (isNaN(total)) {
+        theirs = 0;
+        fee = 0;
+        ours = 0;
+    } else {
+        theirs = culculateTheirs(total);
+        fee = culculateFee(total);
+        ours = culculateOurs(total);
+    }
+    $('.actual-amount').text(theirs.toFixed(2));
+    $('.fee').text(fee.toFixed(2));
+    $('.ours').text(ours.toFixed(2));
+}
 
 function initializeForm() {
     $.validate({
@@ -37,7 +76,7 @@ function initializeForm() {
           }, {
               // settings
               type: 'danger'
-          }); 
+          });
         },
         onSuccess: function($form) {
             // If image is cropped
@@ -53,7 +92,7 @@ function initializeForm() {
                 }, {
                     // settings
                     type: 'danger'
-                }); 
+                });
 
                 return false;
 
@@ -65,7 +104,7 @@ function initializeForm() {
                 }, {
                     // settings
                     type: 'danger'
-                }); 
+                });
 
                 return false;
             }
@@ -105,7 +144,7 @@ function previewFile() {
             }, {
                 // settings
                 type: 'danger'
-            });            
+            });
         }
         // Check file size
         else if (file.size > 5 * 1024 * 1024) {
@@ -190,13 +229,16 @@ function selectCharity(currentSelection) {
 
         $('.no-charity').removeClass('covered');
         if (moneyInput.val() == 0) {
-            moneyInput.val(10);
+            moneyInput.val(2);
+            $('.actual-amount').text(1.4);
+            $('.fee').text(0.58);
+            $('.ours').text(0.02);
         }
 
-        moneyInput.prop('disabled', false);   
+        moneyInput.prop('disabled', false);
     } else if ($('.no-charity').is(':visible')) {
         $('.no-charity').addClass('covered');
-        moneyInput.prop('disabled', true);   
+        moneyInput.prop('disabled', true);
     }
 }
 
@@ -206,8 +248,11 @@ function giveFree(freebox) {
 
         // Set charities to zero
         $('.no-charity').addClass('covered');
-        moneyInput.prop('disabled', true);   
-        moneyInput.val(0);   
+        moneyInput.prop('disabled', true);
+        moneyInput.val(0);
+        $('.actual-amount').text(0);
+        $('.fee').text(0);
+        $('.ours').text(0);
 
         var allBoxes = $('.charity-selection input');
         var allImg = $('.charity-selection img');

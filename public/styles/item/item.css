@@ -715,7 +715,7 @@ fieldset.rating {
 }
 
 .money-input input {
-    width: 100px;
+    width: 90px;
     margin-left: 20px;
 }
 
@@ -777,6 +777,17 @@ fieldset.rating {
     font-weight: 400;
     font-size: 14px;
     color: #565656;
+}
+
+.donation-edit .subtitle {
+    margin-bottom: 0;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+.donation-edit .money-input p {
+    font-size: 12px;
+    line-height: 12px;
 }
 
 
