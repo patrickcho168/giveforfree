@@ -27,27 +27,25 @@ $(function() {
 
 $(document).ready(function() {
 
-    // $('.donation-input').keyup(function(evt) {
-    //     evt.preventDefault();
-    //
-    //     var donationAmount = $('.donation-input').val();
-    //     var total = parseFloat(donationAmount);
-    //     var theirs, ours, fee;
-    //     if (isNaN(total)) {
-    //         theirs = 0;
-    //         fee = 0;
-    //         ours = 0;
-    //     } else {
-    //         theirs = culculateTheirs(total);
-    //         fee = culculateFee(total);
-    //         ours = culculateOurs(total);
-    //     }
-    //     console.log(theirs);
-    //     console.log(theirs.toFixed(2));
-    //     $('.actual-amount').text(theirs.toFixed(2));
-    //     $('.fee').text(fee.toFixed(2));
-    //     $('.ours').text(ours.toFixed(2));
-    // });
+    $('.donation-input').keyup(function(evt) {
+        var donationAmount = $('.donation-input').val();
+        var total = parseFloat(donationAmount);
+        var theirs, ours, fee;
+        if (isNaN(total)) {
+            theirs = 0;
+            fee = 0;
+            ours = 0;
+        } else {
+            theirs = culculateTheirs(total);
+            fee = culculateFee(total);
+            ours = culculateOurs(total);
+        }
+        console.log(theirs);
+        console.log(theirs.toFixed(2));
+        $('.actual-amount').text(theirs.toFixed(2));
+        $('.fee').text(fee.toFixed(2));
+        $('.ours').text(ours.toFixed(2));
+    });
 });
 
 function culculateTheirs(total) {
