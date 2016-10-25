@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	// $('body').addClass('loaded');
+	$('body').addClass('loaded');
 
 	$("a.notification-link").click(function(notification) {
 	    var href = this.href;
