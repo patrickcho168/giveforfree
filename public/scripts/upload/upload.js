@@ -26,8 +26,9 @@ $(function() {
 });
 
 $(document).ready(function() {
-    $('.donation-input').focus(function() {
-        $('html, body').scrollTop($('.charity-info').offset().top);
+
+    $('.donation-input').focus(function(e) {
+        return false;
     });
 
     $('.donation-input').keyup(function() {
