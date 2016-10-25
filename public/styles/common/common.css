@@ -604,10 +604,10 @@ footer {
 /* Loaded styles */
 
 .loaded #loader {
-    opacity: 0;
+    display: none;
 }
 .loaded #loader-wrapper {
-    visibility: hidden;
+    display: block;
 }
 
 .panel {
