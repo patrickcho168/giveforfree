@@ -468,7 +468,7 @@ var NotificationQuery = function(userId, limitNum, cb) {
     })
     .select(['u.name', 'n.notificationID', 'n.notificationType', 'n.itemID', 'n.userID', 'n.wantID', 'n.commentID', 'n.thankID', 'n.timeCreated', 'iw.timeWanted', 'n.active', 'rn.readnotificationID', 'i.giverID', 'i.takerID', 'i.title', 'i.donationAmount', 'iw.wanterID', 't.receiverID', 'c.commenterID'])
     .where('n.active', '=', 1) // Active Notification
-    .whereNull('rn.readnotificationID') // Not Read Yet
+    // .whereNull('rn.readnotificationID') // Not Read Yet
     .where('n.timeCreated', '<=', moment().format("YYYY-MM-DD HH:mm:ss")) // Notification has already been created
     .where(function() {
       this.where(function() {
@@ -488,6 +488,58 @@ var NotificationQuery = function(userId, limitNum, cb) {
       })
     })
     .orderBy('n.timeCreated', 'DESC')
+    .groupBy('n.notificationID')
+    .limit(limitNum)
+    .then(function(result){
+      return cb(result);
+    });
+}
+
+var NotificationQueryBeforeId = function(userId, notificationId, limitNum, cb) {
+  knex
+    .from('notification as n')
+    .leftJoin('readnotification as rn', function() {
+      this.on('n.notificationID', '=', 'rn.notificationID').andOn('rn.userID', '=', userId)
+    })
+    .leftJoin('user as u', function() {
+      this.on('u.userID', '=', 'n.userID')
+    })
+    .leftJoin('item as i', function() {
+      this.on('n.itemID', '=', 'i.itemID')
+    })
+    .leftJoin('itemWanter as iw', function() {
+      this.on('iw.itemID', '=', 'n.itemID').andOn('iw.wanterID', '=', userId).andOn('n.timeCreated','>','iw.timeWanted')
+    })
+    .leftJoin('thank as t', function() {
+      this.on('n.thankID', '=', 't.thankID').andOn('t.receiverID', '=', userId).andOn('t.thankerID', '!=', userId)
+    })
+    .leftJoin('comment as c', function() {
+      this.on('n.commentID', '=', 'c.commentID').andOn('c.commenterID', '!=', userId)
+    })
+    .select(['u.name', 'n.notificationID', 'n.notificationType', 'n.itemID', 'n.userID', 'n.wantID', 'n.commentID', 'n.thankID', 'n.timeCreated', 'iw.timeWanted', 'n.active', 'rn.readnotificationID', 'i.giverID', 'i.takerID', 'i.title', 'i.donationAmount', 'iw.wanterID', 't.receiverID', 'c.commenterID'])
+    .where('n.active', '=', 1) // Active Notification
+    // .whereNull('rn.readnotificationID') // Not Read Yet
+    .where('n.timeCreated', '<=', moment().format("YYYY-MM-DD HH:mm:ss")) // Notification has already been created
+    .where('n.notificationID', '<', notificationId)
+    .where(function() {
+      this.where(function() {
+        this.where('n.notificationType', 'in', [1,2]).andWhere('i.giverID', '=', userId).whereNull('i.takerID') // Notification Type 1/2
+      }).orWhere(function() {
+        this.where('n.notificationType', '=', 3).andWhere('i.giverID', '=', userId).whereNotNull('c.commenterID') // Notification Type 3
+      }).orWhere(function() {
+        this.where('n.notificationType', '=', 3).whereNotNull('iw.wanterID').whereNull('i.takerID').whereNotNull('c.commenterID') // Notification Type 3
+      }).orWhere(function() {
+        this.where('n.notificationType', '=', 4).whereNotNull('iw.wanterID') // Notification Type 4
+      }).orWhere(function() {
+        this.where('n.notificationType', '=', 5).whereNotNull('t.receiverID') // Notification Type 5
+      }).orWhere(function() {
+        this.where('n.notificationType', '=', 6).andWhere('i.giverID', '=', userId) // Notification Type 6
+      }).orWhere(function() {
+        this.where('n.notificationType', '=', 7).andWhere('i.giverID', '=', userId) // Notification Type 7
+      })
+    })
+    .orderBy('n.timeCreated', 'DESC')
+    .groupBy('n.notificationID')
     .limit(limitNum)
     .then(function(result){
       return cb(result);
@@ -519,6 +571,7 @@ db.ProfilePageTotalTakenQuery = ProfilePageTotalTakenQuery;
 db.ProfilePageTotalGivenQuery = ProfilePageTotalGivenQuery;
 db.ItemPageManualQuery = ItemPageManualQuery;
 db.NotificationQuery = NotificationQuery;
+db.NotificationQueryBeforeId = NotificationQueryBeforeId;
 db.GetGiverRatingById = GetGiverRatingById;
 db.GetTakerRatingById = GetTakerRatingById;
 

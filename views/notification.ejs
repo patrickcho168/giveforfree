@@ -1,13 +1,25 @@
 
 <li class="dropdown dropdown-notifications">
     <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        <i data-count="2" class="fa fa-bell fa-fw" aria-hidden="true"></i> Notification<% if (notification.length > 0) { %><span class="badge"><%= notification.length %></span><% } %>
+        <% 
+        var totalUnread = 0;
+        var smallestId = notification[0].notificationID;
+        for (var i=0; i<notification.length; i++) {
+            if (!notification[i].readnotificationID) {
+                totalUnread++;
+            }
+            if (notification[i].notificationID < smallestId) {
+                smallestId = notification[i].notificationID;
+            }
+        } 
+        %>
+        <i data-count="2" class="fa fa-bell fa-fw" aria-hidden="true"></i> Notification<% if (totalUnread > 0) { %><span class="badge"><%= totalUnread %></span><% } %>
     </a>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="height: -ms-max-content; height: -webkit-max-content; height: -moz-max-content; height: -o-max-content; overflow:hidden; overflow-y:scroll;">
         <% if (notification.length > 0) { %>
-            <div class="panel-heading"><a href="#" class="clear-notifications">Clear All Notifications</a></div>
+            <div class="panel-heading"><a href="#" class="clear-notifications">Read All Notifications</a></div>
         <%}%>
-        <div style="height: -ms-max-content; height: -webkit-max-content; height: -moz-max-content; height: -o-max-content; width:100%; overflow:hidden; overflow-y:scroll;" id="all-notifications">
+        <div style="height: -ms-max-content; height: -webkit-max-content; height: -moz-max-content; height: -o-max-content; width:100%; overflow:scroll; height:60vh;" id="all-notifications" smallest-id="<%- smallestId %>" user-id="<%- id %>">
             <% if (notification.length == 0) { %>
                 <div align="center" style="font-weight: 100; padding-top: 10px; padding-bottom: 10px;">
                     <img src="../images/common/message-notif.svg" width="80px" height="80px" align="center" style="opacity: 0.2"/>
@@ -15,7 +27,7 @@
                 </div>
             <%}%>
             <% for (var i=0; i<notification.length; i++) { %>
-            <li class="notification" notificationid=<%= notification[i].notificationID %>>
+            <li class="notification <% if (!notification[i].readnotificationID) { %>unread-notification<% } %>" style="padding: 0px 9.6px;" notificationid=<%= notification[i].notificationID %>>
                 <div class="media">
                     <div class="media-left">
                         <div class="media-object">
@@ -23,10 +35,10 @@
                         </div>
                     </div>
                     <% if (notification[i].notificationType === 5) { %>
-                    <a href="/profile/<%= id %>#thanks" class="notification-link" notificationid=<%= notification[i].notificationID %>>
+                    <a href="/profile/<%= id %>#thanks" class="notification-link" notificationid=<%= notification[i].notificationID %> style="background:transparent;">
                         <div class="media-body">
                             <div class="notification-title" style="color: black">
-                                <strong><%= notification[i].name %></strong> left a new message on your <strong>Thank You Wall</strong>!
+                                <strong><%- notification[i].name %></strong> left a new message on your <strong>Thank You Wall</strong>!
                             </div>
                             <div class="notification-meta">
                                 <small class="timestamp"><%= moment(notification[i].timeCreated).format('MMM Do [at] h:mmA') %></small>
@@ -34,29 +46,29 @@
                         </div>
                     </a>
                     <% } else { %>
-                    <a href="/item/<%= notification[i].itemID %>" class="notification-link" notificationID=<%= notification[i].notificationID %>>
+                    <a href="/item/<%= notification[i].itemID %>" class="notification-link" notificationID=<%= notification[i].notificationID %> style="background:transparent;">
                         <div class="media-body">
                             <div class="notification-title" style="color: black">
                                 <% if (notification[i].notificationType === 1) { %>
-                                    <p><strong><%= notification[i].name %></strong> is interested in getting <strong><%= notification[i].title %></strong>.</p>
+                                    <strong><%- notification[i].name %></strong> is interested in getting <strong><%- notification[i].title %></strong>.
                                 <% } else if (notification[i].notificationType === 2) { %>
-                                    <strong><%= notification[i].title %>'s</strong> giveaway has expired. Pick your lucky winner now.
+                                    <strong><%- notification[i].title %>'s</strong> giveaway has expired. Pick your lucky winner now.
                                 <% } else if (notification[i].notificationType === 3) { %>
-                                    <strong><%= notification[i].name %></strong> left a comment about <strong><%= notification[i].title %></strong>.
+                                    <strong><%- notification[i].name %></strong> left a comment about <strong><%- notification[i].title %></strong>.
                                 <% } else if (notification[i].notificationType === 4) { %>
                                     <% if (notification[i].takerID === id) { %>
                                         <% if (notification[i].donationAmount > 0) { %>
-                                            <strong><%= notification[i].title %></strong> has been given to you! Please <strong>donate</strong> to receive your gift.
+                                            <strong><%- notification[i].title %></strong> has been given to you! Please <strong>donate</strong> to receive your gift.
                                         <% } else { %>
-                                            <strong><%= notification[i].title %></strong> has been given to you! Please arrange delivery with giver.
+                                            <strong><%- notification[i].title %></strong> has been given to you! Please arrange delivery with giver.
                                         <% } %>
                                     <% } else { %>
-                                        <strong><%= notification[i].title %></strong> has been given to someone else!
+                                        <strong><%- notification[i].title %></strong> has been given to someone else!
                                     <% } %>
                                 <% } else if (notification[i].notificationType === 6) { %>
-                                    <strong><%= notification[i].name %></strong> has made a donation for <strong><%= notification[i].title %></strong>. You may deliver the item now.
+                                    <strong><%- notification[i].name %></strong> has made a donation for <strong><%- notification[i].title %></strong>. You may deliver the item now.
                                 <% } else if (notification[i].notificationType === 7) { %>
-                                    <strong><%= notification[i].name %></strong> has received <strong><%= notification[i].title %></strong>. Thank you for your contribution!
+                                    <strong><%- notification[i].name %></strong> has received <strong><%- notification[i].title %></strong>. Thank you for your contribution!
                                 <% } %>
                             </div>
                             <div class="notification-meta">
