@@ -124,17 +124,12 @@ function previewFile() {
         var cropperWidth = boxWidth > 180 ? boxWidth : 180;
     }
 
-
-    $('#create-upload').attr("disabled", "disabled");
-    var node = document.getElementById('image');
-    while (node.hasChildNodes()) {
-        node.removeChild(node.lastChild);
-    }
     var cropbox = document.querySelector('#image');
     var file = document.querySelector('input[type=file]').files[0];
     var reader = new FileReader();
 
     if (file) {
+        console.log('check');
         // Check file type
         if (file.type.indexOf("image") == -1) {
             $('#create-upload').attr("disabled", "disabled");
@@ -162,22 +157,21 @@ function previewFile() {
             reader.addEventListener("load", function() {
                 $uploadCrop = $('#image').croppie({
                     viewport: {
-                        width: cropperWidth*0.9,
-                        height: cropperWidth*0.9,
+                        width: cropperWidth*0.8,
+                        height: cropperWidth*0.8,
                     },
                     boundary: {
                         width: cropperWidth,
                         height: cropperWidth,
                     },
-                    enforceBoundary: false,
+                    enforceBoundary: true,
                     enableExif: true,
                     showZoomer: true
                 });
 
                 // Add something to the input text field
-                $(".image-preview-filename").val("pic.img");
-                $("div.image-preview").remove();
-                $(".image-crop").attr('style', '');
+                $("div.image-preview").hide();
+                $(".image-crop").show();
                 $uploadCrop.croppie('bind', {
                     url: reader.result
                 }).then(function() {
@@ -199,6 +193,17 @@ function previewFile() {
                     $('#create-upload').removeAttr("disabled");
 
                 });
+            });
+
+            $(".image-cancel").click(function() {
+                $('#image-holder').show();
+                $("div.image-preview").show();
+                $(".image-crop").hide();
+                $('#image').hide();
+                $uploadCrop.croppie('destroy');
+
+                var filebtn = $('#upload-trigger');
+                filebtn.replaceWith( filebtn = filebtn.clone( true ) );
             });
             reader.readAsDataURL(file);
         }
