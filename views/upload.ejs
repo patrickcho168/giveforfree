@@ -143,7 +143,7 @@
     </nav>
 
     <div class="main-container">
-        <form action="/upload" name='uploadForm' method="post" id="new-gift-form" role="form">
+        <form action="/upload" name='uploadForm' method="post" id="new-gift-form" role="form" novalidate>
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <input type="hidden" name="croppedImage">
 
@@ -279,7 +279,7 @@
                             <div class="col-md-6 give-free checkbox checkbox-primary checkbox-circle row">
                                 <input type="checkbox" name="givefree" id="givefree" class="check-one hidden" data-validation="required" data-validation-optional-if-answered="donateToCharity" onchange="giveFree(this)">
                                 <label class="large-label" for="givefree">
-                                    I'm giving this away for free.
+                                    I'm giving this away for free. No donation required for this gift.
                                 </label>
                             </div>
 
@@ -292,11 +292,11 @@
                         <div class="donation-info no-charity covered">
                             <h2>Donation Amount</h2>
                             <p>
-                                Recommended minimum 2 dollars.
+                                Minimum 2 dollars.
                             </p>
                             <div class="money-input">
                                 <i class="fa fa-usd"></i><span> SGD</span>
-                                <input type="number" min="1.00" step="0.01" class="input-txt donation-input" name="donation" placeholder="2" maxlength="50" data-validation='required' data-validation-depends-on="donateToCharity">
+                                <input type="number" class="input-txt donation-input" name="donation" placeholder="2" data-validation-allowing="range[2;]" data-validation="required" data-validation="number" data-validation-allowing="float" data-validation-decimal-separator="." data-validation-depends-on="donateToCharity" data-validation-error-msg="Please enter a value more than $2.">
                                 <p>
                                     <span class="actual-amount">$1.4</span> will go to charity<br>
                                     <span class="fee">$0.58</span> will go to PayPal<br>

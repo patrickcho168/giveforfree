@@ -66,7 +66,7 @@ function updateDonationDetail() {
 
 function initializeForm() {
     $.validate({
-        modules : 'logic',
+        modules : 'logic, html5',
         validateHiddenInputs: true,
         validateOnBlur: false,
         onError : function($form) {
