@@ -59,7 +59,7 @@ toExport.route = function(app) {
     // });
 
     // Read single notification
-    app.post('/api/read_notification/:notifID', function(req, res, next) {
+    app.post('/api/read_notification/:notifID', ensureLogin.ensureLoggedIn(), function(req, res, next) {
         db.Notification.where({
             notificationID: req.params.notifID
         }).fetch().then(function(notification) {
@@ -71,17 +71,34 @@ toExport.route = function(app) {
     });
 
     // load more notifications
-    app.get('/api/load_notification/:notifID', function(req, res, next) {
+    app.get('/api/load_notification/:notifID', ensureLogin.ensureLoggedIn(), function(req, res, next) {
         var limitNum = 10;
         console.log(req.params.notifID);
         db.NotificationQueryBeforeId(req.user.appUserId, req.params.notifID, limitNum, function(data) {
-            console.log(data);
             res.json(data);
         })
     });
 
+    // load all notifications on separate page
+    app.get('/notifications', ensureLogin.ensureLoggedIn(), function(req, res, next) {
+        var userId = parseInt(req.user.appUserId);
+        var limitNum = 20;
+        db.User.where({
+            userID: userId
+        }).fetch().then(function(user) {
+            db.NotificationQuery(userId, limitNum, function(data) {
+                res.render('allnotification', {
+                    notification: data,
+                    id: userId,
+                    user: user.attributes,
+                    moment: moment
+                });
+            });
+        });
+    });
+
     // Clear all notifications
-    app.post('/api/clear_notifications', function(req, res, next) {
+    app.post('/api/clear_notifications', ensureLogin.ensureLoggedIn(), function(req, res, next) {
         db.User.where({
             userID: req.user.appUserId
         }).fetch().then(function(user) {

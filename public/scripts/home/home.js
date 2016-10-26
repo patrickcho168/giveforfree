@@ -100,10 +100,12 @@ function addRealViews(html, url) {
                 $('.empty-placeholder-text').removeClass('hidden');
                 $('.placeholder-text').addClass('hidden');
             }
+            $("#item-loader-wrapper").addClass('hidden');
         },
 
         error: function(data) {
             console.log ("error loading");
+            $("#item-loader-wrapper").addClass('hidden');
             canAJAX = true;
             triggered = 0;
         }
@@ -163,10 +165,12 @@ $(window).scroll(function() {
         if (canAJAX && triggered == 1 && lastItemId > 1 && category != null) {
             canAJAX = false;
             urlAJAX = '/api/items/' + category + '/' + lastItemId + '/' + numItems;
+            $("#item-loader-wrapper").removeClass('hidden');
             addRealViews(html, urlAJAX);
         } else if (canAJAX && triggered == 1 && lastItemId > 1) {
             canAJAX = false;
             urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
+            $("#item-loader-wrapper").removeClass('hidden');
             addRealViews(html, urlAJAX);
         }
     }

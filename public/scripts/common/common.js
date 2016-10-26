@@ -2,6 +2,11 @@ var notificationTriggered = 0;
 
 $(document).ready(function() {
 
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    	$("#dropdownMenu1").attr("href", "/notifications");
+    	$("#dropdownMenu1").removeAttr('data-toggle');
+    }
+
 	$('body').addClass('loaded');
 
 	$("a.notification-link").click(function(notification) {
@@ -44,6 +49,7 @@ $(document).ready(function() {
 	jQuery(function($) {
 	    $('#all-notifications').on('scroll', function() {
 	        if(($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) && notificationTriggered===0) {
+	        	$("#notification-loader-wrapper").removeClass('hidden');
 	        	notificationTriggered = 1;
 	        	var id = $(this).attr('smallest-id');
 	        	console.log(id);
@@ -124,11 +130,13 @@ $(document).ready(function() {
 		                    var notification_count = parseInt($("span.badge").text()) + additionalUnread;
 						    $("span.badge").text(notification_count);
 				        }
+				        $("#notification-loader-wrapper").addClass('hidden');
 				    },
 
 			        error: function(data) {
 			            console.log ("error loading");
 			            notificationTriggered = 0;
+			            $("#notification-loader-wrapper").addClass('hidden');
 			        }
 			    });
 	        }

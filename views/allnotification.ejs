@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Metadata and Responsive Viewport -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Give For Free</title>
+
+    <!-- JQuery Support -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Material Date Picker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script src="../assets/materialDatePicker/js/bootstrap-material-datetimepicker.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.2.0/material.min.css">
+    <link rel="stylesheet" href="../assets/materialDatePicker/css/bootstrap-material-datetimepicker.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Bootstrap Support -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Validator -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+
+    <!-- Checkbox Styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.7/awesome-bootstrap-checkbox.min.css
+    ">
+
+    <!-- Native Scripts -->
+    <script src="../scripts/common/common.js"></script>
+    <script src="../scripts/upload/upload.js"></script>
+
+    <!-- Push Notifications -->
+    <!-- <script src="/scripts/common/notification2.js"></script> -->
+
+    <!-- Image Upload EXIF -->
+    <script src="../scripts/upload/exif.js"></script>
+
+    <!-- Auto-Resize Input Fields -->
+    <script src="../assets/autosize/js/autosize.js"></script>
+
+    <!-- Bootstrap CSS (Override) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Pure CSS (Override) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/base-context-min.css">
+
+    <!-- Font Awesome (Override) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <!-- Cropper (Override) -->
+    <script src="../scripts/upload/croppie.js"></script>
+    <link rel="stylesheet" href="../styles/upload/croppie.css">
+
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="../styles/common/bootstrap-edit.css">
+    <link rel="stylesheet" href="../styles/common/common.css">
+    <link rel="stylesheet" href="../styles/upload/upload.css">
+
+    <!-- Bootstrap Notifications -->
+    <link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
+    <script src="../scripts/common/notify.min.js"></script>
+
+    <!-- Animations -->
+    <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
+
+    <!-- Font Support -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    <script src="/scripts/common/analytics.js"></script>
+
+    <!-- Moment -->
+    <script src="/scripts/common/moment.min.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Page Loader -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-fixed-top" style="position:relative; margin-bottom:0">
+        <div class="navbar-header">
+            <div class="navbar-brand">
+                <a href="/" class="navbar-logo">
+                    <img src="../images/common/gff-logo.svg" class="logo-full" alt="" />
+                    <img src="../images/common/gff-logo-s.svg" class="logo-mobile" alt="" />
+                </a>
+            </div>
+
+            <!-- <button type="button" class="navbar-toggle collapsed category-button" aria-expanded="false">
+                <i class="fa fa-bars"></i>
+            </button> -->
+
+            <button type="button" class="navbar-toggle collapsed user-button" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="nav-menu">
+
+            <ul class="nav navbar-nav navbar-right">
+                <li id="nav-profile">
+                    <a href="/profile/<%= id %>">
+                        <div class="user-avatar">
+                            <img src="http://graph.facebook.com/<%= user.fbID %>/picture" alt="" />
+                            <span> <%= user.name %></span>
+                        </div>
+                    </a>
+                </li>
+                <li id="nav-create">
+                    <a href="/upload">
+                        <i class="fa fa-gift fa-fw" aria-hidden="true"></i> Give
+                    </a>
+                </li>
+                <li id="nav-feed">
+                    <a href="/">
+                        <i class="fa fa-newspaper-o fa-fw" aria-hidden="true"></i> Feed
+                    </a>
+                </li>
+                <li>
+                    <% 
+                    var totalUnread = 0;
+                    var smallestId; 
+                    if (notification.length > 0) {
+                        smallestId = notification[0].notificationID;
+                    }
+                    for (var i=0; i<notification.length; i++) {
+                        if (!notification[i].readnotificationID) {
+                            totalUnread++;
+                        }
+                        if (notification[i].notificationID < smallestId) {
+                            smallestId = notification[i].notificationID;
+                        }
+                    } 
+                    %>
+                    <a href="/notifications">
+                        <i data-count="2" class="fa fa-bell fa-fw" aria-hidden="true"></i> Notification<% if (totalUnread > 0) { %><span class="badge"><%= totalUnread %></span><% } %>
+                    </a>
+                </li>
+                <li id="nav-logout">
+                    <a href="/logout">Log out</a>
+                </li>
+            </ul>
+        </div>
+        <!-- Menu -->
+
+    </nav>
+    <div class="main-container" style="padding: 0px; height:calc(100% - 57px);">
+        <div class="row panel" style="padding: 0px; margin:0px; height:100%;">
+            <% 
+            var totalUnread = 0;
+            var smallestId; 
+            if (notification.length > 0) {
+                smallestId = notification[0].notificationID;
+            }
+            for (var i=0; i<notification.length; i++) {
+                if (!notification[i].readnotificationID) {
+                    totalUnread++;
+                }
+                if (notification[i].notificationID < smallestId) {
+                    smallestId = notification[i].notificationID;
+                }
+            } 
+            %>
+            <% if (notification.length > 0) { %>
+                <div class="panel-heading"><a href="#" class="clear-notifications">Read All Notifications</a></div>
+            <%}%>
+            <div style="height: -ms-max-content; height: -webkit-max-content; height: -moz-max-content; height: -o-max-content; width:100%; overflow:scroll; height:calc(100% - 35px);" id="all-notifications" smallest-id="<%- smallestId %>" user-id="<%- id %>">
+                <% if (notification.length == 0) { %>
+                    <div align="center" style="font-weight: 100; padding-top: 10px; padding-bottom: 10px;">
+                        <img src="../images/common/message-notif.svg" width="80px" height="80px" align="center" style="opacity: 0.2"/>
+                        <br><p style="font-weight: 100; opacity: 0.2;"> No notifications right now! Come back later! </p>
+                    </div>
+                <%}%>
+                <% for (var i=0; i<notification.length; i++) { %>
+                <li class="notification <% if (!notification[i].readnotificationID) { %>unread-notification<% } %>" style="padding: 0px 9.6px;" notificationid=<%= notification[i].notificationID %>>
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="media-object">
+                                <!-- <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="Name"> -->
+                            </div>
+                        </div>
+                        <% if (notification[i].notificationType === 5) { %>
+                        <a href="/profile/<%= id %>#thanks" class="notification-link" notificationid=<%= notification[i].notificationID %> style="background:transparent;">
+                            <div class="media-body">
+                                <div class="notification-title" style="color: black">
+                                    <strong><%- notification[i].name %></strong> left a new message on your <strong>Thank You Wall</strong>!
+                                </div>
+                                <div class="notification-meta">
+                                    <small class="timestamp"><%= moment(notification[i].timeCreated).format('MMM Do [at] h:mmA') %></small>
+                                </div>
+                            </div>
+                        </a>
+                        <% } else { %>
+                        <a href="/item/<%= notification[i].itemID %>" class="notification-link" notificationID=<%= notification[i].notificationID %> style="background:transparent;">
+                            <div class="media-body">
+                                <div class="notification-title" style="color: black">
+                                    <% if (notification[i].notificationType === 1) { %>
+                                        <strong><%- notification[i].name %></strong> is interested in getting <strong><%- notification[i].title %></strong>.
+                                    <% } else if (notification[i].notificationType === 2) { %>
+                                        <strong><%- notification[i].title %>'s</strong> giveaway has expired. Pick your lucky winner now.
+                                    <% } else if (notification[i].notificationType === 3) { %>
+                                        <strong><%- notification[i].name %></strong> left a comment about <strong><%- notification[i].title %></strong>.
+                                    <% } else if (notification[i].notificationType === 4) { %>
+                                        <% if (notification[i].takerID === id) { %>
+                                            <% if (notification[i].donationAmount > 0) { %>
+                                                <strong><%- notification[i].title %></strong> has been given to you! Please <strong>donate</strong> to receive your gift.
+                                            <% } else { %>
+                                                <strong><%- notification[i].title %></strong> has been given to you! Please arrange delivery with giver.
+                                            <% } %>
+                                        <% } else { %>
+                                            <strong><%- notification[i].title %></strong> has been given to someone else!
+                                        <% } %>
+                                    <% } else if (notification[i].notificationType === 6) { %>
+                                        <strong><%- notification[i].name %></strong> has made a donation for <strong><%- notification[i].title %></strong>. You may deliver the item now.
+                                    <% } else if (notification[i].notificationType === 7) { %>
+                                        <strong><%- notification[i].name %></strong> has received <strong><%- notification[i].title %></strong>. Thank you for your contribution!
+                                    <% } %>
+                                </div>
+                                <div class="notification-meta">
+                                    <small class="timestamp"><%= moment(notification[i].timeCreated).format('MMM Do [at] h:mmA') %></small>
+                                </div>
+                            </div>
+                        </a>
+                        <% } %>
+                    </div>
+                </li>
+                <% } %>
+            </div>
+        </div>
+        <div id="notification-loader-wrapper" class="hidden">
+            <div id="notification-loader"></div>
+        </div>
+    </div>
+
+</body>

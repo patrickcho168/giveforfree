@@ -745,3 +745,24 @@ fieldset, label { margin: auto; padding: 0; }
 .unread-notification .notification-link {
     background:#decebc;
 }
+
+#notification-loader-wrapper {
+    width: 100%;
+    text-align: center;
+    background: white;
+}
+#notification-loader {
+    display: inline-block;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #c09f80;
+    -webkit-animation: spin 1s linear infinite;
+    /* Chrome, Opera 15+, Safari 5+ */
+    animation: spin 1s linear infinite;
+    /* Chrome, Firefox 16+, IE 10+, Opera */
+    z-index: 1001;
+}

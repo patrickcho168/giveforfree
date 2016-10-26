@@ -1,6 +1,6 @@
 
 <li class="dropdown dropdown-notifications">
-    <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
         <% 
         var totalUnread = 0;
         var smallestId; 
@@ -83,6 +83,9 @@
                 </div>
             </li>
             <% } %>
+        </div>
+        <div id="notification-loader-wrapper" class="hidden">
+            <div id="notification-loader"></div>
         </div>
     </ul>
 </li>

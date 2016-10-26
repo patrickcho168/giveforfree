@@ -101,6 +101,14 @@ function addRealViews(html) {
 
     if (urlAJAX != null && lastItem >= 1 || isFirst) {
         // AJAX to fetch JSON objects from server
+        switch (currentTab) {
+            case "gifts":
+                $("#gift-loader-wrapper").removeClass('hidden');
+                break;
+            case "wants":
+                $("#want-loader-wrapper").removeClass('hidden');
+                break;     
+        }
         $.ajax({
             url: urlAJAX,
             dataType: "json",
@@ -233,6 +241,7 @@ function addRealViews(html) {
                                 $('#infinite-scroll-container-gifts').append(html);
                                 $('#gifts-banner-empty').hide();
                                 $('#gifts-banner').removeClass('hidden');
+                                $("#gift-loader-wrapper").addClass('hidden');
                                 break;
                             case "wants":
                                 firstWants = false;
@@ -240,6 +249,7 @@ function addRealViews(html) {
                                 $('#infinite-scroll-container-wants').append(html);
                                 $('#wants-banner-empty').hide();
                                 $('#wants-banner').removeClass('hidden');
+                                $("#want-loader-wrapper").addClass('hidden');
                                 break;
                             case "thanks":
                                 firstThanks = false;
@@ -260,12 +270,27 @@ function addRealViews(html) {
                     triggered = 0;
 
                 } else {
-
+                    switch (currentTab) {
+                        case "gifts":
+                            $("#gift-loader-wrapper").addClass('hidden');
+                            break;
+                        case "wants":
+                            $("#want-loader-wrapper").addClass('hidden');
+                            break;
+                    }
                 }
             },
             error: function(data) {
                 canAJAX = true;
                 triggered = 0;
+                switch (currentTab) {
+                    case "gifts":
+                        $("#gift-loader-wrapper").addClass('hidden');
+                        break;
+                    case "wants":
+                        $("#want-loader-wrapper").addClass('hidden');
+                        break;
+                }
             }
         });
     }
