@@ -101,14 +101,6 @@ function addRealViews(html) {
 
     if (urlAJAX != null && lastItem >= 1 || isFirst) {
         // AJAX to fetch JSON objects from server
-        switch (currentTab) {
-            case "gifts":
-                $("#gift-loader-wrapper").removeClass('hidden');
-                break;
-            case "wants":
-                $("#want-loader-wrapper").removeClass('hidden');
-                break;     
-        }
         $.ajax({
             url: urlAJAX,
             dataType: "json",
@@ -323,6 +315,14 @@ $(document).ready(function() {
             break;
 
     }
+    switch (currentHash) {
+        case "#gifts":
+            $("#gift-loader-wrapper").removeClass('hidden');
+            break;
+        case "#wants":
+            $("#want-loader-wrapper").removeClass('hidden');
+            break;     
+    }
 
     addRealViews(html);
 
@@ -332,6 +332,15 @@ $(document).ready(function() {
         triggered = 0;
 
         setTimeout(addRealViews, 300, html);
+        currentHash = window.location.hash;
+        switch (currentHash) {
+            case "#gifts":
+                $("#gift-loader-wrapper").removeClass('hidden');
+                break;
+            case "#wants":
+                $("#want-loader-wrapper").removeClass('hidden');
+                break;     
+        }
         addRealViews(html);
     });
 
@@ -555,6 +564,16 @@ $(window).scroll(function() {
         triggered += 1;
 
         if (canAJAX && triggered == 1) {
+            var currentHash = window.location.hash;
+            console.log()
+            switch (currentHash) {
+                case "#gifts":
+                    $("#gift-loader-wrapper").removeClass('hidden');
+                    break;
+                case "#wants":
+                    $("#want-loader-wrapper").removeClass('hidden');
+                    break;     
+            }
             canAJAX = false;
             addRealViews(html);
         }
