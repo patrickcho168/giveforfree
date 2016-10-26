@@ -349,7 +349,7 @@
                             <% } else { %>
                                 <h3 class="empty-placeholder-text">Ta da!</h3>
                                 <p class="empty-placeholder-text">
-                                    Check out what others have wanted below.<br>
+                                    Check out what <%= otherUser.name %> has wanted below.<br>
                                     You might find something you like too!<br><br>
                                 </p>
                             <% } %>
@@ -368,7 +368,7 @@
                             <% } else { %>
                                 <h3 class="empty-placeholder-text">Oops!</h3>
                                 <p class="empty-placeholder-text">
-                                    This person has no wanted gifts yet. <br>
+                                    <%= otherUser.name %> has no wanted gifts yet. <br>
                                     Come back later!
                                 </p>
                             <% } %>
