@@ -3,7 +3,10 @@
     <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         <% 
         var totalUnread = 0;
-        var smallestId = notification[0].notificationID;
+        var smallestId; 
+        if (notification.length > 0) {
+            smallestId = notification[0].notificationID;
+        }
         for (var i=0; i<notification.length; i++) {
             if (!notification[i].readnotificationID) {
                 totalUnread++;
