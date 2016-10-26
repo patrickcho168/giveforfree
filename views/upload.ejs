@@ -299,7 +299,7 @@
                             </p>
                             <div class="money-input">
                                 <i class="fa fa-usd"></i><span> SGD</span>
-                                <input type="number" class="input-txt donation-input" name="donation" placeholder="2" data-validation-allowing="range[2;]" data-validation="required" data-validation="number" data-validation-allowing="float" data-validation-decimal-separator="." data-validation-depends-on="donateToCharity" data-validation-error-msg="Please enter a value more than $2.">
+                                <input type="number" step="0.50" class="input-txt donation-input" name="donation" placeholder="2" data-validation-allowing="range[2;99999999], float" data-validation="required" data-validation="number" data-validation-decimal-separator="." data-validation-depends-on="donateToCharity" data-validation-error-msg="Please enter a value more than $2.">
                                 <p>
                                     <span class="actual-amount">$1.4</span> will go to charity<br>
                                     <span class="fee">$0.58</span> will go to PayPal<br>
