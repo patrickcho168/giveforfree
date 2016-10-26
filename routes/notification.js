@@ -70,6 +70,16 @@ toExport.route = function(app) {
         });
     });
 
+    // load more notifications
+    app.get('/api/load_notification/:notifID', function(req, res, next) {
+        var limitNum = 10;
+        console.log(req.params.notifID);
+        db.NotificationQueryBeforeId(req.user.appUserId, req.params.notifID, limitNum, function(data) {
+            console.log(data);
+            res.json(data);
+        })
+    });
+
     // Clear all notifications
     app.post('/api/clear_notifications', function(req, res, next) {
         db.User.where({

@@ -113,12 +113,18 @@ img.clipped {
 }
 
 .dropdown-notifications li:hover {
-    background-color: #fff!important;
+    background-color: #ede4da!important;
     color: #f9f9f9!important;
 }
 
-.nav .open a, .nav .open a:focus, .nav .open a:hover {
-    background-color: #fff!important;
+.nav .open a, .nav .open a:focus {
+    /*background-color: #fff!important;*/
+}
+
+.nav .open a:hover {
+/*    background-color: #fff!important;
+    color: #f9f9f9!important;
+    transition: all 0s;*/
 }
 
 .dropdown-menu {
@@ -387,9 +393,9 @@ img.clipped {
 }
 
 .navbar-collapse a:focus, .navbar-collapse a:hover {
-    background: #fff!important;
+/*    background: #fff!important;
     outline: none!important;
-    color: #58666e!important;
+    color: #58666e!important;*/
 }
 
 .navbar-collapse .badge {
@@ -730,3 +736,12 @@ fieldset, label { margin: auto; padding: 0; }
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
 .rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
+
+
+.unread-notification {
+    background:#decebc;
+}
+
+.unread-notification .notification-link {
+    background:#decebc;
+}
