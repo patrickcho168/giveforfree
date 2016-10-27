@@ -500,7 +500,8 @@
                                     <p class="subtitle">
                                         This giveaway ends on
                                     </p>
-                                    <input type="text" class="input-txt input-date" name="date" id="date" value="<%= moment(date, "D MMMM YYYY HH:mm").format("YYYY-MM-DD") %>" maxlength="50" autocomplete="off" required>
+                                    <% var deadline = date != "Invalid date" ? moment(date, "D MMMM YYYY HH:mm").format("YYYY-MM-DD") : "" %>
+                                    <input type="text" class="input-txt input-date" name="date" id="date" value="<%= deadline %>" placeholder="Select an end date">
                                 </div>
                                 
                                 <div class="col-sm-6 category-info category-select-holder">
@@ -585,11 +586,15 @@
                                     </div>
                                     <div class="deadline-info">
                                         <p class="subtitle">
+                                            <% if (date == "Invalid date") { %>
+                                            This giveaway has no deadline
+                                            <% } else { %>
                                             This giveaway ends on
                                         </p>
                                         <p class="deadline">
-                                            <%= date %>
+                                            <%= deadline %>
                                         </p>
+                                        <% } %>
                                     </div>
                                     <div class="delivery-info">
                                         <p class="subtitle">
