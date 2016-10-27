@@ -466,7 +466,8 @@ var NotificationQuery = function(userId, limitNum, cb) {
     .leftJoin('comment as c', function() {
       this.on('n.commentID', '=', 'c.commentID').andOn('c.commenterID', '!=', userId)
     })
-    .select(['u.name', 'n.notificationID', 'n.notificationType', 'n.itemID', 'n.userID', 'n.wantID', 'n.commentID', 'n.thankID', 'n.timeCreated', 'iw.timeWanted', 'n.active', 'rn.readnotificationID', 'i.giverID', 'i.takerID', 'i.title', 'i.donationAmount', 'iw.wanterID', 't.receiverID', 'c.commenterID'])
+    .select(['u.name', 'n.notificationID', 'n.notificationType', 'n.itemID', 'n.userID', 'n.wantID', 'n.commentID', 'n.thankID', 'n.timeCreated', 'iw.timeWanted', 'n.active', 'i.giverID', 'i.takerID', 'i.title', 'i.donationAmount', 'iw.wanterID', 't.receiverID', 'c.commenterID'])
+    .avg('rn.readnotificationID as readnotificationID') 
     .where('n.active', '=', 1) // Active Notification
     // .whereNull('rn.readnotificationID') // Not Read Yet
     .where('n.timeCreated', '<=', moment().format("YYYY-MM-DD HH:mm:ss")) // Notification has already been created
@@ -489,7 +490,6 @@ var NotificationQuery = function(userId, limitNum, cb) {
     })
     .orderBy('n.timeCreated', 'DESC')
     .groupBy('n.notificationID')
-    .groupBy('rn.notificationID')
     .limit(limitNum)
     .then(function(result){
       return cb(result);
@@ -517,7 +517,8 @@ var NotificationQueryBeforeId = function(userId, notificationId, limitNum, cb) {
     .leftJoin('comment as c', function() {
       this.on('n.commentID', '=', 'c.commentID').andOn('c.commenterID', '!=', userId)
     })
-    .select(['u.name', 'n.notificationID', 'n.notificationType', 'n.itemID', 'n.userID', 'n.wantID', 'n.commentID', 'n.thankID', 'n.timeCreated', 'iw.timeWanted', 'n.active', 'rn.readnotificationID', 'i.giverID', 'i.takerID', 'i.title', 'i.donationAmount', 'iw.wanterID', 't.receiverID', 'c.commenterID'])
+    .select(['u.name', 'n.notificationID', 'n.notificationType', 'n.itemID', 'n.userID', 'n.wantID', 'n.commentID', 'n.thankID', 'n.timeCreated', 'iw.timeWanted', 'n.active', 'i.giverID', 'i.takerID', 'i.title', 'i.donationAmount', 'iw.wanterID', 't.receiverID', 'c.commenterID'])
+    .avg('rn.readnotificationID as readnotificationID') 
     .where('n.active', '=', 1) // Active Notification
     // .whereNull('rn.readnotificationID') // Not Read Yet
     .where('n.timeCreated', '<=', moment().format("YYYY-MM-DD HH:mm:ss")) // Notification has already been created
@@ -541,7 +542,6 @@ var NotificationQueryBeforeId = function(userId, notificationId, limitNum, cb) {
     })
     .orderBy('n.timeCreated', 'DESC')
     .groupBy('n.notificationID')
-    .groupBy('rn.notificationID')
     .limit(limitNum)
     .then(function(result){
       return cb(result);
