@@ -293,7 +293,6 @@ function addRealViews(html) {
 $(document).ready(function() {
 
     var currentHash = window.location.hash;
-    console.log(currentHash);
     switch (currentHash) {
         case "#gifts":
             $(".nav-pills").find(".active").removeClass("active");
@@ -348,7 +347,6 @@ $(document).ready(function() {
 
     $('#confirm-delete').on('show.bs.modal', function(e) {
         $(this).find('.btn-ok').click(function() {
-            console.log('click');
             $.ajax({
                 type: 'post',
                 url: '/api/delete-user',
@@ -565,7 +563,6 @@ $(window).scroll(function() {
 
         if (canAJAX && triggered == 1) {
             var currentHash = window.location.hash;
-            console.log()
             switch (currentHash) {
                 case "#gifts":
                     $("#gift-loader-wrapper").removeClass('hidden');
