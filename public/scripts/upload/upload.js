@@ -5,7 +5,10 @@ $(function() {
 
     $('#date').bootstrapMaterialDatePicker({
         weekStart: 0,
-        time: false
+        time: false,
+        clearButton: true
+    }).on('dateSelected', function(e, date) {
+        $(".dtp-btn-ok").click();
     });
 
     $('#date').bootstrapMaterialDatePicker('setMinDate', moment());

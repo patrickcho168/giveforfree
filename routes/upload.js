@@ -91,7 +91,7 @@ function saveItem(req, res, fileName) {
     var newItem = new db.Item({
         giverID: req.user.appUserId,
         timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
-        timeExpired: moment(req.body.date + " 23:59:59").format("YYYY-MM-DD HH:mm:ss"),
+        timeExpired: req.body.date ? moment(req.body.date + " 23:59:59").format("YYYY-MM-DD HH:mm:ss") : null,
         title: xss(req.body.title),
         description: xss(req.body.description),
         collectionMessage: xss(req.body.collectionMessage),
@@ -227,7 +227,7 @@ module.exports = function(app) {
                     item.save({
                         title: xss(req.body.title),
                         description: xss(req.body.description),
-                        timeExpired: moment(req.body.date + " 23:59:59").format("YYYY-MM-DD HH:mm:ss"),
+                        timeExpired: req.body.date ? moment(req.body.date + " 23:59:59").format("YYYY-MM-DD HH:mm:ss") : null,
                         collectionMessage: xss(req.body.collectionMessage),
                         postage: req.body.postage ? 1 : 0,
                         meetup: req.body.meetup ? 1 : 0,

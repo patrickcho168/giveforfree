@@ -264,6 +264,10 @@ jQuery(document).ready(function($) {
     updateDonationDetail();
     initializeForm();
 
+    $(".dtp-btn-clear").click(function() {
+        $(".input-date").attr("value", "");
+    });
+
     $('.donation-input').keyup(function() {
         updateDonationDetail();
     });
@@ -495,7 +499,10 @@ $(function() {
 
     $('#date').bootstrapMaterialDatePicker({
         weekStart: 0,
-        time: false
+        time: false,
+        clearButton: true
+    }).on('dateSelected', function(e, date) {
+        $(".dtp-btn-ok").click();
     });
 
     $('#date').bootstrapMaterialDatePicker('setMinDate', moment());
