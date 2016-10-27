@@ -489,6 +489,7 @@ var NotificationQuery = function(userId, limitNum, cb) {
     })
     .orderBy('n.timeCreated', 'DESC')
     .groupBy('n.notificationID')
+    .groupBy('rn.notificationID')
     .limit(limitNum)
     .then(function(result){
       return cb(result);
@@ -540,6 +541,7 @@ var NotificationQueryBeforeId = function(userId, notificationId, limitNum, cb) {
     })
     .orderBy('n.timeCreated', 'DESC')
     .groupBy('n.notificationID')
+    .groupBy('rn.notificationID')
     .limit(limitNum)
     .then(function(result){
       return cb(result);

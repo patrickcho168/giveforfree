@@ -73,7 +73,6 @@ toExport.route = function(app) {
     // load more notifications
     app.get('/api/load_notification/:notifID', ensureLogin.ensureLoggedIn(), function(req, res, next) {
         var limitNum = 10;
-        console.log(req.params.notifID);
         db.NotificationQueryBeforeId(req.user.appUserId, req.params.notifID, limitNum, function(data) {
             res.json(data);
         })
