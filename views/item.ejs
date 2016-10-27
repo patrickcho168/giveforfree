@@ -170,7 +170,7 @@
     <!-- Bootstrap Notifications -->
     <link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
     <script src="../scripts/common/notify.min.js"></script>
-    
+
     <!-- Animations -->
     <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
 
@@ -344,11 +344,7 @@
                     <div class="item-basic-info">
                         <div class="info-text info-display">
                             <h2><%- item.title %></h2>
-                            <% if (item.donationAmount > 0) { %>
-                                <p>$<%= item.donationAmount %> to <%= item.charityName %></p>
-                            <% } else { %>
-                                <p> FREE </p>
-                            <% } %>
+                            <p>$<%= item.donationAmount %> to <%= item.charityName %></p>
                             <div class="category-holder info-display">
                                 <% for (var i=0; i<categories.length; i++) { %>
                                     <span class="category-item"><i class="fa fa-tags"></i> <%= categories[i] %></span>
@@ -384,13 +380,9 @@
                                     <% } %>
                                 <% } else { %>
                                     <% if (item.takerID === id) { %>
-                                        <% if (item.donationAmount > 0) { %>
-                                            <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
-                                                <a class="btn btn-lg btn-block btn-donate" id="paypal" itemId="<%= item.itemID %>" price="<%= item.donationAmount %>" charityName="<%= item.charityName %>" charityEmail="<%= item.charityEmail %>" charityID="<%= item.charityID %>"><i class="fa fa-heart-o"></i> Donate to receive gift</a>
-                                                <a class="btn btn-lg btn-block btn-donated hidden" id="delivered" itemId="<%= item.itemID %>"><i class="fa fa-heart-o"></i> Confirm Gift Delivery</a>
-                                            <% } else if (!item.delivered) { %>
-                                                <a class="btn btn-lg btn-block btn-donated" id="delivered" itemId="<%= item.itemID %>"><i class="fa fa-heart-o"></i> Confirm Gift Delivery</a>
-                                            <% } %>
+                                        <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
+                                            <a class="btn btn-lg btn-block btn-donate" id="paypal" itemId="<%= item.itemID %>" price="<%= item.donationAmount %>" charityName="<%= item.charityName %>" charityEmail="<%= item.charityEmail %>" charityID="<%= item.charityID %>"><i class="fa fa-heart-o"></i> Donate to receive gift</a>
+                                            <a class="btn btn-lg btn-block btn-donated hidden" id="delivered" itemId="<%= item.itemID %>"><i class="fa fa-heart-o"></i> Confirm Gift Delivery</a>
                                         <% } else if (!item.delivered) { %>
                                             <a class="btn btn-lg btn-block btn-donated" id="delivered" itemId="<%= item.itemID %>"><i class="fa fa-heart-o"></i> Confirm Gift Delivery</a>
                                         <% } %>
@@ -443,14 +435,10 @@
                             </div>
                         <% } else { %>
                             <div class="info-button want-button">
-                                <% if (item.donationAmount > 0) { %>
-                                    <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
-                                        <!-- <div class="btn-lg btn-block btn-donated"><i class="fa fa-heart-o"></i> Waiting for Donation</div> -->
-                                    <% } else { %>
-                                        <!-- <div class="btn-lg btn-block btn-donated"><i class="fa fa-heart-o"></i> Deliver</div> -->
-                                    <% } %>
+                                <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
+                                    <!-- <div class="btn-lg btn-block btn-donated"><i class="fa fa-heart-o"></i> Waiting for Donation</div> -->
                                 <% } else { %>
-                                    <!-- <div class="btn-lg btn-block btn-donated"><i class="fa fa-heart-o"></i> Deliver </div> -->
+                                    <!-- <div class="btn-lg btn-block btn-donated"><i class="fa fa-heart-o"></i> Deliver</div> -->
                                 <% } %>
                             </div>
                         <% } %>
@@ -458,24 +446,21 @@
                 </div>
                 <div class="col-sm-8 col-md-9 right-panel">
                     <div class="panel other-info-panel">
-                        <% if (item.donationAmount > 0) { %>
-                            <div class="charity-info info-display">
-                                <div class="charity-img pull-left">
-                                    <img src="../images/upload/charity<%= item.charityID %>.png" alt="" />
-                                </div>
-                                <div class="charity-details info-display">
-                                    <p>
-                                        <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
-                                            Donation will go to
-                                        <% } else { %>
-                                            $<%= item.donatedAmount %> has been donated to
-                                        <% } %>
-                                    </p>
-                                    <h2><%= item.charityName %></h2>
-                                </div>
+                        <div class="charity-info info-display">
+                            <div class="charity-img pull-left">
+                                <img src="../images/upload/charity<%= item.charityID %>.png" alt="" />
                             </div>
-
-                        <% } %>
+                            <div class="charity-details info-display">
+                                <p>
+                                    <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
+                                        Donation will go to
+                                    <% } else { %>
+                                        $<%= item.donatedAmount %> has been donated to
+                                    <% } %>
+                                </p>
+                                <h2><%= item.charityName %></h2>
+                            </div>
+                        </div>
                         <div class="detail-info info-edit hidden">
                             <div class="row">
                                 <div class="col-sm-6 charity-edit">
@@ -621,12 +606,10 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-5">
-                                    <% if (item.donationAmount > 0) { %>
-                                        <h4 class="about-charity">The Charity</h4>
-                                        <p class="charity-intro">
-                                            <%= item.charityDescription %>
-                                        </p>
-                                    <% } %>
+                                    <h4 class="about-charity">The Charity</h4>
+                                    <p class="charity-intro">
+                                        <%= item.charityDescription %>
+                                    </p>
                                     <h4 class="giver-info-title">The Giver</h4>
                                     <div class="giver-info">
                                         <div class="giver-img pull-left">
