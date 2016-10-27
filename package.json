@@ -25,7 +25,7 @@
     "cookie-parser": "~1.4.3",
     "cookie-session": "~2.0.0-alpha.1",
     "cropper": "^2.3.3",
-    "croppie": "^2.3.0",
+    "croppie": "^2.4.0",
     "crypto": "0.0.3",
     "csurf": "^1.9.0",
     "ejs": "~2.5.1",

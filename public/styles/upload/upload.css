@@ -436,10 +436,6 @@ img {
     padding-left: 5px;
 }
 
-.donation-wrapper small {
-    margin-left: 15px;
-}
-
 .more-info-form h2, .donation-info-form h2 {
     margin-top: 0;
     color: #76323f;
@@ -502,7 +498,7 @@ img {
 .charity-selection img {
     height: 60px;
     transition: all .5s;
-    margin-right: 20px;
+    margin: 0px 20px 10px 0px;
     cursor: pointer;
 }
 
@@ -623,7 +619,4 @@ div#cropperHolder:hover {
     font-weight: 300;
 }
 
-.charity-info p {
-    font-size: 20px;
-    margin-top: 10px;
-}
+

@@ -155,18 +155,19 @@ function previewFile() {
             $('#image-holder').hide();
             $('#image').show();
             reader.addEventListener("load", function() {
+
                 $uploadCrop = $('#image').croppie({
                     viewport: {
                         width: cropperWidth*0.8,
-                        height: cropperWidth*0.8,
+                        height: cropperWidth*0.8
                     },
                     boundary: {
                         width: cropperWidth,
                         height: cropperWidth,
                     },
-                    enforceBoundary: true,
                     enableExif: true,
-                    showZoomer: true
+                    showZoomer: true,
+                    enforceBoundary: true
                 });
 
                 // Add something to the input text field
@@ -220,12 +221,10 @@ function selectCharity(currentSelection) {
     var checked = checkBox.prop('checked');
 
     var allBoxes = $('.charity-selection input');
-    var freeBox = $("input[name='givefree']");
     var moneyInput = $('.money-input input');
     var allImg = $('.charity-selection img');
 
     allBoxes.prop('checked', false);
-    freeBox.prop('checked', false);
     allImg.addClass('covered');
 
     if (!checked) {
@@ -244,25 +243,5 @@ function selectCharity(currentSelection) {
     } else if ($('.no-charity').is(':visible')) {
         $('.no-charity').addClass('covered');
         moneyInput.prop('disabled', true);
-    }
-}
-
-function giveFree(freebox) {
-    if ($(freebox).prop('checked') == true) {
-        var moneyInput = $('.money-input input');
-
-        // Set charities to zero
-        $('.no-charity').addClass('covered');
-        moneyInput.prop('disabled', true);
-        moneyInput.val(0);
-        $('.actual-amount').text(0);
-        $('.fee').text(0);
-        $('.ours').text(0);
-
-        var allBoxes = $('.charity-selection input');
-        var allImg = $('.charity-selection img');
-
-        allBoxes.prop('checked', false);
-        allImg.addClass('covered');
     }
 }
