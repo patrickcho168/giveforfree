@@ -233,6 +233,7 @@ $(document).on('click', '#paypal', function() {
 // Carousel Logic
 jQuery(document).ready(function($) {
     updateDonationDetail();
+    initializeForm();
 
     $('.donation-input').keyup(function() {
         updateDonationDetail();
@@ -549,4 +550,21 @@ function updateDonationDetail() {
     $('.actual-amount').text('$'+theirs.toFixed(2));
     $('.fee').text('$'+fee.toFixed(2));
     $('.ours').text('$'+ours.toFixed(2));
+}
+
+function initializeForm() {
+    $.validate({
+        modules : 'logic, html5',
+        validateHiddenInputs: true,
+        validateOnBlur: false,
+        onError : function($form) {
+          $.notify({
+              // options
+                message: "You didn't fill up some fields. Please check again."
+          }, {
+              // settings
+              type: 'danger'
+          });
+        }
+    });
 }
