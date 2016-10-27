@@ -22,6 +22,9 @@ var paypal = require('./controllers/paypal');
 var config = require('./config');
 var db = require('./models/db');
 var moment = require('moment');
+var helmet = require('helmet');
+// var csp = require('helmet-csp');
+
 moment().format();
 
 var app = express();
@@ -85,6 +88,7 @@ app.use(passport.session());
 // Define routes
 app.use(fbLogin.onlyNotLogout(fbLogin.facebookCache));
 app.use(fbLogin.onlyNotLogout(notification.getNotifications))
+app.use(helmet());
 fbLogin.route(app);
 notification.route(app);
 upload(app);

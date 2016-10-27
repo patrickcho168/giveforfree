@@ -35,6 +35,9 @@
     <!-- Bootstrap Support -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <!-- Validation -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+
     <!-- Checkbox Styling -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.7/awesome-bootstrap-checkbox.min.css">
 
@@ -167,11 +170,6 @@
     <!-- Bootstrap Notifications -->
     <link rel="stylesheet" href="../assets/bootstrapNotifications/css/bootstrap-notifications.min.css">
     <script src="../scripts/common/notify.min.js"></script>
-
-    <!-- Selectize -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/js/standalone/selectize.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/css/selectize.default.min.css">
-    <link rel="stylesheet" href="../styles/upload/selectize-mod.css">
 
     <!-- Animations -->
     <link rel="stylesheet" href="https://fastcdn.org/Animate.css/3.4.0/animate.min.css">
@@ -337,7 +335,7 @@
                 </li>
             </ul>
         </div>
-        <form action="/api/update/<%= item.itemID %>" class="form-horizontal form" role="form" method="post">
+        <form action="/api/update/<%= item.itemID %>" class="form-horizontal form" role="form" method="post" novalidate>
             <div class="row item-info">
                 <div class="col-sm-4 col-md-3 panel basic-info-panel">
                     <div class="item-img">
@@ -346,11 +344,7 @@
                     <div class="item-basic-info">
                         <div class="info-text info-display">
                             <h2><%- item.title %></h2>
-                            <% if (item.donationAmount > 0) { %>
-                                <p>$<%= item.donationAmount %> to <%= item.charityName %></p>
-                            <% } else { %>
-                                <p> FREE </p>
-                            <% } %>
+                            <p>$<%= item.donationAmount %> to <%= item.charityName %></p>
                             <div class="category-holder info-display">
                                 <% for (var i=0; i<categories.length; i++) { %>
                                     <span class="category-item"><i class="fa fa-tags"></i> <%= categories[i] %></span>
@@ -359,7 +353,7 @@
                         </div>
                         <div class="info-text info-edit hidden">
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                            <input type="text" class="input-txt name-input" name="title" maxlength="50" autocomplete="off" value="<%- item.title %>" required>
+                            <input type="text" class="input-txt name-input" name="title" maxlength="50" autocomplete="off" value="<%- item.title %>" data-validation="required">
                         </div>
 
                         <% if (loggedIn && !mine && (item.takerID === null || item.takerID === id)) { %>
@@ -386,13 +380,9 @@
                                     <% } %>
                                 <% } else { %>
                                     <% if (item.takerID === id) { %>
-                                        <% if (item.donationAmount > 0) { %>
-                                            <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
-                                                <a class="btn btn-lg btn-block btn-donate" id="paypal" itemId="<%= item.itemID %>" price="<%= item.donationAmount %>" charityName="<%= item.charityName %>" charityEmail="<%= item.charityEmail %>" charityID="<%= item.charityID %>"><i class="fa fa-heart-o"></i> Donate to receive gift</a>
-                                                <a class="btn btn-lg btn-block btn-donated hidden" id="delivered" itemId="<%= item.itemID %>"><i class="fa fa-heart-o"></i> Confirm Gift Delivery</a>
-                                            <% } else if (!item.delivered) { %>
-                                                <a class="btn btn-lg btn-block btn-donated" id="delivered" itemId="<%= item.itemID %>"><i class="fa fa-heart-o"></i> Confirm Gift Delivery</a>
-                                            <% } %>
+                                        <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
+                                            <a class="btn btn-lg btn-block btn-donate" id="paypal" itemId="<%= item.itemID %>" price="<%= item.donationAmount %>" charityName="<%= item.charityName %>" charityEmail="<%= item.charityEmail %>" charityID="<%= item.charityID %>"><i class="fa fa-heart-o"></i> Donate to receive gift</a>
+                                            <a class="btn btn-lg btn-block btn-donated hidden" id="delivered" itemId="<%= item.itemID %>"><i class="fa fa-heart-o"></i> Confirm Gift Delivery</a>
                                         <% } else if (!item.delivered) { %>
                                             <a class="btn btn-lg btn-block btn-donated" id="delivered" itemId="<%= item.itemID %>"><i class="fa fa-heart-o"></i> Confirm Gift Delivery</a>
                                         <% } %>
@@ -445,14 +435,10 @@
                             </div>
                         <% } else { %>
                             <div class="info-button want-button">
-                                <% if (item.donationAmount > 0) { %>
-                                    <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
-                                        <!-- <div class="btn-lg btn-block btn-donated"><i class="fa fa-heart-o"></i> Waiting for Donation</div> -->
-                                    <% } else { %>
-                                        <!-- <div class="btn-lg btn-block btn-donated"><i class="fa fa-heart-o"></i> Deliver</div> -->
-                                    <% } %>
+                                <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
+                                    <!-- <div class="btn-lg btn-block btn-donated"><i class="fa fa-heart-o"></i> Waiting for Donation</div> -->
                                 <% } else { %>
-                                    <!-- <div class="btn-lg btn-block btn-donated"><i class="fa fa-heart-o"></i> Deliver </div> -->
+                                    <!-- <div class="btn-lg btn-block btn-donated"><i class="fa fa-heart-o"></i> Deliver</div> -->
                                 <% } %>
                             </div>
                         <% } %>
@@ -460,24 +446,21 @@
                 </div>
                 <div class="col-sm-8 col-md-9 right-panel">
                     <div class="panel other-info-panel">
-                        <% if (item.donationAmount > 0) { %>
-                            <div class="charity-info info-display">
-                                <div class="charity-img pull-left">
-                                    <img src="../images/upload/charity<%= item.charityID %>.png" alt="" />
-                                </div>
-                                <div class="charity-details info-display">
-                                    <p>
-                                        <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
-                                            Donation will go to
-                                        <% } else { %>
-                                            $<%= item.donatedAmount %> has been donated to
-                                        <% } %>
-                                    </p>
-                                    <h2><%= item.charityName %></h2>
-                                </div>
+                        <div class="charity-info info-display">
+                            <div class="charity-img pull-left">
+                                <img src="../images/upload/charity<%= item.charityID %>.png" alt="" />
                             </div>
-
-                        <% } %>
+                            <div class="charity-details info-display">
+                                <p>
+                                    <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
+                                        Donation will go to
+                                    <% } else { %>
+                                        $<%= item.donatedAmount %> has been donated to
+                                    <% } %>
+                                </p>
+                                <h2><%= item.charityName %></h2>
+                            </div>
+                        </div>
                         <div class="detail-info info-edit hidden">
                             <div class="row">
                                 <div class="col-sm-6 charity-edit">
@@ -541,7 +524,12 @@
                                             "other"
                                         ] %>
                                         <% for(var i=0; i<categories_list.length; i++) {%>
+                                            <% if (categories.indexOf(categories_list[i]) != -1) {%>
+
+                                            <option value="<%= categories_list[i] %>" selected="selected"><%= categories_list[i] %></option>
+                                            <% } else { %>
                                             <option value="<%= categories_list[i] %>"><%= categories_list[i] %></option>
+                                            <% } %>
                                         <% } %>
                                     </select>
                                 </div>
@@ -554,18 +542,18 @@
                                     </p>
                                     <div class="checkbox checkbox-primary delivery-info checkbox-circle row">
                                         <% if (item.meetup === 1) { %>
-                                            <input type="checkbox" name="meetup" id="meetup" class="check-one hidden" checked>
+                                            <input type="checkbox" name="meetup" id="meetup" class="check-one hidden" checked data-validation="required" data-validation-optional-if-answered="postage">
                                         <% } else { %>
-                                            <input type="checkbox" name="meetup" id="meetup" class="check-one hidden">
+                                            <input type="checkbox" name="meetup" id="meetup" class="check-one hidden" data-validation="required" data-validation-optional-if-answered="postage">
                                         <% } %>
                                         <label class="large-label" for="meetup">
                                             Meet and collect
                                         </label><br>
 
                                         <% if (item.postage === 1) { %>
-                                            <input type="checkbox" name="postage" id="postage" class="check-two hidden" checked>
+                                            <input type="checkbox" name="postage" id="postage" class="check-two hidden" checked data-validation="required" data-validation-optional-if-answered="meetup">
                                         <% } else { %>
-                                            <input type="checkbox" name="postage" id="postage" class="check-two hidden">
+                                            <input type="checkbox" name="postage" id="postage" class="check-two hidden" data-validation="required" data-validation-optional-if-answered="meetup">
                                         <% } %>
                                         <label class="large-label" for="postage">
                                             Postage service
@@ -578,7 +566,7 @@
                                         Some words about the gift.
                                     </p>
                                     <div class="description-edit">
-                                        <textarea type="text" class="input-txt description-input" name="description"  maxlength="200" autocomplete="off" required><%- item.description %></textarea>
+                                        <textarea type="text" class="input-txt description-input" name="description"  maxlength="200" autocomplete="off" data-validation="required"><%- item.description %></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -618,12 +606,10 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-5">
-                                    <% if (item.donationAmount > 0) { %>
-                                        <h4 class="about-charity">The Charity</h4>
-                                        <p class="charity-intro">
-                                            <%= item.charityDescription %>
-                                        </p>
-                                    <% } %>
+                                    <h4 class="about-charity">The Charity</h4>
+                                    <p class="charity-intro">
+                                        <%= item.charityDescription %>
+                                    </p>
                                     <h4 class="giver-info-title">The Giver</h4>
                                     <div class="giver-info">
                                         <div class="giver-img pull-left">
