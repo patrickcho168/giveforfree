@@ -147,6 +147,10 @@
     <!-- Auto-Resize Input Fields -->
     <script src="../assets/autosize/js/autosize.js"></script>
 
+    <!-- sweet alert -->
+    <script src="/sweetalert/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/sweetalert/sweetalert.css">
+
     <!-- JQuery Comments Support -->
     <script type="text/javascript" src="../scripts/item/jquery-comments.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../styles/item/jquery-comments.css">
@@ -335,7 +339,7 @@
                 </li>
             </ul>
         </div>
-        <form action="/api/update/<%= item.itemID %>" class="form-horizontal form" role="form" method="post" novalidate>
+        <form action="/api/update/<%= item.itemID %>" class="form-horizontal form eidt-item-form" role="form" method="post" novalidate>
             <div class="row item-info">
                 <div class="col-sm-4 col-md-3 panel basic-info-panel">
                     <div class="item-img">
@@ -372,7 +376,7 @@
                             <div class="info-button want-button">
                                 <% if (!loggedIn) { %>
                                     <% if (!expired && item.takerID === null) { %>
-                                        <a href="/login" class="btn btn-lg btn-want btn-block"><span class="glyphicon glyphicon-gift"></span><span> Want </span><span class="badge"><%= item.numWants %></span> </a>
+                                        <a href="/login" class="btn btn-lg btn-want btn-want-no-login btn-block"><span class="glyphicon glyphicon-gift"></span><span> Want </span><span class="badge"><%= item.numWants %></span> </a>
                                     <% } else if (item.takerID !== null) { %>
                                         <!-- <a href="/profile/<%= item.takerID %>" class="btn btn-lg btn-want btn-block"><i class="fa fa-heart-o"></i> Given to <%= item.takerName %></a> -->
                                     <% } else if (expired && item.takerID === null) { %>
@@ -417,7 +421,7 @@
                                                     <p><%= manual[i].name %></p>
                                                     <div class="link-box">
                                                         <a href="/profile/<%= manual[i].userID %>">Profile</a>
-                                                        <a href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>">Give</a>
+                                                        <a onclick="giveItemConfirm(<%= item.itemID %>, <%= manual[i].userID %>, '<%= manual[i].name %>');" style="cursor: pointer;">Give</a>
                                                     </div>
                                                 </li>
                                             <% } %>
@@ -431,7 +435,7 @@
                             <div class="info-button edit-button-group hidden">
                                 <button href="#" class="btn btn-lg btn-save btn-block" type="submit">Save Modification</button>
                                 <a href="#" class="btn btn-lg btn-cancel btn-block">Cancel Modification</a>
-                                <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block btn-delete">Delete Item</a>
+                                <a class="btn btn-lg btn-block btn-delete" onclick="deleteConfirm(<%= item.itemID %>);">Delete Item</a>
                             </div>
                         <% } else { %>
                             <div class="info-button want-button">
@@ -503,7 +507,7 @@
                                     <% var deadline = date != "Invalid date" ? moment(date, "D MMMM YYYY HH:mm").format("YYYY-MM-DD") : "" %>
                                     <input type="text" class="input-txt input-date" name="date" id="date" value="<%= deadline %>" placeholder="Select an end date">
                                 </div>
-                                
+
                                 <div class="col-sm-6 category-info category-select-holder">
                                     <h2>Category</h2>
 
@@ -650,7 +654,7 @@
                                 <div class="info-button mobile-edit-button-group hidden">
                                     <button href="#" class="btn btn-lg mobile-btn-save btn-block" type="submit">Save Modification</button>
                                     <a href="#" class="btn btn-lg mobile-btn-cancel btn-block">Cancel Modification</a>
-                                    <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block mobile-btn-delete">Delete Item</a>
+                                    <a onclick="deleteConfirm(<%= item.itemID %>);" class="btn btn-lg btn-block mobile-btn-delete">Delete Item</a>
                                 </div>
                             </div>
                         <% } %>
