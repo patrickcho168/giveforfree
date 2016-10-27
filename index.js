@@ -1,5 +1,5 @@
 "use strict"
-
+var subdomain = require('express-subdomain');
 var express = require("express");
 var passport = require("passport");
 var bodyParser = require("body-parser");
@@ -87,15 +87,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 // Define routes
 app.use(fbLogin.onlyNotLogout(fbLogin.facebookCache));
-app.use(fbLogin.onlyNotLogout(notification.getNotifications))
+app.use(fbLogin.onlyNotLogout(notification.getNotifications));
+app.use(subdomain('alpha', fbLogin.router));
+app.use(subdomain('alpha', freeItem));
+app.use(subdomain('alpha', notification.router));
+app.use(subdomain('alpha', privacy));
+app.use(subdomain('alpha', profile));
+app.use(subdomain('alpha', upload));
 app.use(helmet());
-fbLogin.route(app);
-notification.route(app);
-upload(app);
-profile(app);
-freeItem(app);
 paypal(app);
-privacy(app);
 handleErrors(app);
 
-app.listen(config.portNum);
+app.listen(3000);

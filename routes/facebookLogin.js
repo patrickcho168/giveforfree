@@ -8,6 +8,10 @@ var db = require('../models/db');
 var facebook = require('../controllers/facebook');
 var note = require('./notification');
 var moment = require('moment');
+var express = require('express');
+var router = express.Router();
+
+var toExport = {};
 
 passport.use(new Strategy({
         clientID: config.fbClientID,
@@ -53,67 +57,64 @@ passport.deserializeUser(function(obj, cb) {
     cb(null, obj);
 });
 
-var toExport = {}
-toExport.route = function(app) {
-
-    // HOME PAGE
-    app.get('/', function(req, res) {
-        req.session.lastPageVisit = '/';
-        if (req.user === undefined) {
+// HOME PAGE
+router.get('/', function(req, res) {
+    req.session.lastPageVisit = '/';
+    if (req.user === undefined) {
+        res.render('homeLoggedIn', {
+            id: null,
+            loggedIn: false
+        });
+    } else {
+        var userId = req.user.appUserId;
+        db.User.where({
+            userID: userId
+        }).fetch().then(function(user) {
             res.render('homeLoggedIn', {
-                id: null,
-                loggedIn: false
+                notification: req.session.notification,
+                moment: moment,
+                id: userId,
+                user: user.attributes,
+                loggedIn: true
             });
-        } else {
-            var userId = req.user.appUserId;
-            db.User.where({
-                userID: userId
-            }).fetch().then(function(user) {
-                res.render('homeLoggedIn', {
-                    notification: req.session.notification,
-                    moment: moment,
-                    id: userId,
-                    user: user.attributes,
-                    loggedIn: true
-                });
-            });
-        }
-    });
+        });
+    }
+});
 
-    app.get('/login', function(req, res) {
-        if (req.user === undefined) {
-            res.render('loginSS');
+router.get('/login', function(req, res) {
+    if (req.user === undefined) {
+        res.render('loginSS');
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.get('/login/facebook',
+    passport.authenticate('facebook', {
+        // scope: ['user_friends'] // USE THIS TO GET USERS FIRST
+        scope: ['user_friends', 'publish_actions']
+    }));
+
+router.get('/login/facebook/return',
+    passport.authenticate('facebook', {
+        failureRedirect: '/login'
+    }),
+    function(req, res) {
+        if (req.session  && req.session.lastPageVisit) {
+            res.redirect(req.session.lastPageVisit);
         } else {
             res.redirect('/');
         }
     });
 
-    app.get('/login/facebook',
-        passport.authenticate('facebook', {
-            // scope: ['user_friends'] // USE THIS TO GET USERS FIRST
-            scope: ['user_friends', 'publish_actions']
-        }));
+router.get('/logout', function(req, res) {
+    req.logout();
+    req.session.destroy();
+    // req.session = null;
+    res.redirect('/login');
+})
 
-    app.get('/login/facebook/return',
-        passport.authenticate('facebook', {
-            failureRedirect: '/login'
-        }),
-        function(req, res) {
-            if (req.session  && req.session.lastPageVisit) {
-                res.redirect(req.session.lastPageVisit);
-            } else {
-                res.redirect('/');
-            }
-        });
-
-    app.get('/logout', function(req, res) {
-        req.logout();
-        req.session.destroy();
-        // req.session = null;
-        res.redirect('/login');
-    })
-}
-    // CACHE THINGS HERE
+// CACHE THINGS HERE
 toExport.facebookCache = function(req, res, next) {
     if (req.user && req.user.fbFriends && req.user.fbFriendsId && req.user.fbFriendsToPropertyMap) {
         next();
@@ -160,6 +161,8 @@ toExport.onlyNotLogout = function(fn) {
         }
     }
 };
+
+toExport.router = router;
 
 module.exports = toExport;
 

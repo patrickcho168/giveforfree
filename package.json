@@ -31,6 +31,7 @@
     "ejs": "~2.5.1",
     "express": "~4.14.0",
     "express-session": "^1.14.0",
+    "express-subdomain": "^1.0.5",
     "express-validator": "^2.20.8",
     "fb": "~1.1.1",
     "helmet": "^2.3.0",

@@ -1,3 +1,4 @@
+var express = require('express');
 var ensureLogin = require('connect-ensure-login');
 var db = require('../models/db');
 var moment = require('moment');
@@ -5,6 +6,7 @@ var ensureLogin = require('connect-ensure-login');
 var request = require('request');
 var config = require('../config');
 var moment = require('moment');
+var router = express.Router();
 
 // NotificationType 1: Someone snag an item that I am currently giving but haven't given out
 // NotificationType 2: My item has just expired and I haven't given out the item
@@ -29,88 +31,86 @@ toExport.getNotifications = function(req, res, next) {
     }
 };
 
-toExport.route = function(app) {
-    // HOME PAGE
-    // app.post('/notification/gcmregistration', ensureLogin.ensureLoggedIn(), function(req, res, next) {
-    //     // console.log("GCM Registration");
-    //     var userId = parseInt(req.user.appUserId);
-    //     db.User.where({
-    //         userID: userId
-    //     }).fetch().then(function(user) {
-    //         if (user) {
-    //             var endpoint = req.body.endpoint;
-    //             var regId = endpoint.substring(endpoint.lastIndexOf("/")+1, endpoint.length);
-    //             user.save({
-    //                 gcm: regId
-    //             });
-    //         }
-    //     });
-    //     next();
-    // });
+// HOME PAGE
+// router.post('/notification/gcmregistration', ensureLogin.ensureLoggedIn(), function(req, res, next) {
+//     // console.log("GCM Registration");
+//     var userId = parseInt(req.user.appUserId);
+//     db.User.where({
+//         userID: userId
+//     }).fetch().then(function(user) {
+//         if (user) {
+//             var endpoint = req.body.endpoint;
+//             var regId = endpoint.substring(endpoint.lastIndexOf("/")+1, endpoint.length);
+//             user.save({
+//                 gcm: regId
+//             });
+//         }
+//     });
+//     next();
+// });
 
-    // app.get('/api/getonenotification/:recipientgcm', function(req,res) {
-    //     db.User.where({
-    //         gcm: recipientgcm
-    //     }).fetch().then(function(user) {
-    //         db.NotificationQuery(parseInt(user.attributes.userID), 1, function(data) {
-    //             res.json(data);
-    //         });
-    //     });
-    // });
+// router.get('/api/getonenotification/:recipientgcm', function(req,res) {
+//     db.User.where({
+//         gcm: recipientgcm
+//     }).fetch().then(function(user) {
+//         db.NotificationQuery(parseInt(user.attributes.userID), 1, function(data) {
+//             res.json(data);
+//         });
+//     });
+// });
 
-    // Read single notification
-    app.post('/api/read_notification/:notifID', ensureLogin.ensureLoggedIn(), function(req, res, next) {
-        db.Notification.where({
-            notificationID: req.params.notifID
-        }).fetch().then(function(notification) {
-            notification.readBy().attach(req.user.appUserId);
-            res.json({ message: 'Notification read' });
-        }).catch(function(err) {
-            next(err);
-        });
+// Read single notification
+router.post('/api/read_notification/:notifID', ensureLogin.ensureLoggedIn(), function(req, res, next) {
+    db.Notification.where({
+        notificationID: req.params.notifID
+    }).fetch().then(function(notification) {
+        notification.readBy().attach(req.user.appUserId);
+        res.json({ message: 'Notification read' });
+    }).catch(function(err) {
+        next(err);
     });
+});
 
-    // load more notifications
-    app.get('/api/load_notification/:notifID', ensureLogin.ensureLoggedIn(), function(req, res, next) {
-        var limitNum = 10;
-        db.NotificationQueryBeforeId(req.user.appUserId, req.params.notifID, limitNum, function(data) {
-            res.json(data);
-        })
-    });
+// load more notifications
+router.get('/api/load_notification/:notifID', ensureLogin.ensureLoggedIn(), function(req, res, next) {
+    var limitNum = 10;
+    db.NotificationQueryBeforeId(req.user.appUserId, req.params.notifID, limitNum, function(data) {
+        res.json(data);
+    })
+});
 
-    // load all notifications on separate page
-    app.get('/notifications', ensureLogin.ensureLoggedIn(), function(req, res, next) {
-        var userId = parseInt(req.user.appUserId);
-        var limitNum = 20;
-        db.User.where({
-            userID: userId
-        }).fetch().then(function(user) {
-            db.NotificationQuery(userId, limitNum, function(data) {
-                res.render('allnotification', {
-                    notification: data,
-                    id: userId,
-                    user: user.attributes,
-                    moment: moment
-                });
+// load all notifications on separate page
+router.get('/notifications', ensureLogin.ensureLoggedIn(), function(req, res, next) {
+    var userId = parseInt(req.user.appUserId);
+    var limitNum = 20;
+    db.User.where({
+        userID: userId
+    }).fetch().then(function(user) {
+        db.NotificationQuery(userId, limitNum, function(data) {
+            res.render('allnotification', {
+                notification: data,
+                id: userId,
+                user: user.attributes,
+                moment: moment
             });
         });
     });
+});
 
-    // Clear all notifications
-    app.post('/api/clear_notifications', ensureLogin.ensureLoggedIn(), function(req, res, next) {
-        db.User.where({
-            userID: req.user.appUserId
-        }).fetch().then(function(user) {
-            var ids = req.session.notification.map(function(notification) {
-                return notification.notificationID;
-            });
-            user.readNotifications().attach(ids);
-            res.json({ message: 'Notifications cleared' });
-        }).catch(function(err) {
-            next(err);
+// Clear all notifications
+router.post('/api/clear_notifications', ensureLogin.ensureLoggedIn(), function(req, res, next) {
+    db.User.where({
+        userID: req.user.appUserId
+    }).fetch().then(function(user) {
+        var ids = req.session.notification.map(function(notification) {
+            return notification.notificationID;
         });
+        user.readNotifications().attach(ids);
+        res.json({ message: 'Notifications cleared' });
+    }).catch(function(err) {
+        next(err);
     });
-}
+});
 
 toExport.pushNotification = function(userId) {
     db.User.where({
@@ -144,4 +144,5 @@ toExport.pushNotification = function(userId) {
     });
 }
 
+toExport.router = router;
 module.exports = toExport;
