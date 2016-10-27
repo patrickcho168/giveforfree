@@ -649,7 +649,7 @@
                                 <div class="info-button mobile-edit-button-group hidden">
                                     <button href="#" class="btn btn-lg mobile-btn-save btn-block" type="submit">Save Modification</button>
                                     <a href="#" class="btn btn-lg mobile-btn-cancel btn-block">Cancel Modification</a>
-                                    <a href="/api/delete/<%= item.itemID %>" class="btn btn-lg btn-block mobile-btn-delete">Delete Item</a>
+                                    <a onclick="deleteConfirm(<%= item.itemID %>);" class="btn btn-lg btn-block mobile-btn-delete">Delete Item</a>
                                 </div>
                             </div>
                         <% } %>

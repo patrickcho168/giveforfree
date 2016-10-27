@@ -151,19 +151,6 @@ $(document).on("click", "#delivered", function() {
         });
 });
 
-// Submit form
-$(document).on('click', '.btn-save', function(e) {
-    e.preventDefault();
-    swal({
-        title: 'Saved',
-        type: 'success',
-        closeOnConfirm: false,
-    },
-    function() {
-        $('.eidt-item-form').submit();
-    });
-});
-
 // send user to facebook login
 $(document).on('click', '.btn-want-no-login', function(e) {
     e.preventDefault();
@@ -665,7 +652,7 @@ function giveItemConfirm(itemId, userId, userName) {
                     type: "success",
                     showCancelButton: true,
                     cancelButtonText: 'Close',
-                    confirmButtonText: 'Message Giver',
+                    confirmButtonText: 'Message Receiver',
                     closeOnConfirm: false
                 },
                 function() {
