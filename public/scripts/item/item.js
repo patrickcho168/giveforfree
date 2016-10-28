@@ -299,7 +299,7 @@ jQuery(document).ready(function($) {
     $('#comments-container').comments({
         roundProfilePictures: true,
         readOnly: loggedIn ? false : true,
-        profilePictureURL: 'http://graph.facebook.com/' + userFbId + '/picture',
+        profilePictureURL: 'https://graph.facebook.com/' + userFbId + '/picture',
         getComments: function(success, error) {
             $.ajax({
                 url: '/item/' + currentItemId + '/comment',
@@ -325,7 +325,7 @@ jQuery(document).ready(function($) {
                             // fullname: data[i].commentedBy.name,
                             upvote_count: data[i].upvote.length,
                             user_has_upvoted: upvoted,
-                            profile_picture_url: 'http://graph.facebook.com/' + data[i].commentedBy.fbID + '/picture',
+                            profile_picture_url: 'https://graph.facebook.com/' + data[i].commentedBy.fbID + '/picture',
                             parent: data[i].parentComment,
                             created_by_current_user: data[i].commentedBy.userID === userId
                         })
@@ -358,7 +358,7 @@ jQuery(document).ready(function($) {
                         fullname: data.commentedBy.name,
                         upvote_count: data.upvote.length,
                         user_has_upvoted: upvoted,
-                        profile_picture_url: 'http://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
+                        profile_picture_url: 'https://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
                         parent: data.parentComment,
                         created_by_current_user: data.commentedBy.userID === userId
                     });
@@ -389,7 +389,7 @@ jQuery(document).ready(function($) {
                             fullname: data.commentedBy.name,
                             upvote_count: data.upvote.length,
                             user_has_upvoted: upvoted,
-                            profile_picture_url: 'http://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
+                            profile_picture_url: 'https://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
                             parent: data.parentComment,
                             created_by_current_user: data.commentedBy.userID === userId
                         });
@@ -438,7 +438,7 @@ jQuery(document).ready(function($) {
                                 fullname: data.commentedBy.name,
                                 upvote_count: data.upvote.length,
                                 user_has_upvoted: upvoted,
-                                profile_picture_url: 'http://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
+                                profile_picture_url: 'https://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
                                 parent: data.parentComment,
                                 created_by_current_user: data.commentedBy.userID === userId
                             });
@@ -470,7 +470,7 @@ jQuery(document).ready(function($) {
                                 fullname: data.commentedBy.name,
                                 upvote_count: data.upvote.length,
                                 user_has_upvoted: upvoted,
-                                profile_picture_url: 'http://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
+                                profile_picture_url: 'https://graph.facebook.com/' + data.commentedBy.fbID + '/picture',
                                 parent: data.parentComment,
                                 created_by_current_user: data.commentedBy.userID === userId
                             });

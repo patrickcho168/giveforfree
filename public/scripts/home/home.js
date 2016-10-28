@@ -47,7 +47,7 @@ function addRealViews(html, url) {
                     html += '<div class="item-info">';
                     html += '<a href="/item/' + value.itemID + '"><p class="hide-overflow">' + value.title + '</p></a>';
                     html += '<a href="/profile/' + value.userID + '" class="seller-info row">';
-                    html += '<img src="http://graph.facebook.com/' + value.fbID + '/picture" alt="" />';
+                    html += '<img src="https://graph.facebook.com/' + value.fbID + '/picture" alt="" />';
                     html += '<span>' + value.name + '</span>';
                     html += '</a>';
                     html += '<a href="/item/' + value.itemID + '">';

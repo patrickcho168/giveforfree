@@ -159,7 +159,7 @@ function addRealViews(html) {
                         html += '<div class="item-info">';
                         html += '<a href="/item/' + value.itemID + '"><p class="hide-overflow">' + value.title + '</p></a>';
                         html += '<a href="/profile/' + value.userID + '" class="seller-info row">';
-                        html += '<img src="http://graph.facebook.com/' + value.fbID + '/picture" alt="" />';
+                        html += '<img src="https://graph.facebook.com/' + value.fbID + '/picture" alt="" />';
                         html += '<span>' + value.name + '</span>';
                         html += '</a>';
                         html += '<p>';
@@ -366,7 +366,7 @@ $(document).ready(function() {
         roundProfilePictures: true,
         noCommentsText: 'No Thank You Messages.',
         textareaPlaceholderText: isMine ? 'Reply to your Thank You Messages' :'Leave a Thank You Message',
-        profilePictureURL: 'http://graph.facebook.com/' + userFbId + '/picture',
+        profilePictureURL: 'https://graph.facebook.com/' + userFbId + '/picture',
         getComments: function(success, error) {
             $.ajax({
                 url: '/profile/' + appProfileId + '/thank',
@@ -392,7 +392,7 @@ $(document).ready(function() {
                             // fullname: data[i].commentedBy.name,
                             upvote_count: data[i].upvote.length,
                             user_has_upvoted: upvoted,
-                            profile_picture_url: 'http://graph.facebook.com/' + data[i].thankedBy.fbID + '/picture',
+                            profile_picture_url: 'https://graph.facebook.com/' + data[i].thankedBy.fbID + '/picture',
                             parent: data[i].parentThank,
                             created_by_current_user: data[i].thankedBy.userID === myAppId
                         })
@@ -425,7 +425,7 @@ $(document).ready(function() {
                         fullname: data.thankedBy.name,
                         upvote_count: data.upvote.length,
                         user_has_upvoted: upvoted,
-                        profile_picture_url: 'http://graph.facebook.com/' + data.thankedBy.fbID + '/picture',
+                        profile_picture_url: 'https://graph.facebook.com/' + data.thankedBy.fbID + '/picture',
                         parent: data.parentThank,
                         created_by_current_user: data.thankedBy.userID === myAppId
                     });
@@ -457,7 +457,7 @@ $(document).ready(function() {
                             fullname: data.thankedBy.name,
                             upvote_count: data.upvote.length,
                             user_has_upvoted: upvoted,
-                            profile_picture_url: 'http://graph.facebook.com/' + data.thankedBy.fbID + '/picture',
+                            profile_picture_url: 'https://graph.facebook.com/' + data.thankedBy.fbID + '/picture',
                             parent: data.parentThank,
                             created_by_current_user: data.thankedBy.userID === myAppId
                         });
@@ -506,7 +506,7 @@ $(document).ready(function() {
                                 fullname: data.thankedBy.name,
                                 upvote_count: data.upvote.length,
                                 user_has_upvoted: upvoted,
-                                profile_picture_url: 'http://graph.facebook.com/' + data.thankedBy.fbID + '/picture',
+                                profile_picture_url: 'https://graph.facebook.com/' + data.thankedBy.fbID + '/picture',
                                 parent: data.parentThank,
                                 created_by_current_user: data.thankedBy.userID === userId
                             });
@@ -538,7 +538,7 @@ $(document).ready(function() {
                                 fullname: data.thankedBy.name,
                                 upvote_count: data.upvote.length,
                                 user_has_upvoted: upvoted,
-                                profile_picture_url: 'http://graph.facebook.com/' + data.thankedBy.fbID + '/picture',
+                                profile_picture_url: 'https://graph.facebook.com/' + data.thankedBy.fbID + '/picture',
                                 parent: data.parentThank,
                                 created_by_current_user: data.thankedBy.userID === userId
                             });
