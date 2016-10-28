@@ -92,6 +92,7 @@ module.exports = function(app){
 
 	var paypalSdk = new Paypal({
 		userId:    config.paypalUsername,
+		appId:     config.paypalAppId,
 		password:  config.paypalPassword,
 		signature: config.paypalSignature,
 		sandbox:   false //defaults to false

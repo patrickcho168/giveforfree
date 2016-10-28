@@ -60,9 +60,6 @@
 
         <!-- Google Analytics -->
         <script src="/scripts/common/analytics.js"></script>
-
-        <!-- Moment -->
-        <script src="/scripts/common/moment.min.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-fixed-top">
@@ -103,13 +100,16 @@
                     </div>
                 </div>
                 <div class="content-notify">
-                    <p class="title hidden">
-                        Log in with Facebook to get notified when the website is launched!
-                    </p>
-                    <a href="javascript:loginSpecial();" class="hidden"><i class="fa fa-facebook-square"></i> Facebook Login</a>
-                    <p class="thank-you-msg ">
-                        Thank you Patrick, we will inform you when the our site is ready!
-                    </p>
+                    <% if (!loggedIn) { %>
+                        <p class="title">
+                            Log in with Facebook to get notified when Give For Free is launched!
+                        </p>
+                        <a href="javascript:loginSpecial();"><i class="fa fa-facebook-square"></i> Facebook Login</a>
+                    <% } else { %>
+                        <p class="thank-you-msg ">
+                            Thank you <%= user.name %>, we will inform you when Give For Free is launched!
+                        </p>
+                    <% } %>
                 </div>
             </div>
         </div>

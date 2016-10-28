@@ -156,7 +156,7 @@ $(document).on('click', '.btn-want-no-login', function(e) {
     e.preventDefault();
     swal({
         title: 'Login with Facebook!',
-        text: 'Perhaps you need to login before to want this item',
+        text: 'You need to login to want this item',
         showCancelButton: true,
         closeOnConfirm: false,
         showLoaderOnConfirm: true,
