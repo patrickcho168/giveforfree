@@ -209,11 +209,42 @@
     fvertical-align: top;
 }
 
-.title-img .bg {
+.title-img .item-first {
+    height: 100%;
+    width: 100%;
+    background: url(../../images/home/gifts.jpg) center center;
+    background-size: cover;
+}
+
+.title-img .item-second {
     height: 100%;
     width: 100%;
     background: url(../../images/home/gift2.jpg) center center;
     background-size: cover;
+}
+
+.title-img .item-third {
+    height: 100%;
+    width: 100%;
+    background: url(../../images/home/step2.jpg) center center;
+    background-size: cover;
+}
+
+.title-img .item-fourth {
+    height: 100%;
+    width: 100%;
+    background: url(../../images/home/step3.png) center center;
+    background-size: cover;
+}
+
+.carousel {
+    height: 100%;
+    background-color: #565656;
+}
+
+.carousel-inner {
+    height: 100%;
+    width: 100%;
 }
 
 .floating-bar-full {
@@ -237,7 +268,7 @@
     background-color: #c09f80;
     color: #565656;
     padding: 15px;
-    height: 73vh;
+    /*height: 73vh;*/
     overflow: scroll;
     border-radius: 4px;
 }
@@ -357,6 +388,7 @@
 
     .category-bar {
         min-width: 245px;
+        height: 73vh;
     }
 }
 
