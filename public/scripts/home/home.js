@@ -40,7 +40,7 @@ function addRealViews(html, url) {
 
                 /*** Factory for views ***/
                 $.each(data, function(key, value) {
-                    html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
+                    html = '<div class="col-xs-6 col-sm-3 single-item">';
                     html += '<div class="panel">';
                     html += '<a href="/item/' + value.itemID + '"><img src="https://d24uwljj8haz6q.cloudfront.net/' + value.imageLocation + '" alt="" class="img-responsive"/></a>';
                     html += '<a href="/item/' + value.itemID + '">';
@@ -150,9 +150,14 @@ $(document).ready(function() {
 
 $(document).scroll(function() {
     var y = $(document).scrollTop();
+    var x = $(document).scrollLeft();
     var floatingBar = $('.floating-bar-full');
     if(y >= 600) {
-        floatingBar.css({"position": "fixed", "top": "87px", "padding-right": "30px"});
+        if (x > 0) {
+            floatingBar.css({"position": "absolute", "top": y + 87, "padding-right": "30px"});
+        } else {
+            floatingBar.css({"position": "fixed", "top": "87px", "padding-right": "30px"});
+        }
     } else {
         floatingBar.css({"position": "relative", "top": "0px", "padding-right": "15px"});
     }
