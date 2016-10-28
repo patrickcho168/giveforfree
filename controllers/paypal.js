@@ -1,6 +1,7 @@
 var Paypal = require('paypal-adaptive');
 var ipn = require('paypal-ipn');
 var db = require('../models/db');
+var config = require('../config');
 
 module.exports = function(app){
 	var express = require('express');
@@ -56,7 +57,7 @@ module.exports = function(app){
         }).save({
             payKey: payKey
         }, {patch: true}).then(function() {
-			ipn.verify(params,{'allow_sandbox': true}, function callback(err, msg) {
+			ipn.verify(params,{'allow_sandbox': false}, function callback(err, msg) {
 				console.log("ipn verify");
 				if (err) {
 					console.log(err);
@@ -90,10 +91,10 @@ module.exports = function(app){
 	app.post('/api/paypalAdpay',jsonParser, paypalAdpay);
 
 	var paypalSdk = new Paypal({
-		userId:    'giveforfree.payments-facilitator_api1.gmail.com',
-		password:  'Y3NQYMLS7YZ5RFGS',
-		signature: 'AFcWxV21C7fd0v3bYYYRCpSSRl31Az.ETR2blugwnUp.idvqpoBMj20s',
-		sandbox:   true //defaults to false
+		userId:    config.paypalUsername,
+		password:  config.paypalPassword,
+		signature: config.paypalSignature,
+		sandbox:   false //defaults to false
 	});
 
 	function paypalAdpay(req, res){
