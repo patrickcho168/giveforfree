@@ -122,25 +122,26 @@ function saveItem(req, res, fileName) {
             setTimeout(redirectFail, 1, res);
         }
 
-        if (createdItemID != null && req.body.postToFacebook) {
+        // UNCOMMENT TO SHARE ON FACEBOOK
+        // if (createdItemID != null && req.body.postToFacebook) {
 
-            // Create facebook post
-            // var userFbId = req.user.id;
-            var newItemTitle = newSavedItem.attributes.title;
-            var newItemUrl = newSavedItem.attributes.imageLocation;
-            var newItemTimeCreated = newSavedItem.attributes.timeCreated;
-            var newItemTimeExpired = newSavedItem.attributes.timeExpired;
-            // var apiCall = '/' + userFbId + '/feed';
-            // facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, createdItemID, newItemUrl), function(data) {});
-            var apiCall = '/me/' + config.fbNamespace + ':give';
-            var objectApiCall = '/me/objects/' + config.fbNamespace + ':free_item'
-            facebook.getFbData(req.user.accessToken, objectApiCall, createFbFreeItem(newItemTitle, createdItemID, newItemUrl), function(data) {
-                facebook.getFbData(req.user.accessToken, apiCall, createFbStory(createdItemID, newItemTimeCreated, newItemTimeExpired, JSON.parse(data).id), function(data2) {
+        //     // Create facebook post
+        //     // var userFbId = req.user.id;
+        //     var newItemTitle = newSavedItem.attributes.title;
+        //     var newItemUrl = newSavedItem.attributes.imageLocation;
+        //     var newItemTimeCreated = newSavedItem.attributes.timeCreated;
+        //     var newItemTimeExpired = newSavedItem.attributes.timeExpired;
+        //     // var apiCall = '/' + userFbId + '/feed';
+        //     // facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, createdItemID, newItemUrl), function(data) {});
+        //     var apiCall = '/me/' + config.fbNamespace + ':give';
+        //     var objectApiCall = '/me/objects/' + config.fbNamespace + ':free_item'
+        //     facebook.getFbData(req.user.accessToken, objectApiCall, createFbFreeItem(newItemTitle, createdItemID, newItemUrl), function(data) {
+        //         facebook.getFbData(req.user.accessToken, apiCall, createFbStory(createdItemID, newItemTimeCreated, newItemTimeExpired, JSON.parse(data).id), function(data2) {
 
-                });
-            });
+        //         });
+        //     });
 
-        }
+        // }
     });
 }
 

@@ -17,14 +17,19 @@ passport.use(new Strategy({
     },
     function(accessToken, refreshToken, profile, cb) {
         profile.accessToken = accessToken;
+        console.log(profile);
         db.User.where({
             fbID: profile.id
         }).fetch().then(function(user) {
             if (user === null) {
-                console.log("New User: " + profile.displayName);
+                var email = null;
+                if (profile.emails.length > 0) {
+                    email = profile.emails[0].value;
+                }
                 var newUser = new db.User({
                     fbID: profile.id,
-                    name: profile.displayName
+                    name: profile.displayName,
+                    email: email
                 });
                 newUser.save().then(function(user2) {
                     profile.appUserId = user2.attributes.userID;
@@ -91,7 +96,8 @@ toExport.route = function(app) {
     app.get('/login/facebook',
         passport.authenticate('facebook', {
             // scope: ['user_friends'] // USE THIS TO GET USERS FIRST
-            scope: ['user_friends', 'publish_actions']
+            // scope: ['user_friends', 'publish_actions']
+            scope: ['user_friends', 'email']
         }));
 
     app.get('/login/facebook/return',
