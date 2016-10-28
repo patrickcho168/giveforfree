@@ -1,5 +1,18 @@
 // Want
 $(document).on("click", ".snag", function() {
+    swal({
+        title: 'Wanted!',
+        text: 'Please wait for giver to make decision on who to give the gift.',
+        type: 'success',
+        showCancelButton: true,
+        cancelButtonText: 'Close',
+        confirmButtonText: 'Message Giver',
+        closeOnConfirm: false
+    },
+    function() {
+        messageUser();
+        swal.close();
+    });
     var itemId = $(this).attr('itemId');
 
     // Change text
@@ -136,7 +149,23 @@ $(document).on("click", "#delivered", function() {
         .always(function() {
 
         });
-})
+});
+
+// send user to facebook login
+$(document).on('click', '.btn-want-no-login', function(e) {
+    e.preventDefault();
+    swal({
+        title: 'Login with Facebook!',
+        text: 'Perhaps you need to login before to want this item',
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+        imageUrl: "../../images/common/gff-logo-s.svg",
+    },
+    function() {
+        window.location.href = "/login/facebook";
+    });
+});
 
 // For modification
 $(document).on('click', '.btn-modify', function() {
@@ -574,4 +603,76 @@ function initializeForm() {
           });
         }
     });
+}
+
+// Delete item
+function deleteConfirm(itemId) {
+    swal({
+        title: "Delete item",
+        text: "Are you sure to delete this item?",
+        type: "warning",
+        confirmButtonColor: "#DD6B55",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+    },
+    function() {
+        $.get("/api/delete/" + itemId)
+            .done(function() {
+                swal({
+                    title: "Delete successful",
+                    text: "You have successfully deleted your item!",
+                    type: "success",
+                    confirmButtonText: "Back to Home",
+                    closeOnConfirm: false,
+                },
+                function() {
+                    window.location.href = "/";
+                });
+            })
+            .fail(function() {
+
+            })
+            .always(function() {
+
+            });
+    });
+}
+
+// Give item
+function giveItemConfirm(itemId, userId, userName) {
+    swal({
+        title: 'Give item',
+        text: 'Are you sure to give this item to ' + userName + '?',
+        type: 'warning',
+        showCancelButton: true,
+        closeOnConfirm: false,
+    },
+    function() {
+        $.get('/api/give/' + itemId + '/' + userId)
+            .done(function() {
+                $('.want-button').addClass('hidden');
+                $('.modify-button').addClass('hidden');
+                swal({
+                    title: "Item Given!",
+                    text: "You have successfully given your item!",
+                    type: "success",
+                    showCancelButton: true,
+                    cancelButtonText: 'Close',
+                    confirmButtonText: 'Message Receiver',
+                    closeOnConfirm: false
+                },
+                function() {
+                    messageUser();
+                    swal.close();
+                });
+            })
+            .fail(function() {
+
+            })
+            .always(function() {
+
+            });
+    });
+    // href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>"
 }

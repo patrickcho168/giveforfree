@@ -30,6 +30,7 @@ moment().format();
 var app = express();
 
 app.use(express.static('public'));
+app.use('/sweetalert', express.static(__dirname + '/node_modules/sweetalert/dist/'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
