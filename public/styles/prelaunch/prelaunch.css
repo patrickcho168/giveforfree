@@ -1,6 +1,7 @@
 .prelaunch-main-container {
     margin-top: 70px;
     height: 90%;
+    min-height: 700px;
     width: 100%;
     padding: 20px;
     font-family: 'Source Sans Pro', sans-serif;
