@@ -350,6 +350,16 @@
     font-size: 11px;
 }
 
+@media (min-width: 769px) {
+    .main-container, footer {
+        min-width: 1100px;
+    }
+
+    .category-bar {
+        min-width: 245px;
+    }
+}
+
 @media (max-width: 767px) {
     .main-container {
         padding-top: 60px;
@@ -467,4 +477,3 @@
     /* Chrome, Firefox 16+, IE 10+, Opera */
     z-index: 1001;
 }
-

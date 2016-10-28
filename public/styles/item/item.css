@@ -907,6 +907,16 @@ fieldset.rating {
     }
 }
 
+@media (min-width: 1400px) {
+    .message-giver {
+        margin-bottom: 20px;
+    }
+
+    .item-info {
+        min-height: 720px;
+    }
+}
+
 .my-active {
     -webkit-animation-name: blinking; /* Safari 4.0 - 8.0 */
     -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */

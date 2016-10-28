@@ -136,21 +136,21 @@ function addRealViews(html) {
                     $.each(data, function(key, value) {
 
                         if (value.giverID !== myAppId && value.takerID !== null && value.takerID !== myAppId) {
-                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
+                            html = '<div class="col-xs-6 col-sm-3 single-item">';
                         } else if (value.giverID !== myAppId && value.takerID !== null && value.takerID === myAppId) {
-                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
+                            html = '<div class="col-xs-6 col-sm-3 single-item">';
                         } else if (loggedIn && value.giverID !== myAppId && value.meWant === 0 && !value.expired) { // NEED TO ADD NOT EXPIRED
-                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
+                            html = '<div class="col-xs-6 col-sm-3 single-item">';
                         } else if (loggedIn && value.giverID !== myAppId && value.meWant > 0 && !value.expired) {
-                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
+                            html = '<div class="col-xs-6 col-sm-3 single-item">';
                         } else if (value.giverID !== myAppId && value.expired) {
-                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
+                            html = '<div class="col-xs-6 col-sm-3 single-item">';
                         } else if (value.giverID === myAppId && value.takerID !== null) {
-                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
+                            html = '<div class="col-xs-6 col-sm-3 single-item">';
                         } else if (value.giverID === myAppId && value.takerID === null) {
-                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
+                            html = '<div class="col-xs-6 col-sm-3 single-item">';
                         } else {
-                            html = '<div class="col-xs-6 col-sm-4 col-md-3 single-item">';
+                            html = '<div class="col-xs-6 col-sm-3 single-item">';
                         }
 
                         html += '<div class="panel">';
@@ -221,7 +221,7 @@ function addRealViews(html) {
                             html += 'expired';
                             html += '</div>';
                             html += '</div>';
-                        } 
+                        }
 
                         html += '</div>';
                         html += '</div></a>';
@@ -320,7 +320,7 @@ $(document).ready(function() {
             break;
         case "#wants":
             $("#want-loader-wrapper").removeClass('hidden');
-            break;     
+            break;
     }
 
     addRealViews(html);
@@ -338,7 +338,7 @@ $(document).ready(function() {
                 break;
             case "#wants":
                 $("#want-loader-wrapper").removeClass('hidden');
-                break;     
+                break;
         }
         addRealViews(html);
     });
@@ -569,7 +569,7 @@ $(window).scroll(function() {
                     break;
                 case "#wants":
                     $("#want-loader-wrapper").removeClass('hidden');
-                    break;     
+                    break;
             }
             canAJAX = false;
             addRealViews(html);
