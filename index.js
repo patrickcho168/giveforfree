@@ -30,6 +30,17 @@ moment().format();
 
 var app = express();
 
+// Redirect www
+function wwwRedirect(req, res, next) {
+    if (req.headers.host.slice(0, 4) === 'www.') {
+        var newHost = req.headers.host.slice(4);
+        return res.redirect(301, req.protocol + '://' + newHost + req.originalUrl);
+    }
+    next();
+};
+
+app.set('trust proxy', true);
+app.use(wwwRedirect);
 app.use(express.static('public'));
 app.use('/sweetalert', express.static(__dirname + '/node_modules/sweetalert/dist/'));
 app.set('views', __dirname + '/views');
