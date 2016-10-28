@@ -295,6 +295,14 @@ textarea {
     font-size: 15px;
 }
 
+.field-for-name {
+    text-align: center;
+}
+
+.field-for-name .name-input {
+    border-bottom: 1px solid #cfdadd!important;
+}
+
 .info-button {
     text-align: center;
 }
@@ -620,6 +628,8 @@ fieldset.rating {
     font-size: 1.8em;
     font-weight: 300;
     color: #565656;
+    width: 120px;
+    border-bottom: 1px solid #cfdadd;
 }
 
 .detail-info .donation-amount {
@@ -640,6 +650,10 @@ fieldset.rating {
 
 .description-edit {
     margin-top: 20px;
+}
+
+.description-edit textarea {
+    border-bottom: 1px solid #cfdadd;
 }
 
 .deadline-info {
@@ -716,7 +730,8 @@ fieldset.rating {
 
 .money-input input {
     width: 90px;
-    margin-left: 20px;
+    border-bottom: 1px solid #cfdadd;
+    text-align: center;
 }
 
 .covered {
