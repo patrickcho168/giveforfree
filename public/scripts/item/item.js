@@ -221,7 +221,7 @@ $(document).on('click', '#paypal', function() {
     var charityName = $(this).attr("charityName");
     var charityEmail = $(this).attr("charityEmail");
     var charityId = $(this).attr("charityID");
-    var redirectUrl = "https://giveforfree.sg";
+    var redirectUrl = "https://giveforfree.sg/item/" + itemId;
     $('#progress-donate').removeClass("active");
     $('#progress-donate').addClass("completed");
     $('#progress-deliver').addClass("active");

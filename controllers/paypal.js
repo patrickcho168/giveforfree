@@ -117,8 +117,8 @@ module.exports = function(app){
 			feesPayer:      'SECONDARYONLY',
 			memo:           'Donation to ' + req.body.charityName, // Add Charity Name
 			ipnNotificationUrl: 'https://giveforfree.sg/api/paid/' + itemId, // TO CHANGE THIS
-			cancelUrl:      req.body.redirectUrl, // Back to Item Page
-			returnUrl:      req.body.redirectUrl, // Back to Item Page
+			cancelUrl:      req.body.redirectUrl + "?donate=false", // Back to Item Page
+			returnUrl:      req.body.redirectUrl + "?donate=true", // Back to Item Page
 			receiverList: {
 				receiver: [
 					{
