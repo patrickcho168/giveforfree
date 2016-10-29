@@ -606,6 +606,7 @@ module.exports = function(app) {
     // ITEM PAGE
     app.get('/item/:id', csrfProtection, function(req, res, next) {
         var itemId = req.params.id;
+        var donated = req.query.donate;
         req.session.lastPageVisit = '/item/' + itemId;
         var userId;
         var loggedIn;
@@ -659,7 +660,8 @@ module.exports = function(app) {
                                                     csrfToken: req.csrfToken(),
                                                     expiryDate: date,
                                                     categories: categories,
-                                                    user: user ? user.attributes : null
+                                                    user: user ? user.attributes : null,
+                                                    donated: donated
                                                 });
                                             });
                                         } else {
@@ -684,7 +686,8 @@ module.exports = function(app) {
                                                     csrfToken: req.csrfToken(),
                                                     expiryDate: date,
                                                     categories: categories,
-                                                    user: user ? user.attributes : null
+                                                    user: user ? user.attributes : null,
+                                                    donated: donated
                                                 });
                                             });
                                         }
