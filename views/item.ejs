@@ -152,7 +152,7 @@
 
         function shareGiveItem() {
             // alert("CLICKED SHARE");
-            <% var startDate = item.timeCreated; %>
+            <% var startDate = moment(item.timeCreated, "D MMMM YYYY HH:mm").format(); %>
             console.log('<%= startDate %>');
             <% if (item.takerID !== null) { %>
                 FB.ui({
