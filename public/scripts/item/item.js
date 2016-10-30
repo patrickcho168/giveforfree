@@ -594,7 +594,7 @@ function initializeForm() {
 function deleteConfirm(itemId) {
     swal({
         title: "Delete item",
-        text: "Are you sure to delete this item?",
+        text: "Are you sure you want to delete this item?",
         type: "warning",
         confirmButtonColor: "#DD6B55",
         showCancelButton: true,
@@ -628,7 +628,7 @@ function deleteConfirm(itemId) {
 function giveItemConfirm(itemId, userId, userName) {
     swal({
         title: 'Give item',
-        text: 'Are you sure to give this item to ' + userName + '?',
+        text: 'Are you sure you want to give this item to ' + userName + '?',
         type: 'warning',
         showCancelButton: true,
         closeOnConfirm: false,
