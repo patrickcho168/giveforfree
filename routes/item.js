@@ -606,6 +606,7 @@ module.exports = function(app) {
     app.get('/item/:id', csrfProtection, function(req, res, next) {
         var itemId = req.params.id;
         var donated = req.query.donate;
+        var uploaded = req.query.upload;
         req.session.lastPageVisit = '/item/' + itemId;
         var userId;
         var loggedIn;
@@ -660,7 +661,8 @@ module.exports = function(app) {
                                                     expiryDate: date,
                                                     categories: categories,
                                                     user: user ? user.attributes : null,
-                                                    donated: donated
+                                                    donated: donated,
+                                                    uploaded: uploaded
                                                 });
                                             });
                                         } else {
@@ -686,7 +688,8 @@ module.exports = function(app) {
                                                     expiryDate: date,
                                                     categories: categories,
                                                     user: user ? user.attributes : null,
-                                                    donated: donated
+                                                    donated: donated,
+                                                    uploaded: uploaded
                                                 });
                                             });
                                         }

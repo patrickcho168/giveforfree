@@ -149,7 +149,7 @@ function saveItem(req, res, fileName) {
 }
 
 function redirectSuccess(itemID, response) {
-    response.redirect("/item/" + itemID);
+    response.redirect("/item/" + itemID + "?upload=true");
 }
 
 function redirectFail(response) {

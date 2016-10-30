@@ -181,11 +181,33 @@
         }
 
         $(document).ready(function() {
+
+            if (!<%= uploaded === undefined %>) {
+                if (<%= uploaded === 'true' %>) {
+                    swal({
+                        title: 'Post Completed',
+                        text: 'You have successfully posted an item!',
+                        type: 'success',
+                        showCancelButton: true,
+                        cancelButtonText: 'Close',
+                        confirmButtonText: 'Share on Facebook',
+                        closeOnConfirm: false,
+                    },
+                    function(confirm) {
+                        if (!confirm) {
+                            window.location.href = '/item/' + currentItemId;
+                        } else {
+                            shareGiveItem();
+                        }
+                    });
+                }
+            }
+
             if (!<%= donated === undefined %>) {
                 if (<%= donated === 'true' %>) {
                     swal({
-                        title: 'Donation Success',
-                        text: 'You have successfully completed the payment!',
+                        title: 'Donation Completed',
+                        text: 'You have successfully completed the donation! Message giver to discuss delivery details.',
                         type: 'success',
                         showCancelButton: true,
                         cancelButtonText: 'Close',
