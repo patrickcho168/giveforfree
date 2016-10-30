@@ -29,28 +29,28 @@ module.exports = function(app) {
 
     // -------------- DONATE
 
-    app.post('/api/item/donate/:id', ensureLogin.ensureLoggedIn(), function(req, res) {
-        var userId = parseInt(req.user.appUserId);
-        var itemId = parseInt(req.params.id);
-        db.Item.where({
-            itemID: itemId,
-            takerID: userId,
-        }).fetch().then(function(itemData) {
-            if (itemData && itemData.attributes && itemData.attributes.giverID !== null) {
-                itemData.save({
-                    donatedAmount: itemData.attributes.donationAmount,
-                })
-                var newNote = new db.Notification({
-                    timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
-                    active: 1,
-                    notificationType: 6,
-                    itemID: itemId,
-                    userID: userId
-                });
-                newNote.save();
-            }
-        })
-    })
+    // app.post('/api/item/donate/:id', ensureLogin.ensureLoggedIn(), function(req, res) {
+    //     var userId = parseInt(req.user.appUserId);
+    //     var itemId = parseInt(req.params.id);
+    //     db.Item.where({
+    //         itemID: itemId,
+    //         takerID: userId,
+    //     }).fetch().then(function(itemData) {
+    //         if (itemData && itemData.attributes && itemData.attributes.giverID !== null) {
+    //             itemData.save({
+    //                 donatedAmount: itemData.attributes.donationAmount,
+    //             })
+    //             var newNote = new db.Notification({
+    //                 timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+    //                 active: 1,
+    //                 notificationType: 6,
+    //                 itemID: itemId,
+    //                 userID: userId
+    //             });
+    //             newNote.save();
+    //         }
+    //     })
+    // })
 
     // -------------- DELIVERED
 

@@ -41,6 +41,13 @@ module.exports = function(app){
 		if (~req.url.indexOf('/api/paid')) parseRaw(req, res, next)
 		else return next();  
 	});
+
+	var sandbox = true;
+	if (config.environment === "LOCAL" || config.environment === "STAGING") {
+		sandbox = true;
+	} else if (config.environment === "PRODUCTION") {
+		sandbox = false;
+	}
 	
 	
 	app.post('/api/paid/:id', function(req, res) {
@@ -57,7 +64,7 @@ module.exports = function(app){
         }).save({
             payKey: payKey
         }, {patch: true}).then(function() {
-			ipn.verify(params,{'allow_sandbox': false}, function callback(err, msg) {
+			ipn.verify(params,{'allow_sandbox': sandbox}, function callback(err, msg) {
 				console.log("ipn verify");
 				if (err) {
 					console.log(err);
@@ -90,13 +97,24 @@ module.exports = function(app){
 
 	app.post('/api/paypalAdpay',jsonParser, paypalAdpay);
 
-	var paypalSdk = new Paypal({
-		userId:    config.paypalUsername,
-		appId:     config.paypalAppId,
-		password:  config.paypalPassword,
-		signature: config.paypalSignature,
-		sandbox:   false //defaults to false
-	});
+	var paypalSdk;
+	if (config.environment === "LOCAL" || config.environment === "STAGING") {
+		paypalSdk = new Paypal({
+			userId:    config.paypalUsername,
+			password:  config.paypalPassword,
+			signature: config.paypalSignature,
+			sandbox:   sandbox //defaults to false
+		});
+	} else if (config.environment === "PRODUCTION") {
+		paypalSdk = new Paypal({
+			userId:    config.paypalUsername,
+			appId:     config.paypalAppId,
+			password:  config.paypalPassword,
+			signature: config.paypalSignature,
+			sandbox:   sandbox //defaults to false
+		});
+	}
+
 
 	function paypalAdpay(req, res){
 		console.log(req.body.cost);
