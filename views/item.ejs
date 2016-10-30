@@ -156,17 +156,17 @@
             console.log('<%= startDate %>');
             <% if (item.takerID !== null) { %>
                 FB.ui({
-                    method: 'share',
-                    href: '<%= domain %>/item/<%= item.itemID %>',
-                    mobile_iframe: true
-                }, function(response) {});
-            <% } else { %>
-                FB.ui({
                     method: 'share_open_graph',
                     action_type: '<%= fbNameSpace %>:give',
                     action_properties: {
                         'free_item': '<%= domain %>/item/<%= item.itemID %>'
                     }
+                }, function(response) {});
+            <% } else { %>
+                FB.ui({
+                    method: 'share',
+                    href: '<%= domain %>/item/<%= item.itemID %>',
+                    mobile_iframe: true
                 }, function(response) {});
             <% } %>
         }
