@@ -97,13 +97,24 @@ module.exports = function(app){
 
 	app.post('/api/paypalAdpay',jsonParser, paypalAdpay);
 
-	var paypalSdk = new Paypal({
-		userId:    config.paypalUsername,
-		appId:     config.paypalAppId,
-		password:  config.paypalPassword,
-		signature: config.paypalSignature,
-		sandbox:   sandbox //defaults to false
-	});
+	var paypalSdk;
+	if (config.environment === "LOCAL" || config.environment === "STAGING") {
+		paypalSdk = new Paypal({
+			userId:    config.paypalUsername,
+			password:  config.paypalPassword,
+			signature: config.paypalSignature,
+			sandbox:   sandbox //defaults to false
+		});
+	} else if (config.environment === "PRODUCTION") {
+		paypalSdk = new Paypal({
+			userId:    config.paypalUsername,
+			appId:     config.paypalAppId,
+			password:  config.paypalPassword,
+			signature: config.paypalSignature,
+			sandbox:   sandbox //defaults to false
+		});
+	}
+
 
 	function paypalAdpay(req, res){
 		console.log(req.body.cost);
