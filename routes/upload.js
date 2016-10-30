@@ -80,6 +80,8 @@ function saveCategories(item, categories) {
         var ids = categories.map(function(cat) {
             return categoriesPos.indexOf(cat) + 1;
         });
+        console.log(categories);
+        console.log(ids);
 
         item.categories().detach();
         item.categories().attach(ids);
@@ -234,7 +236,7 @@ module.exports = function(app) {
                         meetup: req.body.meetup ? 1 : 0,
                         charityID: req.body.donateToCharity,
                         donationAmount: req.body.donation
-                    }).then(function() {
+                    }, {patch: true}).then(function() {
                         req.flash('success_messages', 'Your item details are updated!');
                         res.redirect("/item/" + itemId);
                     });

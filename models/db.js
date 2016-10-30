@@ -183,7 +183,11 @@ var HomePageItemQuery = function(userId, numItems, cb) {
     .groupBy('i.itemID')
     .whereNull('i.takerID')
     // .where('i.giverID', '!=', userId)
-    .where('i.timeExpired', '>', knex.raw('NOW()'))
+    .where(function() {
+      this.where(function() {
+        this.where('i.timeExpired', '>', knex.raw('NOW()')).orWhereNull('i.timeExpired')
+      })
+    })
     .orderBy('i.itemID', 'DESC')
     .limit(numItems)
     .then(function(result){
@@ -206,7 +210,11 @@ var HomePageItemQueryBeforeId = function(userId, numItems, beforeId, cb) {
     .whereNull('i.takerID')
     // .where('i.giverID', '!=', userId)
     .where('i.itemID', '<', beforeId)
-    .where('i.timeExpired', '>', knex.raw('NOW()'))
+    .where(function() {
+      this.where(function() {
+        this.where('i.timeExpired', '>', knex.raw('NOW()')).orWhereNull('i.timeExpired')
+      })
+    })
     .orderBy('i.itemID', 'DESC')
     .limit(numItems)
     .then(function(result){
@@ -230,7 +238,11 @@ var CategoryPageItemQuery = function(userId, numItems, categoryID, cb) {
     .whereNull('i.takerID')
     // .where('i.giverID', '!=', userId)
     .where('ci.categoryID', '=', categoryID)
-    .where('i.timeExpired', '>', knex.raw('NOW()'))
+    .where(function() {
+      this.where(function() {
+        this.where('i.timeExpired', '>', knex.raw('NOW()')).orWhereNull('i.timeExpired')
+      })
+    })
     .orderBy('i.itemID', 'DESC')
     .limit(numItems)
     .then(function(result){
@@ -255,7 +267,11 @@ var CategoryPageItemQueryBeforeId = function(userId, numItems, beforeId, categor
     // .where('i.giverID', '!=', userId)
     .where('i.itemID', '<', beforeId)
     .where('ci.categoryID', '=', categoryID)
-    .where('i.timeExpired', '>', knex.raw('NOW()'))
+    .where(function() {
+      this.where(function() {
+        this.where('i.timeExpired', '>', knex.raw('NOW()')).orWhereNull('i.timeExpired')
+      })
+    })
     .orderBy('i.itemID', 'DESC')
     .limit(numItems)
     .then(function(result){
@@ -271,7 +287,7 @@ var ProfilePageGiveQuery = function(userId, profileId, numItems, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.timeExpired', knex.raw('i.timeExpired < NOW() as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.charityID', 'i.donationAmount', 'i.giverID', 'u.name', 'u.userID', 'u.fbID'])
+    .select(['i.itemID', 'i.timeExpired', knex.raw('((i.timeExpired < NOW()) AND (i.timeExpired IS NOT NULL)) as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.charityID', 'i.donationAmount', 'i.giverID', 'u.name', 'u.userID', 'u.fbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -291,7 +307,7 @@ var ProfilePageGiveQueryBeforeId = function(userId, profileId, numItems, beforeI
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.timeExpired', knex.raw('i.timeExpired < NOW() as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'i.charityID', 'i.donationAmount', 'u.name', 'u.userID', 'u.fbID'])
+    .select(['i.itemID', 'i.timeExpired', knex.raw('((i.timeExpired < NOW()) AND (i.timeExpired IS NOT NULL)) as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'i.charityID', 'i.donationAmount', 'u.name', 'u.userID', 'u.fbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -313,7 +329,7 @@ var ProfilePageWantQuery = function(userId, profileId, numItems, cb) {
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.timeExpired', knex.raw('i.timeExpired < NOW() as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'i.charityID', 'i.donationAmount', 'u.name', 'u.userID', 'u.fbID'])
+    .select(['i.itemID', 'i.timeExpired', knex.raw('((i.timeExpired < NOW()) AND (i.timeExpired IS NOT NULL)) as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'i.charityID', 'i.donationAmount', 'u.name', 'u.userID', 'u.fbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
@@ -361,7 +377,7 @@ var ProfilePageWantQueryBeforeId = function(userId, profileId, numItems, beforeI
     .leftJoin('itemWanter as iwu', function() {
       this.on('iwu.itemID', '=', 'i.itemID').andOn('iwu.wanterID', '=', userId)
     })
-    .select(['i.itemID', 'i.timeExpired', knex.raw('i.timeExpired < NOW() as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'i.charityID', 'i.donationAmount', 'u.name', 'u.userID', 'u.fbID'])
+    .select(['i.itemID', 'i.timeExpired', knex.raw('((i.timeExpired < NOW()) AND (i.timeExpired IS NOT NULL)) as expired'), 'i.imageLocation', 'i.title', 'i.takerID', 'i.description', 'i.giverID', 'i.charityID', 'i.donationAmount', 'u.name', 'u.userID', 'u.fbID'])
     .count('iw.itemID as numWants')
     .countDistinct('iwu.itemID as meWant')
     .groupBy('i.itemID')
