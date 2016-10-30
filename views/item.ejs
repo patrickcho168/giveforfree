@@ -159,9 +159,7 @@
                     method: 'share_open_graph',
                     action_type: '<%= fbNameSpace %>:give',
                     action_properties: {
-                        'free_item': '<%= domain %>/item/<%= item.itemID %>',
-                        'start_time': '<%= startDate %>',
-                        'end_time': '<%= startDate %>'
+                        'free_item': '<%= domain %>/item/<%= item.itemID %>'
                     }
                 }, function(response) {});
             <% } else { %>
@@ -169,8 +167,7 @@
                     method: 'share_open_graph',
                     action_type: '<%= fbNameSpace %>:give',
                     action_properties: {
-                        'free_item': '<%= domain %>/item/<%= item.itemID %>',
-                        'start_time': '<%= startDate %>'
+                        'free_item': '<%= domain %>/item/<%= item.itemID %>'
                     }
                 }, function(response) {});
             <% } %>
