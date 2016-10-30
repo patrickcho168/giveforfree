@@ -641,7 +641,7 @@ module.exports = function(app) {
                                         var mine = userId === data[0].giverID;
                                         if (mine && data[0].takerID === null && data[0].numWants > 0) {
                                             db.ItemPageManualQuery(itemId, function(data2) {
-                                                
+
                                                 res.render('item', {
                                                     id: userId,
                                                     item: data[0],
