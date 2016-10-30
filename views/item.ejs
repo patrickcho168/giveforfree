@@ -152,14 +152,16 @@
 
         function shareGiveItem() {
             // alert("CLICKED SHARE");
-            <% var startDate = moment(item.timeCreated, "D MMMM YYYY HH:mm").format("YYYY-MM-DD[T]HH:mm:ss[+0000]"); %>
+            <% var startDate = moment(item.timeCreated, "D MMMM YYYY HH:mm").format(); %>
             console.log('<%= startDate %>');
             <% if (item.takerID !== null) { %>
                 FB.ui({
                     method: 'share_open_graph',
                     action_type: '<%= fbNameSpace %>:give',
                     action_properties: {
-                        'free_item': '<%= domain %>/item/<%= item.itemID %>'
+                        'free_item': '<%= domain %>/item/<%= item.itemID %>',
+                        'start_time': '<%- startDate %>',
+                        'end_time': '<%- startDate %>'
                     }
                 }, function(response) {});
             <% } else { %>
@@ -167,7 +169,8 @@
                     method: 'share_open_graph',
                     action_type: '<%= fbNameSpace %>:give',
                     action_properties: {
-                        'free_item': '<%= domain %>/item/<%= item.itemID %>'
+                        'free_item': '<%= domain %>/item/<%= item.itemID %>',
+                        'start_time': '<%- startDate %>'
                     }
                 }, function(response) {});
             <% } %>
