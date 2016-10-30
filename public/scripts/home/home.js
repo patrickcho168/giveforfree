@@ -146,6 +146,14 @@ $(document).ready(function() {
         console.log(urlAJAX);
         return false;
     })
+
+    $("#main-page-carousel").swiperight(function() {
+        $(this).carousel('prev');
+    });
+    
+    $("#main-page-carousel").swipeleft(function() {
+        $(this).carousel('next');
+    });
 });
 
 $(document).scroll(function() {
