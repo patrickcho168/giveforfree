@@ -227,36 +227,22 @@ $(document).on('click', '#paypal', function() {
     $('#progress-deliver').addClass("active");
     // $('#delivered').removeClass("hidden");
     $(this).addClass('disabled');
-    if (false) {
-        // Send post request
-        $.post("/api/item/donate/" + itemId)
-            .done(function() {
-
-            })
-            .fail(function() {
-
-            })
-            .always(function() {
-
-            });
-    } else {
-        var body = {
-            charityName: charityName,
-            charityEmail: charityEmail,
-            cost: price,
-            redirectUrl: redirectUrl,
-            itemId: itemId,
-            charityId: charityId
-        };
-        $.ajax({type:'post',
-            url:'/api/paypalAdpay',
-            data:body,
-            datatype:'json',
-            success: function(data){
-                window.location = data;
-            }
-        });
-    }
+    var body = {
+        charityName: charityName,
+        charityEmail: charityEmail,
+        cost: price,
+        redirectUrl: redirectUrl,
+        itemId: itemId,
+        charityId: charityId
+    };
+    $.ajax({type:'post',
+        url:'/api/paypalAdpay',
+        data:body,
+        datatype:'json',
+        success: function(data){
+            window.location = data;
+        }
+    });
 })
 
 // Carousel Logic
