@@ -153,6 +153,7 @@
         function shareGiveItem() {
             // alert("CLICKED SHARE");
             <% var startDate = moment(item.timeCreated, "D MMMM YYYY HH:mm").format("YYYY-MM-DD"); %>
+            console.log('<%= startDate %>');
             <% if (item.takerID !== null) { %>
                 FB.ui({
                     method: 'share_open_graph',
