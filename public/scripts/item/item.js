@@ -11,7 +11,6 @@ $(document).on("click", ".snag", function() {
     },
     function() {
         messageUser();
-        swal.close();
     });
     var itemId = $(this).attr('itemId');
 
@@ -664,7 +663,6 @@ function giveItemConfirm(itemId, userId, userName) {
                 },
                 function() {
                     messageUser();
-                    swal.close();
                 });
             })
             .fail(function() {

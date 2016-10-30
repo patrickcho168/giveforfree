@@ -109,6 +109,12 @@
         });
 
         function messageUser() {
+            if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                swal({
+                    title: 'Oops!',
+                    text: 'Messaging via Facebook only works on desktop. We are terribly sorry about the inconvenience brought.',
+                });
+            } else {
                 var toId = null;
 
                 <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
@@ -122,7 +128,7 @@
                     link: '<%= domain %>/item/<%= item.itemID %>',
                     to: toId
                 }, function(response) {});
-
+            }
         }
 
         function shareItem() {
@@ -137,6 +143,46 @@
             }, function(response) {});
         }
 
+        $(document).ready(function() {
+            if (!<%= donated === undefined %>) {
+                if (<%= donated === 'true' %>) {
+                    swal({
+                        title: 'Donation Success',
+                        text: 'You have successfully completed the payment!',
+                        type: 'success',
+                        showCancelButton: true,
+                        cancelButtonText: 'Close',
+                        confirmButtonText: 'Message Giver',
+                        closeOnConfirm: false,
+                    },
+                    function(confirm) {
+                        if (!confirm) {
+                            window.location.href = '/item/' + currentItemId;
+                        } else {
+                            messageUser();
+                        }
+                    });
+                } else {
+                    swal({
+                        title: 'Donation Failed',
+                        text: 'Something went wrong during the payment process. Try it again or contact us for help!',
+                        type: 'error',
+                        showCancelButton: true,
+                        cancelButtonText: 'Cancel',
+                        confirmButtonText: 'Try again',
+                        closeOnConfirm: false,
+                    },
+                    function(confirm) {
+                        if (!confirm) {
+                            window.location.href = '/item/' + currentItemId;
+                        } else {
+                            $('#paypal').trigger('click');
+                            swal.close();
+                        }
+                    });
+                }
+            }
+        });
     </script>
 
     <!-- Native Scripts -->
