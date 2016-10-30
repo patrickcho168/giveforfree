@@ -152,13 +152,26 @@
 
         function shareGiveItem() {
             // alert("CLICKED SHARE");
-            FB.ui({
-                method: 'share_open_graph',
-                action_type: '<%= fbNameSpace %>:give',
-                action_properties: {
-                    'free_item': '<%= domain %>/item/<%= item.itemID %>'
-                }
-            }, function(response) {});
+            <% if (item.takerID !== null) { %> 
+                FB.ui({
+                    method: 'share_open_graph',
+                    action_type: '<%= fbNameSpace %>:give',
+                    action_properties: {
+                        'free_item': '<%= domain %>/item/<%= item.itemID %>',
+                        'start_time': '<%= item.timeCreated %>',
+                        'end_time': '<%= item.timeCreated %>'
+                    }
+                }, function(response) {});
+            <% } else { %>
+                FB.ui({
+                    method: 'share_open_graph',
+                    action_type: '<%= fbNameSpace %>:give',
+                    action_properties: {
+                        'free_item': '<%= domain %>/item/<%= item.itemID %>',
+                        'start_time': '<%= item.timeCreated %>'
+                    }
+                }, function(response) {});
+            <% } %>
         }
 
         function shareItem() {
