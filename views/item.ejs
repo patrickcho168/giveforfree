@@ -104,6 +104,10 @@
             messageUser();
         });
 
+        $('#facebook-receive-share').unbind('click').bind('click', function (e) {
+            shareReceiveItem();
+        });
+
         $('#facebook-share').unbind('click').bind('click', function (e) {
             shareItem();
         });
@@ -135,15 +139,14 @@
             }
         }
 
-        function shareItem() {
+        function shareReceiveItem() {
             // alert("CLICKED SHARE");
             FB.ui({
                 method: 'share_open_graph',
                 action_type: '<%= fbNameSpace %>:receive',
                 action_properties: {
                     'free_item': '<%= domain %>/item/<%= item.itemID %>'
-                },
-                mobile_iframe: true
+                }
             }, function(response) {});
         }
 
@@ -154,7 +157,15 @@
                 action_type: '<%= fbNameSpace %>:give',
                 action_properties: {
                     'free_item': '<%= domain %>/item/<%= item.itemID %>'
-                },
+                }
+            }, function(response) {});
+        }
+
+        function shareItem() {
+            // alert("CLICKED SHARE");
+            FB.ui({
+                method: 'share',
+                href: '<%= domain %>/item/<%= item.itemID %>',
                 mobile_iframe: true
             }, function(response) {});
         }
@@ -428,9 +439,9 @@
                             <div class="message-giver">
                                 <a href="javascript:messageUser();" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Giver</a>
                                 <% if (item.takerID === id) { %>
-                                    <a href="javascript:shareItem();" class="btn btn-xs share-button" id="facebook-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
+                                    <a href="javascript:shareReceiveItem();" class="btn btn-xs share-button" id="facebook-receive-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
                                 <% } else { %>
-                                    <a href="javascript:shareGiveItem();" class="btn btn-xs share-button" id="facebook-give-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
+                                    <a href="javascript:shareItem();" class="btn btn-xs share-button" id="facebook-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
                                 <% } %>
                             </div>
                         <% } else if (loggedIn && mine && item.takerID !== null) { %>
