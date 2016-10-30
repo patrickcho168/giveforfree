@@ -49,7 +49,7 @@
         var currentItemId = <%= item.itemID %>;
         var userId = <%= id %>;
         var userFbId;
-        <% var startDate = moment(item.timeCreated, "D MMMM YYYY HH:mm").format("YYYY-MM-DD[T]HH:mm:ss"); %>
+        <% var startDate = moment(item.timeCreated, "D MMMM YYYY HH:mm").format(); %>
         <% if (loggedIn) { %>
             userFbId = "<%= user.fbID %>";
         <% } %>
@@ -156,21 +156,17 @@
             console.log('<%= startDate %>');
             <% if (item.takerID !== null) { %>
                 FB.ui({
-                    method: 'share_open_graph',
-                    action_type: '<%= fbNameSpace %>:give',
-                    action_properties: {
-                        free_item: '<%= domain %>/item/<%= item.itemID %>',
-                        start_time: '<%- startDate %>',
-                        end_time: '<%- startDate %>'
-                    }
+                    method: 'share',
+                    href: '<%= domain %>/item/<%= item.itemID %>',
+                    mobile_iframe: true
                 }, function(response) {});
             <% } else { %>
                 FB.ui({
                     method: 'share_open_graph',
                     action_type: '<%= fbNameSpace %>:give',
                     action_properties: {
-                        free_item: '<%= domain %>/item/<%= item.itemID %>',
-                        start_time: '<%- startDate %>'
+                        'free_item': '<%= domain %>/item/<%= item.itemID %>',
+                        'start_time': '<%- startDate %>'
                     }
                 }, function(response) {});
             <% } %>
