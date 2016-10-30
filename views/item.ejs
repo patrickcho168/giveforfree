@@ -152,7 +152,8 @@
 
         function shareGiveItem() {
             // alert("CLICKED SHARE");
-            <% if (item.takerID !== null) { %> 
+            console.log('<%= item.timeCreated %>');
+            <% if (item.takerID !== null) { %>
                 FB.ui({
                     method: 'share_open_graph',
                     action_type: '<%= fbNameSpace %>:give',
