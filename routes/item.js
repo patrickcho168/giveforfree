@@ -3,7 +3,6 @@
 var db = require('../models/db');
 var ensureLogin = require('connect-ensure-login');
 var moment = require('moment');
-var facebook = require('../controllers/facebook');
 var config = require('../config');
 var moment = require("moment");
 var xss = require('xss');
