@@ -159,7 +159,7 @@
                     method: 'share_open_graph',
                     action_type: '<%= fbNameSpace %>:give',
                     action_properties: {
-                        'free_item': '<%= domain %>/item/<%= item.itemID %>',
+                        free_item: '<%= domain %>/item/<%= item.itemID %>',
                         start_time: '<%- startDate %>',
                         end_time: '<%- startDate %>'
                     }
@@ -169,7 +169,7 @@
                     method: 'share_open_graph',
                     action_type: '<%= fbNameSpace %>:give',
                     action_properties: {
-                        'free_item': '<%= domain %>/item/<%= item.itemID %>',
+                        free_item: '<%= domain %>/item/<%= item.itemID %>',
                         start_time: '<%- startDate %>'
                     }
                 }, function(response) {});
