@@ -146,8 +146,8 @@ toExport.facebookCache = function(req, res, next) {
                         });
 
                         result.on('end', function(){
-                            var newJsonData = JSON.parse(buffer);
-                            var newFriendsData = newJsonData.data;
+                            var jsonData = JSON.parse(buffer);
+                            var newFriendsData = jsonData.data;
                             if (newFriendsData instanceof Array) {
                                 for (var i = 0; i < newFriendsData.length; i++) {
                                     friendsQuery.push(newFriendsData[i].id); // all Facebook IDs of friends
