@@ -163,16 +163,12 @@ function addRealViews(html) {
                         html += '<span>' + value.name + '</span>';
                         html += '</a>';
                         html += '<p>';
-                        if (value.donationAmount > 0) {
-                            if (value.donationAmount % 1 == 0) {
-                                html += '<span style="inline-block"><img src="../images/upload/charity' + value.charityID + '.png" alt="" class="small-charity-logo" /> $' + value.donationAmount;
-                            } else {
-                                html += '<span style="inline-block"><img src="../images/upload/charity' + value.charityID + '.png" alt="" class="small-charity-logo" /> $' + value.donationAmount.toFixed(2);
-                            }
-                            html += '</span>';
+                        if (value.donationAmount % 1 == 0) {
+                            html += '<span style="inline-block"><img src="../images/upload/charity' + value.charityID + '.png" alt="" class="small-charity-logo" /> $' + value.donationAmount;
                         } else {
-                            html += '<span>FREE</span>';
+                            html += '<span style="inline-block"><img src="../images/upload/charity' + value.charityID + '.png" alt="" class="small-charity-logo" /> $' + value.donationAmount.toFixed(2);
                         }
+                        html += '</span>';
                         if (value.meWant) {
                             html += '<span class="pull-right"><i class="fa fa-heart addition-info pull-right me-want"></i>' + value.numWants + '</span>';
                         } else {
