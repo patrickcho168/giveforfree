@@ -102,6 +102,7 @@ app.use(passport.session());
 app.use(fbLogin.onlyNotLogout(fbLogin.facebookCache));
 app.use(fbLogin.onlyNotLogout(notification.getNotifications))
 app.use(helmet());
+app.use(helmet.noCache())
 fbLogin.route(app);
 notification.route(app);
 upload(app);
