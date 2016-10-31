@@ -23,7 +23,7 @@ passport.use(new Strategy({
         }).fetch().then(function(user) {
             if (user === null) {
                 var email = null;
-                if (profile.emails.length > 0) {
+                if (profile.emails && profile.emails.length > 0) {
                     email = profile.emails[0].value;
                 }
                 var newUser = new db.User({
