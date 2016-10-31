@@ -158,6 +158,10 @@ toExport.facebookCache = function(req, res, next) {
                             }
                         });
                     });
+                    request.end();
+                    request.on('error', (e) => {
+                        console.error(e);
+                    });
                 }
                 var cacheFriends = []; // List of {userID, name, fbID}
                 var cacheFriendsAppId = []; // List of userID
