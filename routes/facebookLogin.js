@@ -139,6 +139,7 @@ toExport.facebookCache = function(req, res, next) {
                     }
                 }
                 while (jsonData.paging && jsonData.paging.next) {
+                    console.log(jsonData.paging.next);
                     var request = https.get(jsonData.paging.next, function(result){
                         result.setEncoding('utf8');
                         result.on('data', function(chunk){
@@ -148,6 +149,7 @@ toExport.facebookCache = function(req, res, next) {
                         result.on('end', function(){
                             var jsonData = JSON.parse(buffer);
                             var newFriendsData = jsonData.data;
+                            console.log(newFriendsData);
                             if (newFriendsData instanceof Array) {
                                 for (var i = 0; i < newFriendsData.length; i++) {
                                     friendsQuery.push(newFriendsData[i].id); // all Facebook IDs of friends
