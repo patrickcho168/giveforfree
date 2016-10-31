@@ -8,6 +8,7 @@ var db = require('../models/db');
 var facebook = require('../controllers/facebook');
 var note = require('./notification');
 var moment = require('moment');
+var https = require('https');
 
 passport.use(new Strategy({
         clientID: config.fbClientID,
@@ -136,6 +137,24 @@ toExport.facebookCache = function(req, res, next) {
                     for (var i = 0; i < friendsData.length; i++) {
                         friendsQuery.push(friendsData[i].id); // all Facebook IDs of friends
                     }
+                }
+                while (jsonData.paging && jsonData.paging.next) {
+                    var request = https.get(options, function(result){
+                        result.setEncoding('utf8');
+                        result.on('data', function(chunk){
+                            buffer += chunk;
+                        });
+
+                        result.on('end', function(){
+                            var newJsonData = JSON.parse(buffer);
+                            var newFriendsData = newJsonData.data;
+                            if (newFriendsData instanceof Array) {
+                                for (var i = 0; i < newFriendsData.length; i++) {
+                                    friendsQuery.push(newFriendsData[i].id); // all Facebook IDs of friends
+                                }
+                            }
+                        });
+                    });
                 }
                 var cacheFriends = []; // List of {userID, name, fbID}
                 var cacheFriendsAppId = []; // List of userID
