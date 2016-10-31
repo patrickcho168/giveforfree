@@ -380,6 +380,11 @@ ul, ol {
     margin: 0;
 }
 
+.items-display .item-info p {
+    font-size: 16px;
+    font-weight: 400;
+}
+
 .items-display .seller-info img {
     border-radius: 50px;
     width: 25px;
