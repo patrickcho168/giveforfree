@@ -159,7 +159,7 @@ toExport.facebookCache = function(req, res, next) {
                         });
                     });
                     request.end();
-                    request.on('error', (e) => {
+                    request.on('error', function(e) {
                         console.error(e);
                     });
                 }
