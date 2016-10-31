@@ -142,6 +142,7 @@ toExport.facebookCache = function(req, res, next) {
                     console.log(jsonData.paging.next);
                     var request = https.get(jsonData.paging.next, function(result){
                         result.setEncoding('utf8');
+                        var buffer = '';
                         result.on('data', function(chunk){
                             buffer += chunk;
                         });
