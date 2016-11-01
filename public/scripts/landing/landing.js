@@ -48,3 +48,19 @@ $(document).ready(function() {
         window.location.hash = '#faq';
     });
 })
+
+// send user to facebook login
+$(document).on('click', '.btn-give-no-login', function(e) {
+    e.preventDefault();
+    swal({
+        title: 'Login with Facebook to donate!',
+        text: 'You need to login to donate a gift',
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+        imageUrl: "../../images/common/gff-logo-s.svg",
+    },
+    function() {
+        window.location.href = "/login/facebook";
+    });
+});
