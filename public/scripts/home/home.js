@@ -146,7 +146,7 @@ $(document).ready(function() {
     $("#main-page-carousel").swiperight(function() {
         $(this).carousel('prev');
     });
-    
+
     $("#main-page-carousel").swipeleft(function() {
         $(this).carousel('next');
     });
@@ -156,11 +156,11 @@ $(document).scroll(function() {
     var y = $(document).scrollTop();
     var x = $(document).scrollLeft();
     var floatingBar = $('.floating-bar-full');
-    if(y >= 600) {
+    if(y > 0) {
         if (x > 0) {
-            floatingBar.css({"position": "absolute", "top": y + 87, "padding-right": "30px"});
+            floatingBar.css({"position": "absolute", "top": y + 83, "padding-right": "30px"});
         } else {
-            floatingBar.css({"position": "fixed", "top": "87px", "padding-right": "30px"});
+            floatingBar.css({"position": "fixed", "top": "83px", "padding-right": "30px"});
         }
     } else {
         floatingBar.css({"position": "relative", "top": "0px", "padding-right": "15px"});
