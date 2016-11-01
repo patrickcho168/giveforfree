@@ -178,10 +178,10 @@
 
         $(document).ready(function() {
 
-            $('#facebook-message').unbind('click').bind('click', function (e) {
-                console.log($("#facebook-message").attr("fbid"));
-                messageUser($("#facebook-message").attr("fbid"));
-            });
+            // $('#facebook-message').unbind('click').bind('click', function (e) {
+            //     console.log($("#facebook-message").attr("fbid"));
+            //     messageUser($("#facebook-message").attr("fbid"));
+            // });
 
             if (!<%= uploaded === undefined %>) {
                 if (<%= uploaded === 'true' %>) {
@@ -470,7 +470,7 @@
 
                         <% if (loggedIn && !mine && (item.takerID === null || item.takerID === id)) { %>
                             <div class="message-giver">
-                                <a href="javascript:messageUser();" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;" fbid="<%- item.fbID %>"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Giver</a>
+                                <a href="javascript:messageUser('<%- item.fbID %>');" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Giver</a>
                                 <% if (item.takerID === id) { %>
                                     <a href="javascript:shareReceiveItem();" class="btn btn-xs share-button" id="facebook-receive-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
                                 <% } else { %>
@@ -479,7 +479,7 @@
                             </div>
                         <% } else if (loggedIn && mine && item.takerID !== null) { %>
                             <div class="message-giver">
-                                <a href="javascript:messageUser();" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;" fbid="<%- item.takerFbID %>"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Donor</a>
+                                <a href="javascript:messageUser('<%- item.takerFbID %>');" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Donor</a>
                                 <a href="javascript:shareGiveItem();" class="btn btn-xs share-button" id="facebook-give-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
                             </div>
                         <% } else if (loggedIn && mine) { %>
