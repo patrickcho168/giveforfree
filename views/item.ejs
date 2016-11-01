@@ -101,11 +101,6 @@
         //     }
         // }
 
-        $('#facebook-message').unbind('click').bind('click', function (e) {
-            console.log($('#facebook-message').attr("fbid"))
-            messageUser($('#facebook-message').attr("fbid"));
-        });
-
         $('#facebook-receive-share').unbind('click').bind('click', function (e) {
             shareReceiveItem();
         });
@@ -182,6 +177,11 @@
         }
 
         $(document).ready(function() {
+
+            $('#facebook-message').unbind('click').bind('click', function (e) {
+                console.log($("#facebook-message").attr("fbid"));
+                messageUser($("#facebook-message").attr("fbid"));
+            });
 
             if (!<%= uploaded === undefined %>) {
                 if (<%= uploaded === 'true' %>) {
