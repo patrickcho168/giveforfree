@@ -8,6 +8,7 @@ var moment = require("moment");
 var xss = require('xss');
 var bodyParser = require("body-parser");
 var csrf = require('csurf');
+var nodemailer = require('nodemailer');
 
 var csrfProtection = csrf();
 
@@ -20,6 +21,34 @@ function inArray(needle, haystack) {
         }
     }
     return false;
+}
+
+// instantiate mail transporter
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    pool: true,
+    auth: {
+        user: config.emailuser,
+        pass: config.pass 
+    }
+});
+
+function sendMail(subj, msg, receiverEmail) {
+    // create mail using provided message
+    var mailOptions = {
+        from: '"GiveForFree" <giveforfreefeedback@gmail.com>', // sender address
+        to: receiverEmail, // list of receivers
+        subject: subj, // Subject line
+        html: msg
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error) {
+            return console.log(error);
+        }
+        console.log('Message sent: ' + info.response);
+    });
 }
 
 var parseForm = bodyParser.urlencoded({ extended: true, limit: '50mb' });
@@ -64,6 +93,29 @@ module.exports = function(app) {
                 itemData.save({
                     delivered: 1,
                 })
+
+                db.User.where({
+                    userID: itemData.attributes.giverID
+                }).fetch().then(function(giverData) {
+                    console.log(giverData);
+                    // Email the giver
+                    sendMail(
+                        "Your item has been delivered!",
+                        "Hi " + giverData.attributes.name + ",<br><br>Thank you for your contribution to the site. We hope to see you again!<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                        giverData.attributes.email);
+                })
+
+                db.User.where({
+                    userID: itemData.attributes.takerID
+                }).fetch().then(function(takerData) {
+                    console.log(takerData);
+                    // Email the giver
+                    sendMail(
+                        "You have received your item!",
+                        "Hi " + giverData.attributes.name + ",<br><br>Thank you for your donation. We hope to see you again!<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                        takerData.attributes.email);
+                })
+
                 var newNote = new db.Notification({
                     timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
                     active: 1,
@@ -163,6 +215,34 @@ module.exports = function(app) {
             parentComment: req.body.parent
         });
         newComment.save().then(function(comment) {
+            db.Item.where({
+                itemID: itemId
+            }).fetch({withRelated: ['wantedBy']}).then(function(item) {
+                item.related('wantedBy').toJSON().forEach(function(wanter) {
+                    if (userId != wanter.wanterID) {
+                        db.User.where({
+                            userID: wanter.wanterID
+                        }).fetch().then(function(wanterData) {
+                            sendMail(
+                                "Someone commented on " + item.attributes.title+ "!",
+                                "Hi " + wanterData.attributes.name + ",<br><br>Someone has left a comment on " + item.attributes.title + ". Visit the <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to see the comment!<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                                wanterData.attributes.email);
+                        });
+                    }
+                });
+
+                // email only if giver is not the commenter
+                if (userId != item.attributes.giverID) {
+                    db.User.where({
+                        userID: item.attributes.giverID
+                    }).fetch().then(function(giverData) {
+                        sendMail(
+                            "Someone commented on your item page!",
+                            "Hi " + giverData.attributes.name + ",<br><br>Someone has left a comment on " + item.attributes.title + ". Check out your <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to see the comment.<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                            giverData.attributes.email);
+                    });
+                }
+            });
             var newNote = new db.Notification({
                 notificationType: 3,
                 userID: userId,
@@ -272,9 +352,10 @@ module.exports = function(app) {
     app.get('/api/give/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {
         var userId = parseInt(req.user.appUserId);
         var itemId = parseInt(req.params.itemId);
+
         db.Item.where({
             itemID: itemId
-        }).fetch().then(function(data) {
+        }).fetch({withRelated: ['wantedBy']}).then(function(data) {
             // If item exists
             if (data !== null) {
                 // Ensure item belongs to user currently logged in
@@ -300,6 +381,31 @@ module.exports = function(app) {
                                 }).then(function(noUse) {
                                     res.redirect("/item/" + itemId);
                                 });
+
+                                // Email wanters to inform them of outcome
+                                data.related('wantedBy').toJSON().forEach(function(wanter) {
+                                    if (wantUserId != wanter.wanterID) {
+                                        db.User.where({
+                                            userID: wanter.wanterID
+                                        }).fetch().then(function(wanterData) {
+                                            sendMail(
+                                                data.attributes.title+ " has been given away!",
+                                                "Hi " + wanterData.attributes.name + ",<br><br>Unfortunately, you didn't get picked to receive " + data.attributes.title + ". Visit the <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to who got picked! You can also look for another item on <a href='" + config.domain + "'>GiveForFree</a>.<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                                                wanterData.attributes.email);
+                                        });
+                                    } else {
+                                        db.User.where({
+                                            userID: wanter.wanterID
+                                        }).fetch().then(function(wanterData) {
+                                            sendMail(
+                                                "You have been picked to receive " + data.attributes.title,
+                                                "Hi " + wanterData.attributes.name + ",<br><br>Congratulations! You were picked to receive " + data.attributes.title + ". Visit the <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to make your donation.<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                                                wanterData.attributes.email);
+                                        });
+                                        
+                                    }
+                                });
+
                                 var newNote = new db.Notification({
                                     timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
                                     active: 1,
@@ -323,7 +429,7 @@ module.exports = function(app) {
         var wanterId = parseInt(req.params.takerId);
         db.Item.where({
             itemID: itemId
-        }).fetch().then(function(data) {
+        }).fetch({withRelated: ['wantedBy']}).then(function(data) {
             // If item exists
             if (data !== null) {
                 // Ensure item belongs to user currently logged in
@@ -341,6 +447,29 @@ module.exports = function(app) {
                                     takerID: wanterId
                                 }).then(function(noUse) {
                                     res.redirect("/item/" + itemId);
+                                });
+
+                                data.related('wantedBy').toJSON().forEach(function(wanter) {
+                                    if (wanterId != wanter.wanterID) {
+                                        db.User.where({
+                                            userID: wanter.wanterID
+                                        }).fetch().then(function(wanterData) {
+                                            sendMail(
+                                                data.attributes.title+ " has been given away!",
+                                                "Hi " + wanterData.attributes.name + ",<br><br>Unfortunately, you didn't get picked to receive " + data.attributes.title + ". Visit the <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to who got picked! You can also look for another item on <a href='" + config.domain + "'>GiveForFree</a>.<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                                                wanterData.attributes.email);
+                                        });
+                                    } else {
+                                        db.User.where({
+                                            userID: wanter.wanterID
+                                        }).fetch().then(function(wanterData) {
+                                            sendMail(
+                                                "You have been picked to receive " + data.attributes.title,
+                                                "Hi " + wanterData.attributes.name + ",<br><br>Congratulations! You were picked to receive " + data.attributes.title + ". Visit the <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to make your donation.<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                                                wanterData.attributes.email);
+                                        });
+                                        
+                                    }
                                 });
                                 var newNote = new db.Notification({
                                     timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
@@ -395,7 +524,7 @@ module.exports = function(app) {
                 itemID: itemId
             }).fetch().then(function(item) {
                 // Check if item is owned by this person
-                if (item.giverID != userId) {
+                if (item.attributes.giverID != userId) {
                     // Check if item already wanted by this person
                     if (oldWant === null) {
 
@@ -422,7 +551,17 @@ module.exports = function(app) {
                                     }, {
                                         method: "update"
                                     });
-                                } else {
+                                } else {   
+                                    // inform the giver than someone is interested
+                                    db.User.where({
+                                        userID: item.attributes.giverID
+                                    }).fetch().then(function(giverData) {
+
+                                        sendMail(
+                                            "Someone is interested in your item!",
+                                            "Hi " + giverData.attributes.name + ",<br><br>It seems like someone is interested in " + item.attributes.title + ". Check out your <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to see who it is!<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                                            giverData.attributes.email);
+                                    })                                 
                                     var newNote = new db.Notification({
                                         wantID: want.attributes.wantID,
                                         timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
