@@ -215,10 +215,6 @@ function previewFile() {
 
 }
 
-function toggleShareColor() {
-    $('.share-info i').toggleClass('active');
-}
-
 function selectCharity(currentSelection) {
     var checkBox = $(currentSelection).prev();
     var checked = checkBox.prop('checked');
