@@ -17,3 +17,19 @@ $(function () {
 function clickLogo() {
     $('html, body').animate({ scrollTop: 0 }, 500);
 }
+
+$(document).ready(function() {
+
+    $('.how-progress').on('click', function() {
+        window.location.hash = '#how';
+    });
+    $('.who-progress').on('click', function() {
+        window.location.hash = '#who';
+    });
+    $('.charity-progress').on('click', function() {
+        window.location.hash = '#charity';
+    });
+    $('.faq-progress').on('click', function() {
+        window.location.hash = '#faq';
+    });
+})
