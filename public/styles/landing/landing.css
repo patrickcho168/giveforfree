@@ -310,7 +310,7 @@ nav .search-button, #nav-search {
     }
 
     .panel-right {
-        width: 85%;
+        width: 90%;
     }
 
     .panel-right .redirect-button {
@@ -318,6 +318,6 @@ nav .search-button, #nav-search {
     }
 
     .panel-right h2 {
-        margin-top: 180px;
+        margin-top: 190px;
     }
 }
