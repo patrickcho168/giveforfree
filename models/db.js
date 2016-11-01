@@ -431,6 +431,16 @@ var ItemPageManualQuery = function(itemId, cb) {
   });
 }
 
+var HomePageTotalDonationQuery = function(cb) {
+  knex
+    .from('item as i')
+    .sum('i.donatedAmount as totalDonatedAmount')
+    .whereNotNull('i.takerID')
+    .then(function(result){
+    return cb(result);
+  });
+}
+
 var ProfilePageTotalGivenQuery = function(userId, cb) {
   knex
     .from('item as i')
@@ -578,6 +588,7 @@ db.FlagUser = FlagUser;
 
 db.HomePageItemQuery = HomePageItemQuery;
 db.HomePageItemQueryBeforeId = HomePageItemQueryBeforeId;
+db.HomePageTotalDonationQuery = HomePageTotalDonationQuery;
 db.CategoryPageItemQuery = CategoryPageItemQuery;
 db.CategoryPageItemQueryBeforeId = CategoryPageItemQueryBeforeId;
 db.ProfilePageGiveQuery = ProfilePageGiveQuery;
