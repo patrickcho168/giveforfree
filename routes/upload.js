@@ -30,40 +30,6 @@ var s3 = new aws.S3({
     }
 });
 
-function createFbPost(title, itemId, imgUrl) {
-    var object = {
-        'link': config.domain + '/item/' + itemId,
-        'message': 'Snag my ' + title + ' for free now!',
-        'method': 'POST',
-        'picture': config.imageDomain + '/' + imgUrl
-    };
-    return querystring.stringify(object);
-}
-
-function createFbStory(itemId, startTime, endTime, fbFreeItemId) {
-    var object = {
-        // 'free_item': 'https://graph.facebook.com/1086175114800378/' + fbFreeItemId,
-        'free_item': config.domain + '/item/' + itemId,
-        'method': 'POST',
-        'fb:explicitly_shared': true,
-        'start_time': startTime,
-        'end_time': endTime
-    };
-    return querystring.stringify(object);
-}
-
-function createFbFreeItem(title, itemId, imgUrl) {
-    var object = {
-        'og:url': config.domain + '/item/' + itemId,
-        'og:title': title,
-        'og:type': config.fbNamespace + ':free_item',
-        'og:image': config.imageDomain + '/' + imgUrl,
-        'og:description': '',
-        'fb:app_id': config.fbClientID,
-    }
-    return 'method=POST&object=' + encodeURIComponent(JSON.stringify(object));
-}
-
 function saveCategories(item, categories) {
     var categoriesPos = [
         "books",
@@ -122,28 +88,6 @@ function saveItem(req, res, fileName) {
         } else {
             req.flash('error_messages', 'Drats we encountered some problems uploading your item! Please try again!');
             setTimeout(redirectFail, 1, res);
-        }
-
-        // UNCOMMENT TO SHARE ON FACEBOOK
-        // if (createdItemID != null && req.body.postToFacebook) {
-        if (createdItemID != null) {
-
-            // Create facebook post
-            // var userFbId = req.user.id;
-            var newItemTitle = newSavedItem.attributes.title;
-            var newItemUrl = newSavedItem.attributes.imageLocation;
-            var newItemTimeCreated = newSavedItem.attributes.timeCreated;
-            var newItemTimeExpired = newSavedItem.attributes.timeExpired;
-            // var apiCall = '/' + userFbId + '/feed';
-            // facebook.getFbData(req.user.accessToken, apiCall, createFbPost(newItemTitle, createdItemID, newItemUrl), function(data) {});
-            var apiCall = '/me/' + config.fbNamespace + ':give';
-            var objectApiCall = '/me/objects/' + config.fbNamespace + ':free_item'
-            facebook.getFbData(req.user.accessToken, objectApiCall, createFbFreeItem(newItemTitle, createdItemID, newItemUrl), function(data) {
-                // facebook.getFbData(req.user.accessToken, apiCall, createFbStory(createdItemID, newItemTimeCreated, newItemTimeExpired, JSON.parse(data).id), function(data2) {
-
-                // });
-            });
-
         }
     });
 }
