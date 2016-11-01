@@ -29,6 +29,22 @@ function backToTop() {
 }
 
 function clickUserGuide() {
-    var y = $('.help-panel').offset().top - 87;
+    var y = $('.what-panel').offset().top - 87;
     $('html, body').animate({ scrollTop: y }, 500);
 }
+
+$(document).ready(function() {
+
+    $('.how-progress').on('click', function() {
+        window.location.hash = '#how';
+    });
+    $('.who-progress').on('click', function() {
+        window.location.hash = '#who';
+    });
+    $('.charity-progress').on('click', function() {
+        window.location.hash = '#charity';
+    });
+    $('.faq-progress').on('click', function() {
+        window.location.hash = '#faq';
+    });
+})
