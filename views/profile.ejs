@@ -222,43 +222,19 @@
                                     <p class="user-name">
                                         <%= otherUser.name %>
                                     </p><br>
-                                    <!--
-                                    <fieldset class="fixedrating">
-                                        <input type="radio" id="star5" name="rating" value="5" <% if (userRating === 10) { %>checked="checked" <% } %> disabled/><label class = "full" for="star5" title="5 stars"></label>
-                                        <input type="radio" id="star4half" name="rating" value="4 and a half" <% if (userRating === 9) { %>checked="checked" <% } %> disabled/><label class="half" for="star4half" title="4.5 stars"></label>
-                                        <input type="radio" id="star4" name="rating" value="4" <% if (userRating === 8) { %>checked="checked" <% } %> disabled/><label class = "full" for="star4" title="4 stars"></label>
-                                        <input type="radio" id="star3half" name="rating" value="3 and a half" <% if (userRating === 7) { %>checked="checked" <% } %> disabled/><label class="half" for="star3half" title="3.5 stars"></label>
-                                        <input type="radio" id="star3" name="rating" value="3" <% if (userRating === 6) { %>checked="checked" <% } %> disabled/><label class = "full" for="star3" title="3 stars"></label>
-                                        <input type="radio" id="star2half" name="rating" value="2 and a half" <% if (userRating === 5) { %>checked="checked" <% } %> disabled/><label class="half" for="star2half" title="2.5 stars"></label>
-                                        <input type="radio" id="star2" name="rating" value="2" <% if (userRating === 4) { %>checked="checked" <% } %> disabled/><label class = "full" for="star2" title="2 stars"></label>
-                                        <input type="radio" id="star1half" name="rating" value="1 and a half" <% if (userRating === 3) { %>checked="checked" <% } %> disabled/><label class="half" for="star1half" title="1.5 stars"></label>
-                                        <input type="radio" id="star1" name="rating" value="1" <% if (userRating === 2) { %>checked="checked" <% } %> disabled/><label class = "full" for="star1" title="1 star"></label>
-                                        <input type="radio" id="starhalf" name="rating" value="half" <% if (userRating === 1) { %>checked="checked" <% } %> disabled/><label class="half" for="starhalf" title="0.5 stars"></label>
-                                    </fieldset><br>
-                                    -->
                                     <div class="fb-like" data-href="http://www.giveforfree.sg/profile/<%= id %>" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
                                 </div>
                         </div>
 
 
                         <div class="data-wrapper">
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-12 col-md-12 give-info">
-                                    <p class="donation-money">
-                                        $<% if (giverDonationAmount.totalDonatedAmount) { %><%= giverDonationAmount.totalDonatedAmount %><% } else {%>0<% } %>
-                                    </p>
-                                    <p class="donation-text">
-                                        donated through gifts
-                                    </p>
-                                </div>
-                                <div class="col-xs-6 col-sm-12 col-md-12 receive-info">
-                                    <p class="donation-money">
-                                        $<% if (takerDonationAmount.totalDonatedAmount) { %><%= takerDonationAmount.totalDonatedAmount %><% } else { %>0<% } %>
-                                    </p>
-                                    <p class="donation-text">
-                                        donated in cash
-                                    </p>
-                                </div>
+                            <div class="give-info">
+                                <p class="donation-money">
+                                    <i class="fa fa-diamond"></i> <% if (giverDonationAmount.totalDonatedAmount) { %><%= giverDonationAmount.totalDonatedAmount %><% } else {%>0<% } %> SGD
+                                </p>
+                                <p class="donation-text">
+                                    contribution in total
+                                </p>
                             </div>
                         </div>
                     </div>

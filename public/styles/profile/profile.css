@@ -108,12 +108,16 @@ textarea.flag-input {
     padding: 20px;
 }
 
+.give-info {
+    text-align: center;
+}
+
 .donation-money {
-    font-size: 3em;
+    font-size: 4em;
 }
 
 .donation-text {
-    font-size: 13px;
+    font-size: 16px;
 }
 
 .profile-switcher {
