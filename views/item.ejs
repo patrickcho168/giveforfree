@@ -102,8 +102,8 @@
         // }
 
         $('#facebook-message').unbind('click').bind('click', function (e) {
-            console.log($(this).attr("fbId"))
-            messageUser($(this).attr("fbId"));
+            console.log($('#facebook-message').attr("fbId"))
+            messageUser($('#facebook-message').attr("fbId"));
         });
 
         $('#facebook-receive-share').unbind('click').bind('click', function (e) {
