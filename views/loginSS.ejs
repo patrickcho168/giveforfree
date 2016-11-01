@@ -14,6 +14,10 @@
     <!-- JQuery Support -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
+    <!-- sweet alert -->
+    <script src="/sweetalert/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/sweetalert/sweetalert.css">
+
     <!-- Bootstrap Support -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -159,8 +163,12 @@
                         and <b>help a charity</b> along the way!
                     </p>
                     <!-- TODO: link to different pages -->
-                    <a href="#" class="redirect-button"><i class="fa fa-gift"></i> Browse gifts</a>
-                    <a href="#" class="redirect-button give-button"><i class="fa fa-heart"></i> Donate gift</a>
+                    <a href="/feed" class="redirect-button"><i class="fa fa-gift"></i> Get a gift</a>
+                    <% if (loggedIn) { %>
+                        <a href="/upload" class="redirect-button give-button"><i class="fa fa-heart"></i> Donate gifts</a>
+                    <% } else { %>
+                        <a href="/upload" class="redirect-button give-button btn-give-no-login"><i class="fa fa-heart"></i> Donate gift</a>
+                    <% } %>
                     <a onclick='clickUserGuide();'><p class="user-guide">
                         Using it for the first time? Get some tips below <i class="fa fa-arrow-circle-o-down"></i>
                     </p></a>

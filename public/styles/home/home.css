@@ -224,28 +224,28 @@ ul, ol {
 .title-img .item-first {
     height: 100%;
     width: 100%;
-    background: url(../../images/home/gifts.jpg) center center;
+    background: url(/images/home/userstory1.png) center center;
     background-size: cover;
 }
 
 .title-img .item-second {
     height: 100%;
     width: 100%;
-    background: url(../../images/home/gift2.jpg) center center;
+    background: url(/images/home/userstory2.png) center center;
     background-size: cover;
 }
 
 .title-img .item-third {
     height: 100%;
     width: 100%;
-    background: url(../../images/home/step2.jpg) center center;
+    background: url(/images/home/userstory1.png) center center;
     background-size: cover;
 }
 
 .title-img .item-fourth {
     height: 100%;
     width: 100%;
-    background: url(../../images/home/step3.png) center center;
+    background: url(/images/home/userstory2.png) center center;
     background-size: cover;
 }
 
@@ -255,7 +255,7 @@ ul, ol {
 
 .carousel {
     height: 100%;
-    background-color: #565656;
+    background-color: #e8e5e3;
 }
 
 .carousel-inner {
