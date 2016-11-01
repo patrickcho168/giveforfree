@@ -376,7 +376,7 @@ module.exports = function(app) {
                 }).destroy();
             }
         });
-        res.redirect("/");
+        res.redirect("/feed");
     });
 
     // -------------- WANT AND UNWANT

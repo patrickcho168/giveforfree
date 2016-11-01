@@ -63,8 +63,8 @@ var toExport = {}
 toExport.route = function(app) {
 
     // HOME PAGE
-    app.get('/', function(req, res) {
-        req.session.lastPageVisit = '/';
+    app.get('/feed', function(req, res) {
+        req.session.lastPageVisit = '/feed';
         if (req.user === undefined) {
             res.render('homeLoggedIn', {
                 id: null,
@@ -86,11 +86,26 @@ toExport.route = function(app) {
         }
     });
 
-    app.get('/login', function(req, res) {
+    app.get('/', function(req, res) {
         if (req.user === undefined) {
-            res.render('loginSS');
+            res.render('loginSS', {
+                user: null,
+                loggedIn: false,
+                id: null
+            });
         } else {
-            res.redirect('/');
+            var userId = req.user.appUserId;
+            db.User.where({
+                userID: userId
+            }).fetch().then(function(user) {
+                res.render('loginSS', {
+                    user: user.attributes,
+                    notification: req.session.notification,
+                    moment: moment,
+                    loggedIn: true,
+                    id: userId
+                });
+            });
         }
     });
 
@@ -103,13 +118,13 @@ toExport.route = function(app) {
 
     app.get('/login/facebook/return',
         passport.authenticate('facebook', {
-            failureRedirect: '/login'
+            failureRedirect: '/'
         }),
         function(req, res) {
             if (req.session  && req.session.lastPageVisit) {
                 res.redirect(req.session.lastPageVisit);
             } else {
-                res.redirect('/');
+                res.redirect('/feed');
             }
         });
 
@@ -117,7 +132,7 @@ toExport.route = function(app) {
         req.logout();
         req.session.destroy();
         // req.session = null;
-        res.redirect('/login');
+        res.redirect('/');
     })
 }
     // CACHE THINGS HERE
@@ -138,6 +153,7 @@ toExport.facebookCache = function(req, res, next) {
                         friendsQuery.push(friendsData[i].id); // all Facebook IDs of friends
                     }
                 }
+                // GET ALL FRIENDS USING PAGINATION
                 // if (jsonData.paging && jsonData.paging.next) {
                 //     do {
                 //         console.log(jsonData.paging.next);
@@ -187,7 +203,7 @@ toExport.facebookCache = function(req, res, next) {
 
 toExport.onlyNotLogout = function(fn) {
     return function(req, res, next) {
-        if (req.path != '/logout' && req.path != '/login' && req.path != '/login/facebook' && req.path != '/login/facebook/return' && req.path != "/privacy" && ensureLogin.ensureLoggedIn() && req.path.substring(0, 4) != "/api" && req.path != "/favicon.ico") {
+        if (req.path != '/logout' && req.path != '/' && req.path != '/login/facebook' && req.path != '/login/facebook/return' && req.path != "/privacy" && ensureLogin.ensureLoggedIn() && req.path.substring(0, 4) != "/api" && req.path != "/favicon.ico") {
             fn(req, res, next);
         } else {
             next();
