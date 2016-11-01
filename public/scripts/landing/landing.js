@@ -14,8 +14,23 @@ $(function () {
     });
 });
 
-function clickLogo() {
+$(document).scroll(function() {
+    var y = $(document).scrollTop();
+    var midHeight = $(window).height()/2;
+    if(y > midHeight) {
+        $('.back-to-top').removeClass('hidden');
+    } else {
+        $('.back-to-top').addClass('hidden');
+    }
+})
+
+function backToTop() {
     $('html, body').animate({ scrollTop: 0 }, 500);
+}
+
+function clickUserGuide() {
+    var y = $('.what-panel').offset().top - 87;
+    $('html, body').animate({ scrollTop: y }, 500);
 }
 
 $(document).ready(function() {
