@@ -8,6 +8,7 @@ var db = require('../models/db');
 var facebook = require('../controllers/facebook');
 var note = require('./notification');
 var moment = require('moment');
+var https = require('https');
 
 passport.use(new Strategy({
         clientID: config.fbClientID,
@@ -137,6 +138,33 @@ toExport.facebookCache = function(req, res, next) {
                         friendsQuery.push(friendsData[i].id); // all Facebook IDs of friends
                     }
                 }
+                // if (jsonData.paging && jsonData.paging.next) {
+                //     do {
+                //         console.log(jsonData.paging.next);
+                //         var request = https.get(jsonData.paging.next, function(result){
+                //             result.setEncoding('utf8');
+                //             var buffer = '';
+                //             result.on('data', function(chunk){
+                //                 buffer += chunk;
+                //             });
+
+                //             result.on('end', function(){
+                //                 jsonData = JSON.parse(buffer);
+                //                 var newFriendsData = jsonData.data;
+                //                 console.log(newFriendsData);
+                //                 if (newFriendsData instanceof Array) {
+                //                     for (var i = 0; i < newFriendsData.length; i++) {
+                //                         friendsQuery.push(newFriendsData[i].id); // all Facebook IDs of friends
+                //                     }
+                //                 }
+                //             });
+                //         });
+                //         request.end();
+                //         request.on('error', function(e) {
+                //             console.error(e);
+                //         });
+                //     } while (jsonData.paging && jsonData.paging.next)
+                // }
                 var cacheFriends = []; // List of {userID, name, fbID}
                 var cacheFriendsAppId = []; // List of userID
                 var cacheFriendsToPropertiesMapping = {};
