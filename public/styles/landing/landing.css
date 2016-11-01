@@ -264,7 +264,7 @@ nav .search-button, #nav-search {
     }
 
     .login-panel {
-        height: 85vh;
+        height: 600px;
     }
 
     .contact-panel {
@@ -305,6 +305,10 @@ nav .search-button, #nav-search {
 }
 
 @media (max-width: 359px) {
+    .login-panel {
+        height: 500px;
+    }
+
     .panel-right {
         width: 85%;
     }
