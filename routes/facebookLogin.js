@@ -87,7 +87,6 @@ toExport.route = function(app) {
     });
 
     app.get('/', function(req, res) {
-        req.session.lastPageVisit = '/feed';
         if (req.user === undefined) {
             res.render('loginSS', {
                 user: null,
@@ -109,6 +108,14 @@ toExport.route = function(app) {
             });
         }
     });
+
+    app.get('/login', function(req,res) {
+        var redirectPage = req.query.redirect;
+        if (redirectPage) {
+            req.session.lastPageVisit = redirectPage;
+        }
+        res.redirect('/login/facebook');
+    })
 
     app.get('/login/facebook',
         passport.authenticate('facebook', {
