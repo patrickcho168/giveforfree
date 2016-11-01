@@ -305,6 +305,10 @@ nav .search-button, #nav-search {
 }
 
 @media (max-width: 359px) {
+    .panel-right {
+        width: 85%;
+    }
+
     .panel-right .redirect-button {
         font-size: 12px;
     }
