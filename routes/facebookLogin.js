@@ -87,6 +87,7 @@ toExport.route = function(app) {
     });
 
     app.get('/', function(req, res) {
+        req.session.lastPageVisit = '/feed';
         if (req.user === undefined) {
             res.render('loginSS', {
                 user: null,
@@ -122,7 +123,11 @@ toExport.route = function(app) {
         }),
         function(req, res) {
             if (req.session  && req.session.lastPageVisit) {
-                res.redirect(req.session.lastPageVisit);
+                if (req.session.lastPageVisit === '/') {
+                    res.redirect('/upload');
+                } else {
+                    res.redirect(req.session.lastPageVisit);
+                }
             } else {
                 res.redirect('/feed');
             }
