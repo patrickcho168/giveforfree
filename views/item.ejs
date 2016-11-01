@@ -102,6 +102,7 @@
         // }
 
         $('#facebook-message').unbind('click').bind('click', function (e) {
+            console.log($(this).attr("fbId"))
             messageUser($(this).attr("fbId"));
         });
 
@@ -131,7 +132,7 @@
                 // <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
                 // toId = '<%= item.takerFbID %>';
                 // <% } %>
-
+                console.log(toFbId);
                 FB.ui({
                     method: 'send',
                     link: '<%= domain %>/item/<%= item.itemID %>',
