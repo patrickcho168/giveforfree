@@ -92,30 +92,29 @@ nav .search-button, #nav-search {
 }
 
 /*modification*/
+.back-to-top {
+    position: fixed;
+    z-index: 100;
+    right: 30px;
+    bottom: 20px;
+    background-color: #c09f80;
+    border-radius: 4px;
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    font-size: 3.5em;
+    text-align: center;
+    cursor: pointer;
+}
+
+.back-to-top:hover {
+    color: #d7cec7;
+}
+
 .main-container {
     padding: 100px 30px 0px 30px;
     font-family: 'Source Sans Pro', sans-serif;
     color: #565656;
-}
-
-@media (max-width: 767px) {
-    .main-container {
-        padding-top: 75px;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-    .login-panel {
-        height: 85vh!important;
-    }
-
-    .contact-panel {
-        padding: 20px 70px!important;
-    }
-
-    .contact-panel .teammate-description {
-        text-align: center;
-    }
 }
 
 .login-panel {
@@ -159,15 +158,35 @@ nav .search-button, #nav-search {
 
 .panel-right p {
     color: #565656;
-    margin-bottom: 50px;
 }
 
-.panel-right a {
-    font-size: 13px;
+.panel-right .slogan {
+    margin-bottom: 50px;
+    font-size: 16px;
+}
+
+.panel-right .user-guide {
+    margin-top: 30px;
+    font-weight: 400;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all .5s;
+}
+
+.panel-right .user-guide:hover {
+    color: #c09f80;
+}
+
+.panel-right .redirect-button {
+    font-size: 15px;
     color: #fff;
     background-color: #c09f80;
     padding: 10px 15px;
     border-radius: 50px;
+}
+
+.panel-right .give-button {
+    margin-left: 10px;
 }
 
 .panel-right a:hover {
@@ -176,6 +195,11 @@ nav .search-button, #nav-search {
 
 .login-panel img {
     width: 150px;
+}
+
+.help-panel {
+    width: 100%;
+    min-height: 85vh;
 }
 
 .what-panel {
@@ -224,4 +248,46 @@ nav .search-button, #nav-search {
     background-color: #fffcfa;
     padding: 20px;
     text-align: center;
+}
+
+@media (min-width: 769px) {
+    .main-container, footer {
+        min-width: 1100px;
+    }
+}
+
+@media (max-width: 767px) {
+    .main-container {
+        padding-top: 75px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .login-panel {
+        height: 85vh!important;
+    }
+
+    .contact-panel {
+        padding: 20px 70px!important;
+    }
+
+    .contact-panel .teammate-description {
+        text-align: center;
+    }
+
+    .panel-right {
+        width: 60%!important;
+    }
+
+    .panel-right h2 {
+        margin-top: 20vh!important;
+    }
+
+    .line-breaker {
+        display: block!important;
+    }
+
+    .panel-right .give-button {
+        margin-left: 0px;
+    }
 }

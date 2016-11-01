@@ -69,6 +69,10 @@
 
 <body>
 
+    <a class="back-to-top hidden" onclick="backToTop();">
+        <i class="fa fa-caret-up" aria-hidden="true"></i>
+    </a>
+
     <!-- Facebook Like -->
     <div id="fb-root"></div>
 
@@ -84,7 +88,7 @@
     <nav class="navbar navbar-fixed-top">
         <div class="navbar-header">
             <div class="navbar-brand">
-                <a class="navbar-logo" onclick="clickLogo();">
+                <a class="navbar-logo">
                     <img src="../images/common/gff-logo.svg" class="logo-full" alt="" />
                     <img src="../images/common/gff-logo-s.svg" class="logo-mobile" alt="" />
                 </a>
@@ -111,30 +115,28 @@
 
     </nav>
 
-    <!-- Section 1: Login -->
-    <!-- <header id="login" class="login">
-        <div class="text-vertical-center">
-            <h1>It's FREE</h1>
-            <h3>Give and Take Pre-loved Goods</h3>
-            <br>
-            <a href="javascript:loginSpecial();" class="btn btn-md btn-primary animated infinite pulse">
-                <h4><i class="fa fa-facebook-square" aria-hidden="true"></i> Login using Facebook</h4>
-            </a>
-        </div>
-    </header> -->
     <div class="main-container">
         <div class="panel login-panel">
             <div class="panel-cover">
                 <div class="penel-left"></div>
                 <div class="panel-right">
                     <h2>Give For Free</h2>
-                    <p>
+                    <p class="slogan">
                         Give and receive pre-loved goods <br>
                         and <b>help a charity</b> along the way!
                     </p>
-                    <a href="javascript:loginSpecial();"><i class="fa fa-facebook-square"></i> Facebook Login</a>
+                    <!-- TODO: link to different pages -->
+                    <a href="#" class="redirect-button"><i class="fa fa-gift"></i> Get a gift</a><br class="line-breaker" style="display:none;"><br class="line-breaker" style="display:none;"><br class="line-breaker" style="display:none;">
+                    <a href="#" class="redirect-button give-button"><i class="fa fa-heart"></i> Donate a gift</a>
+                    <a onclick='clickUserGuide();'><p class="user-guide">
+                        Using it for the first time? Get some tips below <i class="fa fa-arrow-circle-o-down"></i>
+                    </p></a>
                 </div>
             </div>
+        </div>
+
+        <div class="panel help-panel">
+
         </div>
 
         <!-- Section 2: About -->
