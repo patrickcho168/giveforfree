@@ -91,6 +91,8 @@
     overflow-x: hidden;
 }
 .dropdown-menu {
+    width: 90%;
+    margin-top: 0px!important;
     left: auto;
     top: inherit;
 }
@@ -247,7 +249,7 @@ textarea {
 
 /*modification*/
 .item-info {
-    height: 570px;
+    height: 600px;
     margin-bottom: 20px;
 }
 
@@ -328,6 +330,17 @@ textarea {
     padding: 10px 20px;
     border-radius: 2px;
     border: none;
+}
+
+.view-profile {
+    padding: 2px 10px!important;
+    color: #fff;
+    background-color: #c09f80;
+}
+.give-item {
+    padding: 2px 10px!important;
+    color: #fff;
+    background-color: #76323f;
 }
 
 .info-button .btn-want {
@@ -537,8 +550,9 @@ textarea {
 .single-wanter p {
     margin-left: 10px;
     color: #565656!important;
-    margin-bottom: 0px;
+    margin-bottom: 5px;
     text-align: left;
+    font-size: 16px;
 }
 
 .single-wanter .link-box {
@@ -548,11 +562,9 @@ textarea {
 }
 
 .single-wanter .link-box a {
-    color: #565656!important;
     margin-left: 10px;
     margin-right: 0;
     font-size: 12px;
-    padding: 0;
 }
 
 .view-wanter .badge {
