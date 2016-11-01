@@ -318,6 +318,13 @@ img.clipped {
     font-weight: 300!important;
 }
 
+.name-on-card {
+    margin-left: 30px;
+    margin-top: -20px;
+    margin-bottom: 5px;
+    width: auto!important;
+}
+
 @media (max-width: 767px) {
     .dropdown-menu {
         border-top: 1px #eee solid!important;

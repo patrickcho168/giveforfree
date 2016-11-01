@@ -160,7 +160,7 @@ function addRealViews(html) {
                         html += '<a href="/item/' + value.itemID + '"><p class="hide-overflow">' + value.title + '</p></a>';
                         html += '<a href="/profile/' + value.userID + '" class="seller-info row">';
                         html += '<img src="https://graph.facebook.com/' + value.fbID + '/picture" alt="" />';
-                        html += '<span>' + value.name + '</span>';
+                        html += '<span class="hide-overflow name-on-card">' + value.name + '</span>';
                         html += '</a>';
                         html += '<p>';
                         if (value.donationAmount % 1 == 0) {

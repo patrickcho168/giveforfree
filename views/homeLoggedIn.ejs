@@ -81,7 +81,7 @@
 
 
 <body>
-	<div class="container-fluid">
+	<div class="container-fluid" style="margin-top: -14px;">
 		<!-- Facebook Like -->
 	    <div id="fb-root"></div>
 		<!-- Page Loader -->
@@ -189,80 +189,6 @@
 
 	        } %>
 
-			<div class="panel title-banner">
-				<div class="title-content col">
-					<% if(loggedIn) { %>
-						<h1>Welcome, <br><%= user.name %></h1>
-						<!-- TODO: the user name -->
-						<div class="sub-titles">
-							<p class="sub-title-first">
-								Have a nice day!
-							</p>
-							<!-- <a class="give-button" type="button" href="/upload">Give a gift</a> -->
-							<p class="sub-title-second">
-								<a onclick="scrollDown();">
-									Browse for gifts below <i class="fa fa-arrow-circle-o-down"></i>
-								</a>
-							</p>
-						</div>
-					<% } else { %>
-						<h1>Welcome</h1>
-						<!-- TODO: the user name -->
-						<div class="sub-titles">
-							<p class="sub-title-first">
-								Log in now to get gifts
-							</p>
-							<a class="give-button" type="button" href="javascript:loginSpecial();">Log in</a>
-							<p class="sub-title-second">
-								<a onclick="scrollDown();">
-									Browse for gifts below <i class="fa fa-arrow-circle-o-down"></i>
-								</a>
-							</p>
-						</div>
-					<% } %>
-				</div>
-				<div class="title-img">
-					<div id="main-page-carousel" class="carousel slide" data-ride="carousel">
-						<ol class="carousel-indicators">
-						    <li data-target="#main-page-carousel" data-slide-to="0" class="active"></li>
-							<li data-target="#main-page-carousel" data-slide-to="1"></li>
-							<li data-target="#main-page-carousel" data-slide-to="2"></li>
-							<li data-target="#main-page-carousel" data-slide-to="3"></li>
-						</ol>
-						<div class="carousel-inner" role="listbox">
-						    <div class="item item-first active">
-						      	<div class="inner-content">
-						      		<!-- <img src="/images/home/userstory1.png" style="max-width:100%; max-height:100%;"/> -->
-						      	</div>
-						    </div>
-							<div class="item item-second">
-								<div class="inner-content">
-
-								</div>
-							</div>
-							<div class="item item-third">
-								<div class="inner-content">
-
-								</div>
-							</div>
-							<div class="item item-fourth">
-								<div class="inner-content">
-
-								</div>
-							</div>
-						</div>
-						<a class="left carousel-control" href="#main-page-carousel" role="button" data-slide="prev">
-						    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-						    <span class="sr-only">Previous</span>
-						</a>
-						<a class="right carousel-control" href="#main-page-carousel" role="button" data-slide="next">
-						    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-						    <span class="sr-only">Next</span>
-						</a>
-					</div>
-				</div>
-			</div>
-
 			<!-- Scroll Container -->
 			<div class="infinite-scroll-container row" id="infinite-scroll-container">
 				<!-- Placeholder -->
@@ -290,9 +216,7 @@
 						<h3 class="placeholder-text">Receive a gift today</h3>
 						<p class="placeholder-text">
 							After receiving a gift, <br>
-							please proceed to give a donation. <br>
-							Do contribute a gift too. <br><br>
-							<a class="give-button" type="button" href="/upload">Give a gift</a>
+							do remember to give a donation ;)<br>
 						</p>
 					</div>
 				</div>
