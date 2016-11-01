@@ -131,6 +131,14 @@
 }
 
 /* for modification */
+ul, ol {
+    font-size: 15px;
+}
+
+.navbar-collapse a {
+    font-size: 14px;
+}
+
 .title-banner {
     display: table;
     height: 560px;
@@ -310,6 +318,10 @@
     color: #565656;
 }
 
+.placeholder p {
+    font-size: 16px;
+}
+
 .placeholder-img {
     width: 100px;
 }
@@ -366,6 +378,11 @@
 
 .items-display .item-info .row {
     margin: 0;
+}
+
+.items-display .item-info p {
+    font-size: 16px;
+    font-weight: 400;
 }
 
 .items-display .seller-info img {
