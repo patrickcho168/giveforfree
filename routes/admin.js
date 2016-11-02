@@ -8,6 +8,7 @@ module.exports = function(app) {
     	if (req.user && req.user.admin) {
     		// Display Flagged Users
             db.FlagUser.fetchAll({withRelated: ['flaggedBy', 'flags']}).then(function(flagUser) {
+                // Display All Items
                 db.Item.fetchAll({withRelated: ['ownedBy', 'takenBy']}).then(function(items) {
                     res.render('admin', {
                         flag: flagUser.models,
@@ -15,10 +16,29 @@ module.exports = function(app) {
                     });
                 });
             });
-            // Display All Items
     	} else {
         	res.render('404');
     	}
+    });
+
+    app.get("/admin/item/:id", ensureLogin.ensureLoggedIn(), function(req, res) {
+        var itemId = req.params.id;
+        if (req.user && req.user.admin) {
+            db.Item.where({
+                itemID: itemId
+            }).fetch({withRelated: ['ownedBy', 'takenBy', 'categories']}).then(function(item) {
+                console.log(item.relations.categories.models[0]);
+                if (item) {
+                    res.render('adminItem', {
+                        item: item
+                    });
+                } else {
+                    res.render('404');
+                }
+            });
+        } else {
+            res.render('404');
+        }
     });
 
     app.get('/api/admin/item/delete/:itemId', ensureLogin.ensureLoggedIn(), function(req, res) {

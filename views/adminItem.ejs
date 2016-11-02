@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+
+<body>
+	<h1>Welcome Admin!</h1>
+	<h2>One Item</h2>
+	<table border="1">
+		<tr>
+			<th>Title</th>
+			<th>Description</th>
+			<th>Time Created</th>
+			<th>Time Expired</th>
+			<th>Giver</th>
+			<th>Taker</th>
+			<th>Categories</th>
+			<th>Charity ID</th>
+			<th>Donation Amount</th>
+			<th>Donated Amount</th>
+			<th>Delivered</th>
+			<th>Delete</th>
+		</tr>
+		<tr>
+			<td><a href="/item/<%= item.attributes.itemID %>"><%- item.attributes.title %></a></td>
+			<td><%- item.attributes.description %></a></td>
+			<td><%= item.attributes.timeCreated %></td>
+			<td><%= item.attributes.timeExpired %></td>
+			<td><a href="/profile/<%= item.attributes.giverID %>"><%= item.relations.ownedBy.attributes.name %></a></td>
+			<td>
+				<% if (item.attributes.takerID) { %>
+					<a href="/profile/<%= item.attributes.takerID %>"><%= item.relations.takenBy.attributes.name %></a></td>
+				<% } %>
+			</td>
+			<td>
+				<% if (item.relations.categories.models.length > 0) { %>
+					<%= item.relations.categories.models[0].attributes.name %>
+				<% } %>
+			</td>
+			<td><%= item.attributes.charityID %></td>
+			<td><%= item.attributes.donationAmount %></td>
+			<td><%= item.attributes.donatedAmount %></td>
+			<td><%= item.attributes.delivered %></td>
+			<td><a href="/api/admin/item/delete/<%= item.attributes.itemID %>">DELETE</a></td>
+		</tr>
+	</table>
+</body>
+</html>
