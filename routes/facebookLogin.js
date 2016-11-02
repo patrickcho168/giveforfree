@@ -54,10 +54,16 @@ passport.use(new Strategy({
                         email: email
                     }).then(function(user2) {
                         profile.appUserId = user2.attributes.userID;
+                        if (user2.attributes.admin) {
+                            profile.admin = true;
+                        }
                         return cb(null, profile);
                     })
                 } else {
                     profile.appUserId = user.attributes.userID;
+                    if (user.attributes.admin) {
+                        profile.admin = true;
+                    }
                     return cb(null, profile);
                 }
             }

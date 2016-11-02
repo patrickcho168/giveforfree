@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+
+<body>
+	<h1>Welcome Admin!</h1>
+	<h2>Flags</h2>
+	<table border="1">
+		<tr>
+			<th>Who Flagged</th>
+			<th>Got Flagged</th>
+			<th>Message</th>
+		</tr>
+		<% for (var i=0; i<flag.length; i++) { %>
+			<tr>
+				<td><a href="/profile/<%= flag[i].relations.flaggedBy.attributes.userID %>"><%= flag[i].relations.flaggedBy.attributes.name %></a></td>
+				<td><a href="/profile/<%= flag[i].relations.flags.attributes.userID %>"><%= flag[i].relations.flags.attributes.name %></a></td>
+				<td><%= flag[i].attributes.flagText %></td>
+			</tr>
+		<% } %>
+	</table>
+	<h2>All Items</h2>
+	<table border="1">
+		<tr>
+			<th>Title</th>
+			<th>Description</th>
+			<th>Time Created</th>
+			<th>Time Expired</th>
+			<th>Giver</th>
+			<th>Taker</th>
+			<th>Charity ID</th>
+			<th>Donation Amount</th>
+			<th>Donated Amount</th>
+			<th>Delivered</th>
+			<th>Delete</th>
+		</tr>
+		<% for (var i=0; i<items.length; i++) { %>
+			<tr>
+				<td><a href="/item/<%= items[i].attributes.itemID %>"><%- items[i].attributes.title %></a></td>
+				<td><%- items[i].attributes.description %></a></td>
+				<td><%= items[i].attributes.timeCreated %></td>
+				<td><%= items[i].attributes.timeExpired %></td>
+				<td><a href="/profile/<%= items[i].attributes.giverID %>"><%= items[i].relations.ownedBy.attributes.name %></a></td>
+				<td>
+					<% if (items[i].attributes.takerID) { %>
+						<a href="/profile/<%= items[i].attributes.takerID %>"><%= items[i].relations.takenBy.attributes.name %></a></td>
+					<% } %>
+				</td>
+				<td><%= items[i].attributes.charityID %></td>
+				<td><%= items[i].attributes.donationAmount %></td>
+				<td><%= items[i].attributes.donatedAmount %></td>
+				<td><%= items[i].attributes.delivered %></td>
+				<td><a href="/api/admin/item/delete/<%= items[i].attributes.itemID %>">DELETE</a></td>
+			</tr>
+		<% } %>
+	</table>
+</body>
+</html>

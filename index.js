@@ -17,7 +17,8 @@ var profile = require('./routes/profile');
 var freeItem = require('./routes/item');
 var privacy = require('./routes/privacy');
 var prelaunch = require('./routes/prelaunch');
-var handleErrors = require('./routes/handleErrors')
+var admin = require('./routes/admin');
+var handleErrors = require('./routes/handleErrors');
 var facebook = require('./controllers/facebook');
 var paypal = require('./controllers/paypal');
 var config = require('./config');
@@ -111,6 +112,7 @@ freeItem(app);
 paypal(app);
 privacy(app);
 prelaunch(app);
+admin(app);
 handleErrors(app);
 
 app.listen(config.portNum);

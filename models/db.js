@@ -165,7 +165,7 @@ var FlagUser = bookshelf.Model.extend({
     return this.belongsTo(User, 'flaggerID');
   },
   flags: function() {
-    return this.belongsTo(Item, 'flaggedID');
+    return this.belongsTo(User, 'flaggedID');
   }
 });
 
