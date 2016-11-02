@@ -333,18 +333,31 @@ textarea {
 }
 
 .view-profile {
-    padding: 2px 10px!important;
-    color: #fff;
-    background-color: #76322f;
+    padding: 0!important;
+    border: 1px solid #565656!important;
+    color: #565656!important;
+    padding: 0px 10px!important;
 }
 .give-item {
-    padding: 2px 10px!important;
-    color: #fff;
-    background-color: #c09f80;
+    padding: 0!important;
+    border: 1px solid #565656!important;
+    color: #565656!important;
+    padding: 0px 10px!important;
+}
+.random-draw {
+
+}
+.view-profile:hover {
+    background-color: #565656;
+    color: #fff!important;
+}
+.give-item:hover {
+    background: #565656;
+    color: #fff!important;
 }
 .message-wanter {
-    padding: 2px 10px!important;
-    color: #fff;
+    padding: 0!important;
+    color: #3b5998!important;
 }
 
 .info-button .btn-want {
@@ -465,7 +478,7 @@ textarea {
 .description-input {
     padding: 0 10px!important;
     max-height: 74px;
-    font-size: 14px;
+    font-size: 14px!important;
     font-weight: 400;
     color: #565656;
 }
@@ -483,7 +496,7 @@ textarea {
 }
 
 .description-info {
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 .right-panel {
@@ -570,6 +583,13 @@ textarea {
     margin-bottom: 5px;
 }
 
+.single-wanter {
+    padding: 20px 15px;
+    border-radius: 0px!important;
+    border-left: none!important;
+    border-right: none!important;
+}
+
 .single-wanter p {
     margin-left: 10px;
     color: #565656!important;
@@ -579,9 +599,17 @@ textarea {
 }
 
 .single-wanter .link-box {
-    width: 100%;
+    margin-top: 10px;
     display: flex;
     flex-direction: row;
+}
+
+.person-info-box {
+    margin-left: 50px;
+}
+
+.person-info-box p {
+    margin-bottom: 0px;
 }
 
 .single-wanter .link-box a {
@@ -626,8 +654,12 @@ fieldset.rating {
     margin-bottom: 10px;
 }
 
-.detail-info  .category-info, .detail-info  .deadline-info {
-    /*height: 190px;*/
+.info-display .subtitle {
+    font-size: 18px;
+}
+
+.category-info {
+    margin-top: 40px!important;
 }
 
 .category-holder {
@@ -692,11 +724,19 @@ fieldset.rating {
 }
 
 .deadline-info {
-    margin-top: 20px;
+    margin-top: 40px;
+}
+
+#input-tags {
+    margin-left: 10px;
+}
+
+.charity-selection {
+    margin-left: 10px;
 }
 
 .delivery-info {
-    margin-top: 20px!important;
+    margin-top: 40px!important;
 }
 
 .selectize-input {
@@ -757,7 +797,7 @@ fieldset.rating {
 
 .money-input {
     margin-left: 15px;
-    /*margin-top: 30px;*/
+    margin-top: 20px;
     font-weight: 300;
     font-size: 1.8em;
     color: #565656;
@@ -840,12 +880,69 @@ fieldset.rating {
     line-height: 12px;
 }
 
+/*for modal*/
+.modal-content {
+    border-radius: 4px;
+    border: none;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.modal-content .modal-header, .modal-content .modal-footer {
+    border: none;
+}
+
+.modal-body {
+    padding: 0px;
+}
+
+.modal-footer {
+    padding-top: 0px;
+}
+
+.modal-footer .close-modal {
+    border: none;
+    background: #888;
+    color: #fff;
+}
+
+.modal-footer .random-draw {
+    border: none;
+    background: #c09f80;
+    color: #fff;
+}
+
+.wanter-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 500px;
+}
+
+@media (min-width: 769px) {
+    .main-container, footer {
+        min-width: 1100px;
+    }
+
+    .info-display .subtitle {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 991px) {
+    .item-info {
+        height: 650px;
+    }
+}
+
 
 @media (max-width: 767px) {
     .main-container {
         padding-top: 75px;
         padding-left: 25px;
         padding-right: 25px;
+    }
+
+    .detail-info {
+        padding: 20px 20px;
     }
 
     .item-info {

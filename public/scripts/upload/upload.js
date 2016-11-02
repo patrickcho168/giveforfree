@@ -230,17 +230,14 @@ function selectCharity(currentSelection) {
         checkBox.prop('checked', true);
         $(currentSelection).removeClass('covered');
 
-        $('.no-charity').removeClass('covered');
         if (moneyInput.val() == 0) {
             moneyInput.val(2);
-            $('.actual-amount').text(1.4);
-            $('.fee').text(0.58);
-            $('.ours').text(0.02);
+            $('.actual-amount').text('$1.4');
+            $('.fee').text('$0.58');
+            $('.ours').text('$0.02');
         }
 
-        moneyInput.prop('disabled', false);
     } else if ($('.no-charity').is(':visible')) {
-        $('.no-charity').addClass('covered');
-        moneyInput.prop('disabled', true);
+
     }
 }

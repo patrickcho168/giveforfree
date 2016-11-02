@@ -324,10 +324,26 @@ ul, ol {
 
 .placeholder p {
     font-size: 16px;
+    margin-bottom: 0px;
+}
+
+.placeholder .placeholder-text {
+    font-size: 5em;
+    margin-bottom: 15px;
+}
+
+.placeholder .total-info {
+    margin-top: 25px;
 }
 
 .placeholder-img {
     width: 100px;
+}
+
+.total-donation {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .gifts-banner {
