@@ -115,8 +115,7 @@ module.exports = function(app){
 			userId:    config.paypalUsername,
 			appId:     config.paypalAppId,
 			password:  config.paypalPassword,
-			signature: config.paypalSignature,
-			sandbox:   sandbox //defaults to false
+			signature: config.paypalSignature
 		});
 	}
 
@@ -149,7 +148,7 @@ module.exports = function(app){
 						amount: toPay.toString(),
 						primary:'true'
 					},{
-						email:	'giveforfree.payments-facilitator@gmail.com', // Give For Free Payment email
+						email:	'giveforfree.payments@gmail.com', // Give For Free Payment email
 						amount: ours.toString(),
 						primary: 'false'
 					}
