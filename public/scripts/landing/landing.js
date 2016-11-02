@@ -47,6 +47,10 @@ $(document).ready(function() {
     $('.faq-progress').on('click', function() {
         window.location.hash = '#faq';
     });
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        $("#howitworksimg").attr("src", "/images/landing/howitworks.png");
+    }
 })
 
 // send user to facebook login
