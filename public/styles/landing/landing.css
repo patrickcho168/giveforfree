@@ -277,6 +277,11 @@ nav .search-button, #nav-search {
     text-align: center;
 }
 
+.what-panel p, .contact-panel p{
+    font-size: 14px;
+    font-weight: 400;
+}
+
 @media (min-width: 769px) {
     .main-container, footer {
         min-width: 1100px;

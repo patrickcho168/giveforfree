@@ -29,7 +29,7 @@ function backToTop() {
 }
 
 function clickUserGuide() {
-    var y = $('.what-panel').offset().top - 87;
+    var y = $('.howitworks-panel').offset().top - 87;
     $('html, body').animate({ scrollTop: y }, 500);
 }
 

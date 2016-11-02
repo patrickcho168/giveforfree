@@ -90,11 +90,9 @@ function addRealViews(html, url) {
             if($('.single-item').length > 0) {
                 $('.gifts-banner').css('height', 300);
                 $('.empty-placeholder-text').addClass('hidden');
-                $('.placeholder-text').removeClass('hidden');
             } else {
                 $('.gifts-banner').css('height', '73vh');
                 $('.empty-placeholder-text').removeClass('hidden');
-                $('.placeholder-text').addClass('hidden');
             }
             $("#item-loader-wrapper").addClass('hidden');
         },

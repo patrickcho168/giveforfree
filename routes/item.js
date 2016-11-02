@@ -401,7 +401,15 @@ module.exports = function(app) {
                                 data.save({
                                     takerID: wantUserId
                                 }).then(function(noUse) {
-                                    res.redirect("/item/" + itemId);
+                                    db.User.where({
+                                        userID: wantUserId
+                                    }).fetch().then(function(takerData) {
+                                        res.json({
+                                            winnerId: wantUserId,
+                                            winnerFbId: takerData.attributes.fbID,
+                                            winnerName: takerData.attributes.name
+                                        });
+                                    });
                                 });
 
                                 // Email wanters to inform them of outcome
@@ -436,9 +444,6 @@ module.exports = function(app) {
                                     userID: userId
                                 });
                                 newNote.save();
-                                res.json({
-                                    winner: wantUserId
-                                })
                             }
                         })
                     }

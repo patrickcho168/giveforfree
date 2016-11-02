@@ -120,13 +120,8 @@
                     text: 'Messaging via Facebook only works on desktop. We are terribly sorry about the inconvenience caused.',
                 });
             } else {
-                // var toId = toFbId;
+                swal.close();
 
-                // <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                // toId = '<%= item.fbID %>';
-                // <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                // toId = '<%= item.takerFbID %>';
-                // <% } %>
                 console.log(toFbId);
                 FB.ui({
                     method: 'send',
@@ -148,6 +143,8 @@
         }
 
         function shareGiveItem() {
+
+            swal.close();
             // alert("CLICKED SHARE");
             console.log('<%= startDate %>');
             <% if (item.takerID !== null) { %>
@@ -219,7 +216,7 @@
                         if (!confirm) {
                             window.location.href = '/item/' + currentItemId;
                         } else {
-                            messageUser();
+                            messageUser("<%= item.fbID %>");
                         }
                     });
                 } else {
@@ -381,24 +378,6 @@
 
     <!-- Start of Page Content -->
     <div class="main-container">
-
-        <!-- Message Flashing -->
-        <!-- Errors -->
-        <!-- <% if (locals.error_messages) {
-            error_messages.forEach(function(message) { %>
-            <div class="alert alert-warning"><strong>Uh-oh! </strong>
-                <%= message %>
-            </div>
-            <% });
-        } %>
-        <% if (locals.success_messages) {
-            success_messages.forEach(function(message) { %>
-            <div class="alert alert-success"><strong>Awesome! </strong>
-                <%= message %>
-            </div>
-            <% });
-
-        } %> -->
         <div class="row panel" style="padding-top: 20px;">
             <ul class="progress-indicator">
                 <li
@@ -456,7 +435,7 @@
                     <div class="item-basic-info">
                         <div class="info-text info-display">
                             <h2><%- item.title %></h2>
-                            <p>$<%= item.donationAmount %> to <%= item.charityName %></p>
+                            <p>Get for FREE with $ <%= item.donationAmount %> donation</p>
                             <div class="category-holder info-display">
                                 <% for (var i=0; i<categories.length; i++) { %>
                                     <span class="category-item"><i class="fa fa-tags"></i> <%= categories[i] %></span>
@@ -469,7 +448,7 @@
                         </div>
 
                         <% if (loggedIn && !mine && (item.takerID === null || item.takerID === id)) { %>
-                            <div class="message-giver">
+                            <div class="message-giver info-display">
                                 <a href="javascript:messageUser('<%- item.fbID %>');" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Giver</a>
                                 <% if (item.takerID === id) { %>
                                     <a href="javascript:shareReceiveItem();" class="btn btn-xs share-button" id="facebook-receive-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
@@ -478,12 +457,12 @@
                                 <% } %>
                             </div>
                         <% } else if (loggedIn && mine && item.takerID !== null) { %>
-                            <div class="message-giver">
+                            <div class="message-giver info-display">
                                 <a href="javascript:messageUser('<%- item.takerFbID %>');" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Donor</a>
                                 <a href="javascript:shareGiveItem();" class="btn btn-xs share-button" id="facebook-give-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
                             </div>
                         <% } else if (loggedIn && mine) { %>
-                            <div class="message-giver">
+                            <div class="message-giver info-display">
                                 <a href="javascript:shareGiveItem();" class="btn btn-xs share-button" id="facebook-give-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
                             </div>
                         <% } %>
@@ -508,9 +487,9 @@
                                     <% } else if (item.takerID !== null) { %>
                                         <!-- <a href="/profile/<%= item.takerID %>" class="btn btn-lg btn-want btn-block"><i class="fa fa-heart-o"></i> Given to <%= item.takerName %></a> -->
                                     <% } else if (item.meWant === 1 && !expired) { %>
-                                        <a class="btn btn-lg btn-block btn-unwant unsnag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span><span> Unwant </span><span class="badge"><%= item.numWants %> <% if (item.numWants == 1) { %>wanter<% } else { %>wanters<% } %></span></a>
+                                        <a class="btn btn-lg btn-block btn-unwant unsnag" itemId="<%= item.itemID %>" fbId="<%= item.fbID %>"><span class="glyphicon glyphicon-gift"></span><span> Unwant </span><span class="badge"><%= item.numWants %> <% if (item.numWants == 1) { %>wanter<% } else { %>wanters<% } %></span></a>
                                     <% } else if (!expired) { %>
-                                        <a class="btn btn-lg btn-block btn-want snag" itemId="<%= item.itemID %>"><span class="glyphicon glyphicon-gift"></span><span> Want </span><span class="badge"><%= item.numWants %> <% if (item.numWants == 1) { %>wanter<% } else { %>wanters<% } %></span></a>
+                                        <a class="btn btn-lg btn-block btn-want snag" itemId="<%= item.itemID %>" fbId="<%= item.fbID %>"><span class="glyphicon glyphicon-gift"></span><span> Want </span><span class="badge"><%= item.numWants %> <% if (item.numWants == 1) { %>wanter<% } else { %>wanters<% } %></span></a>
                                     <% } else { %>
                                         <!-- <div class="btn-lg btn-expired btn-block"><i class="fa fa-heart-o"></i> Gift has expired</div> -->
                                     <% } %>
@@ -520,28 +499,45 @@
                             <div class="info-button want-button">
                                 <% if (manual.length > 0) { %>
                                     <% if (!expired) { %>
-                                        <a type="button" class="btn btn-lg btn-block dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a type="button" class="btn btn-lg btn-block dropdown-toggle view-wanter" data-toggle="modal" data-target="#wanter-list">
                                             Give <span class="badge"><%= item.numWants %> <% if (item.numWants == 1) { %>wanter<% } else { %>wanters<% } %></span>
                                         </a>
                                     <% } else { %>
-                                        <a type="button" class="btn btn-lg btn-block dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a type="button" class="btn btn-lg btn-block dropdown-toggle view-wanter" data-toggle="modal" data-target="#wanter-list">
                                             Give <span class="badge"><%= item.numWants %> <% if (item.numWants == 1) { %>wanter<% } else { %>wanters<% } %></span>
                                         </a>
                                     <% } %>
                                     <% if (item.numWants > 0) { %>
-                                        <ul class="dropdown-menu scrollable-menu" role="menu">
-                                            <% for (var i=0; i<manual.length; i++) { %>
-                                                <li class="single-wanter">
-                                                    <p><%= manual[i].name %></p>
-                                                    <div class="link-box">
-                                                        <a class="view-profile" href="/profile/<%= manual[i].userID %>">View Profile</a>
-                                                        <a class="give-item" onclick="giveItemConfirm(<%= item.itemID %>, <%= manual[i].userID %>, '<%= manual[i].name %>');" style="cursor: pointer;">Give item</a>
-                                                        <a href="javascript:messageUser('<%- manual[i].fbID %>');" class="btn btn-xs message-button message-wanter" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message</a>
+                                        <div class="modal fade" id="wanter-list" tabindex="-1" role="dialog">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">Choose a receiver</h4>
                                                     </div>
-                                                </li>
-                                            <% } %>
-                                            <li><a onclick="giveItemConfirm(<%= item.itemID %>);" style="padding-left: 10px; margin-top: 10px; background-color: #eee;">Do a random draw</a></li>
-                                        </ul>
+                                                    <div class="modal-body">
+                                                        <ul class="list-group">
+                                                            <% for (var i=0; i<manual.length; i++) { %>
+                                                                <li class="single-wanter list-group-item">
+                                                                    <img src="https://graph.facebook.com/<%= manual[i].fbID %>/picture" alt="" class="wanter-img pull-left"/>
+                                                                    <div class="person-info-box">
+                                                                        <p><%= manual[i].name %><a href="javascript:messageUser('<%- manual[i].fbID %>');" class="message-wanter pull-right" id="facebook-message"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message</a></p>
+                                                                        <div class="link-box">
+                                                                            <a class="view-profile" href="/profile/<%= manual[i].userID %>">Profile</a>
+                                                                            <a class="give-item" onclick="giveItemConfirm(<%= item.itemID %>, <%= manual[i].userID %>, '<%= manual[i].name %>', <%= manual[i].fbID %>);" style="cursor: pointer;">Give</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            <% } %>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default close-modal" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn random-draw" onclick="giveItemConfirm(<%= item.itemID %>);">Random draw!</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     <% } %>
                                 <% } %>
                             </div>
@@ -569,11 +565,12 @@
                         <div class="charity-info info-display">
                             <div class="charity-img pull-left">
                                 <img src="../images/upload/charity<%= item.charityID %>.png" alt="" />
+
                             </div>
                             <div class="charity-details info-display">
                                 <p>
                                     <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
-                                        Donation will go to
+                                        Your donation will go to
                                     <% } else { %>
                                         $<%= item.donatedAmount %> has been donated to
                                     <% } %>
@@ -621,13 +618,13 @@
                                         This giveaway ends on
                                     </p>
                                     <% var deadline = date != "Invalid date" ? moment(date, "D MMMM YYYY HH:mm").format("YYYY-MM-DD") : "" %>
-                                    <input type="text" class="input-txt input-date" name="date" id="date" value="<%= deadline %>" placeholder="Select an end date">
+                                    <input type="text" class="input-txt input-date" name="date" id="date" value="<%= moment(deadline).format('DD MMM YYYY') %>" placeholder="Select an end date">
                                 </div>
 
                                 <div class="col-sm-6 category-info category-select-holder">
                                     <h2>Category</h2>
 
-                                    <p>
+                                    <p class="subtitle">
                                     Select the most appropriate category. <span class="no-category-alert hidden" style="color: #f05050;">You need to choose a category.</span>
                                     <!-- TODO: implement validation-->
                                     </p>
@@ -712,7 +709,7 @@
                                             This giveaway ends on
                                         </p>
                                         <p class="deadline">
-                                            <%= deadline %>
+                                            <%= moment(deadline).format('DD MMM YYYY') %>
                                         </p>
                                         <% } %>
                                     </div>
