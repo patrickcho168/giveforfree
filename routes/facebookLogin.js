@@ -18,7 +18,6 @@ passport.use(new Strategy({
     },
     function(accessToken, refreshToken, profile, cb) {
         profile.accessToken = accessToken;
-        console.log(profile);
         db.User.where({
             fbID: profile.id
         }).fetch().then(function(user) {
@@ -45,8 +44,22 @@ passport.use(new Strategy({
                     return cb(null, profile);
                 })
             } else {
-                profile.appUserId = user.attributes.userID;
-                return cb(null, profile);
+                // Add Email to database
+                if (!user.attributes.email) {
+                    var email = null;
+                    if (profile.emails && profile.emails.length > 0) {
+                        email = profile.emails[0].value;
+                    }
+                    user.save({
+                        email: email
+                    }).then(function(user2) {
+                        profile.appUserId = user2.attributes.userID;
+                        return cb(null, profile);
+                    })
+                } else {
+                    profile.appUserId = user.attributes.userID;
+                    return cb(null, profile);
+                }
             }
         });
     }));
@@ -66,7 +79,6 @@ toExport.route = function(app) {
     app.get('/feed', function(req, res) {
         req.session.lastPageVisit = '/feed';
         db.HomePageTotalDonationQuery(function(totalDonated) {
-            console.log(totalDonated);
             if (req.user === undefined) {
                 res.render('homeLoggedIn', {
                     id: null,
@@ -152,6 +164,39 @@ toExport.route = function(app) {
         res.redirect('/');
     })
 }
+
+function getAllFbFriends(jsonData, friendsQuery, cb) {
+    // GET ALL FRIENDS USING PAGINATION
+    if (jsonData.paging && jsonData.paging.next) {
+        console.log(jsonData.paging.next);
+        var request = https.get(jsonData.paging.next, function(result){
+            result.setEncoding('utf8');
+            var buffer = '';
+            result.on('data', function(chunk){
+                buffer += chunk;
+            });
+
+            result.on('end', function(){
+                jsonData = JSON.parse(buffer);
+                var newFriendsData = jsonData.data;
+                console.log(newFriendsData);
+                if (newFriendsData instanceof Array) {
+                    for (var i = 0; i < newFriendsData.length; i++) {
+                        friendsQuery.push(newFriendsData[i].id); // all Facebook IDs of friends
+                    }
+                }
+                getAllFbFriends(jsonData, friendsQuery, cb);
+            });
+        });
+        request.end();
+        request.on('error', function(e) {
+            console.error(e);
+        });
+    } else {
+        cb(friendsQuery);
+    }
+}
+
     // CACHE THINGS HERE
 toExport.facebookCache = function(req, res, next) {
     if (req.user && req.user.fbFriends && req.user.fbFriendsId && req.user.fbFriendsToPropertyMap) {
@@ -170,48 +215,22 @@ toExport.facebookCache = function(req, res, next) {
                         friendsQuery.push(friendsData[i].id); // all Facebook IDs of friends
                     }
                 }
-                // GET ALL FRIENDS USING PAGINATION
-                // if (jsonData.paging && jsonData.paging.next) {
-                //     do {
-                //         console.log(jsonData.paging.next);
-                //         var request = https.get(jsonData.paging.next, function(result){
-                //             result.setEncoding('utf8');
-                //             var buffer = '';
-                //             result.on('data', function(chunk){
-                //                 buffer += chunk;
-                //             });
-
-                //             result.on('end', function(){
-                //                 jsonData = JSON.parse(buffer);
-                //                 var newFriendsData = jsonData.data;
-                //                 console.log(newFriendsData);
-                //                 if (newFriendsData instanceof Array) {
-                //                     for (var i = 0; i < newFriendsData.length; i++) {
-                //                         friendsQuery.push(newFriendsData[i].id); // all Facebook IDs of friends
-                //                     }
-                //                 }
-                //             });
-                //         });
-                //         request.end();
-                //         request.on('error', function(e) {
-                //             console.error(e);
-                //         });
-                //     } while (jsonData.paging && jsonData.paging.next)
-                // }
-                var cacheFriends = []; // List of {userID, name, fbID}
-                var cacheFriendsAppId = []; // List of userID
-                var cacheFriendsToPropertiesMapping = {};
-                db.User.where('fbID', 'in', friendsQuery).fetchAll().then(function(data2) {
-                    for (var i = 0; i < data2.models.length; i++) {
-                        cacheFriends.push(data2.models[i].attributes);
-                        cacheFriendsAppId.push(data2.models[i].attributes.userID);
-                        cacheFriendsToPropertiesMapping[data2.models[i].attributes.userID] = data2.models[i].attributes;
-                    }
-                    // CACHE
-                    req.user.fbFriends = cacheFriends;
-                    req.user.fbFriendsId = cacheFriendsAppId;
-                    req.user.fbFriendsToPropertyMap = cacheFriendsToPropertiesMapping;
-                    next();
+                getAllFbFriends(jsonData, friendsQuery, function(fullFriendsQuery) {
+                    var cacheFriends = []; // List of {userID, name, fbID}
+                    var cacheFriendsAppId = []; // List of userID
+                    var cacheFriendsToPropertiesMapping = {};
+                    db.User.where('fbID', 'in', fullFriendsQuery).fetchAll().then(function(data2) {
+                        for (var i = 0; i < data2.models.length; i++) {
+                            cacheFriends.push(data2.models[i].attributes);
+                            cacheFriendsAppId.push(data2.models[i].attributes.userID);
+                            cacheFriendsToPropertiesMapping[data2.models[i].attributes.userID] = data2.models[i].attributes;
+                        }
+                        // CACHE
+                        req.user.fbFriends = cacheFriends;
+                        req.user.fbFriendsId = cacheFriendsAppId;
+                        req.user.fbFriendsToPropertyMap = cacheFriendsToPropertiesMapping;
+                        next();
+                    });
                 });
             });
         }

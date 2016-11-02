@@ -342,6 +342,10 @@ textarea {
     color: #fff;
     background-color: #c09f80;
 }
+.message-wanter {
+    padding: 2px 10px!important;
+    color: #fff;
+}
 
 .info-button .btn-want {
     background-color: #c09f80;
