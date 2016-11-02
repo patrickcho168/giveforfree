@@ -530,16 +530,16 @@
                                     <% } %>
                                     <% if (item.numWants > 0) { %>
                                         <ul class="dropdown-menu scrollable-menu" role="menu">
-                                            <li><a href="/api/give/<%= item.itemID %>" style="padding-left: 10px;">Random draw</a></li>
                                             <% for (var i=0; i<manual.length; i++) { %>
                                                 <li class="single-wanter">
                                                     <p><%= manual[i].name %></p>
                                                     <div class="link-box">
-                                                        <a href="/profile/<%= manual[i].userID %>">Profile</a>
-                                                        <a onclick="giveItemConfirm(<%= item.itemID %>, <%= manual[i].userID %>, '<%= manual[i].name %>');" style="cursor: pointer;">Give</a>
+                                                        <a class="view-profile" href="/profile/<%= manual[i].userID %>">View Profile</a>
+                                                        <a class="give-item" onclick="giveItemConfirm(<%= item.itemID %>, <%= manual[i].userID %>, '<%= manual[i].name %>');" style="cursor: pointer;">Give item</a>
                                                     </div>
                                                 </li>
                                             <% } %>
+                                            <li><a onclick="giveItemConfirm(<%= item.itemID %>);" style="padding-left: 10px; margin-top: 10px; background-color: #eee;">Do a random draw</a></li>
                                         </ul>
                                     <% } %>
                                 <% } %>
