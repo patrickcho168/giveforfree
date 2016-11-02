@@ -633,10 +633,10 @@ function giveItemConfirm(itemId, userId, userName) {
     console.log(userName);
     if (userId === undefined) {
         text = 'Are you sure to do a random draw?';
-        url = '/api/give/' + itemId;
+
     } else {
         text = 'Are you sure you want to give this item to ' + userName + '?';
-        url = '/api/give/' + itemId + '/' + userId;
+
     }
     swal({
         title: 'Give item',
@@ -646,33 +646,68 @@ function giveItemConfirm(itemId, userId, userName) {
         closeOnConfirm: false,
     },
     function() {
-        $.get(url)
-            .done(function() {
-                $('.want-button').addClass('hidden');
-                $('.modify-button').addClass('hidden');
-                swal({
-                    title: "Item Given!",
-                    text: "You have successfully given your item!",
-                    type: "success",
-                    showCancelButton: true,
-                    cancelButtonText: 'Close',
-                    confirmButtonText: 'Message Receiver',
-                    closeOnConfirm: false
-                },
-                function(isConfirm) {
-                    if (isConfirm) {
-                        messageUser();
-                    } else {
-                        window.location.href = '/item/' + itemId;
-                    }
+        if (userId === undefined) {
+            url = '/api/give/' + itemId;
+            $.get(url)
+                .done(function(data) {
+                    console.log(data);
+                    $('.want-button').addClass('hidden');
+                    $('.modify-button').addClass('hidden');
+                    swal({
+                        title: "Item Given!",
+                        text: "You have successfully given your item to " + data.winnerName,
+                        type: "success",
+                        showCancelButton: true,
+                        cancelButtonText: 'Close',
+                        confirmButtonText: 'Message Receiver',
+                        closeOnConfirm: false
+                    },
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            messageUser(data.winnerFbId);
+                        } else {
+                            window.location.href = '/item/' + itemId;
+                        }
+                    });
+                })
+                .fail(function() {
+
+                })
+                .always(function() {
+
                 });
-            })
-            .fail(function() {
+        } else {
+            url = '/api/give/' + itemId + '/' + userId;
+            $.get(url)
+                .done(function(data) {
+                    console.log(data);
+                    $('.want-button').addClass('hidden');
+                    $('.modify-button').addClass('hidden');
+                    swal({
+                        title: "Item Given!",
+                        text: "You have successfully given your item!",
+                        type: "success",
+                        showCancelButton: true,
+                        cancelButtonText: 'Close',
+                        confirmButtonText: 'Message Receiver',
+                        closeOnConfirm: false
+                    },
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            messageUser(data.winnerFbId);
+                        } else {
+                            window.location.href = '/item/' + itemId;
+                        }
+                    });
+                })
+                .fail(function() {
 
-            })
-            .always(function() {
+                })
+                .always(function() {
 
-            });
+                });
+        }
+
     });
     // href="/api/give/<%= item.itemID %>/<%= manual[i].userID %>"
 }
