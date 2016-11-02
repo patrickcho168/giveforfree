@@ -858,6 +858,12 @@ fieldset.rating {
     }
 }
 
+@media (max-width: 991px) {
+    .item-info {
+        height: 650px;
+    }
+}
+
 
 @media (max-width: 767px) {
     .main-container {

@@ -206,24 +206,30 @@
 				</div>
 				<div class="col-sm-offset-3 gifts-banner panel">
 					<div class="placeholder">
-						<img src="../images/common/empty-gift.svg" alt="" class="placeholder-img"/>
-						<h3 class="empty-placeholder-text hidden">Take the lead</h3>
+						<div class="total-donation">
+							<img src="../images/home/money.svg" alt="" class="placeholder-img"/>
+							<div class="total-info">
+								<p class="placeholder-text">
+									$
+									<% if (totalDonated) { %>
+										<%- totalDonated.toFixed(2) %>
+									<% } else { %>
+										0
+									<% } %>
+								</p>
+								<p>Raised in total</p>
+							</div>
+						</div>
+						<h3>
+							Join and contribute!
+						</h3>
 						<p class="empty-placeholder-text hidden">
 							There are no gifts in this category yet. <br>
 							Why not be the first to contribute? <br><br>
 							<a class="give-button" type="button" href="/upload">Give a gift</a>
 						</p>
-						<h3 class="placeholder-text">Get a 'FREE' gift today</h3>
-						<p class="placeholder-text">
-							After getting a gift, <br>
-							remember to make a donation!<br>
-						</p>
-						<p> $
-							<% if (totalDonated) { %>
-								<%- totalDonated.toFixed(2) %>
-							<% } else { %>
-								0
-							<% } %> 
+
+						<p>
 						</p>
 					</div>
 				</div>
