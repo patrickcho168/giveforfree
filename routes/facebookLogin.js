@@ -165,7 +165,7 @@ toExport.route = function(app) {
     })
 }
 
-function getAllFbFriends = function(jsonData, friendsQuery, cb) {
+function getAllFbFriends(jsonData, friendsQuery, cb) {
     // GET ALL FRIENDS USING PAGINATION
     if (jsonData.paging && jsonData.paging.next) {
         console.log(jsonData.paging.next);
