@@ -18,7 +18,6 @@ passport.use(new Strategy({
     },
     function(accessToken, refreshToken, profile, cb) {
         profile.accessToken = accessToken;
-        console.log(profile);
         db.User.where({
             fbID: profile.id
         }).fetch().then(function(user) {
@@ -45,8 +44,22 @@ passport.use(new Strategy({
                     return cb(null, profile);
                 })
             } else {
-                profile.appUserId = user.attributes.userID;
-                return cb(null, profile);
+                // Add Email to database
+                if (!user.attributes.email) {
+                    var email = null;
+                    if (profile.emails && profile.emails.length > 0) {
+                        email = profile.emails[0].value;
+                    }
+                    user.save({
+                        email: email
+                    }).then(function(user2) {
+                        profile.appUserId = user2.attributes.userID;
+                        return cb(null, profile);
+                    })
+                } else {
+                    profile.appUserId = user.attributes.userID;
+                    return cb(null, profile);
+                }
             }
         });
     }));
@@ -66,7 +79,6 @@ toExport.route = function(app) {
     app.get('/feed', function(req, res) {
         req.session.lastPageVisit = '/feed';
         db.HomePageTotalDonationQuery(function(totalDonated) {
-            console.log(totalDonated);
             if (req.user === undefined) {
                 res.render('homeLoggedIn', {
                     id: null,

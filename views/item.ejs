@@ -536,6 +536,7 @@
                                                     <div class="link-box">
                                                         <a class="view-profile" href="/profile/<%= manual[i].userID %>">View Profile</a>
                                                         <a class="give-item" onclick="giveItemConfirm(<%= item.itemID %>, <%= manual[i].userID %>, '<%= manual[i].name %>');" style="cursor: pointer;">Give item</a>
+                                                        <a href="javascript:messageUser('<%- manual[i].fbID %>');" class="btn btn-xs message-button message-wanter" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message</a>
                                                     </div>
                                                 </li>
                                             <% } %>
