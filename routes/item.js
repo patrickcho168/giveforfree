@@ -237,34 +237,34 @@ module.exports = function(app) {
             parentComment: req.body.parent
         });
         newComment.save().then(function(comment) {
-            db.Item.where({
-                itemID: itemId
-            }).fetch({withRelated: ['wantedBy']}).then(function(item) {
-                item.related('wantedBy').toJSON().forEach(function(wanter) {
-                    if (userId != wanter.wanterID) {
-                        db.User.where({
-                            userID: wanter.wanterID
-                        }).fetch().then(function(wanterData) {
-                            sendMail(
-                                "Someone commented on " + item.attributes.title+ "!",
-                                "Hi " + wanterData.attributes.name + ",<br><br>Someone has left a comment on " + item.attributes.title + ". Visit <a href='" + config.domain + "/item/" + itemId + "'>" + item.attributes.title + "</a> to see the comment!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
-                                wanterData.attributes.email);
-                        });
-                    }
-                });
+            // db.Item.where({
+            //     itemID: itemId
+            // }).fetch({withRelated: ['wantedBy']}).then(function(item) {
+            //     item.related('wantedBy').toJSON().forEach(function(wanter) {
+            //         if (userId != wanter.wanterID) {
+            //             db.User.where({
+            //                 userID: wanter.wanterID
+            //             }).fetch().then(function(wanterData) {
+            //                 sendMail(
+            //                     "Someone commented on " + item.attributes.title+ "!",
+            //                     "Hi " + wanterData.attributes.name + ",<br><br>Someone has left a comment on " + item.attributes.title + ". Visit <a href='" + config.domain + "/item/" + itemId + "'>" + item.attributes.title + "</a> to see the comment!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
+            //                     wanterData.attributes.email);
+            //             });
+            //         }
+            //     });
 
-                // email only if giver is not the commenter
-                if (userId != item.attributes.giverID) {
-                    db.User.where({
-                        userID: item.attributes.giverID
-                    }).fetch().then(function(giverData) {
-                        sendMail(
-                            "Someone commented on " + item.attributes.title+ "!",
-                            "Hi " + giverData.attributes.name + ",<br><br>Someone has left a comment on " + item.attributes.title + ". Check out your <a href='" + config.domain + "/item/" + itemId + "'>" + item.attributes.title + "</a> to see the comment.<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
-                            giverData.attributes.email);
-                    });
-                }
-            });
+            //     // email only if giver is not the commenter
+            //     if (userId != item.attributes.giverID) {
+            //         db.User.where({
+            //             userID: item.attributes.giverID
+            //         }).fetch().then(function(giverData) {
+            //             sendMail(
+            //                 "Someone commented on " + item.attributes.title+ "!",
+            //                 "Hi " + giverData.attributes.name + ",<br><br>Someone has left a comment on " + item.attributes.title + ". Check out your <a href='" + config.domain + "/item/" + itemId + "'>" + item.attributes.title + "</a> to see the comment.<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
+            //                 giverData.attributes.email);
+            //         });
+            //     }
+            // });
             var newNote = new db.Notification({
                 notificationType: 3,
                 userID: userId,
