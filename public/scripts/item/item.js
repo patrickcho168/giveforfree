@@ -1,5 +1,7 @@
 // Want
 $(document).on("click", ".snag", function() {
+    var fbId = $(this).attr('fbId');
+
     swal({
         title: 'Wanted!',
         text: 'Please wait for giver to make decision on who to give the gift.',
@@ -10,7 +12,7 @@ $(document).on("click", ".snag", function() {
         closeOnConfirm: false
     },
     function() {
-        messageUser();
+        messageUser(fbId);
     });
     var itemId = $(this).attr('itemId');
 
