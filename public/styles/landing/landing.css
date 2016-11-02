@@ -228,6 +228,33 @@ nav .search-button, #nav-search {
     color: #565656;
 }
 
+.howitworks-panel {
+    width: 100%;
+    min-height: 85vh;
+    border: none;
+    background-color: #fffcfa;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5%;
+    padding-top: 15%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.howitworks-panel h2 {
+    margin-bottom: 50px;
+    color: #565656;
+}
+
+.howitworks-panel .glyphicon {
+    color: #c09f80;
+}
+
+.howitworks-panel h4 {
+    color: #565656;
+}
+
 .how-panel {
     width: 100%;
     min-height: 85vh;
