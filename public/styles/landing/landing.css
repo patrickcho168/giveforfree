@@ -264,7 +264,7 @@ nav .search-button, #nav-search {
     }
 
     .login-panel {
-        height: 85vh;
+        height: 600px;
     }
 
     .contact-panel {
@@ -280,7 +280,7 @@ nav .search-button, #nav-search {
     }
 
     .panel-right h2 {
-        margin-top: 35vh;
+        margin-top: 230px;
     }
 
     .line-breaker {
@@ -300,13 +300,17 @@ nav .search-button, #nav-search {
 
 @media (max-width: 500px) {
     .panel-right {
-        width: 80%;
+        width: 85%;
     }
 }
 
 @media (max-width: 359px) {
+    .login-panel {
+        height: 500px;
+    }
+
     .panel-right {
-        width: 85%;
+        width: 90%;
     }
 
     .panel-right .redirect-button {
@@ -314,6 +318,6 @@ nav .search-button, #nav-search {
     }
 
     .panel-right h2 {
-        margin-top: 30vh;
+        margin-top: 190px;
     }
 }
