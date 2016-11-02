@@ -149,7 +149,7 @@ module.exports = function(app){
 						amount: toPay.toString(),
 						primary:'true'
 					},{
-						email:	'giveforfree.payments-facilitator@gmail.com', // Give For Free Payment email
+						email:	'giveforfree.payments@gmail.com', // Give For Free Payment email
 						amount: ours.toString(),
 						primary: 'false'
 					}
