@@ -600,7 +600,7 @@
                                         This giveaway ends on
                                     </p>
                                     <% var deadline = date != "Invalid date" ? moment(date, "D MMMM YYYY HH:mm").format("YYYY-MM-DD") : "" %>
-                                    <input type="text" class="input-txt input-date" name="date" id="date" value="<%= deadline %>" placeholder="Select an end date">
+                                    <input type="text" class="input-txt input-date" name="date" id="date" value="<%= moment(deadline).format('D MMM YYYY') %>" placeholder="Select an end date">
                                 </div>
 
                                 <div class="col-sm-6 category-info category-select-holder">
@@ -691,7 +691,7 @@
                                             This giveaway ends on
                                         </p>
                                         <p class="deadline">
-                                            <%= deadline %>
+                                            <%= moment(deadline).format('D MMM YYYY') %>
                                         </p>
                                         <% } %>
                                     </div>
