@@ -524,7 +524,7 @@
                                                                         <p><%= manual[i].name %><a href="javascript:messageUser('<%- manual[i].fbID %>');" class="message-wanter pull-right" id="facebook-message"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message</a></p>
                                                                         <div class="link-box">
                                                                             <a class="view-profile" href="/profile/<%= manual[i].userID %>">Profile</a>
-                                                                            <a class="give-item" onclick="giveItemConfirm(<%= item.itemID %>, <%= manual[i].userID %>, '<%= manual[i].name %>');" style="cursor: pointer;">Give</a>
+                                                                            <a class="give-item" onclick="giveItemConfirm(<%= item.itemID %>, <%= manual[i].userID %>, '<%= manual[i].name %>', <%= manual[i].fbID %>);" style="cursor: pointer;">Give</a>
                                                                         </div>
                                                                     </div>
                                                                 </li>

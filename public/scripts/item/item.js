@@ -627,10 +627,7 @@ function deleteConfirm(itemId) {
 }
 
 // Give item
-function giveItemConfirm(itemId, userId, userName) {
-    console.log(itemId);
-    console.log(userId);
-    console.log(userName);
+function giveItemConfirm(itemId, userId, userName, wanterFbId) {
     if (userId === undefined) {
         text = 'Are you sure to do a random draw?';
 
@@ -646,11 +643,11 @@ function giveItemConfirm(itemId, userId, userName) {
         closeOnConfirm: false,
     },
     function() {
+        $('#wanter-list').modal('toggle');
         if (userId === undefined) {
             url = '/api/give/' + itemId;
             $.get(url)
                 .done(function(data) {
-                    console.log(data);
                     $('.want-button').addClass('hidden');
                     $('.modify-button').addClass('hidden');
                     swal({
@@ -679,13 +676,12 @@ function giveItemConfirm(itemId, userId, userName) {
         } else {
             url = '/api/give/' + itemId + '/' + userId;
             $.get(url)
-                .done(function(data) {
-                    console.log(data);
+                .done(function() {
                     $('.want-button').addClass('hidden');
                     $('.modify-button').addClass('hidden');
                     swal({
                         title: "Item Given!",
-                        text: "You have successfully given your item!",
+                        text: "You have successfully given your item to " + userName,
                         type: "success",
                         showCancelButton: true,
                         cancelButtonText: 'Close',
@@ -694,7 +690,7 @@ function giveItemConfirm(itemId, userId, userName) {
                     },
                     function(isConfirm) {
                         if (isConfirm) {
-                            messageUser(data.winnerFbId);
+                            messageUser(wanterFbId);
                         } else {
                             window.location.href = '/item/' + itemId;
                         }
