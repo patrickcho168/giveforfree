@@ -106,6 +106,11 @@ module.exports = function(app){
 			sandbox:   sandbox //defaults to false
 		});
 	} else if (config.environment === "PRODUCTION") {
+		console.log(sandbox);
+		console.log(config.paypalUsername);
+		console.log(config.paypalAppId);
+		console.log(config.paypalPassword);
+		console.log(config.paypalSignature);
 		paypalSdk = new Paypal({
 			userId:    config.paypalUsername,
 			appId:     config.paypalAppId,

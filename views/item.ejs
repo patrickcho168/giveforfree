@@ -101,10 +101,6 @@
         //     }
         // }
 
-        $('#facebook-message').unbind('click').bind('click', function (e) {
-            messageUser();
-        });
-
         $('#facebook-receive-share').unbind('click').bind('click', function (e) {
             shareReceiveItem();
         });
@@ -117,25 +113,25 @@
             shareGiveItem();
         });
 
-        function messageUser() {
+        function messageUser(toFbId) {
             if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
                 swal({
                     title: 'Oops!',
-                    text: 'Messaging via Facebook only works on desktop. We are terribly sorry about the inconvenience brought.',
+                    text: 'Messaging via Facebook only works on desktop. We are terribly sorry about the inconvenience caused.',
                 });
             } else {
-                var toId = null;
+                // var toId = toFbId;
 
-                <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                toId = '<%= item.fbID %>';
-                <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                toId = '<%= item.takerFbID %>';
-                <% } %>
-
+                // <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
+                // toId = '<%= item.fbID %>';
+                // <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
+                // toId = '<%= item.takerFbID %>';
+                // <% } %>
+                console.log(toFbId);
                 FB.ui({
                     method: 'send',
                     link: '<%= domain %>/item/<%= item.itemID %>',
-                    to: toId
+                    to: toFbId
                 }, function(response) {});
             }
         }
@@ -181,6 +177,11 @@
         }
 
         $(document).ready(function() {
+
+            // $('#facebook-message').unbind('click').bind('click', function (e) {
+            //     console.log($("#facebook-message").attr("fbid"));
+            //     messageUser($("#facebook-message").attr("fbid"));
+            // });
 
             if (!<%= uploaded === undefined %>) {
                 if (<%= uploaded === 'true' %>) {
@@ -469,7 +470,7 @@
 
                         <% if (loggedIn && !mine && (item.takerID === null || item.takerID === id)) { %>
                             <div class="message-giver">
-                                <a href="javascript:messageUser();" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Giver</a>
+                                <a href="javascript:messageUser('<%- item.fbID %>');" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Giver</a>
                                 <% if (item.takerID === id) { %>
                                     <a href="javascript:shareReceiveItem();" class="btn btn-xs share-button" id="facebook-receive-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
                                 <% } else { %>
@@ -478,7 +479,7 @@
                             </div>
                         <% } else if (loggedIn && mine && item.takerID !== null) { %>
                             <div class="message-giver">
-                                <a href="javascript:messageUser();" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Donor</a>
+                                <a href="javascript:messageUser('<%- item.takerFbID %>');" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Donor</a>
                                 <a href="javascript:shareGiveItem();" class="btn btn-xs share-button" id="facebook-give-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
                             </div>
                         <% } else if (loggedIn && mine) { %>
