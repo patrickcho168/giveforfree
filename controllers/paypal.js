@@ -115,8 +115,7 @@ module.exports = function(app){
 			userId:    config.paypalUsername,
 			appId:     config.paypalAppId,
 			password:  config.paypalPassword,
-			signature: config.paypalSignature,
-			sandbox:   sandbox //defaults to false
+			signature: config.paypalSignature
 		});
 	}
 
