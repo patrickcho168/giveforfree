@@ -143,7 +143,7 @@
         }
 
         function shareGiveItem() {
-            
+
             swal.close();
             // alert("CLICKED SHARE");
             console.log('<%= startDate %>');
@@ -378,24 +378,6 @@
 
     <!-- Start of Page Content -->
     <div class="main-container">
-
-        <!-- Message Flashing -->
-        <!-- Errors -->
-        <!-- <% if (locals.error_messages) {
-            error_messages.forEach(function(message) { %>
-            <div class="alert alert-warning"><strong>Uh-oh! </strong>
-                <%= message %>
-            </div>
-            <% });
-        } %>
-        <% if (locals.success_messages) {
-            success_messages.forEach(function(message) { %>
-            <div class="alert alert-success"><strong>Awesome! </strong>
-                <%= message %>
-            </div>
-            <% });
-
-        } %> -->
         <div class="row panel" style="padding-top: 20px;">
             <ul class="progress-indicator">
                 <li
@@ -453,7 +435,7 @@
                     <div class="item-basic-info">
                         <div class="info-text info-display">
                             <h2><%- item.title %></h2>
-                            <p>$<%= item.donationAmount %> to <%= item.charityName %></p>
+                            <p>Get for FREE with $ <%= item.donationAmount %> donation</p>
                             <div class="category-holder info-display">
                                 <% for (var i=0; i<categories.length; i++) { %>
                                     <span class="category-item"><i class="fa fa-tags"></i> <%= categories[i] %></span>
@@ -466,7 +448,7 @@
                         </div>
 
                         <% if (loggedIn && !mine && (item.takerID === null || item.takerID === id)) { %>
-                            <div class="message-giver">
+                            <div class="message-giver info-display">
                                 <a href="javascript:messageUser('<%- item.fbID %>');" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Giver</a>
                                 <% if (item.takerID === id) { %>
                                     <a href="javascript:shareReceiveItem();" class="btn btn-xs share-button" id="facebook-receive-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
@@ -475,12 +457,12 @@
                                 <% } %>
                             </div>
                         <% } else if (loggedIn && mine && item.takerID !== null) { %>
-                            <div class="message-giver">
+                            <div class="message-giver info-display">
                                 <a href="javascript:messageUser('<%- item.takerFbID %>');" class="btn btn-xs message-button" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message Donor</a>
                                 <a href="javascript:shareGiveItem();" class="btn btn-xs share-button" id="facebook-give-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
                             </div>
                         <% } else if (loggedIn && mine) { %>
-                            <div class="message-giver">
+                            <div class="message-giver info-display">
                                 <a href="javascript:shareGiveItem();" class="btn btn-xs share-button" id="facebook-give-share" style="margin-bottom: 10px;"><i class="fa fa-share-alt-square" aria-hidden="true"></i> Share</a><br>
                             </div>
                         <% } %>
@@ -565,11 +547,12 @@
                         <div class="charity-info info-display">
                             <div class="charity-img pull-left">
                                 <img src="../images/upload/charity<%= item.charityID %>.png" alt="" />
+
                             </div>
                             <div class="charity-details info-display">
                                 <p>
                                     <% if (item.donatedAmount === null || item.donatedAmount < item.donationAmount) { %>
-                                        Donation will go to
+                                        Your donation will go to
                                     <% } else { %>
                                         $<%= item.donatedAmount %> has been donated to
                                     <% } %>
@@ -623,7 +606,7 @@
                                 <div class="col-sm-6 category-info category-select-holder">
                                     <h2>Category</h2>
 
-                                    <p>
+                                    <p class="subtitle">
                                     Select the most appropriate category. <span class="no-category-alert hidden" style="color: #f05050;">You need to choose a category.</span>
                                     <!-- TODO: implement validation-->
                                     </p>
