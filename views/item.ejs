@@ -538,7 +538,7 @@
                                                     </div>
                                                 </li>
                                             <% } %>
-                                            <li><a href="/api/give/<%= item.itemID %>" style="padding-left: 10px;">Do a random draw</a></li>
+                                            <li><a onclick="giveItemConfirm(<%= item.itemID %>);" style="padding-left: 10px; margin-top: 10px; background-color: #eee;">Do a random draw</a></li>
                                         </ul>
                                     <% } %>
                                 <% } %>
