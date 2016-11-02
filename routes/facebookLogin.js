@@ -65,29 +65,33 @@ toExport.route = function(app) {
     // HOME PAGE
     app.get('/feed', function(req, res) {
         req.session.lastPageVisit = '/feed';
-        if (req.user === undefined) {
-            res.render('homeLoggedIn', {
-                id: null,
-                loggedIn: false
-            });
-        } else {
-            var userId = req.user.appUserId;
-            db.User.where({
-                userID: userId
-            }).fetch().then(function(user) {
+        db.HomePageTotalDonationQuery(function(totalDonated) {
+            console.log(totalDonated);
+            if (req.user === undefined) {
                 res.render('homeLoggedIn', {
-                    notification: req.session.notification,
-                    moment: moment,
-                    id: userId,
-                    user: user.attributes,
-                    loggedIn: true
+                    id: null,
+                    loggedIn: false,
+                    totalDonated: totalDonated ? totalDonated[0].totalDonatedAmount : 0
                 });
-            });
-        }
+            } else {
+                var userId = req.user.appUserId;
+                db.User.where({
+                    userID: userId
+                }).fetch().then(function(user) {
+                    res.render('homeLoggedIn', {
+                        notification: req.session.notification,
+                        moment: moment,
+                        id: userId,
+                        user: user.attributes,
+                        loggedIn: true,
+                        totalDonated: totalDonated ? totalDonated[0].totalDonatedAmount : 0
+                    });
+                });
+            }
+        })
     });
 
     app.get('/', function(req, res) {
-        req.session.lastPageVisit = '/feed';
         if (req.user === undefined) {
             res.render('loginSS', {
                 user: null,
@@ -109,6 +113,14 @@ toExport.route = function(app) {
             });
         }
     });
+
+    app.get('/login', function(req,res) {
+        var redirectPage = req.query.redirect;
+        if (redirectPage) {
+            req.session.lastPageVisit = redirectPage;
+        }
+        res.redirect('/login/facebook');
+    })
 
     app.get('/login/facebook',
         passport.authenticate('facebook', {

@@ -47,13 +47,17 @@ $(document).ready(function() {
     $('.faq-progress').on('click', function() {
         window.location.hash = '#faq';
     });
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        $("#howitworksimg").attr("src", "/images/landing/howitworks.png");
+    }
 })
 
 // send user to facebook login
 $(document).on('click', '.btn-give-no-login', function(e) {
     e.preventDefault();
     swal({
-        title: 'Login with Facebook to donate!',
+        title: 'Login with Facebook!',
         text: 'You need to login to donate a gift',
         showCancelButton: true,
         closeOnConfirm: false,
@@ -61,6 +65,6 @@ $(document).on('click', '.btn-give-no-login', function(e) {
         imageUrl: "../../images/common/gff-logo-s.svg",
     },
     function() {
-        window.location.href = "/login/facebook";
+        window.location.href = "/login?redirect=/upload";
     });
 });

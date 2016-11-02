@@ -101,9 +101,9 @@
                     <i class="fa fa-bars"></i>
                 </button>
 
-                <button type="button" class="navbar-toggle collapsed category-button" aria-expanded="false">
+                <!-- <button type="button" class="navbar-toggle collapsed category-button" aria-expanded="false">
                     <i class="fa fa-filter"></i>
-                </button>
+                </button> -->
             </div>
 
             <div class="collapse navbar-collapse" id="nav-menu">
@@ -159,8 +159,9 @@
                 <div class="panel-right">
                     <h2>Give For Free</h2>
                     <p class="slogan">
-                        Give and receive pre-loved goods <br>
-                        and <b>help a charity</b> along the way!
+                        Donate your pre-loved items <br>
+                        or get others' pre-loved items. <br>
+                        Either way, you're <b>helping a charity</b>!
                     </p>
                     <!-- TODO: link to different pages -->
 
@@ -171,155 +172,173 @@
                         <a href="/upload" class="redirect-button give-button btn-give-no-login"><i class="fa fa-heart"></i> Donate gift</a>
                     <% } %>
                     <a onclick='clickUserGuide();'><p class="user-guide">
-                        Using it for the first time? Get some tips below <i class="fa fa-arrow-circle-o-down"></i>
+                        First time user? Get some tips below <i class="fa fa-arrow-circle-o-down"></i>
                     </p></a>
                 </div>
             </div>
         </div>
 
             <!-- Section 2: How it works -->
-        <div class="panel what-panel" id="how">
+        <div class="panel howitworks-panel" id="how">
 
-            <ul class="progress-indicator">
+            <ul class="progress-indicator" style="margin:0 0 8em;">
                 <li class="active how-progress">
                     <span class="bubble"></span>
-                    <h6>How To Donate Gifts</h6>
+                    <h6>How It Works</h6>
                 </li>
                 <li class="who-progress">
                     <span class="bubble"></span>
-                    <h6>How To Buy Gifts</h6>
+                    <h6>Who We Are</h6>
                 </li>
                 <li class="charity-progress">
                     <span class="bubble"></span>
-                    <h6>Who We Are</h6>
+                    <h6>Partner Charities</h6>
                 </li>
                 <li class="faq-progress">
                     <span class="bubble"></span>
-                    <h6>Partner Charities</h6>
+                    <h6>Rules</h6>
                 </li>
             </ul>
 
                 <!-- Introduction -->
-                <h2>How To Donate Gifts</h2>
                 <div class="row">
                     <div>
-                        <img src="../images/landing/give4.png" style="max-width:100%; max-height:100%;"></img>
+                        <img id="howitworksimg" src="/images/landing/howitworks-desktop.png" style="max-width:1000px; width:100%;"></img>
                     </div>
                 </div>
         </div>
 
         <!-- Section 3: Who We Are -->
-        <div class="penel what-panel" id="who">
+        <div class="panel what-panel" id="who">
 
-            <ul class="progress-indicator">
+            <ul class="progress-indicator" style="margin:0 0 8em;">
                 <li class="how-progress">
                     <span class="bubble"></span>
-                    <h6>How To Donate Gifts</h6>
+                    <h6>How It Works</h6>
                 </li>
                 <li class="active who-progress">
                     <span class="bubble"></span>
-                    <h6>How To Buy Gifts</h6>
+                    <h6>Who We Are</h6>
                 </li>
                 <li class="charity-progress">
                     <span class="bubble"></span>
-                    <h6>Who We Are</h6>
+                    <h6>Partner Charities</h6>
                 </li>
                 <li class="faq-progress">
                     <span class="bubble"></span>
-                    <h6>Partner Charities</h6>
+                    <h6>Rules</h6>
                 </li>
             </ul>
 
                 <!-- Introduction -->
-                <h2>How To Buy Gifts</h2>
                 <div class="row">
-                    <img src="../images/landing/get4.png" style="max-width:100%; max-height:100%;"></img>
+
+                    <p>Give For Free raises funds for your favorite charity - with a TWIST.</p><br>
+                    <p>Instead of donating money, post your preloved items on our platform.</p><br>
+                    <p>Anyone who 'buys' your items pays the money directly to your chosen charity.</p><br>
+                    <p>You can shop for items here too. Simply donate to a charity to 'buy' the item.</p><br>
+                    <p><b>Charities benefit. You benefit. The Environment benefits.</b></p>
+
                 </div>
         </div>
 
         <!-- Section 4: Partner Charities -->
-        <div class="penel what-panel" id="charity">
+        <div class="panel what-panel" id="charity">
 
-            <ul class="progress-indicator">
+            <ul class="progress-indicator" style="margin:0 0 8em;">
                 <li class="how-progress">
                     <span class="bubble"></span>
-                    <h6>How To Donate Gifts</h6>
+                    <h6>How It Works</h6>
                 </li>
                 <li class="who-progress">
                     <span class="bubble"></span>
-                    <h6>How To Buy Gifts</h6>
+                    <h6>Who We Are</h6>
                 </li>
                 <li class="active charity-progress">
                     <span class="bubble"></span>
-                    <h6>Who We Are</h6>
+                    <h6>Partner Charities</h6>
                 </li>
                 <li class="faq-progress">
                     <span class="bubble"></span>
-                    <h6>Partner Charities</h6>
+                    <h6>Rules</h6>
                 </li>
             </ul>
 
-                <!-- Introduction -->
-                <h2>Who We Are</h2>
-                <div class="row">
+            <!-- Introduction -->
+            <div class="row">
 
-                    <h4>Give For Free raises funds for your favorite charity - with a TWIST.</h4><br>
-                    <h4>Instead of donating money, post your preloved items on our platform.</h4><br>
-                    <h4>Anyone who 'buys' your items pays the money directly to your chosen charity.</h4><br>
-                    <h4>You can shop for items here too. Simply donate to a charity to 'buy' the item.</h4><br>
-                    <h4><b>Charities benefit. You benefit. The Environment benefits.</b></h4>
-
-                </div>
-        </div>
-
-        <!-- Section 5: FAQ -->
-        <div class="penel what-panel" id="faq">
-
-            <ul class="progress-indicator">
-                <li class="how-progress">
-                    <span class="bubble"></span>
-                    <h6>How It Donate Gifts</h6>
-                </li>
-                <li class="who-progress">
-                    <span class="bubble"></span>
-                    <h6>How To Buy Gifts</h6>
-                </li>
-                <li class="charity-progress">
-                    <span class="bubble"></span>
-                    <h6>Who We Are</h6>
-                </li>
-                <li class="active faq-progress">
-                    <span class="bubble"></span>
-                    <h6>Partner Charities</h6>
-                </li>
-            </ul>
-
-                <!-- Introduction -->
-                <h2>Partner Charities</h2>
-                <div class="row">
-
-                <div class="col-sm-6 contact-item">
+                <div class="contact-item">
                     <div class="col-sm-4">
                         <img src="/images/upload/charity1.png" style="width:100%; max-width:130px"/>
                         <!-- <span class="glyphicon glyphicon-bullhorn" id="bullhorn-icon" aria-hidden="true"></span> -->
                     </div>
                     <div class="col-sm-8 teammate-description">
                         <h3> SPCA </h3>
-                        <p> SPCA helps animals. </p>
+                        <p> The SPCA is a not-for-profit, community-based charity. We do not receive funding from the government and rely on public donations and other fundraising (such as merchandise sales) to assist with the operations of our animal shelter and clinic, support the work of our Inspectorate and animal rescue services, as well as other initiatives such as our foster care programme, sterilisation programme for community animals and education and outreach efforts.</p><br><br><br><br>
                     </div>
                 </div>
 
-                <div class="col-sm-6 contact-item">
-                    <div class="col-sm-4">
-                        <img src="/images/upload/charity2.png" style="width:100%; max-width:130px"/>
-                        <!-- <span class="glyphicon glyphicon-blackboard" id="blackboard-icon" aria-hidden="true"></span> -->
-                    </div>
-                    <div class="col-sm-8 teammate-description">
-                        <h3> Red Cross </h3>
-                        <p> Red Cross helps humans. </p>
+                <div class="contact-item">
+                    <div class="teammate-description">
+                        <center>
+
+                            <h3> More Charities Coming Soon! </h3>
+                            <p> Can't find a charity you like? <a href="mailto:giveforfreefeedback@gmail.com"><i class="fa fa-envelope"></i> Email us</a>!</p>
+                        </center>
                     </div>
                 </div>
+            </div>
+        </div>
+                
 
+        <!-- Section 5: FAQ -->
+        <div class="panel what-panel" id="faq">
+
+            <ul class="progress-indicator" style="margin:0 0 8em;">
+                <li class="how-progress">
+                    <span class="bubble"></span>
+                    <h6>How It Works</h6>
+                </li>
+                <li class="who-progress">
+                    <span class="bubble"></span>
+                    <h6>Who We Are</h6>
+                </li>
+                <li class="charity-progress">
+                    <span class="bubble"></span>
+                    <h6>Partner Charities</h6>
+                </li>
+                <li class="active faq-progress">
+                    <span class="bubble"></span>
+                    <h6>Rules</h6>
+                </li>
+            </ul>
+
+            <!-- Introduction -->
+            <div class="row">
+
+                <ol style="text-align:left">
+                    <li>
+                        For any grievances, please inform admin at giveforfreefeedback@gmail.com. Please do not post your grievances on the platform. This is to prevent members from debating and breaking the joy of giving.
+                    </li>
+                    <li>
+                        All prices shown will be paid directly to the charity. Postage and handling fees, if any, should be specified separately in the item description.
+                    </li>
+                    <li>
+                        No monetary exchange is allowed between members on Give For Free. If there is suspicion on price or request for cash on delivery, please inform admin.
+                    </li>
+                    <li>
+                        No begging / pestering / touting / spamming members. Report any such activities to admin immediately.
+                    </li>
+                    <li>
+                        Please donate promptly once a gift has been given to you. If the donation is not made within 24 hours, giver can inform admin to give the gift to someone else instead.
+                    </li>
+                    <li>
+                        Similarly, please deliver gift promptly after donation has been made. 
+                    </li>
+                    <li>
+                        Admin reserves the right to remove any items on the platform or ban members who do not follow these rules.
+                    </li>
+                </ol>
             </div>
         </div>
 

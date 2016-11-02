@@ -213,10 +213,17 @@
 							Why not be the first to contribute? <br><br>
 							<a class="give-button" type="button" href="/upload">Give a gift</a>
 						</p>
-						<h3 class="placeholder-text">Receive a gift today</h3>
+						<h3 class="placeholder-text">Get a 'FREE' gift today</h3>
 						<p class="placeholder-text">
-							After receiving a gift, <br>
-							do remember to give a donation ;)<br>
+							After getting a gift, <br>
+							remember to make a donation!<br>
+						</p>
+						<p> $
+							<% if (totalDonated) { %>
+								<%- totalDonated.toFixed(2) %>
+							<% } else { %>
+								0
+							<% } %> 
 						</p>
 					</div>
 				</div>

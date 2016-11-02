@@ -626,15 +626,25 @@ function deleteConfirm(itemId) {
 
 // Give item
 function giveItemConfirm(itemId, userId, userName) {
+    console.log(itemId);
+    console.log(userId);
+    console.log(userName);
+    if (userId === undefined) {
+        text = 'Are you sure to do a random draw?';
+        url = '/api/give/' + itemId;
+    } else {
+        text = 'Are you sure you want to give this item to ' + userName + '?';
+        url = '/api/give/' + itemId + '/' + userId;
+    }
     swal({
         title: 'Give item',
-        text: 'Are you sure you want to give this item to ' + userName + '?',
+        text: text,
         type: 'warning',
         showCancelButton: true,
         closeOnConfirm: false,
     },
     function() {
-        $.get('/api/give/' + itemId + '/' + userId)
+        $.get(url)
             .done(function() {
                 $('.want-button').addClass('hidden');
                 $('.modify-button').addClass('hidden');
@@ -647,8 +657,12 @@ function giveItemConfirm(itemId, userId, userName) {
                     confirmButtonText: 'Message Receiver',
                     closeOnConfirm: false
                 },
-                function() {
-                    messageUser();
+                function(isConfirm) {
+                    if (isConfirm) {
+                        messageUser();
+                    } else {
+                        window.location.href = '/item/' + itemId;
+                    }
                 });
             })
             .fail(function() {
