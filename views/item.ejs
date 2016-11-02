@@ -499,28 +499,45 @@
                             <div class="info-button want-button">
                                 <% if (manual.length > 0) { %>
                                     <% if (!expired) { %>
-                                        <a type="button" class="btn btn-lg btn-block dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a type="button" class="btn btn-lg btn-block dropdown-toggle view-wanter" data-toggle="modal" data-target="#wanter-list">
                                             Give <span class="badge"><%= item.numWants %> <% if (item.numWants == 1) { %>wanter<% } else { %>wanters<% } %></span>
                                         </a>
                                     <% } else { %>
-                                        <a type="button" class="btn btn-lg btn-block dropdown-toggle view-wanter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a type="button" class="btn btn-lg btn-block dropdown-toggle view-wanter" data-toggle="modal" data-target="#wanter-list">
                                             Give <span class="badge"><%= item.numWants %> <% if (item.numWants == 1) { %>wanter<% } else { %>wanters<% } %></span>
                                         </a>
                                     <% } %>
                                     <% if (item.numWants > 0) { %>
-                                        <ul class="dropdown-menu scrollable-menu" role="menu">
-                                            <% for (var i=0; i<manual.length; i++) { %>
-                                                <li class="single-wanter">
-                                                    <p><%= manual[i].name %></p>
-                                                    <div class="link-box">
-                                                        <a class="view-profile" href="/profile/<%= manual[i].userID %>">View Profile</a>
-                                                        <a class="give-item" onclick="giveItemConfirm(<%= item.itemID %>, <%= manual[i].userID %>, '<%= manual[i].name %>');" style="cursor: pointer;">Give item</a>
-                                                        <a href="javascript:messageUser('<%- manual[i].fbID %>');" class="btn btn-xs message-button message-wanter" id="facebook-message" style="margin-bottom: 10px;"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message</a>
+                                        <div class="modal fade" id="wanter-list" tabindex="-1" role="dialog">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">Choose a receiver</h4>
                                                     </div>
-                                                </li>
-                                            <% } %>
-                                            <li><a onclick="giveItemConfirm(<%= item.itemID %>);" style="padding-left: 10px; margin-top: 10px; background-color: #eee;">Do a random draw</a></li>
-                                        </ul>
+                                                    <div class="modal-body">
+                                                        <ul class="list-group">
+                                                            <% for (var i=0; i<manual.length; i++) { %>
+                                                                <li class="single-wanter list-group-item">
+                                                                    <img src="https://graph.facebook.com/<%= manual[i].fbID %>/picture" alt="" class="wanter-img pull-left"/>
+                                                                    <div class="person-info-box">
+                                                                        <p><%= manual[i].name %><a href="javascript:messageUser('<%- manual[i].fbID %>');" class="message-wanter pull-right" id="facebook-message"><i class="fa fa-facebook-official" aria-hidden="true"></i> Message</a></p>
+                                                                        <div class="link-box">
+                                                                            <a class="view-profile" href="/profile/<%= manual[i].userID %>">Profile</a>
+                                                                            <a class="give-item" onclick="giveItemConfirm(<%= item.itemID %>, <%= manual[i].userID %>, '<%= manual[i].name %>');" style="cursor: pointer;">Give</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            <% } %>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default close-modal" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn random-draw" onclick="giveItemConfirm(<%= item.itemID %>);">Random draw!</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     <% } %>
                                 <% } %>
                             </div>

@@ -333,18 +333,31 @@ textarea {
 }
 
 .view-profile {
-    padding: 2px 10px!important;
-    color: #fff;
-    background-color: #76322f;
+    padding: 0!important;
+    border: 1px solid #565656!important;
+    color: #565656!important;
+    padding: 0px 10px!important;
 }
 .give-item {
-    padding: 2px 10px!important;
-    color: #fff;
-    background-color: #c09f80;
+    padding: 0!important;
+    border: 1px solid #565656!important;
+    color: #565656!important;
+    padding: 0px 10px!important;
+}
+.random-draw {
+
+}
+.view-profile:hover {
+    background-color: #565656;
+    color: #fff!important;
+}
+.give-item:hover {
+    background: #565656;
+    color: #fff!important;
 }
 .message-wanter {
-    padding: 2px 10px!important;
-    color: #fff;
+    padding: 0!important;
+    color: #3b5998!important;
 }
 
 .info-button .btn-want {
@@ -570,6 +583,13 @@ textarea {
     margin-bottom: 5px;
 }
 
+.single-wanter {
+    padding: 20px 15px;
+    border-radius: 0px!important;
+    border-left: none!important;
+    border-right: none!important;
+}
+
 .single-wanter p {
     margin-left: 10px;
     color: #565656!important;
@@ -579,9 +599,17 @@ textarea {
 }
 
 .single-wanter .link-box {
-    width: 100%;
+    margin-top: 10px;
     display: flex;
     flex-direction: row;
+}
+
+.person-info-box {
+    margin-left: 50px;
+}
+
+.person-info-box p {
+    margin-bottom: 0px;
 }
 
 .single-wanter .link-box a {
@@ -850,6 +878,43 @@ fieldset.rating {
 .donation-edit .money-input p {
     font-size: 12px;
     line-height: 12px;
+}
+
+/*for modal*/
+.modal-content {
+    border-radius: 4px;
+    border: none;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.modal-content .modal-header, .modal-content .modal-footer {
+    border: none;
+}
+
+.modal-body {
+    padding: 0px;
+}
+
+.modal-footer {
+    padding-top: 0px;
+}
+
+.modal-footer .close-modal {
+    border: none;
+    background: #888;
+    color: #fff;
+}
+
+.modal-footer .random-draw {
+    border: none;
+    background: #c09f80;
+    color: #fff;
+}
+
+.wanter-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 500px;
 }
 
 @media (min-width: 769px) {
