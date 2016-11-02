@@ -120,13 +120,8 @@
                     text: 'Messaging via Facebook only works on desktop. We are terribly sorry about the inconvenience caused.',
                 });
             } else {
-                // var toId = toFbId;
+                swal.close();
 
-                // <% if (loggedIn && (item.takerID === null || item.takerID === id)) { %>
-                // toId = '<%= item.fbID %>';
-                // <% } else if (loggedIn && item.giverID === id && item.takerID !== null) { %>
-                // toId = '<%= item.takerFbID %>';
-                // <% } %>
                 console.log(toFbId);
                 FB.ui({
                     method: 'send',
@@ -148,6 +143,8 @@
         }
 
         function shareGiveItem() {
+            
+            swal.close();
             // alert("CLICKED SHARE");
             console.log('<%= startDate %>');
             <% if (item.takerID !== null) { %>
