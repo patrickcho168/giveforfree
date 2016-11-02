@@ -164,9 +164,9 @@ function addRealViews(html) {
                         html += '</a>';
                         html += '<p>';
                         if (value.donationAmount % 1 == 0) {
-                            html += '<span style="inline-block"><img src="../images/upload/charity' + value.charityID + '.png" alt="" class="small-charity-logo" /> $' + value.donationAmount;
+                            html += '<span style="inline-block"><img src="../images/upload/charity' + value.charityID + '.png" alt="" class="small-charity-logo" /> $' + value.donationAmount + " donation";
                         } else {
-                            html += '<span style="inline-block"><img src="../images/upload/charity' + value.charityID + '.png" alt="" class="small-charity-logo" /> $' + value.donationAmount.toFixed(2);
+                            html += '<span style="inline-block"><img src="../images/upload/charity' + value.charityID + '.png" alt="" class="small-charity-logo" /> $' + value.donationAmount.toFixed(2) + " donation";
                         }
                         html += '</span>';
                         if (value.meWant) {

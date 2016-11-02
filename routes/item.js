@@ -436,6 +436,9 @@ module.exports = function(app) {
                                     userID: userId
                                 });
                                 newNote.save();
+                                res.json({
+                                    winner: wantUserId
+                                })
                             }
                         })
                     }
