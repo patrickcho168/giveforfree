@@ -55,30 +55,52 @@ var parseForm = bodyParser.urlencoded({ extended: true, limit: '50mb' });
 
 module.exports = function(app) {
 
-    // -------------- DONATE
+    // DONATE
 
-    // app.post('/api/item/donate/:id', ensureLogin.ensureLoggedIn(), function(req, res) {
-    //     var userId = parseInt(req.user.appUserId);
-    //     var itemId = parseInt(req.params.id);
-    //     db.Item.where({
-    //         itemID: itemId,
-    //         takerID: userId,
-    //     }).fetch().then(function(itemData) {
-    //         if (itemData && itemData.attributes && itemData.attributes.giverID !== null) {
-    //             itemData.save({
-    //                 donatedAmount: itemData.attributes.donationAmount,
-    //             })
-    //             var newNote = new db.Notification({
-    //                 timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
-    //                 active: 1,
-    //                 notificationType: 6,
-    //                 itemID: itemId,
-    //                 userID: userId
-    //             });
-    //             newNote.save();
-    //         }
-    //     })
-    // })
+    app.post('/api/item/donate/:id', ensureLogin.ensureLoggedIn(), function(req, res) {
+        var userId = parseInt(req.user.appUserId);
+        var itemId = parseInt(req.params.id);
+        db.Item.where({
+            itemID: itemId,
+            takerID: userId,
+        }).fetch().then(function(itemData) {
+            if (itemData && itemData.attributes && itemData.attributes.giverID !== null) {
+                itemData.save({
+                    donatedAmount: itemData.attributes.donationAmount,
+                })
+
+                db.User.where({
+                    userID: itemData.attributes.takerID
+                }).fetch().then(function(takerData) {
+                    db.User.where({
+                        userID: itemData.attributes.giverID
+                    }).fetch().then(function(giverData) {
+                        // Email the giver
+                        sendMail(
+                            "The donation for " + itemData.attributes.title + " has been received!",
+                            "Hi " + giverData.attributes.name + ",<br><br>" + takerData.attributes.name + " has donated " + itemData.attributes.donationAmount + " for " + itemData.attributes.title + ". Please arrange for the item to be given to the donor. Thank you!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
+                            giverData.attributes.email);
+
+                        // Email the donor
+
+                        sendMail(
+                            "The donation for " + itemData.attributes.title + " has been received!",
+                            "Hi " + takerData.attributes.name + ",<br><br>Your donation of " + itemData.attributes.donationAmount + " for " + itemData.attributes.title + "has been received. Please contact " + giverData.attributes.name + " to receive your item! Thank you!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
+                            giverData.attributes.email);
+                    });
+                });
+
+                var newNote = new db.Notification({
+                    timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+                    active: 1,
+                    notificationType: 6,
+                    itemID: itemId,
+                    userID: userId
+                });
+                newNote.save();
+            }
+        })
+    })
 
     // -------------- DELIVERED
 
@@ -100,8 +122,8 @@ module.exports = function(app) {
                     console.log(giverData);
                     // Email the giver
                     sendMail(
-                        "Your item has been delivered!",
-                        "Hi " + giverData.attributes.name + ",<br><br>Thank you for your contribution to the site. We hope to see you again!<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                        itemData.attributes.title + " has been delivered!",
+                        "Hi " + giverData.attributes.name + ",<br><br>Thank you for your contribution to the site. We hope to see you again!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
                         giverData.attributes.email);
                 })
 
@@ -111,8 +133,8 @@ module.exports = function(app) {
                     console.log(takerData);
                     // Email the giver
                     sendMail(
-                        "You have received your item!",
-                        "Hi " + giverData.attributes.name + ",<br><br>Thank you for your donation. We hope to see you again!<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                        "You have received " + itemData.attributes.title + "!",
+                        "Hi " + giverData.attributes.name + ",<br><br>Thank you for your donation. We hope to see you again!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
                         takerData.attributes.email);
                 })
 
@@ -225,7 +247,7 @@ module.exports = function(app) {
                         }).fetch().then(function(wanterData) {
                             sendMail(
                                 "Someone commented on " + item.attributes.title+ "!",
-                                "Hi " + wanterData.attributes.name + ",<br><br>Someone has left a comment on " + item.attributes.title + ". Visit the <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to see the comment!<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                                "Hi " + wanterData.attributes.name + ",<br><br>Someone has left a comment on " + item.attributes.title + ". Visit <a href='" + config.domain + "/item/" + itemId + "'>" + item.attributes.title + "</a> to see the comment!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
                                 wanterData.attributes.email);
                         });
                     }
@@ -237,8 +259,8 @@ module.exports = function(app) {
                         userID: item.attributes.giverID
                     }).fetch().then(function(giverData) {
                         sendMail(
-                            "Someone commented on your item page!",
-                            "Hi " + giverData.attributes.name + ",<br><br>Someone has left a comment on " + item.attributes.title + ". Check out your <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to see the comment.<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                            "Someone commented on " + item.attributes.title+ "!",
+                            "Hi " + giverData.attributes.name + ",<br><br>Someone has left a comment on " + item.attributes.title + ". Check out your <a href='" + config.domain + "/item/" + itemId + "'>" + item.attributes.title + "</a> to see the comment.<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
                             giverData.attributes.email);
                     });
                 }
@@ -390,7 +412,7 @@ module.exports = function(app) {
                                         }).fetch().then(function(wanterData) {
                                             sendMail(
                                                 data.attributes.title+ " has been given away!",
-                                                "Hi " + wanterData.attributes.name + ",<br><br>Unfortunately, you didn't get picked to receive " + data.attributes.title + ". Visit the <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to who got picked! You can also look for another item on <a href='" + config.domain + "'>GiveForFree</a>.<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                                                "Hi " + wanterData.attributes.name + ",<br><br>Unfortunately, you didn't get picked to receive " + data.attributes.title + ". Visit this <a href='" + config.domain + "/item/" + itemId + "'>page</a> to who got picked! You can also look for another item on <a href='" + config.domain + "'>GiveForFree</a>.<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
                                                 wanterData.attributes.email);
                                         });
                                     } else {
@@ -399,7 +421,7 @@ module.exports = function(app) {
                                         }).fetch().then(function(wanterData) {
                                             sendMail(
                                                 "You have been picked to receive " + data.attributes.title,
-                                                "Hi " + wanterData.attributes.name + ",<br><br>Congratulations! You were picked to receive " + data.attributes.title + ". Visit the <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to make your donation.<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                                                "Hi " + wanterData.attributes.name + ",<br><br>Congratulations! You were picked to receive " + data.attributes.title + ". Visit this <a href='" + config.domain + "/item/" + itemId + "'>page</a> to make your donation.<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
                                                 wanterData.attributes.email);
                                         });
                                         
@@ -456,7 +478,7 @@ module.exports = function(app) {
                                         }).fetch().then(function(wanterData) {
                                             sendMail(
                                                 data.attributes.title+ " has been given away!",
-                                                "Hi " + wanterData.attributes.name + ",<br><br>Unfortunately, you didn't get picked to receive " + data.attributes.title + ". Visit the <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to who got picked! You can also look for another item on <a href='" + config.domain + "'>GiveForFree</a>.<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                                                "Hi " + wanterData.attributes.name + ",<br><br>Unfortunately, you didn't get picked to receive " + data.attributes.title + ". Visit the <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to who got picked! You can also look for another item on <a href='" + config.domain + "'>GiveForFree</a>.<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
                                                 wanterData.attributes.email);
                                         });
                                     } else {
@@ -465,7 +487,7 @@ module.exports = function(app) {
                                         }).fetch().then(function(wanterData) {
                                             sendMail(
                                                 "You have been picked to receive " + data.attributes.title,
-                                                "Hi " + wanterData.attributes.name + ",<br><br>Congratulations! You were picked to receive " + data.attributes.title + ". Visit the <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to make your donation.<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                                                "Hi " + wanterData.attributes.name + ",<br><br>Congratulations! You were picked to receive " + data.attributes.title + ". Visit the <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to make your donation.<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
                                                 wanterData.attributes.email);
                                         });
                                         
@@ -559,7 +581,7 @@ module.exports = function(app) {
 
                                         sendMail(
                                             "Someone is interested in your item!",
-                                            "Hi " + giverData.attributes.name + ",<br><br>It seems like someone is interested in " + item.attributes.title + ". Check out your <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to see who it is!<br><br>Patrick Cho<br><strong>GiveForFree Founder</strong><br>giveforfree.sg",
+                                            "Hi " + giverData.attributes.name + ",<br><br>It seems like someone is interested in " + item.attributes.title + ". Check out your <a href='" + config.domain + "/item/" + itemId + "'>item page</a> to see who it is!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
                                             giverData.attributes.email);
                                     })                                 
                                     var newNote = new db.Notification({
