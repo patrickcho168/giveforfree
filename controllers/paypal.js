@@ -2,6 +2,36 @@ var Paypal = require('paypal-adaptive');
 var ipn = require('paypal-ipn');
 var db = require('../models/db');
 var config = require('../config');
+var nodemailer = require('nodemailer');
+var moment = require('moment');
+
+// instantiate mail transporter
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    pool: true,
+    auth: {
+        user: config.emailuser,
+        pass: config.pass 
+    }
+});
+
+function sendMail(subj, msg, receiverEmail) {
+    // create mail using provided message
+    var mailOptions = {
+        from: '"GiveForFree" <giveforfreefeedback@gmail.com>', // sender address
+        to: receiverEmail, // list of receivers
+        subject: subj, // Subject line
+        html: msg
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error) {
+            return console.log(error);
+        }
+        console.log('Message sent: ' + info.response);
+    });
+}
 
 module.exports = function(app){
     var express = require('express');
