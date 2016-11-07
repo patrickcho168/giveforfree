@@ -141,7 +141,7 @@ module.exports = function(app){
                                         sendMail(
                                             "The donation for " + itemData.attributes.title + " has been received!",
                                             "Hi " + takerData.attributes.name + ",<br><br>Your donation of $" + itemData.attributes.donationAmount + " for " + itemData.attributes.title + "has been received. Please contact " + giverData.attributes.name + " to receive your item! Thank you!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
-                                            giverData.attributes.email);
+                                            takerData.attributes.email);
                                     });
                                 });
 
