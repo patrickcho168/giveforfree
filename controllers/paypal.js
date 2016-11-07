@@ -133,14 +133,14 @@ module.exports = function(app){
                                         // Email the giver
                                         sendMail(
                                             "The donation for " + itemData.attributes.title + " has been received!",
-                                            "Hi " + giverData.attributes.name + ",<br><br>" + takerData.attributes.name + " has donated " + itemData.attributes.donationAmount + " for " + itemData.attributes.title + ". Please arrange for the item to be given to the donor. Thank you!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
+                                            "Hi " + giverData.attributes.name + ",<br><br>" + takerData.attributes.name + " has donated $" + itemData.attributes.donationAmount + " for " + itemData.attributes.title + ". Please arrange for the item to be given to the donor. Thank you!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
                                             giverData.attributes.email);
 
                                         // Email the donor
 
                                         sendMail(
                                             "The donation for " + itemData.attributes.title + " has been received!",
-                                            "Hi " + takerData.attributes.name + ",<br><br>Your donation of " + itemData.attributes.donationAmount + " for " + itemData.attributes.title + "has been received. Please contact " + giverData.attributes.name + " to receive your item! Thank you!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
+                                            "Hi " + takerData.attributes.name + ",<br><br>Your donation of $" + itemData.attributes.donationAmount + " for " + itemData.attributes.title + "has been received. Please contact " + giverData.attributes.name + " to receive your item! Thank you!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
                                             giverData.attributes.email);
                                     });
                                 });

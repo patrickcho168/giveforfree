@@ -133,7 +133,7 @@ module.exports = function(app) {
                         // Email the giver
                         sendMail(
                             "You have received " + itemData.attributes.title + "!",
-                            "Hi " + giverData.attributes.name + ",<br><br>Thank you for your donation. We hope to see you again!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
+                            "Hi " + takerData.attributes.name + ",<br><br>Thank you for your donation. We hope to see you again!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
                             takerData.attributes.email);
                     })
                 })
@@ -775,6 +775,7 @@ module.exports = function(app) {
 
     // ITEM PAGE
     app.get('/item/:id', csrfProtection, function(req, res, next) {
+
         var itemId = req.params.id;
         var donated = req.query.donate;
         var uploaded = req.query.upload;
