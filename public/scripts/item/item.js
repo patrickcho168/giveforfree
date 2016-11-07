@@ -142,7 +142,7 @@ $(document).on("click", "#delivered", function() {
     // Send post request
     $.post("/api/item/deliver/" + itemId)
         .done(function() {
-
+            window.location.href = "/item/" + itemId;
         })
         .fail(function() {
 
