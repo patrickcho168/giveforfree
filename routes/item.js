@@ -125,18 +125,20 @@ module.exports = function(app) {
                         itemData.attributes.title + " has been delivered!",
                         "Hi " + giverData.attributes.name + ",<br><br>Thank you for your contribution to the site. We hope to see you again!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
                         giverData.attributes.email);
+
+                    db.User.where({
+                        userID: itemData.attributes.takerID
+                    }).fetch().then(function(takerData) {
+                        console.log(takerData);
+                        // Email the giver
+                        sendMail(
+                            "You have received " + itemData.attributes.title + "!",
+                            "Hi " + giverData.attributes.name + ",<br><br>Thank you for your donation. We hope to see you again!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
+                            takerData.attributes.email);
+                    })
                 })
 
-                db.User.where({
-                    userID: itemData.attributes.takerID
-                }).fetch().then(function(takerData) {
-                    console.log(takerData);
-                    // Email the giver
-                    sendMail(
-                        "You have received " + itemData.attributes.title + "!",
-                        "Hi " + giverData.attributes.name + ",<br><br>Thank you for your donation. We hope to see you again!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
-                        takerData.attributes.email);
-                })
+
 
                 var newNote = new db.Notification({
                     timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
