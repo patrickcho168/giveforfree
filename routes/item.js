@@ -146,6 +146,7 @@ module.exports = function(app) {
                     userID: userId
                 });
                 newNote.save();
+                res.redirect('/item/' + itemId);
             }
         })
     })
