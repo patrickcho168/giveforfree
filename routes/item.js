@@ -57,50 +57,50 @@ module.exports = function(app) {
 
     // DONATE
 
-    app.post('/api/item/donate/:id', ensureLogin.ensureLoggedIn(), function(req, res) {
-        var userId = parseInt(req.user.appUserId);
-        var itemId = parseInt(req.params.id);
-        db.Item.where({
-            itemID: itemId,
-            takerID: userId,
-        }).fetch().then(function(itemData) {
-            if (itemData && itemData.attributes && itemData.attributes.giverID !== null) {
-                itemData.save({
-                    donatedAmount: itemData.attributes.donationAmount,
-                })
+    // app.post('/api/item/donate/:id', ensureLogin.ensureLoggedIn(), function(req, res) {
+    //     var userId = parseInt(req.user.appUserId);
+    //     var itemId = parseInt(req.params.id);
+    //     db.Item.where({
+    //         itemID: itemId,
+    //         takerID: userId,
+    //     }).fetch().then(function(itemData) {
+    //         if (itemData && itemData.attributes && itemData.attributes.giverID !== null) {
+    //             itemData.save({
+    //                 donatedAmount: itemData.attributes.donationAmount,
+    //             })
 
-                db.User.where({
-                    userID: itemData.attributes.takerID
-                }).fetch().then(function(takerData) {
-                    db.User.where({
-                        userID: itemData.attributes.giverID
-                    }).fetch().then(function(giverData) {
-                        // Email the giver
-                        sendMail(
-                            "The donation for " + itemData.attributes.title + " has been received!",
-                            "Hi " + giverData.attributes.name + ",<br><br>" + takerData.attributes.name + " has donated " + itemData.attributes.donationAmount + " for " + itemData.attributes.title + ". Please arrange for the item to be given to the donor. Thank you!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
-                            giverData.attributes.email);
+    //             db.User.where({
+    //                 userID: itemData.attributes.takerID
+    //             }).fetch().then(function(takerData) {
+    //                 db.User.where({
+    //                     userID: itemData.attributes.giverID
+    //                 }).fetch().then(function(giverData) {
+    //                     // Email the giver
+    //                     sendMail(
+    //                         "The donation for " + itemData.attributes.title + " has been received!",
+    //                         "Hi " + giverData.attributes.name + ",<br><br>" + takerData.attributes.name + " has donated " + itemData.attributes.donationAmount + " for " + itemData.attributes.title + ". Please arrange for the item to be given to the donor. Thank you!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
+    //                         giverData.attributes.email);
 
-                        // Email the donor
+    //                     // Email the donor
 
-                        sendMail(
-                            "The donation for " + itemData.attributes.title + " has been received!",
-                            "Hi " + takerData.attributes.name + ",<br><br>Your donation of " + itemData.attributes.donationAmount + " for " + itemData.attributes.title + "has been received. Please contact " + giverData.attributes.name + " to receive your item! Thank you!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
-                            giverData.attributes.email);
-                    });
-                });
+    //                     sendMail(
+    //                         "The donation for " + itemData.attributes.title + " has been received!",
+    //                         "Hi " + takerData.attributes.name + ",<br><br>Your donation of " + itemData.attributes.donationAmount + " for " + itemData.attributes.title + "has been received. Please contact " + giverData.attributes.name + " to receive your item! Thank you!<br><br><strong>GiveForFree Team</strong><br>giveforfree.sg",
+    //                         giverData.attributes.email);
+    //                 });
+    //             });
 
-                var newNote = new db.Notification({
-                    timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
-                    active: 1,
-                    notificationType: 6,
-                    itemID: itemId,
-                    userID: userId
-                });
-                newNote.save();
-            }
-        })
-    })
+    //             var newNote = new db.Notification({
+    //                 timeCreated: moment().format("YYYY-MM-DD HH:mm:ss"),
+    //                 active: 1,
+    //                 notificationType: 6,
+    //                 itemID: itemId,
+    //                 userID: userId
+    //             });
+    //             newNote.save();
+    //         }
+    //     })
+    // })
 
     // -------------- DELIVERED
 
