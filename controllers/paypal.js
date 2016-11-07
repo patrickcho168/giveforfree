@@ -89,6 +89,7 @@ module.exports = function(app){
         var payKey = getAtt(params, "&pay_key=");
         var paymentStatus = getAtt(params, "&status=");
         var totalAmountPaid = getAtt(params, "&transaction%5B0%5D.amount=");
+        var userId = parseInt(req.user.appUserId);
         new db.Item().where({
             itemID: itemId
         }).save({
