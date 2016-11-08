@@ -18,6 +18,8 @@ var canAJAX = true;
 
 var urlAJAX = '/api/allItems/' + 0 + '/' + numItems;
 
+var loginMessageShown = false;
+
 // AJAX Infinite Scrolling Function
 function addRealViews(html, url) {
 
@@ -166,19 +168,35 @@ $(document).scroll(function() {
 });
 
 $(window).scroll(function() {
-    if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-        triggered += 1;
+    if ($(window).scrollTop() + $(window).height() > $(document).height() - 10) {
+        // Check if logged in
+        if (loggedIn) {
+            triggered += 1;
 
-        if (canAJAX && triggered == 1 && lastItemId > 1 && category != null) {
-            canAJAX = false;
-            urlAJAX = '/api/items/' + category + '/' + lastItemId + '/' + numItems;
-            $("#item-loader-wrapper").removeClass('hidden');
-            addRealViews(html, urlAJAX);
-        } else if (canAJAX && triggered == 1 && lastItemId > 1) {
-            canAJAX = false;
-            urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
-            $("#item-loader-wrapper").removeClass('hidden');
-            addRealViews(html, urlAJAX);
+            if (canAJAX && triggered == 1 && lastItemId > 1 && category != null) {
+                canAJAX = false;
+                urlAJAX = '/api/items/' + category + '/' + lastItemId + '/' + numItems;
+                $("#item-loader-wrapper").removeClass('hidden');
+                addRealViews(html, urlAJAX);
+            } else if (canAJAX && triggered == 1 && lastItemId > 1) {
+                canAJAX = false;
+                urlAJAX = '/api/allItems/' + lastItemId + '/' + numItems;
+                $("#item-loader-wrapper").removeClass('hidden');
+                addRealViews(html, urlAJAX);
+            }
+        } else if (loginMessageShown === false) {
+            loginMessageShown = true;
+            swal({
+                title: 'Login with Facebook!',
+                text: 'You need to login to view more items',
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+                imageUrl: "../../images/common/gff-logo-s.svg",
+            },
+            function() {
+                window.location.href = "/login/facebook";
+            });
         }
     }
 });
