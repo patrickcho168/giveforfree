@@ -33,6 +33,9 @@ $(document).ready(function() {
     $('.donation-input').keyup(function(evt) {
         updateDonationDetail();
     });
+
+    $('.charity-selection #charity1').prop('checked', true);
+    $('.charity-selection img').removeClass('covered');
 });
 
 function culculateTheirs(total) {
