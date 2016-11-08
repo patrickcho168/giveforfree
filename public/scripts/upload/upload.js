@@ -72,8 +72,8 @@ function updateDonationDetail() {
 
 function initializeForm() {
     $.validate({
-        modules : 'logic, html5',
-        validateHiddenInputs: true,
+        modules : 'logic',
+        validateHiddenInputs: false,
         validateOnBlur: false,
         onError : function($form) {
           $.notify({
@@ -90,17 +90,9 @@ function initializeForm() {
                 return true;
 
             // If image selected but not cropped
-            } else if ($("div.image-preview").length == 0) {
-
-                $.notify({
-                    // options
-                      message: "Please finish cropping your image."
-                }, {
-                    // settings
-                    type: 'danger'
-                });
-
-                return false;
+            } else if ($("div.image-preview").length == 1) {
+                $(".image-confirm").click();
+                return true;
 
             // If image not yet uploaded
             } else {

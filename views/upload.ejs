@@ -148,7 +148,7 @@
     </nav>
 
     <div class="main-container">
-        <form action="/upload" name='uploadForm' method="post" id="new-gift-form" role="form" novalidate>
+        <form action="/upload" name='uploadForm' method="post" id="new-gift-form" role="form">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <input type="hidden" name="croppedImage">
 
@@ -193,7 +193,7 @@
                                 Size and measurements. Meetup Details. <span class="no-description-alert hidden" style="color: #f05050;">You have to fill in the description.</span>
                                 <!-- TODO: implement validation-->
                             </p>
-                            <textarea type="text" class="input-txt description-field" name="description" id="description" placeholder="My gift is..." id="description-field" maxlength="200"  data-validation="required"></textarea>
+                            <textarea type="text" class="input-txt description-field" name="description" id="description" placeholder="My gift is..." id="description-field" maxlength="200" data-validation="required"></textarea>
                         </div>
                         <div class="category-select-holder">
                             <label for="category"><h2>Category</h2></label>
@@ -266,7 +266,7 @@
                                     I want to raise money for ...
                                 </p>
                                 <div class="charity-selection">
-                                    <input type="radio" id="charity1" name="donateToCharity" value="1" class="hidden" data-validation="required" data-validation-optional-if-answered="givefree, donateToCharity">
+                                    <input type="radio" id="charity1" name="donateToCharity" value="1" class="hidden" data-validation="required">
                                     <img src="../images/upload/charity1.png" alt="" class="covered" onclick="selectCharity(this);"/>
                                 </div>
                             </div>
@@ -284,7 +284,7 @@
                             </p>
                             <div class="money-input">
                                 <i class="fa fa-usd"></i><span> SGD</span>
-                                <input type="number" step="0.50" class="input-txt donation-input" name="donation" placeholder="2" data-validation-allowing="range[2;99999999], float" data-validation="required" data-validation="number" data-validation-decimal-separator="." data-validation-depends-on="donateToCharity" data-validation-error-msg="Please enter a value more than $2.">
+                                <input type="number" step="0.50" class="input-txt donation-input" name="donation" data-validation-allowing="range[2;99999999], float" data-validation="required" data-validation="number" data-validation-decimal-separator="." data-validation-error-msg="Please enter a value more than $2." value="2">
                                 <p>
                                     <span class="actual-amount">$1.4</span> will go to charity<br>
                                     <span class="fee">$0.58</span> will go to PayPal<br>
