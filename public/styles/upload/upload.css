@@ -84,7 +84,7 @@ textarea {
     overflow: scroll;
     max-height: 95px;
 }
-textarea::-webkit-scrollbar { 
+textarea::-webkit-scrollbar {
     display: none;
 }
 button {
@@ -226,6 +226,7 @@ img {
 
 .checkbox.checkbox-circle label::before {
     margin-top: 6px;
+    border-radius: 2px;
 }
 
 .checkbox-primary input[type="checkbox"]:checked+label::before, .checkbox-primary input[type="radio"]:checked+label::before {
