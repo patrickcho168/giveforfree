@@ -81,8 +81,11 @@ textarea {
     resize: none;
     border-bottom: none;
     display: block;
-    overflow: hidden!important;
+    overflow: scroll;
     max-height: 95px;
+}
+textarea::-webkit-scrollbar { 
+    display: none;
 }
 button {
     transition: all .5s;
