@@ -81,8 +81,11 @@ textarea {
     resize: none;
     border-bottom: none;
     display: block;
-    overflow: hidden!important;
+    overflow: scroll;
     max-height: 95px;
+}
+textarea::-webkit-scrollbar {
+    display: none;
 }
 button {
     transition: all .5s;
@@ -223,6 +226,7 @@ img {
 
 .checkbox.checkbox-circle label::before {
     margin-top: 6px;
+    border-radius: 2px;
 }
 
 .checkbox-primary input[type="checkbox"]:checked+label::before, .checkbox-primary input[type="radio"]:checked+label::before {
@@ -358,6 +362,7 @@ img {
     margin-top: 10px;
     font-size: 20px;
     font-weight: 300;
+    padding-right: 25px;
 }
 
 .category-select-holder select, option {
