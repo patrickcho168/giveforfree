@@ -44,7 +44,7 @@
     "mysql": "~2.11.1",
     "node-sass": "^3.10.1",
     "node-sass-middleware": "^0.9.8",
-    "nodemailer": "^2.6.4",
+    "nodemailer": "^4.0.1",
     "passport": "~0.3.2",
     "passport-facebook": "~2.1.1",
     "paypal-adaptive": "^0.4.2",
